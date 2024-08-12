@@ -1,3 +1,4 @@
+DROP DATABASE tranbolico;
 CREATE DATABASE tranbolico;
 USE tranbolico;
 
@@ -18,7 +19,7 @@ create table city(
 CREATE TABLE user(
 	user_id int unsigned NOT NULL PRIMARY KEY auto_increment,
 	name varchar(50) NOT NULL,
-    last_name varchar(100) NOT NULL,
+    surname varchar(100) NOT NULL,
     dni varchar(9) NOT NULL,
     email varchar(320) UNIQUE NOT NULL,
     password varchar(100) NOT NULL,
@@ -26,9 +27,9 @@ CREATE TABLE user(
     avatar varchar(100) DEFAULT NULL,
     province_id TINYINT unsigned NOT NULL,
     city_id SMALLINT unsigned NOT NULL,
-    is_validated BOOL DEFAULT FALSE NOT NULL,
-    is_disabled BOOL DEFAULT FALSE NOT NULL,
-    user_type TINYINT DEFAULT 2 NOT NULL,
+    is_validated BOOLEAN NOT NULL DEFAULT FALSE,
+    is_disabled BOOLEAN NOT NULL DEFAULT FALSE,
+    user_type TINYINT NOT NULL DEFAULT 2,
     CONSTRAINT fk_user_city_id FOREIGN KEY (province_id, city_id) REFERENCES city (province_id, city_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -39,7 +40,7 @@ CREATE TABLE route(
     arrival_province_id TINYINT unsigned NOT NULL,
     arrival_city_id SMALLINT unsigned NOT NULL,
     text TINYTEXT,
-    is_disabled BOOL NOT NULL DEFAULT FALSE,
+    is_disabled BOOLEAN NOT NULL DEFAULT FALSE,
     CONSTRAINT fk_departure_city_id FOREIGN KEY (departure_province_id, departure_city_id) REFERENCES city (province_id, city_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_arrival_city_id FOREIGN KEY (arrival_province_id, arrival_city_id) REFERENCES city (province_id, city_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -56,10 +57,10 @@ CREATE TABLE planning (
 CREATE TABLE reservation(
 	user_id int unsigned NOT NULL,
     reservation_id int unsigned NOT NULL ,
+    reservation_type TINYINT NOT NULL, -- 1 ida - 2 vuelta
     route_id int unsigned NOT NULL,
-    planning_id int unsigned NOT NULL,
-    reservation_type TINYINT NOT NULL, -- 1 ida -2 vuelta
-    is_deleted BOOL NOT NULL DEFAULT 0,
+    planning_id int unsigned NOT NULL,    
+    is_deleted BOOLEAN NOT NULL DEFAULT 0,
     PRIMARY KEY(user_id,reservation_id, reservation_type),
     CONSTRAINT fk_reservation_user_id FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_reservation_planning_id FOREIGN KEY (route_id, planning_id) REFERENCES planning (route_id, planning_id) ON DELETE CASCADE ON UPDATE CASCADE
