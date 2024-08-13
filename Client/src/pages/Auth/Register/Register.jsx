@@ -13,8 +13,8 @@ const initialValue = {
   phone_number: "",
   birthdate: "",
   genre: "",
-  city_id: "",
-  province_id: "",
+  city: "",
+  province: "",
   password: "",
 };
 
@@ -36,8 +36,8 @@ export const Register = () => {
       !register.email ||
       !register.phone_number ||
       !register.birthdate ||
-      !register.city_id ||
-      !register.province_id ||
+      !register.city ||
+      !register.province ||
       !register.password
     ) {
       setMsg({ show: true });
@@ -169,8 +169,8 @@ export const Register = () => {
                   className="input-form"
                   type="text"
                   placeholder="Ciudad"
-                  name="city_id"
-                  value={register.city_id}
+                  name="city"
+                  value={register.city}
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -184,8 +184,8 @@ export const Register = () => {
                   className="input-form"
                   type="text"
                   placeholder="Provincia"
-                  name="province_id"
-                  value={register.province_id}
+                  name="province"
+                  value={register.province}
                   onChange={handleChange}
                 />
               </Form.Group>
