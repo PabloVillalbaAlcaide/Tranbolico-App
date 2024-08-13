@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Index } from "../pages";
+import { Home } from "../pages/Home";
 import { Row } from "react-bootstrap";
 import { NavBarApp } from "../components/NavBarApp/NavBarApp";
+import { Footer } from "../components/Footer/Footer";
 
 export const AppRoutes = () => {
   return (
@@ -10,8 +11,11 @@ export const AppRoutes = () => {
         <NavBarApp />
       </Row>
       <Routes>
-        <Route path="/" element={<Index />} />
+        <Route path="/" element={<Home />} />
       </Routes>
+      <Row>
+        <Footer />
+      </Row>
     </BrowserRouter>
   );
 };

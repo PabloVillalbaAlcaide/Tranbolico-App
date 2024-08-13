@@ -1,0 +1,39 @@
+.contenedor-footer {
+  background-color: var(--tranbolico-azul);
+  width: 100%;
+  min-height: 20vh;
+  font-family: "Akkurat-Regular.ttf";
+}
+
+.contenedor-footer img {
+  width: 150px;
+}
+
+.h1-footer {
+  font-family: "VinaSans-Regular.ttf";
+  font-size: 3rem;
+  color: white;
+}
+
+.hr-footer {
+  border-top: 3px solid white;
+  width: 100%;
+  opacity: 1;
+}
+
+.tuvuelta-footer {
+  color: white;
+  font-size: 1.2rem;
+}
+
+.avisolegal-footer {
+  color: #beb5b5;
+}
+
+.derechos-footer {
+  color: #beb5b5;
+}
+
+.iconos-footer > Button:hover {
+  background-color: var(--tranbolico-fucsia);
+}

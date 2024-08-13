@@ -1,0 +1,151 @@
+.contenedor-home {
+  font-family: "Akkurat-Regular.ttf";
+}
+
+.contenedor-home img {
+  width: 215px;
+  height: 100px;
+}
+
+.h1-main-home {
+  font-family: "VinaSans-Regular.ttf";
+  font-size: 3.5rem;
+  color: var(--tranbolico-azul);
+}
+
+.tuvuelta-home {
+  color: var(--tranbolico-azul);
+  font-size: 1.2rem;
+}
+
+.origen-home {
+  margin-right: -5px;
+}
+
+.origen-home,
+.destino-home {
+  background-color: var(--tranbolico-azul);
+  color: white;
+  min-height: 7vh;
+  min-width: 100%;
+  border-radius: 15px 0px 0px 15px;
+  text-align: center;
+  padding-top: 10px;
+  font-size: 1.3rem;
+}
+
+.destino-home {
+  margin-left: -10px;
+}
+
+.btn-home-buscar {
+  border: none;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: bold;
+  background-color: var(--tranbolico-azulClaro);
+  padding: 10px;
+  border-radius: 20px;
+  border-radius: 0 15px 15px 0;
+}
+
+.btn-home-buscar:hover {
+  background-color: #118899;
+}
+
+.contenedor-botones-home > Button {
+  border: none;
+  font-size: 1.8rem;
+  color: white;
+  border-radius: 1rem;
+  font-family: "VinaSans-Regular.ttf";
+  padding: 5px 30px;
+}
+
+.btn-reservas-home {
+  background-color: var(--tranbolico-azul);
+}
+.btn-reservas-home:hover {
+  background-color: #273897;
+}
+
+.btn-rutas-home {
+  background-color: var(--tranbolico-fucsia);
+}
+
+.btn-rutas-home:hover {
+  background-color: #ea013b;
+}
+
+.btn-conocenos-home {
+  background-color: var(--tranbolico-amarillo);
+}
+
+.btn-conocenos-home:hover {
+  background-color: #facc00;
+}
+
+.btn-faqs-home {
+  background-color: var(--tranbolico-azulClaro);
+}
+
+.btn-faqs-home:hover {
+  background-color: #53afc6;
+}
+
+.contenedor-home-criaturas {
+  color: white;
+  gap: 5rem;
+  position: relative;
+}
+
+.contenedor-home-criaturas p {
+  font-family: "VinaSans-Regular.ttf";
+  font-size: 2rem;
+}
+
+.contenedor-home-criaturas img {
+  width: 140px;
+  height: 140px;
+}
+
+.home-criatura-1,
+.home-criatura-2,
+.home-criatura-3 {
+  background-color: var(--tranbolico-azul);
+  max-width: 30vh;
+  max-height: 35vh;
+  border-radius: 15px;
+  text-align: center;
+  padding: 10px;
+  top: -10px;
+  left: -10px;
+  line-height: 29px;
+}
+
+.home-criatura-1 {
+  background-color: var(--tranbolico-azul);
+}
+
+.home-criatura-2 {
+  background-color: var(--tranbolico-fucsia);
+}
+
+.home-criatura-3 {
+  background-color: var(--tranbolico-rosa);
+}
+
+.home-criatura-1 img {
+  position: relative;
+  bottom: 20px;
+}
+
+.home-criatura-2 img {
+  position: relative;
+  bottom: 20px;
+}
+
+.home-criatura-3 img {
+  position: relative;
+  bottom: -5px;
+}

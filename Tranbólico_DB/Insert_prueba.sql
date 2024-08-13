@@ -1,15 +1,15 @@
 -- Inserts para la tabla user
-INSERT INTO user (name, surname, dni, email, password, phone_number, avatar, province_id, city_id, is_validated, is_disabled, user_type) VALUES
-('Juan', 'Pérez', '12345678A', 'juan.perez@example.com', 'password123', '123456789', NULL, 12, 40, FALSE, FALSE, 2),
-('María', 'García', '87654321B', 'maria.garcia@example.com', 'password456', '987654321', NULL, 12, 40, TRUE, FALSE, 2),
-('Carlos', 'López', '11223344C', 'carlos.lopez@example.com', 'password789', '456123789', NULL, 12, 40, FALSE, TRUE, 2),
-('Ana', 'Martínez', '44332211D', 'ana.martinez@example.com', 'password012', '321654987', NULL, 12, 9, TRUE, FALSE, 2),
-('Luis', 'Hernández', '55667788E', 'luis.hernandez@example.com', 'password345', '789456123', NULL, 12, 9, FALSE, FALSE, 2),
-('Laura', 'Gómez', '99887766F', 'laura.gomez@example.com', 'password678', '654321987', NULL, 12, 9, TRUE, FALSE, 2),
-('Pedro', 'Sánchez', '66554433G', 'pedro.sanchez@example.com', 'password901', '321987654', NULL, 12, 28, FALSE, TRUE, 1),
-('Elena', 'Ruiz', '33445566H', 'elena.ruiz@example.com', 'password234', '987123456', NULL, 12, 28, TRUE, FALSE, 2),
-('Miguel', 'Torres', '22334455I', 'miguel.torres@example.com', 'password567', '123789456', NULL, 12, 9, FALSE, FALSE, 2),
-('Sara', 'Ramírez', '11223344J', 'sara.ramirez@example.com', 'password890', '789123654', NULL, 12, 135, TRUE, FALSE, 2);
+INSERT INTO user (name, surname, birthdate, genre, email, password, phone_number, avatar, province_id, city_id, is_validated, is_disabled, user_type) VALUES
+('Juan', 'Pérez', '2004-08-15', 1, 'juan.perez@example.com', 'password123', '123456789', NULL, 12, 40, FALSE, FALSE, 2),
+('María', 'García', '2004-08-15', 2, 'maria.garcia@example.com', 'password456', '987654321', NULL, 12, 40, TRUE, FALSE, 2),
+('Carlos', 'López', '2004-08-15', 1, 'carlos.lopez@example.com', 'password789', '456123789', NULL, 12, 40, FALSE, TRUE, 2),
+('Ana', 'Martínez', '2004-08-15', 2, 'ana.martinez@example.com', 'password012', '321654987', NULL, 12, 9, TRUE, FALSE, 2),
+('Luis', 'Hernández', '2004-08-15', 3,'luis.hernandez@example.com', 'password345', '789456123', NULL, 12, 9, FALSE, FALSE, 2),
+('Laura', 'Gómez', '2004-08-15', 2, 'laura.gomez@example.com', 'password678', '654321987', NULL, 12, 9, TRUE, FALSE, 2),
+('Pedro', 'Sánchez', '2004-08-15', NULL, 'pedro.sanchez@example.com', 'password901', '321987654', NULL, 12, 28, FALSE, TRUE, 1),
+('Elena', 'Ruiz', '2004-08-15', 2, 'elena.ruiz@example.com', 'password234', '987123456', NULL, 12, 28, TRUE, FALSE, 2),
+('Miguel', 'Torres', '2004-08-15', 1, 'miguel.torres@example.com', 'password567', '123789456', NULL, 12, 9, FALSE, FALSE, 2),
+('Sara', 'Ramírez', '2004-08-15', 2, 'sara.ramirez@example.com', 'password890', '789123654', NULL, 12, 135, TRUE, FALSE, 2);
 
 -- Inserts para la tabla route
 INSERT INTO route (departure_province_id, departure_city_id, arrival_province_id, arrival_city_id, text, is_disabled) VALUES
