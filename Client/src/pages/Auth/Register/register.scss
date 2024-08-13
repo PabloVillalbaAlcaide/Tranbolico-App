@@ -1,8 +1,17 @@
-.ppal-register,
-.aceptar {
-  background-color: var(--tranbolico-azul);
+p {
+  margin-bottom: 0;
 }
 
+.ppal-register, .aceptar {
+  background-color: var(--tranbolico-azul);
+}
 .cancelar {
   background-color: var(--tranbolico-fucsia);
+  }
+.input-form{
+  border-radius: 20px;
+  border: 2px solid black;
+  font-style: italic;
+  text-align: center;
+  font-size: 1.2rem;
 }

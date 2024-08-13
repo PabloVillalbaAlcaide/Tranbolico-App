@@ -4,6 +4,7 @@ import "./register.scss";
 
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useState } from "react";
+import axios from "axios";
 
 const initialValue = {
   name: "",
@@ -28,7 +29,7 @@ export const Register = () => {
   };
   console.log(register);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (
       !register.name ||
       !register.surname ||
@@ -37,10 +38,21 @@ export const Register = () => {
       !register.birthdate ||
       !register.city_id ||
       !register.province_id ||
-      !register.password1 ||
-      !register.password2
+      !register.password
     ) {
-      setMsg({ text: "Todos los campos son obligatorios", show: true });
+      setMsg({ show: true });
+      return;
+    }
+    try {
+      const res = await axios.post(
+        "http://localhost:4000/users/registerUser",
+        register
+      );
+      console.log(res);
+      setMsg({ show: false, text: "" });
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -48,9 +60,9 @@ export const Register = () => {
     <>
       <Row>
         <div className="ppal-register text-center text-white">
-          <h2>REGISTRO</h2>
+          <h2 className="mb-0 py-2">REGISTRO</h2>
         </div>
-        <div className="d-flex justify-content-center py-5">
+        <div className="d-flex justify-content-center py-4">
           <Col xs={12} md={8} lg={6} xl={4} className="w-50">
             <Form>
               <div className="text-center mb-3">
@@ -60,8 +72,9 @@ export const Register = () => {
                   width={"50px"}
                 />
               </div>
-              <Form.Group className="mb-3" controlId="formBasicName">
+              <Form.Group className="mb-2" controlId="formBasicName">
                 <Form.Control
+                  className="input-form"
                   type="text"
                   placeholder="Nombre"
                   name="name"
@@ -69,9 +82,15 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
+              {msg.show && (
+                <p className="text-danger text-center mb-2">
+                  {(msg.text = "Campo requerido")}
+                </p>
+              )}
 
-              <Form.Group className="mb-3" controlId="formBasicSurname">
+              <Form.Group className="mb-2" controlId="formBasicSurname">
                 <Form.Control
+                  className="input-form"
                   type="text"
                   placeholder="Apellidos"
                   name="surname"
@@ -79,29 +98,46 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
+              {msg.show && (
+                <p className="text-danger text-center mb-2">
+                  {(msg.text = "Campo requerido")}
+                </p>
+              )}
+              <Form.Group className="mb-2" controlId="formBasicEmail">
                 <Form.Control
+                  className="input-form"
                   type="email"
                   placeholder="Email"
                   name="email"
                   value={register.email}
                   onChange={handleChange}
-                  pattern="[a-z-A-Z-0-9._%+-]+@[a-z0-9.-]+\.[a-z-A-Z]{2,4}$"
-                  required
+                  /* pattern="[a-z-A-Z-0-9._%+-]+@[a-z0-9.-]+\.[a-z-A-Z]{2,4}$" */
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicPhoneNumber">
+              {msg.show && (
+                <p className="text-danger text-center">
+                  {(msg.text = "Campo requerido")}
+                </p>
+              )}
+              <Form.Group className="mb-2" controlId="formBasicPhoneNumber">
                 <Form.Control
+                  className="input-form"
                   type="tel"
                   placeholder="Teléfono"
                   name="phone_number"
                   value={register.phone_number}
                   onChange={handleChange}
-                  pattern="[6-7]{1}-[0-9]{8}"
+                  /* pattern="[6-7]{1}-[0-9]{8}" */
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicBirthDate">
+              {msg.show && (
+                <p className="text-danger text-center mb-2">
+                  {(msg.text = "Campo requerido")}
+                </p>
+              )}
+              <Form.Group className="mb-2" controlId="formBasicBirthDate">
                 <Form.Control
+                  className="input-form"
                   type="date"
                   placeholder="Fecha de nacimiento"
                   name="birthdate"
@@ -109,8 +145,14 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicGenre">
+              {msg.show && (
+                <p className="text-danger text-center mb-2">
+                  {(msg.text = "Campo requerido")}
+                </p>
+              )}
+              <Form.Group className="mb-2" controlId="formBasicGenre">
                 <Form.Control
+                  className="input-form"
                   as="select"
                   name="genre"
                   value={register.genre}
@@ -122,8 +164,9 @@ export const Register = () => {
                   <option value="3">Otro</option>
                 </Form.Control>
               </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicCity">
+              <Form.Group className="mb-2" controlId="formBasicCity">
                 <Form.Control
+                  className="input-form"
                   type="text"
                   placeholder="Ciudad"
                   name="city_id"
@@ -131,8 +174,14 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicProvince">
+              {msg.show && (
+                <p className="text-danger text-center mb-2">
+                  {(msg.text = "Campo requerido")}
+                </p>
+              )}
+              <Form.Group className="mb-2" controlId="formBasicProvince">
                 <Form.Control
+                  className="input-form"
                   type="text"
                   placeholder="Provincia"
                   name="province_id"
@@ -140,31 +189,48 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
+              {msg.show && (
+                <p className="text-danger text-center mb-2">
+                  {(msg.text = "Campo requerido")}
+                </p>
+              )}
 
-              <Form.Group className="mb-3" controlId="formBasicPassword1">
+              <Form.Group className="mb-2" controlId="formBasicPassword">
                 <Form.Control
+                  className="input-form"
                   type="password"
                   placeholder="Contraseña"
                   name="password"
                   value={register.password}
                   onChange={handleChange}
-                  pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,16}"
+                  /* pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,16}" */
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicPassword2">
+              {msg.show && (
+                <p className="text-danger text-center mb-2">
+                  {(msg.text = "Campo requerido")}
+                </p>
+              )}
+              <Form.Group className="mb-2" controlId="formBasicPassword2">
                 <Form.Control
+                  className="input-form"
                   type="password"
                   placeholder="Confirmar contraseña"
                   name="password2"
                   value={register.password}
                   onChange={handleChange}
-                  pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,16}"
+                  /* pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,16}" */
                 />
               </Form.Group>
               {msg.show && (
-                <p className="text-danger text-center">{msg.text}</p>
+                <p className="text-danger text-center mb-2">
+                  {(msg.text = "Campo requerido")}
+                </p>
               )}
-              <p className="fw-bold fst-italic">
+              {/* {msg.show && (
+                <p className="text-danger text-center">{msg.text}</p>
+              )} */}
+              <p className="fw-bold fst-italic text-center mb-2">
                 <span className="text-decoration-underline">
                   ¿Ya tienes una cuenta?
                 </span>{" "}
@@ -173,14 +239,12 @@ export const Register = () => {
               <div className="d-flex justify-content-center gap-4">
                 <Button
                   className="aceptar border-0 fst-italic"
-                  variant="primary"
                   onClick={onSubmit}
                 >
                   Registrar
                 </Button>
                 <Button
                   className="cancelar border-0 fst-italic"
-                  variant="primary"
                   onClick={() => navigate("/")}
                 >
                   Volver
