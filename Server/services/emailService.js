@@ -23,7 +23,7 @@ const sendMail = (email, name, registerToken) =>{
     <h1>Bienvenid@ a Tranbólico</h1>
     <h3>¡Hola ${name}!</h3>
     <p>Gracias por unirte a Tranbólico. Por favor, verifica tu email haciendo clic en el siguiente enlace:</p>
-    <a href="http://localhost:5173/verify/${registerToken}">http://localhost:5173/verify/${registerToken}</a>
+    <a href="http://localhost:5173/MsgVerifyEmail/${registerToken}">http://localhost:5173/MsgVerifyEmail/${registerToken}</a>
     <p>Si tienes alguna pregunta, contáctanos en [email de soporte].</p>
     <p>¡Saludos!</p>
     <p>El equipo de Tranbólico</p>

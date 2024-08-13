@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const sendMail = require("../services/emailService");
 const tokenGenerator = require("../helpers/tokenGenerator");
+const { encryptToken, decryptToken } = require("../helpers/encryptToken");
 
 class UserController {
   //Controlador que realiza el registro de usuario
@@ -56,21 +57,20 @@ class UserController {
                 if (errorIns) {
                   res.status(500).json(errorIns);
                 } else {
-                  // Generamos token para verificación de registro
+                  // Genera el token para verificación de registro
                   const registerToken = tokenGenerator(
                     resultIns.insertId,
                     process.env.SECRET_KEY_2,
                     1
                   );
-                  let saltRounds = 10;
-                  bcrypt.hash(registerToken, saltRounds, (error, hashToken) => {
-                    if (error) {
-                      res.status(500).json(error);
-                    } else {
-                      sendMail(email, name, hashToken);
-                      res.status(201).json(resultIns);
-                    }
-                  })
+
+                  //Encripta el token y hace el envio
+                  const hashToken = encryptToken(
+                    registerToken,
+                    process.env.SECRET_KEY_3
+                  );
+                  sendMail(email, name, hashToken);
+                  res.status(201).json(resultIns);
                 }
               });
             }
@@ -129,15 +129,18 @@ class UserController {
   //Verifica el usuario en base al token de registro
   verifyUser = (req, res) => {
     const { hashToken } = req.body;
-    console.log(req.body);
 
     if (!hashToken) {
-      res.status(401).json({ status: 401, message: "No autorizado" });
+      res.status(401).json({ status: 401, message: "No autorizado 1" });
     }
-    
+
+    //Desencripta el token
+    const registerToken = decryptToken(hashToken, process.env.SECRET_KEY_3);
+
+    //Verifica el token
     jwt.verify(registerToken, process.env.SECRET_KEY_2, (error, decode) => {
       if (error) {
-        res.status(401).json({ status: 401, message: "No autorizado" });
+        res.status(401).json({ status: 401, message: "No autorizado 2" });
       } else {
         console.log(decode);
         let data = [decode.id];
