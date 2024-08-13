@@ -2,11 +2,10 @@ const connection = require("../config/db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const sendMail = require("../services/emailService")
-const tokenGenerator = require("../helpers/tokenGenerator")
+const sendMail = require("../services/emailService");
+const tokenGenerator = require("../helpers/tokenGenerator");
 
 class UserController {
-
   //Controlador que realiza el registro de usuario
   registerUser = (req, res) => {
     const {
@@ -56,11 +55,22 @@ class UserController {
               connection.query(sql2, data, (errorIns, resultIns) => {
                 if (errorIns) {
                   res.status(500).json(errorIns);
-                } else {                  
+                } else {
                   // Generamos token para verificación de registro
-                  const registerToken = tokenGenerator(resultIns.insertId,process.env.SECRET_KEY_2,1)
-                  sendMail(email,name,registerToken)
-                  res.status(201).json(resultIns);
+                  const registerToken = tokenGenerator(
+                    resultIns.insertId,
+                    process.env.SECRET_KEY_2,
+                    1
+                  );
+                  let saltRounds = 10;
+                  bcrypt.hash(registerToken, saltRounds, (error, hashToken) => {
+                    if (error) {
+                      res.status(500).json(error);
+                    } else {
+                      sendMail(email, name, hashToken);
+                      res.status(201).json(resultIns);
+                    }
+                  })
                 }
               });
             }
@@ -71,76 +81,93 @@ class UserController {
   };
 
   //Controlador que realiza el login del usuario
-  loginUser = (req,res) => {
-    const {email, password} = req.body;
-    let sql = `SELECT * FROM user WHERE email='${email}' AND is_disabled = 0 AND is_validated = 1`
-    connection.query(sql, (err, result) =>{
-      if(err){
-        res.status(401).json("Credenciales incorrectas")
-      }else{
-        if(!result || result.length === 0){
-          res.status(401).json("Credenciales incorrectas")
-        }else{
+  loginUser = (req, res) => {
+    const { email, password } = req.body;
+    let sql = `SELECT * FROM user WHERE email='${email}' AND is_disabled = 0 AND is_validated = 1`;
+    connection.query(sql, (err, result) => {
+      if (err) {
+        res.status(401).json("Credenciales incorrectas");
+      } else {
+        if (!result || result.length === 0) {
+          res.status(401).json("Credenciales incorrectas");
+        } else {
           const hash = result[0].password;
-          bcrypt.compare(password, hash,(errHash,resHash)=>{ 
-            if(errHash){
-              resHash.status(500).json(errHash)
-            }else{
-              if(resHash){
-                const token = jwt.sign(
-                  {id: result[0].user_id},
-                  process.env.SECRET_KEY,
-                  {expiresIn:"1d"}
-                  )
-                  res.status(200).json(token)
-              }else{
-                res.status(401).json("Credenciales incorrectas")
+          bcrypt.compare(password, hash, (errHash, resHash) => {
+            if (errHash) {
+              resHash.status(500).json(errHash);
+            } else {
+              if (resHash) {
+                let sql2 = "SELECT * FROM user WHERE user_id = ?";
+                connection.query(sql2, data, (errSelect, resultSelect) => {
+                  if (errSelect) {
+                    res
+                      .status(401)
+                      .json({ status: 401, message: "No autorizado" });
+                  } else {
+                    if (!resultSelect || resultSelect.length === 0) {
+                      res.status(401).json("No autorizado");
+                    } else {
+                      const token = tokenGenerator(
+                        resultSelect[0].user_id,
+                        process.env.SECRET_KEY,
+                        1
+                      );
+                      res.status(200).json({ resultSelect, token });
+                    }
+                  }
+                });
+              } else {
+                res.status(401).json("Credenciales incorrectas");
               }
             }
-          })
+          });
         }
       }
-    })
+    });
   };
 
   //Verifica el usuario en base al token de registro
-  verifyUser = (req,res)=>{
-    const {registerToken} = req.body
+  verifyUser = (req, res) => {
+    const { hashToken } = req.body;
     console.log(req.body);
+
+    if (!hashToken) {
+      res.status(401).json({ status: 401, message: "No autorizado" });
+    }
     
-    if(!registerToken){
-      res.status(401).json({status:401, message:"No autorizado"});
-  }
-  jwt.verify(registerToken, process.env.SECRET_KEY_2, (error, decode)=>{
-      if(error){
-          res.status(401).json({status:401, message:"No autorizado"});
-      }else{
+    jwt.verify(registerToken, process.env.SECRET_KEY_2, (error, decode) => {
+      if (error) {
+        res.status(401).json({ status: 401, message: "No autorizado" });
+      } else {
         console.log(decode);
-        let data = [decode.id]
-        let sql = `UPDATE user SET is_validated = 1 WHERE user_id = ?`
-        connection.query(sql,data, (err,result)=>{
-          if(err){
-            res.status(401).json({status:401, message:"No autorizado"});
-          }
-          else{
-            let sql2 = 'SELECT * FROM user WHERE user_id = ?'
-            connection.query(sql2,data, (errSelect,resultSelect)=>{
-              if(errSelect){
-                res.status(401).json({status:401, message:"No autorizado"});
-              }else{
-                if(!result || result.length === 0){
-                  res.status(401).json("No autorizado")
-                }else{
-                  res.status(200).json({resultSelect,token})
+        let data = [decode.id];
+        let sql = `UPDATE user SET is_validated = 1 WHERE user_id = ?`;
+        connection.query(sql, data, (err, result) => {
+          if (err) {
+            res.status(401).json({ status: 401, message: "No autorizado" });
+          } else {
+            let sql2 = "SELECT * FROM user WHERE user_id = ?";
+            connection.query(sql2, data, (errSelect, resultSelect) => {
+              if (errSelect) {
+                res.status(401).json({ status: 401, message: "No autorizado" });
+              } else {
+                if (!resultSelect || resultSelect.length === 0) {
+                  res.status(401).json("No autorizado");
+                } else {
+                  const token = tokenGenerator(
+                    resultSelect[0].user_id,
+                    process.env.SECRET_KEY,
+                    1
+                  );
+                  res.status(200).json({ resultSelect, token });
                 }
               }
-          })}
-        })
-        
+            });
+          }
+        });
       }
-  })
-
-  }
+    });
+  };
 }
 
 module.exports = new UserController();
