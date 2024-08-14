@@ -171,6 +171,40 @@ class UserController {
       }
     });
   };
+
+  //Traemos los datos de un usuario
+  getOneUser = (req, res) => {
+    // console.log(req.headers.authorization);
+    let token = req.headers.authorization.split(" ")[1];
+    let { id } = jwt.decode(token);
+    // console.log(id);
+
+    let sql = `SELECT * FROM user WHERE user_id = ${id}`;
+    connection.query(sql, (err, result) => {
+      if (err) {
+        res.status(500).json(err);
+      } else if (result.length === 0) {
+        res.status(401).json("No autorizado");
+      } else {
+        let sql2 = `SELECT * FROM reservation WHERE user_id = ${id} AND is_deleted = 0`;
+        connection.query(sql2, (err2, result2) => {
+          if (err2) {
+            res.status(500).json(err2);
+          } else {
+            // res.send("resuuuuult2", result2)
+            res.status(200).json(result2);
+          }
+        });
+      }
+    });
+  };
+
+  editOneUser = (req, res) => {
+    // res.send("editOneUser")
+    const { name, surname, email, password, phone_number, province, city } =
+      req.body;
+    console.log(req.body);
+  };
 }
 
 module.exports = new UserController();
