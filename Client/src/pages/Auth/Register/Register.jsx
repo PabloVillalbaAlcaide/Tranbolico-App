@@ -21,7 +21,9 @@ const initialValue = {
 export const Register = () => {
   const [register, setRegister] = useState(initialValue);
   const navigate = useNavigate();
-  const [msg, setMsg] = useState({ text: "", show: false });
+  // const [msg, setMsg] = useState({ text: "", show: false });
+  const [password2, setPassword2] = useState("");
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,27 +31,120 @@ export const Register = () => {
   };
   console.log(register);
 
+  const handleChangePassword2 = (e) => {
+    const { value } = e.target;
+    setPassword2(value);
+  };
+
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {
+      name: "",
+      surname: "",
+      email: "",
+      phone_number: "",
+      birthdate: "",
+      province: "",
+      city: "",
+      password: "",
+      password2: "",
+    };
+
+    //Validamos
+    if (!register.name) {
+      newErrors.name = "El nombre es obligatorio";
+      valid = false;
+    } else if (register.name.length < 3 || register.name.length > 15) {
+      newErrors.name = "El nombre debe contener entre 3 y 15 caracteres";
+      valid = false;
+    }
+
+    //Validamos apellido
+    if (!register.surname) {
+      newErrors.surname = "El apellido es obligatorio";
+      valid = false;
+    } else if (register.surname.length < 3 || register.surname.length > 40) {
+      newErrors.surname = "El nombre debe contener entre 3 y 40 caracteres";
+      valid = false;
+    }
+
+    //Validamos email
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!register.email) {
+      newErrors.email = "El email es obligatorio";
+      valid = false;
+    } else if (register.email.length > 320) {
+      newErrors.surname = "El email debe contener como máximo 320 caracteres";
+      valid = false;
+    } else if (!emailPattern.test(register.email)) {
+      newErrors.email = "Formato de email no válido";
+      valid = false;
+    }
+
+    //Validamos teléfono
+    if (!register.phone_number) {
+      newErrors.phone_number = "El teléfono es obligatorio";
+      valid = false;
+    } else if (register.phone_number.length > 25) {
+      newErrors.phone_number =
+        "El teléfono debe contener como máximo 25 caracteres";
+      valid = false;
+    }
+
+    //Validamos fecha de nacimiento
+    if (!register.birthdate) {
+      newErrors.birthdate = "La fecha de nacimiento es obligatoria";
+      valid = false;
+    }
+
+    //Validamos provincia
+    if (!register.province) {
+      newErrors.province = "La provincia es obligatoria";
+      valid = false;
+    }
+
+    //Validamos ciudad
+    if (!register.city) {
+      newErrors.city = "La ciudad es obligatoria";
+      valid = false;
+    }
+
+    //Validamos password
+    const passwordPattern = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
+    if (!register.password) {
+      newErrors.password = "La contraseña es obligatoria";
+      valid = false;
+    } else if (register.password.length > 100) {
+      newErrors.password =
+        "La contraseña debe contener como máximo 100 caracteres";
+      valid = false;
+    } else if (!passwordPattern.test(register.password)) {
+      newErrors.password =
+        "La contraseña debe ser de más de 8 caracteres, contener al menos una mayúscula, una minúscula, y un número";
+      valid = false;
+    }
+
+    //Comparamos password y password2
+    if (register.password !== password2) {
+      newErrors.password2 = "Las contraseñas no coinciden";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
   const onSubmit = async () => {
-    if (
-      !register.name ||
-      !register.surname ||
-      !register.email ||
-      !register.phone_number ||
-      !register.birthdate ||
-      !register.city ||
-      !register.province ||
-      !register.password
-    ) {
-      setMsg({ show: true });
+    if (!validateForm()) {
       return;
     }
+
     try {
       const res = await axios.post(
         "http://localhost:4000/users/registerUser",
         register
       );
       console.log(res);
-      setMsg({ show: false, text: "" });
       navigate("/MsgVerifyEmail");
     } catch (err) {
       console.log(err);
@@ -59,11 +154,11 @@ export const Register = () => {
   return (
     <>
       <Row>
-        <div className="ppal-register text-center text-white">
+        <div className="ppal-register text-center text-white mt-2">
           <h2 className="mb-0 py-2">REGISTRO</h2>
         </div>
-        <div className="d-flex justify-content-center py-4">
-          <Col xs={12} md={8} lg={6} xl={4} className="w-50">
+        <div className="d-flex justify-content-center p-5">
+          <Col xs={12} md={8} lg={6} xl={4}>
             <Form>
               <div className="text-center mb-3">
                 <img
@@ -82,11 +177,7 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {msg.show && (
-                <p className="text-danger text-center mb-2">
-                  {(msg.text = "Campo requerido")}
-                </p>
-              )}
+              {errors.name && <p>{errors.name}</p>}
 
               <Form.Group className="mb-2" controlId="formBasicSurname">
                 <Form.Control
@@ -98,11 +189,7 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {msg.show && (
-                <p className="text-danger text-center mb-2">
-                  {(msg.text = "Campo requerido")}
-                </p>
-              )}
+              {errors.surname && <p>{errors.surname}</p>}
               <Form.Group className="mb-2" controlId="formBasicEmail">
                 <Form.Control
                   className="input-form"
@@ -114,11 +201,7 @@ export const Register = () => {
                   /* pattern="[a-z-A-Z-0-9._%+-]+@[a-z0-9.-]+\.[a-z-A-Z]{2,4}$" */
                 />
               </Form.Group>
-              {msg.show && (
-                <p className="text-danger text-center">
-                  {(msg.text = "Campo requerido")}
-                </p>
-              )}
+              {errors.email && <p>{errors.email}</p>}
               <Form.Group className="mb-2" controlId="formBasicPhoneNumber">
                 <Form.Control
                   className="input-form"
@@ -130,11 +213,7 @@ export const Register = () => {
                   /* pattern="[6-7]{1}-[0-9]{8}" */
                 />
               </Form.Group>
-              {msg.show && (
-                <p className="text-danger text-center mb-2">
-                  {(msg.text = "Campo requerido")}
-                </p>
-              )}
+              {errors.phone_number && <p>{errors.phone_number}</p>}
               <Form.Group className="mb-2" controlId="formBasicBirthDate">
                 <Form.Control
                   className="input-form"
@@ -145,11 +224,7 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {msg.show && (
-                <p className="text-danger text-center mb-2">
-                  {(msg.text = "Campo requerido")}
-                </p>
-              )}
+              {errors.birthdate && <p>{errors.birthdate}</p>}
               <Form.Group className="mb-2" controlId="formBasicGenre">
                 <Form.Control
                   className="input-form"
@@ -174,11 +249,7 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {msg.show && (
-                <p className="text-danger text-center mb-2">
-                  {(msg.text = "Campo requerido")}
-                </p>
-              )}
+              {errors.province && <p>{errors.province}</p>}
               <Form.Group className="mb-2" controlId="formBasicCity">
                 <Form.Control
                   className="input-form"
@@ -189,12 +260,7 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {msg.show && (
-                <p className="text-danger text-center mb-2">
-                  {(msg.text = "Campo requerido")}
-                </p>
-              )}
-              
+              {errors.city && <p>{errors.city}</p>}
 
               <Form.Group className="mb-2" controlId="formBasicPassword">
                 <Form.Control
@@ -204,33 +270,20 @@ export const Register = () => {
                   name="password"
                   value={register.password}
                   onChange={handleChange}
-                  /* pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,16}" */
                 />
               </Form.Group>
-              {msg.show && (
-                <p className="text-danger text-center mb-2">
-                  {(msg.text = "Campo requerido")}
-                </p>
-              )}
+              {errors.password && <p>{errors.password}</p>}
               <Form.Group className="mb-2" controlId="formBasicPassword2">
                 <Form.Control
                   className="input-form"
                   type="password"
                   placeholder="Confirmar contraseña"
                   name="password2"
-                  value={register.password}
-                  onChange={handleChange}
-                  /* pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,16}" */
+                  value={password2}
+                  onChange={handleChangePassword2}
                 />
               </Form.Group>
-              {msg.show && (
-                <p className="text-danger text-center mb-2">
-                  {(msg.text = "Campo requerido")}
-                </p>
-              )}
-              {/* {msg.show && (
-                <p className="text-danger text-center">{msg.text}</p>
-              )} */}
+              {errors.password2 && <p>{errors.password2}</p>}
               <p className="fw-bold fst-italic text-center mb-2">
                 <span className="text-decoration-underline">
                   ¿Ya tienes una cuenta?
