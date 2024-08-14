@@ -1,4 +1,4 @@
-DROP DATABASE tranbolico;
+-- DROP DATABASE tranbolico;
 CREATE DATABASE tranbolico;
 USE tranbolico;
 
