@@ -9,6 +9,10 @@ import { Register } from "../pages/Auth/Register/Register";
 import { Login } from "../pages/Auth/Login/Login";
 import { MsgVerifyEmail } from "../pages/msg-verify-email/MsgVerifyEmail";
 import { MsgToken } from "../pages/msg-token/MsgToken";
+import { Reservations } from "../pages/reservations/Reservations";
+import { Rutas } from "../pages/rutas/Rutas";
+import { About } from "../pages/about/About";
+import { Faqs } from "../pages/faqs/Faqs";
 
 
 export const AppRoutes = () => {
@@ -19,7 +23,10 @@ export const AppRoutes = () => {
       </Row>
       <Routes>
         <Route path="/" element={<Home />} />
-
+        <Route path="/reservations" element={<Reservations />}/>
+        <Route path="/routes" element={<Rutas />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/faqs" element={<Faqs />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/MsgVerifyEmail" element={<MsgVerifyEmail />} />
