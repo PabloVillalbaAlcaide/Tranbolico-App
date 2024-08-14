@@ -177,7 +177,7 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {errors.name && <p>{errors.name}</p>}
+              {errors.name && <p className="text-center text-danger fw-bold">{errors.name}</p>}
 
               <Form.Group className="mb-2" controlId="formBasicSurname">
                 <Form.Control
@@ -189,7 +189,7 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {errors.surname && <p>{errors.surname}</p>}
+              {errors.surname && <p className="text-center text-danger fw-bold">{errors.surname}</p>}
               <Form.Group className="mb-2" controlId="formBasicEmail">
                 <Form.Control
                   className="input-form"
@@ -201,7 +201,7 @@ export const Register = () => {
                   /* pattern="[a-z-A-Z-0-9._%+-]+@[a-z0-9.-]+\.[a-z-A-Z]{2,4}$" */
                 />
               </Form.Group>
-              {errors.email && <p>{errors.email}</p>}
+              {errors.email && <p className="text-center text-danger fw-bold">{errors.email}</p>}
               <Form.Group className="mb-2" controlId="formBasicPhoneNumber">
                 <Form.Control
                   className="input-form"
@@ -213,7 +213,7 @@ export const Register = () => {
                   /* pattern="[6-7]{1}-[0-9]{8}" */
                 />
               </Form.Group>
-              {errors.phone_number && <p>{errors.phone_number}</p>}
+              {errors.phone_number && <p className="text-center text-danger fw-bold">{errors.phone_number}</p>}
               <Form.Group className="mb-2" controlId="formBasicBirthDate">
                 <Form.Control
                   className="input-form"
@@ -224,7 +224,7 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {errors.birthdate && <p>{errors.birthdate}</p>}
+              {errors.birthdate && <p className="text-center text-danger fw-bold">{errors.birthdate}</p>}
               <Form.Group className="mb-2" controlId="formBasicGenre">
                 <Form.Control
                   className="input-form"
@@ -249,7 +249,7 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {errors.province && <p>{errors.province}</p>}
+              {errors.province && <p className="text-center text-danger fw-bold">{errors.province}</p>}
               <Form.Group className="mb-2" controlId="formBasicCity">
                 <Form.Control
                   className="input-form"
@@ -260,7 +260,7 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {errors.city && <p>{errors.city}</p>}
+              {errors.city && <p className="text-center text-danger fw-bold">{errors.city}</p>}
 
               <Form.Group className="mb-2" controlId="formBasicPassword">
                 <Form.Control
@@ -272,7 +272,7 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {errors.password && <p>{errors.password}</p>}
+              {errors.password && <p className="text-center text-danger fw-bold">{errors.password}</p>}
               <Form.Group className="mb-2" controlId="formBasicPassword2">
                 <Form.Control
                   className="input-form"
@@ -283,7 +283,7 @@ export const Register = () => {
                   onChange={handleChangePassword2}
                 />
               </Form.Group>
-              {errors.password2 && <p>{errors.password2}</p>}
+              {errors.password2 && <p className="text-center text-danger fw-bold">{errors.password2}</p>}
               <p className="fw-bold fst-italic text-center mb-2">
                 <span className="text-decoration-underline">
                   ¿Ya tienes una cuenta?
