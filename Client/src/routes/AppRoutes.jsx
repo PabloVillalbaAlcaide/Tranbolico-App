@@ -8,6 +8,7 @@ import { NavBarApp } from "../components/NavBarApp/NavBarApp";
 import { Register } from "../pages/Auth/Register/Register";
 import { Login } from "../pages/Auth/Login/Login";
 import { MsgVerifyEmail } from "../pages/msg-verify-email/MsgVerifyEmail";
+import { MsgToken } from "../pages/msg-token/MsgToken";
 
 
 export const AppRoutes = () => {
@@ -22,7 +23,7 @@ export const AppRoutes = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/MsgVerifyEmail" element={<MsgVerifyEmail />} />
-        <Route path="/MsgVerifyEmail/:hashtoken" element={<MsgVerifyEmail />} />
+        <Route path="/MsgVerifyEmail/:hashtoken" element={<MsgToken />} />
       </Routes>
       <Row>
         <Footer />

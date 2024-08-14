@@ -2,7 +2,6 @@ import React, { Fragment, useEffect } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "../../App.css";
-import "./msgVerify.scss"
 import { useParams } from 'react-router-dom';
 
 export const MsgToken = () => {

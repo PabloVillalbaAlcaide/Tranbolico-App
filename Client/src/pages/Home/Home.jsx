@@ -1,4 +1,7 @@
+
 import { Button, Container, Row, Col } from "react-bootstrap";
+
+
 import busTranbólico from "/images/busTrambólico.jpg";
 import tranbolic4 from "/images/Trambólico4.png";
 import tranbolic10 from "/images/Trambólico10.png";
@@ -9,6 +12,7 @@ export const Home = () => {
   return (
     <Container fluid className="contenedor-home">
       <main>
+
         <div className="d-flex align-items-center justify-content-center flex-column text-center ">
           <h1 className="h1-main-home m-0">TRANBÓLICO</h1>
           <p className="tuvuelta-home m-0">Tu vuelta a casa sin esperas</p>
@@ -17,6 +21,7 @@ export const Home = () => {
             className="bus-footer me-4"
             alt="Bus Tranbolico"
           />
+
           <div className="buscador-home d-flex mt-4 align-items-center justify-content-center m-0 ">
             <p className="origen-home">◯ Origen</p>
             <p className="destino-home">◯ Destino</p>
@@ -25,21 +30,27 @@ export const Home = () => {
           </div>
         </div>
 
+
         <div className="contenedor-botones-home d-flex mt-4  flex-column flex-md-row mt-4 align-items-center justify-content-center gap-4">
+
           <Button className="btn-reservas-home">RESERVAS</Button>
           <Button className="btn-rutas-home">RUTAS</Button>
           <Button className="btn-conocenos-home">CONÓCENOS</Button>
           <Button className="btn-faqs-home">FAQS</Button>
         </div>
+
         <Row className="contenedor-home-criaturas d-flex align-items-center justify-content-center pb-5 pt-5">
           <Col xs={12} md={4} className="home-criatura-1">
+
             <p className="p-home-criatura-1">
               volver a casa sentada despues de una noche bailándotelo todo no
               tiene precio.
             </p>
             <img src={tranbolic4} alt="tranbolic4" />
+
           </Col>
           <Col xs={12} md={4} className="home-criatura-2">
+
             <p className="p-home-criatura-2">
               vas a pasartelo bien, pero luego, ¿como piensas volver a casa?¿vas
               a esperar 2horas a un taxi?
