@@ -26,7 +26,7 @@
 .destino-home {
   background-color: var(--tranbolico-azul);
   color: white;
-  min-height: 7vh;
+  min-height: 8vh;
   min-width: 100%;
   border-radius: 15px 0px 0px 15px;
   text-align: center;
@@ -44,13 +44,17 @@
   font-size: 1.3rem;
   font-weight: bold;
   background-color: var(--tranbolico-azulClaro);
-  padding: 10px;
-  border-radius: 20px;
+  padding: 13.5px;
   border-radius: 0 15px 15px 0;
+  margin-top: 15px;
 }
 
 .btn-home-buscar:hover {
   background-color: #118899;
+}
+.contenedor-botones-home {
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .contenedor-botones-home > Button {
@@ -59,7 +63,7 @@
   color: white;
   border-radius: 1rem;
   font-family: "VinaSans-Regular.ttf";
-  padding: 5px 30px;
+  padding: 5px 20px;
 }
 
 .btn-reservas-home {
@@ -95,8 +99,7 @@
 
 .contenedor-home-criaturas {
   color: white;
-  gap: 5rem;
-  position: relative;
+  gap: 3rem;
 }
 
 .contenedor-home-criaturas p {
@@ -148,4 +151,60 @@
 .home-criatura-3 img {
   position: relative;
   bottom: -5px;
+}
+
+@media (max-width: 650px) {
+  .buscador-home {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .btn-home-buscar {
+    font-size: 2rem;
+    border-radius: 10px;
+    padding: 18px 80px;
+    width: 100%;
+    width: 95vw;
+  }
+
+  .origen-home:hover,
+  .destino-home:hover {
+    background-color: #acb2df;
+  }
+
+  .origen-home,
+  .destino-home {
+    color: white;
+    min-height: 9vh;
+    min-width: 45vw;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.3rem;
+  }
+
+  .origen-home {
+    margin-right: 10px;
+  }
+
+  .destino-home {
+    margin-left: -10px;
+  }
+
+  .contenedor-botones-home {
+    padding-bottom: 30px;
+  }
+
+  .contenedor-botones-home > Button {
+    border: none;
+    font-size: 2.8rem;
+    color: white;
+    border-radius: 1rem;
+    font-family: "VinaSans-Regular.ttf";
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .contenedor-home-criaturas {
+    display: none !important;
+  }
 }
