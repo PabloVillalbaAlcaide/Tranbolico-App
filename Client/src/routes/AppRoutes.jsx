@@ -1,6 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import React, { useState } from "react";
-
 import { Home } from "../pages/Home/Home";
 import { Footer } from "../components/Footer/Footer";
 import { Row } from "react-bootstrap";
@@ -15,19 +13,10 @@ import { About } from "../pages/about/About";
 import { Faqs } from "../pages/faqs/Faqs";
 
 export const AppRoutes = () => {
-  const [user, setUser] = useState();
-  const [token, setToken] = useState();
-
-  const logOut = () => {
-    setToken();
-    setUser();
-    localStorage.removeItem("token");
-  };
-
   return (
     <BrowserRouter>
       <Row>
-        <NavBarApp user={user} logOut={logOut} />
+        <NavBarApp />
       </Row>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -36,10 +25,7 @@ export const AppRoutes = () => {
         <Route path="/about" element={<About />} />
         <Route path="/faqs" element={<Faqs />} />
         <Route path="/register" element={<Register />} />
-        <Route
-          path="/login"
-          element={<Login setUser={setUser} setToken={setToken} />}
-        />
+        <Route path="/login" element={<Login />} />
         <Route path="/MsgVerifyEmail" element={<MsgVerifyEmail />} />
         <Route path="/MsgVerifyEmail/:hashtoken" element={<MsgToken />} />
       </Routes>
