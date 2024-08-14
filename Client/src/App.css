@@ -1,15 +1,14 @@
 @font-face {
-  font-family: 'VinaSans-Regular.ttf';
-  src: url('./src/assets/fonts/VinaSans-Regular.ttf') format('truetype');
-
+  font-family: "VinaSans-Regular.ttf";
+  src: url("./assets/fonts/VinaSans-Regular.ttf") format("truetype");
 
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Akkurat-Regular.ttf';
-  src: url('./src/assets/fonts/Akkurat-Regular.ttf') format('truetype');
+  font-family: "Akkurat-Regular.ttf";
+  src: url("./assets/fonts/Akkurat-Regular.ttf") format("truetype");
 
   font-weight: normal;
   font-style: normal;
