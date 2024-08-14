@@ -6,6 +6,6 @@ const { validateRules } = require("../middlewares/usersValidators");
 
 router.post("/registerUser",validateRules, userController.registerUser);
 router.post("/loginUser", userController.loginUser);
-router.post("/verifyUser", userController.verifyUser);
+router.put("/verifyUser", userController.verifyUser);
 
 module.exports = router;

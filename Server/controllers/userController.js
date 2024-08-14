@@ -112,6 +112,11 @@ class UserController {
                         process.env.SECRET_KEY,
                         1
                       );
+                   //Encripta el token
+                   const hashToken = encryptToken(
+                    token,
+                    process.env.SECRET_KEY_3
+                    );
                       res.status(200).json({ resultSelect, token });
                     }
                   }
@@ -128,7 +133,10 @@ class UserController {
 
   //Verifica el usuario en base al token de registro
   verifyUser = (req, res) => {
-    const { hashToken } = req.body;
+    const hashToken = req.headers.authorization.split(" ")[1];
+
+    console.log(hashToken);
+    
 
     if (!hashToken) {
       res.status(401).json({ status: 401, message: "No autorizado 1" });
