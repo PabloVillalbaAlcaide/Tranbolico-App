@@ -7,8 +7,8 @@
   font-size: calc(1rem + 2vw);
   color: white;
   margin-inline: 50px;
-  pointer-events: none;
   margin-block: 5px;
+  text-decoration: none;
 }
 .NavbarNavLink {
   color: white;
@@ -33,6 +33,12 @@
   background-color: rgb(127, 127, 127);
   transition-duration: 0.5s;
 }
+.custom-menu {
+  background-color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+}
+
 .color {
   color: var(--tranbolico-azul);
 }
@@ -55,6 +61,12 @@
   }
   .NavbarRegisterLoginColor {
     color: white;
+  }
+  .NavbarRegisterLoginColor:hover {
+    color: rgb(127, 127, 127);
+  }
+  .NavbarRegisterLogin:hover {
+    background-color: transparent;
   }
 }
 @media screen and (width < 992px) {

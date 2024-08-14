@@ -1,10 +1,11 @@
-import React from "react";
+import '../../App.css'
 import "./NavBarApp.css";
 import { Nav, Navbar, NavbarBrand } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export const NavBarApp = () => {
   return (
-    <div>
+    <div className="p-0">
       <header
         className="container-fluid d-flex justify-content-center"
         style={{ background: "var(--tranbolico-azul" }}
@@ -17,7 +18,7 @@ export const NavBarApp = () => {
           </div>
           <div className="d-flex justify-content-start col-8 ">
             <Navbar expand="lg " className="w-100">
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Toggle aria-controls="basic-navbar-nav" className="custom-menu"/>
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto NavbarCollapse w-100">
                   <div className="d-flex justify-content-start flex-lg-row flex-column col-8">
@@ -38,7 +39,7 @@ export const NavBarApp = () => {
                     <div className="NavbarRegisterLogin">
                       <Nav.Link
                         className="NavbarRegisterLoginColor"
-                        href="#link"
+                        as={Link} to={"/register"}
                       >
                         Registro
                       </Nav.Link>
@@ -46,7 +47,7 @@ export const NavBarApp = () => {
                     <div className="NavbarRegisterLogin">
                       <Nav.Link
                         className="NavbarRegisterLoginColor"
-                        href="#link"
+                        as={Link} to={"/login"}
                       >
                         Login
                       </Nav.Link>
@@ -56,7 +57,7 @@ export const NavBarApp = () => {
               </Navbar.Collapse>
             </Navbar>
           </div>
-          <div className="col-1 d-flex justify-content-center align-items-center">
+          <div className="col-1 d-flex justify-content-center align-items-lg-center align-items-start mt-1 mt-lg-0">
             <img
               className="NavbarAvatar"
               src="./images/avatar.png"

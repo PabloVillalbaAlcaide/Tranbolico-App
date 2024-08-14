@@ -50,7 +50,7 @@ export const Register = () => {
       );
       console.log(res);
       setMsg({ show: false, text: "" });
-      navigate("/login");
+      navigate("/MsgVerifyEmail");
     } catch (err) {
       console.log(err);
     }
@@ -164,21 +164,6 @@ export const Register = () => {
                   <option value="3">Otro</option>
                 </Form.Control>
               </Form.Group>
-              <Form.Group className="mb-2" controlId="formBasicCity">
-                <Form.Control
-                  className="input-form"
-                  type="text"
-                  placeholder="Ciudad"
-                  name="city"
-                  value={register.city}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              {msg.show && (
-                <p className="text-danger text-center mb-2">
-                  {(msg.text = "Campo requerido")}
-                </p>
-              )}
               <Form.Group className="mb-2" controlId="formBasicProvince">
                 <Form.Control
                   className="input-form"
@@ -194,6 +179,22 @@ export const Register = () => {
                   {(msg.text = "Campo requerido")}
                 </p>
               )}
+              <Form.Group className="mb-2" controlId="formBasicCity">
+                <Form.Control
+                  className="input-form"
+                  type="text"
+                  placeholder="Ciudad"
+                  name="city"
+                  value={register.city}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              {msg.show && (
+                <p className="text-danger text-center mb-2">
+                  {(msg.text = "Campo requerido")}
+                </p>
+              )}
+              
 
               <Form.Group className="mb-2" controlId="formBasicPassword">
                 <Form.Control
