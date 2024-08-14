@@ -11,6 +11,7 @@ const verifyToken = (req, res, next) =>{
     if(!token){
         res.status(401).json({status:401, message:"No autorizado"});
     }
+    token = decryptToken(token, process.env.SECRET_KEY_3);
     jwt.verify(token, process.env.SECRET_KEY, (error)=>{
         if(error){
             res.status(401).json({status:401, message:"No autorizado"});

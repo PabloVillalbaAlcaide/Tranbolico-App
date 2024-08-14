@@ -10,4 +10,5 @@ router.post("/verifyUser", userController.verifyUser);
 router.get("/getOneUser", verifyToken, userController.getOneUser);
 router.put("/editOneUser", verifyToken, userController.editOneUser);
 
+
 module.exports = router;

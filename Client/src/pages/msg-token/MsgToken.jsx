@@ -1,12 +1,37 @@
-import React, { Fragment, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "../../App.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { AppContext } from "../../context/TranbolicoContextProvider";
+import axios from "axios";
+import { Button } from "react-bootstrap";
 
 export const MsgToken = () => {
-  const { token } = useParams();
-  useEffect(() => {}, []);
+  const { globalState, setGlobalState } = useContext(AppContext);
+  const navigate = useNavigate()
+ 
+  const { hashtoken } = useParams();
+  useEffect(() => {
+    verifyUser(hashtoken);
+  }, []);
+
+  const verifyUser = async (token) => {
+    try {
+      const res = await axios.put("http://localhost:4000/users/verifyUser",{}, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      setGlobalState({...globalState,"token":res.data.token, "user":res.data.resultSelect[0]})
+      localStorage.setItem("token", res.data.token)
+      
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
+  console.log(globalState);
+  
   return (
     <>
       <Row>
@@ -29,6 +54,8 @@ export const MsgToken = () => {
               <h3>Verificación por email</h3>
 
               <p>Cuenta verificada correctamente</p>
+              
+              <Button onClick={()=>navigate('/')}>Aceptar</Button>
             </div>
             <div className="imagen-rabbit">
               <img
