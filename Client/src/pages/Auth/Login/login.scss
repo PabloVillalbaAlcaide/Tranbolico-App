@@ -1,0 +1,46 @@
+.contenedor-login {
+  font-family: "Akkurat-Regular.ttf";
+  font-size: 1rem;
+  background-color: #28b7c7;
+  border-radius: 10px;
+  padding: 50px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+  position: relative;
+}
+
+.login-img {
+  background-color: #28b7c7;
+  border: 1px solid black;
+  border-radius: 100px;
+  width: 65px;
+  position: relative;
+  top: -80px;
+  box-shadow: 0 0 0 5px;
+}
+
+.input-form-login {
+  border-radius: 20px;
+  border: 2px solid black;
+  font-style: italic;
+  text-align: center;
+  font-size: 1.2rem;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.btn-iniciar-login {
+  border: none;
+  background-color: var(--tranbolico-azul);
+}
+
+@media (max-width: 800px) {
+  .contenedor-login {
+    width: 80%;
+    min-width: 300px;
+  }
+  .input-form-login {
+    max-width: 100%;
+  }
+}
