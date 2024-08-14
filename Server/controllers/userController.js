@@ -97,6 +97,7 @@ class UserController {
               resHash.status(500).json(errHash);
             } else {
               if (resHash) {
+                let data = result[0].user_id;
                 let sql2 = "SELECT * FROM user WHERE user_id = ?";
                 connection.query(sql2, data, (errSelect, resultSelect) => {
                   if (errSelect) {
@@ -112,11 +113,11 @@ class UserController {
                         process.env.SECRET_KEY,
                         1
                       );
-                   //Encripta el token
-                   const hashToken = encryptToken(
-                    token,
-                    process.env.SECRET_KEY_3
-                    );
+                      //Encripta el token
+                      const hashToken = encryptToken(
+                        token,
+                        process.env.SECRET_KEY_3
+                      );
                       res.status(200).json({ resultSelect, token });
                     }
                   }
@@ -136,7 +137,6 @@ class UserController {
     const hashToken = req.headers.authorization.split(" ")[1];
 
     console.log(hashToken);
-    
 
     if (!hashToken) {
       res.status(401).json({ status: 401, message: "No autorizado 1" });
