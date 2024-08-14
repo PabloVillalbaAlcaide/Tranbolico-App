@@ -1,9 +1,12 @@
 import '../../App.css'
 import "./NavBarApp.css";
-import { Nav, Navbar, NavbarBrand } from "react-bootstrap";
-import { Link } from "react-router-dom";
+
+import {Link, useNavigate} from 'react-router-dom';
+import { Nav, Navbar } from "react-bootstrap";
+
 
 export const NavBarApp = () => {
+  const navigate = useNavigate();
   return (
     <div className="p-0">
       <header
@@ -12,9 +15,11 @@ export const NavBarApp = () => {
       >
         <div className="container-xxl d-flex justify-content-between row">
           <div className="col-lg-3 col-0 d-flex align-items-center">
-            <NavbarBrand href="#home" className="NavbarLogo ">
-              TRANBÓLICO
-            </NavbarBrand>
+             <Link to="/" className="NavbarLogo">
+             TRANBÓLICO
+             </Link>
+              
+            
           </div>
           <div className="d-flex justify-content-start col-8 ">
             <Navbar expand="lg " className="w-100">
@@ -22,16 +27,16 @@ export const NavBarApp = () => {
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto NavbarCollapse w-100">
                   <div className="d-flex justify-content-start flex-lg-row flex-column col-8">
-                    <Nav.Link className="NavbarNavLink" href="#home">
+                    <Nav.Link as={Link} to="/reservations" className="NavbarNavLink">
                       Reservas
                     </Nav.Link>
-                    <Nav.Link className="NavbarNavLink" href="#link">
+                    <Nav.Link as={Link} to="/routes" className="NavbarNavLink">
                       Rutas
                     </Nav.Link>
-                    <Nav.Link className="NavbarNavLink" href="#link">
+                    <Nav.Link as={Link} to="/about" className="NavbarNavLink">
                       Conócenos
                     </Nav.Link>
-                    <Nav.Link className="NavbarNavLink" href="#link">
+                    <Nav.Link as={Link} to="/faqs" className="NavbarNavLink">
                       FAQ´S
                     </Nav.Link>
                   </div>
@@ -39,7 +44,9 @@ export const NavBarApp = () => {
                     <div className="NavbarRegisterLogin">
                       <Nav.Link
                         className="NavbarRegisterLoginColor"
-                        as={Link} to={"/register"}
+
+                        onClick={()=>navigate('/register')}
+
                       >
                         Registro
                       </Nav.Link>
@@ -47,7 +54,9 @@ export const NavBarApp = () => {
                     <div className="NavbarRegisterLogin">
                       <Nav.Link
                         className="NavbarRegisterLoginColor"
-                        as={Link} to={"/login"}
+
+                        onClick={()=>navigate('/login')}
+
                       >
                         Login
                       </Nav.Link>
