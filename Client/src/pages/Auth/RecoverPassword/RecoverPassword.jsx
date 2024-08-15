@@ -6,17 +6,20 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const RecoverPassword = () => {
-  const [email, setEmail] = useState("");
+  const [mail, setMail] = useState({});
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setEmail(e.target.value);
+    const { name, value } = e.target;
+    setMail({ ...mail, [name]: value });
   };
   const onSubmit = async () => {
     try {
+      console.log(mail);
+
       const res = await axios.post(
         "http://localhost:4000/users/recoverPassword",
-        email
+        mail
       );
       console.log(res);
       navigate("/MsgRecoverPassword");
@@ -42,7 +45,7 @@ export const RecoverPassword = () => {
               type="email"
               placeholder="Email"
               onChange={handleChange}
-              value={email}
+              value={mail.email}
               name="email"
             />
           </Form.Group>
