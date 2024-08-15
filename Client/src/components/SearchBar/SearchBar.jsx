@@ -7,25 +7,23 @@ import "./searchBar.scss";
 
 export const SearchBar = () => {
   const [origin, setOrigin] = useState("");
-  const [originFinal, setOriginFinal] = useState("");
+  const [originFinal, setOriginFinal] = useState({});
   const [destination, setDestination] = useState("");
-  const [destinationFinal, setDestinationFinal] = useState("");
+  const [destinationFinal, setDestinationFinal] = useState({});
   const [originSuggestions, setOriginSuggestions] = useState([]);
   const [destinationSuggestions, setDestinationSuggestions] = useState([]);
 
   const navigate = useNavigate();
 
-  console.log(originSuggestions);
-  
-
   const handleOriginChange = async (e) => {
     let { value } = e.target;
     setOrigin(value);
+
     if (value[0] === " ") {
-      value = value.split(" ")[0];
+      value = value.trimStart();
     }
 
-    if (value != "" && value != " ") {
+    if (value !== "") {
       try {
         const res = await axios.get(
           `http://localhost:4000/reservation/oneWayTrip?search=${value}`
@@ -40,42 +38,52 @@ export const SearchBar = () => {
   };
 
   const handleDestinationChange = async (e) => {
-    const { value } = e.target;
-    setDestination(value);
-    if (value != "" && value != " " && origin) {
-      try {
-        const res = await axios.get(
-          `http://localhost:4000/reservation/returnTrip?search=${value}&city=${origin.city}&province=${origin.province}`
-        );
-        setDestinationSuggestions(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      setDestinationSuggestions([]);
-    }
-  };
+  const { value } = e.target;
+  setDestination(value);
 
-  const handleOriginSelected = (city,province) => {
-    setOriginFinal({...originFinal,"city":city,"province":province});
+  if (value !== "" && originFinal.city && originFinal.province) {
+    try {
+      const res = await axios.get(
+        `http://localhost:4000/reservation/returnTrip?search=${value}&city=${originFinal.city}&province=${originFinal.province}`
+      );
+      
+      console.log(res); 
+      console.log(res.data); 
+      
+      setDestinationSuggestions(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  } else {
+    setDestinationSuggestions([]);
+  }
+};
+
+
+  const handleOriginSelected = (city, province) => {
+    setOriginFinal({ city, province });
+    setOrigin(`${city}, ${province}`);
     setOriginSuggestions([]);
   };
 
   const handleDestinationSelected = (city, province) => {
-    setDestinationFinal({...destinationFinal, "city":city, "province":province});
+    setDestinationFinal({ city, province });
+    setDestination(`${city}, ${province}`);
     setDestinationSuggestions([]);
   };
 
   const onSubmit = async () => {
     try {
       const response = await axios.post("http://localhost:4000/reservation", {
-        origin,
-        destination,
+        origin: originFinal,
+        destination: destinationFinal,
       });
       if (response.status === 200) {
-        navigate("/reservations", { state: { origin, destination } });
+        navigate("/reservations", {
+          state: { origin: originFinal, destination: destinationFinal },
+        });
       } else {
-        console.log("error al enviar los datos");
+        console.log("Error al enviar los datos");
       }
     } catch (error) {
       console.log(error);
@@ -95,13 +103,16 @@ export const SearchBar = () => {
         />
         {originSuggestions.length > 0 && (
           <div className="suggestions">
-            {originSuggestions.map((e) => {
-              <div
-                key={`${e.province_id}-${e.city_id}`}
-                onClick={() => handleOriginSelected(e.name, e.city_name)}
-              >
-                {e.name}, {e.city_name}
-              </div>;
+            {originSuggestions.map((e, index) => {
+              const key = `${e.province_id || index}-${e.city_id || index}`;
+              return (
+                <div
+                  key={key}
+                  onClick={() => handleOriginSelected(e.city_name, e.name)}
+                >
+                  <p>{e.city_name}, {e.name}</p>
+                </div>
+              );
             })}
           </div>
         )}
@@ -118,19 +129,21 @@ export const SearchBar = () => {
         />
         {destinationSuggestions.length > 0 && (
           <div className="suggestions">
-            {destinationSuggestions.map((e) => {
-              <div
-                key={`${e.province_id}-${e.city_id}`}
-                onClick={() =>
-                  handleDestinationSelected(e.name, e.city_name)
-                }
-              >
-                {e.name}, {e.city_name}
-              </div>;
+            {destinationSuggestions.map((e, index) => {
+              const key = `${e.province_id || index}-${e.city_id || index}`;
+              return (
+                <div
+                  key={key}
+                  onClick={() => handleDestinationSelected(e.city_name, e.name)}
+                >
+                  <p>{e.city_name}, {e.name}</p>
+                </div>
+              );
             })}
           </div>
         )}
       </Form.Group>
+      
       <Button variant="primary" onClick={onSubmit}>
         Buscar
       </Button>
