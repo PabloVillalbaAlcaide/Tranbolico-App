@@ -39,6 +39,7 @@ export const AppRoutes = () => {
         <Route path="/recoverPassword" element={<RecoverPassword />} />
         <Route path="/MsgRecoverPassword" element={<MsgRecoverPassword />} />
         <Route path="/resetPassword" element={<ResetPassword />} />
+        <Route path="/resetPassword/:hashtoken" element={<ResetPassword />} />
         <Route path="/MsgVerifyEmail" element={<MsgVerifyEmail />} />
         <Route path="/MsgVerifyEmail/:hashtoken" element={<MsgToken />} />
       </Routes>
