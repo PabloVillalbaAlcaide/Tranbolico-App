@@ -3,8 +3,10 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const sendMail = require("../services/emailService");
+const sendMailRecover = require("../services/emailServiceRecoverPassword");
 const tokenGenerator = require("../helpers/tokenGenerator");
 const { encryptToken, decryptToken } = require("../helpers/encryptToken");
+const generator = require("generate-password");
 
 class UserController {
   //Controlador que realiza el registro de usuario
@@ -254,6 +256,23 @@ class UserController {
         }
       }
     });
+  };
+
+  recoverPassword = (req, res) => {
+    const { email } = req.body;
+    //generamos la contraseña de recuperacion
+    const password = generator.generate({
+      length: 12, // Longitud de la contraseña
+      numbers: true, // Incluir números
+      symbols: true, // Incluir símbolos
+      uppercase: true, // Incluir letras mayúsculas
+      lowercase: true,
+      // Incluir letras minúsculas
+    });
+    let sql = `SELECT * FROM user WHERE email='${email}' AND is_disabled = 0 AND is_validated = 1`;
+
+    console.log(email, password);
+    sendMailRecover(email, password);
   };
 }
 
