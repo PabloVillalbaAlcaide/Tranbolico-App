@@ -268,7 +268,7 @@ class UserController {
       } else if (result.length === 0) {
         res.status(401).json("No autorizado");
       } else {
-        //generamos la contraseña de recuperacion
+        //Genera la contraseña de recuperacion
         const password = generator.generate({
           length: 12, // Longitud de la contraseña
           numbers: true, // Incluir números
@@ -277,13 +277,90 @@ class UserController {
           lowercase: true, // Incluir letras minúsculas
         });
 
-        sendMailRecover(email, result[0].name, password);
-        res.status(200).json("Email enviado");
+        //Genera Token
+        const resetToken = tokenGenerator(
+          result[0].user_id,
+          process.env.SECRET_KEY_2,
+          1
+        );
+
+        //Encripta el token y hace el envio
+        const hashToken = encryptToken(resetToken, process.env.SECRET_KEY_3);
+
+        let data = (password, result[0].user_id);
+        let sql2 =
+          "UPDATE user SET password = ?, is_auto_generated = 1 WHERE user_id = ?";
+        connection.query(sql2, data, (err, resultUpdate) => {
+          if (err) {
+            res.status(500).json(err);
+          } else {
+            sendMailRecover(email, result[0].name, password, hashToken);
+            res.status(200).json(resultUpdate);
+          }
+        });
       }
     });
   };
 
-  changePassword = (req, res) => {};
+  changePassword = (req, res) => {
+    const { oldPassword, password } = req.body;
+    const hashtoken = req.headers.authorization.split(" ")[1];
+
+    const token = decryptToken(hashtoken, process.env.SECRET_KEY_3);
+
+    const { id } = jwt.decode(token);
+    let sql = `SELECT * FROM user WHERE user_id='${id}' AND is_disabled = 0 AND is_validated = 1`;
+    connection.query(sql, (err, result) => {
+      if (err) {
+        res.status(401).json("Credenciales incorrectas");
+      } else {
+        if (!result || result.length === 0) {
+          res.status(401).json("Credenciales incorrectas");
+        } else {
+          const hash = result[0].password;
+          bcrypt.compare(password, hash, (errHash, resHash) => {
+            if (errHash) {
+              resHash.status(500).json(errHash);
+            } else {
+              if (resHash) {
+                let saltRounds = 10;
+                bcrypt.hash(password, saltRounds, (error, hash) => {
+                  if (error) {
+                    res.status(500).json(error);
+                  } else {
+                    let data = [password, id];
+                    let sql2 = "UPDATE user SET password = ?, is_auto_generated = 0 WHERE user_id = ?";
+                    connection.query(sql2, data, (errSelect, resultSelect) => {
+                      if (errSelect) {
+                        res
+                          .status(401)
+                          .json({ status: 401, message: "No autorizado" });
+                      } else {
+                        if (!resultSelect || resultSelect.length === 0) {
+                          res.status(401).json("No autorizado");
+                        } else {
+                          let token = tokenGenerator(
+                            resultSelect[0].user_id,
+                            process.env.SECRET_KEY,
+                            1
+                          );
+                          //Encripta el token
+                          token = encryptToken(token, process.env.SECRET_KEY_3);
+                          res.status(200).json({ resultSelect, token });
+                        }
+                      }
+                    });
+                  }
+                });
+              } else {
+                res.status(401).json("Credenciales incorrectas");
+              }
+            }
+          });
+        }
+      }
+    });
+  };
 }
 
 module.exports = new UserController();
