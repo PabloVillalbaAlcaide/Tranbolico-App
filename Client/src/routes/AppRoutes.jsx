@@ -11,6 +11,9 @@ import { Reservations } from "../pages/reservations/Reservations";
 import { Rutas } from "../pages/rutas/Rutas";
 import { About } from "../pages/about/About";
 import { Faqs } from "../pages/faqs/Faqs";
+import { ResetPassword } from "../pages/Auth/ResetPassword/ResetPassword";
+import { RecoverPassword } from "../pages/Auth/RecoverPassword/RecoverPassword";
+import { MsgRecoverPassword } from "../pages/msg-recoverPassword/MsgRecoverPassword";
 
 export const AppRoutes = () => {
   return (
@@ -26,6 +29,9 @@ export const AppRoutes = () => {
         <Route path="/faqs" element={<Faqs />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/recoverPassword" element={<RecoverPassword />} />
+        <Route path="/MsgRecoverPassword" element={<MsgRecoverPassword />} />
+        <Route path="/resetPassword" element={<ResetPassword />} />
         <Route path="/MsgVerifyEmail" element={<MsgVerifyEmail />} />
         <Route path="/MsgVerifyEmail/:hashtoken" element={<MsgToken />} />
       </Routes>
