@@ -110,16 +110,13 @@ class UserController {
                     if (!resultSelect || resultSelect.length === 0) {
                       res.status(401).json("No autorizado");
                     } else {
-                      const token = tokenGenerator(
+                      let token = tokenGenerator(
                         resultSelect[0].user_id,
                         process.env.SECRET_KEY,
                         1
                       );
                       //Encripta el token
-                      const hashToken = encryptToken(
-                        token,
-                        process.env.SECRET_KEY_3
-                      );
+                      token = encryptToken(token, process.env.SECRET_KEY_3);
                       res.status(200).json({ resultSelect, token });
                     }
                   }
@@ -167,11 +164,13 @@ class UserController {
                 if (!resultSelect || resultSelect.length === 0) {
                   res.status(401).json("No autorizado");
                 } else {
-                  const token = tokenGenerator(
+                  let token = tokenGenerator(
                     resultSelect[0].user_id,
                     process.env.SECRET_KEY,
                     1
                   );
+                  token = encryptToken(token, process.env.SECRET_KEY_3);
+
                   res.status(200).json({ resultSelect, token });
                 }
               }
@@ -184,10 +183,14 @@ class UserController {
 
   //Traemos los datos de un usuario
   getOneUser = (req, res) => {
-    // console.log(req.headers.authorization);
-    let token = req.headers.authorization.split(" ")[1];
-    let { id } = jwt.decode(token);
-    // console.log(id);
+    let hashtoken = req.headers.authorization.split(" ")[1];
+
+    const token = decryptToken(hashtoken, process.env.SECRET_KEY_3);
+    console.log("Token desencriptado", token);
+
+    const { id } = jwt.decode(token);
+
+    console.log(id);
 
     let sql = `SELECT * FROM user WHERE user_id = ${id}`;
     connection.query(sql, (err, result) => {
@@ -196,24 +199,63 @@ class UserController {
       } else if (result.length === 0) {
         res.status(401).json("No autorizado");
       } else {
-        let sql2 = `SELECT * FROM reservation WHERE user_id = ${id} AND is_deleted = 0`;
-        connection.query(sql2, (err2, result2) => {
-          if (err2) {
-            res.status(500).json(err2);
-          } else {
-            // res.send("resuuuuult2", result2)
-            res.status(200).json(result2);
-          }
-        });
+        res.status(200).json(result);
       }
     });
   };
 
   editOneUser = (req, res) => {
-    // res.send("editOneUser")
-    const { name, surname, email, password, phone_number, province, city } =
-      req.body;
-    console.log(req.body);
+    const {
+      user_id,
+      name,
+      surname,
+      email,
+      genre,
+      phone_number,
+      province,
+      city,
+    } = JSON.parse(req.body.editUser);
+    let data = [
+      name,
+      surname,
+      email,
+      genre,
+      phone_number,
+      province,
+      city,
+      province,
+      user_id,
+    ];
+    let sql =
+      "UPDATE user SET name = ?, surname = ?, email = ? genre = ?, phone_number = ?, province_id = (SELECT province_id FROM province WHERE name = ?), city_id = (SELECT city_id FROM city WHERE city_name = ? AND province_id = (SELECT province_id FROM province WHERE name = ?)) WHERE user_id = ?";
+
+    if (req.file != undefined) {
+      data = [
+        name,
+        surname,
+        email,
+        genre,
+        phone_number,
+        province,
+        city,
+        province,
+        req.file.filename,
+        user_id,
+      ];
+      sql =
+        "UPDATE user SET name = ?, surname = ?, email = ? genre = ?, phone_number = ?, province_id = (SELECT province_id FROM province WHERE name = ?), city_id = (SELECT city_id FROM city WHERE city_name = ? AND province_id = (SELECT province_id FROM province WHERE name = ?)), avatar = ? WHERE user_id = ?";
+    }
+    connection.query(sql, data, (err, result) => {
+      if (err) {
+        res.status(500).json(err);
+      } else {
+        if (req.file) {
+          res.status(200).json({ result, image: req.file.filename });
+        } else {
+          res.status(200).json({ result });
+        }
+      }
+    });
   };
 
   recoverPassword = (req, res) => {
