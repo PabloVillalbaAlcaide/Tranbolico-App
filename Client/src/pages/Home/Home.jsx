@@ -1,12 +1,10 @@
-
 import { Button, Container, Row, Col } from "react-bootstrap";
-
-
 import busTranbólico from "/images/busTrambólico.jpg";
 import tranbolic4 from "/images/Trambólico4.png";
 import tranbolic10 from "/images/Trambólico10.png";
 import tranbolic7 from "/images/Trambólico7.png";
 import "./Home.scss";
+import { SearchBar } from "../../components/SearchBar/SearchBar";
 
 export const Home = () => {
   return (
@@ -22,14 +20,17 @@ export const Home = () => {
             alt="Bus Tranbolico"
           />
 
+          {/*<div className="buscador-home d-flex mt-4 align-items-center justify-content-center m-0 ">
+
           <div className="buscador-home d-flex mt-4 align-items-center justify-content-center m-0 ">
+
             <p className="origen-home">◯ Origen</p>
             <p className="destino-home">◯ Destino</p>
 
             <button className="btn-home-buscar mb-3">Buscar</button>
-          </div>
+          </div>*/}
+          <SearchBar />
         </div>
-
 
         <div className="contenedor-botones-home d-flex mt-4  flex-column flex-md-row mt-4 align-items-center justify-content-center gap-4">
 
