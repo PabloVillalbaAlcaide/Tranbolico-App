@@ -7,11 +7,16 @@ import "./searchBar.scss";
 
 export const SearchBar = () => {
   const [origin, setOrigin] = useState("");
+  const [originFinal, setOriginFinal] = useState("");
   const [destination, setDestination] = useState("");
+  const [destinationFinal, setDestinationFinal] = useState("");
   const [originSuggestions, setOriginSuggestions] = useState([]);
   const [destinationSuggestions, setDestinationSuggestions] = useState([]);
 
   const navigate = useNavigate();
+
+  console.log(originSuggestions);
+  
 
   const handleOriginChange = async (e) => {
     let { value } = e.target;
@@ -23,8 +28,7 @@ export const SearchBar = () => {
     if (value != "" && value != " ") {
       try {
         const res = await axios.get(
-          `http://localhost:4000/reservation/search?name="${value}"`,
-          { params: { search: value } }
+          `http://localhost:4000/reservation/oneWayTrip?search=${value}`
         );
         setOriginSuggestions(res.data);
       } catch (err) {
@@ -35,16 +39,13 @@ export const SearchBar = () => {
     }
   };
 
-  console.log(origin);
-
   const handleDestinationChange = async (e) => {
     const { value } = e.target;
     setDestination(value);
     if (value != "" && value != " " && origin) {
       try {
         const res = await axios.get(
-          `http://localhost:4000/reservation/search?name="${value}"`,
-          { params: { search: value } }
+          `http://localhost:4000/reservation/returnTrip?search=${value}&city=${origin.city}&province=${origin.province}`
         );
         setDestinationSuggestions(res.data);
       } catch (err) {
@@ -54,15 +55,14 @@ export const SearchBar = () => {
       setDestinationSuggestions([]);
     }
   };
-  console.log(destination);
 
-  const handleOriginSelected = (city) => {
-    setOrigin(city);
+  const handleOriginSelected = (city,province) => {
+    setOriginFinal({...originFinal,"city":city,"province":province});
     setOriginSuggestions([]);
   };
 
-  const handleDestinationSelected = (city) => {
-    setDestination(city);
+  const handleDestinationSelected = (city, province) => {
+    setDestinationFinal({...destinationFinal, "city":city, "province":province});
     setDestinationSuggestions([]);
   };
 
@@ -98,7 +98,7 @@ export const SearchBar = () => {
             {originSuggestions.map((e) => {
               <div
                 key={`${e.province_id}-${e.city_id}`}
-                onClick={() => handleOriginSelected(`${e.name}-${e.city_name}`)}
+                onClick={() => handleOriginSelected(e.name, e.city_name)}
               >
                 {e.name}, {e.city_name}
               </div>;
@@ -122,7 +122,7 @@ export const SearchBar = () => {
               <div
                 key={`${e.province_id}-${e.city_id}`}
                 onClick={() =>
-                  handleDestinationSelected(`${e.name}-${e.city_name}`)
+                  handleDestinationSelected(e.name, e.city_name)
                 }
               >
                 {e.name}, {e.city_name}
