@@ -2,19 +2,21 @@
 import "./login.scss";
 import { Button, Container, Form } from "react-bootstrap";
 import icono from "/images/perfil2.png";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { AppContext } from "../../../context/TranbolicoContextProvider";
 
 const initialValue = {
   email: "",
   password: "",
 };
 
-export const Login = ({ setUser, setToken }) => {
+export const Login = () => {
   const [login, setLogin] = useState(initialValue);
   const navigate = useNavigate();
   const [msg, setMsg] = useState(false);
+  const { globalState, setGlobalState } = useContext(AppContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,20 +26,24 @@ export const Login = ({ setUser, setToken }) => {
   const handleSubmit = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:4000/user/loginUser",
+        "http://localhost:4000/users/loginUser",
         login
       );
-      const res2 = await axios.get("http://localhost:4000/user/getOneUser", {
-        headers: { Authorization: `Bearer ${res.data}` },
+      setGlobalState({
+        ...globalState,
+        token: res.data.token,
+        user: res.data.resultSelect[0],
       });
-      setUser(res2.data);
-      setToken(res.data);
-      if (res2.data.type === 1) {
-        navigate("/home");
-      } else if (res2.data.type === 2) {
+      localStorage.setItem("token", res.data.token);
+
+      if (res.data.resultSelect[0].user_type === 1) {
+        navigate("/home"); //enviar al administrador
+      } else if (res.data.resultSelect[0].user_type === 2) {
         navigate("/home");
       }
     } catch (err) {
+      console.log(err);
+
       if (err.response.status === 401) {
         setMsg(true);
       }
