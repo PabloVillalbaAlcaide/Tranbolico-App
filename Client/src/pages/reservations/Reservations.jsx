@@ -1,7 +1,14 @@
-import React from 'react'
+import { useState } from 'react'
+import { Outlet, useLocation } from 'react-router-dom'
 
 export const Reservations = () => {
+  const [reservation, setReservation] = useState({})
+  const location = useLocation();
+  const ruta = location.state;
+  
   return (
-    <div>Estas en Reservas</div>
+    <>
+    <Outlet context={{reservation, setReservation}}/>
+    </>
   )
 }
