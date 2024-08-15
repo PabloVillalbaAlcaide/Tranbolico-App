@@ -82,6 +82,13 @@ export const Login = () => {
             />
           </Form.Group>
           {msg && <p style={{ color: "red" }}>Datos incorrectos</p>}
+          {msg && (
+            <p>
+              <Link to="/recoverPassword">
+                <span>¿Has olvidado tu contraseña?</span>
+              </Link>
+            </p>
+          )}
           <p>
             <br />
             ¿No estás Registrado?, <Link to="/register">Registrate</Link>
