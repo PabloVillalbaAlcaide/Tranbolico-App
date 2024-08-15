@@ -262,7 +262,7 @@ class UserController {
     const { email } = req.body;
 
     let sql = `SELECT * FROM user WHERE email='${email}' AND is_disabled = 0 AND is_validated = 1`;
-    connection.query(sql,(err,result)=>{
+    connection.query(sql, (err, result) => {
       if (err) {
         res.status(500).json(err);
       } else if (result.length === 0) {
@@ -270,20 +270,20 @@ class UserController {
       } else {
         //generamos la contraseña de recuperacion
         const password = generator.generate({
-        length: 12, // Longitud de la contraseña
-        numbers: true, // Incluir números
-        symbols: true, // Incluir símbolos
-        uppercase: true, // Incluir letras mayúsculas
-        lowercase: true, // Incluir letras minúsculas
+          length: 12, // Longitud de la contraseña
+          numbers: true, // Incluir números
+          symbols: true, // Incluir símbolos
+          uppercase: true, // Incluir letras mayúsculas
+          lowercase: true, // Incluir letras minúsculas
         });
+
         sendMailRecover(email, result[0].name, password);
         res.status(200).json("Email enviado");
       }
     });
-    
   };
 
-  changePassword = (req,res) =>{}
+  changePassword = (req, res) => {};
 }
 
 module.exports = new UserController();

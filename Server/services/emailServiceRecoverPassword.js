@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendMail = (email, newPassword) => {
+const sendMailRecover = (email, name, newPassword) => {
   let mensajeHtml = `<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -20,13 +20,13 @@ const sendMail = (email, newPassword) => {
 </head>
 <body>
     <h1>Recuperación de contraseña</h1>
-    <h3>¡Hola }!</h3>
+    <h3>¡Hola ${name}!</h3>
     <p>Hemos recibido tu solicitud de recuperar contraseña. Tu nueva contraseña es la siguiente: </p>
     <p>${newPassword}</p>
     
 
     <p>Por favor, ir al siguiente enlace para restablecer tu contraseña:</p>
-    <a href="http://localhost:5173/MsgRecoverPassword">http://localhost:5173/MsgRecoverPassword}</a>
+    <a href="http://localhost:5173/resetPassword">http://localhost:5173/resetPassword}</a>
     <p>Si tienes alguna pregunta, contáctanos en [email de soporte].</p>
     <p>¡Saludos!</p>
     <p>El equipo de Tranbólico</p>
@@ -48,4 +48,4 @@ const sendMail = (email, newPassword) => {
   info.then((res) => console.log(res)).catch((err) => console.log(err));
 };
 
-module.exports = sendMail;
+module.exports = sendMailRecover;
