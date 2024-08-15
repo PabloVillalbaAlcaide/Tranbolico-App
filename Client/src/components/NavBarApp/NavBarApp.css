@@ -3,7 +3,7 @@
   color: white;
 }
 .NavbarLogo {
-  font-family: "VinaSans-Regular.ttf";
+  font-family: "VinaSans-Regular.ttf", system-ui;
   font-size: calc(1rem + 2vw);
   color: white;
   margin-inline: 50px;
@@ -13,7 +13,7 @@
 .NavbarNavLink {
   color: white;
   font-size: 1.1rem;
-  font-family: "Akkurat-Regular.ttf";
+  font-family: "Akkurat-Regular.ttf", system-ui;
 }
 .NavbarNavLink:hover {
   color: rgb(127, 127, 127);
@@ -22,7 +22,7 @@
   background-color: white;
   margin-inline: 10px;
   color: var(--tranbolico-azul);
-  font-family: "Akkurat-Regular.ttf";
+  font-family: "Akkurat-Regular.ttf", system-ui;
   font-size: 1.1rem;
   font-weight: 600;
   border-radius: 50px;
@@ -33,6 +33,12 @@
   background-color: rgb(127, 127, 127);
   transition-duration: 0.5s;
 }
+.custom-menu {
+  background-color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+}
+
 .color {
   color: var(--tranbolico-azul);
 }
@@ -55,6 +61,12 @@
   }
   .NavbarRegisterLoginColor {
     color: white;
+  }
+  .NavbarRegisterLoginColor:hover {
+    color: rgb(127, 127, 127);
+  }
+  .NavbarRegisterLogin:hover {
+    background-color: transparent;
   }
 }
 @media screen and (width < 992px) {

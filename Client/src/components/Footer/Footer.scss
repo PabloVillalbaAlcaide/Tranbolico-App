@@ -2,7 +2,7 @@
   background-color: var(--tranbolico-azul);
   width: 100%;
   min-height: 20vh;
-  font-family: "Akkurat-Regular.ttf";
+  font-family: "Akkurat-Regular.ttf", system-ui;
 }
 
 .contenedor-footer img {
@@ -10,7 +10,7 @@
 }
 
 .h1-footer {
-  font-family: "VinaSans-Regular.ttf";
+  font-family: "VinaSans-Regular.ttf", system-ui;
   font-size: 3rem;
   color: white;
 }

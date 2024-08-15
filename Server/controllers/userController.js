@@ -97,6 +97,7 @@ class UserController {
               resHash.status(500).json(errHash);
             } else {
               if (resHash) {
+                let data = result[0].user_id;
                 let sql2 = "SELECT * FROM user WHERE user_id = ?";
                 connection.query(sql2, data, (errSelect, resultSelect) => {
                   if (errSelect) {
@@ -111,6 +112,11 @@ class UserController {
                         resultSelect[0].user_id,
                         process.env.SECRET_KEY,
                         1
+                      );
+                      //Encripta el token
+                      const hashToken = encryptToken(
+                        token,
+                        process.env.SECRET_KEY_3
                       );
                       res.status(200).json({ resultSelect, token });
                     }
@@ -128,7 +134,9 @@ class UserController {
 
   //Verifica el usuario en base al token de registro
   verifyUser = (req, res) => {
-    const { hashToken } = req.body;
+    const hashToken = req.headers.authorization.split(" ")[1];
+
+    console.log(hashToken);
 
     if (!hashToken) {
       res.status(401).json({ status: 401, message: "No autorizado 1" });
@@ -170,6 +178,40 @@ class UserController {
         });
       }
     });
+  };
+
+  //Traemos los datos de un usuario
+  getOneUser = (req, res) => {
+    // console.log(req.headers.authorization);
+    let token = req.headers.authorization.split(" ")[1];
+    let { id } = jwt.decode(token);
+    // console.log(id);
+
+    let sql = `SELECT * FROM user WHERE user_id = ${id}`;
+    connection.query(sql, (err, result) => {
+      if (err) {
+        res.status(500).json(err);
+      } else if (result.length === 0) {
+        res.status(401).json("No autorizado");
+      } else {
+        let sql2 = `SELECT * FROM reservation WHERE user_id = ${id} AND is_deleted = 0`;
+        connection.query(sql2, (err2, result2) => {
+          if (err2) {
+            res.status(500).json(err2);
+          } else {
+            // res.send("resuuuuult2", result2)
+            res.status(200).json(result2);
+          }
+        });
+      }
+    });
+  };
+
+  editOneUser = (req, res) => {
+    // res.send("editOneUser")
+    const { name, surname, email, password, phone_number, province, city } =
+      req.body;
+    console.log(req.body);
   };
 }
 

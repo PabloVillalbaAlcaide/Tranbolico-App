@@ -1,6 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
-
 import { Home } from "../pages/Home/Home";
 import { Footer } from "../components/Footer/Footer";
 import { Row } from "react-bootstrap";
@@ -14,7 +12,6 @@ import { Rutas } from "../pages/rutas/Rutas";
 import { About } from "../pages/about/About";
 import { Faqs } from "../pages/faqs/Faqs";
 
-
 export const AppRoutes = () => {
   return (
     <BrowserRouter>
@@ -23,7 +20,7 @@ export const AppRoutes = () => {
       </Row>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/reservations" element={<Reservations />}/>
+        <Route path="/reservations" element={<Reservations />} />
         <Route path="/routes" element={<Rutas />} />
         <Route path="/about" element={<About />} />
         <Route path="/faqs" element={<Faqs />} />
