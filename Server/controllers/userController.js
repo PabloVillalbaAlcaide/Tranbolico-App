@@ -215,8 +215,8 @@ class UserController {
       email,
       genre,
       phone_number,
-      province,
-      city,
+      province_name,
+      city_name,
     } = JSON.parse(req.body.editUser);
     let data = [
       name,
@@ -224,13 +224,13 @@ class UserController {
       email,
       genre,
       phone_number,
-      province,
-      city,
-      province,
+      province_name,
+      city_name,
+      province_name,
       user_id,
     ];
     let sql =
-      "UPDATE user SET name = ?, surname = ?, email = ? genre = ?, phone_number = ?, province_id = (SELECT province_id FROM province WHERE name = ?), city_id = (SELECT city_id FROM city WHERE city_name = ? AND province_id = (SELECT province_id FROM province WHERE name = ?)) WHERE user_id = ?";
+      "UPDATE user SET name = ?, surname = ?, email = ?, genre = ?, phone_number = ?, province_id = (SELECT province_id FROM province WHERE name = ?), city_id = (SELECT city_id FROM city WHERE city_name = ? AND province_id = (SELECT province_id FROM province WHERE name = ?)) WHERE user_id = ?";
 
     if (req.file != undefined) {
       data = [
@@ -246,7 +246,7 @@ class UserController {
         user_id,
       ];
       sql =
-        "UPDATE user SET name = ?, surname = ?, email = ? genre = ?, phone_number = ?, province_id = (SELECT province_id FROM province WHERE name = ?), city_id = (SELECT city_id FROM city WHERE city_name = ? AND province_id = (SELECT province_id FROM province WHERE name = ?)), avatar = ? WHERE user_id = ?";
+        "UPDATE user SET name = ?, surname = ?, email = ?, genre = ?, phone_number = ?, province_id = (SELECT province_id FROM province WHERE name = ?), city_id = (SELECT city_id FROM city WHERE city_name = ? AND province_id = (SELECT province_id FROM province WHERE name = ?)), avatar = ? WHERE user_id = ?";
     }
     connection.query(sql, data, (err, result) => {
       if (err) {

@@ -7,6 +7,19 @@
   max-width: 200px;
 }
 
+.contenedor-edit{
+  font-family: "Akkurat-Regular.ttf";
+  font-size: 1rem;
+  background-color: #91cad8;
+  border-radius: 10px;
+  padding: 50px;
+  width: 100%;
+  max-width: 700px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+  position: relative;
+  margin: 0 auto;
+}
+
 .btn-iniciar-login {
   border: none;
   background-color: var(--tranbolico-azul);
