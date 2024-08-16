@@ -1,0 +1,103 @@
+@font-face {
+  font-family: "VinaSans";
+  src: url("./assets/fonts/VinaSans-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Akkurat";
+  src: url("./assets/fonts/Akkurat-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --tranbolico-amarillo: #ffd92d;
+  --tranbolico-azul: #283583;
+}
+
+body {
+  font-family: "VinaSans", sans-serif;
+}
+
+.conocenos {
+  background-color: var(--tranbolico-amarillo);
+  font-family: "Akkurat", sans-serif;
+  font-size: 3.5rem;
+  color: var(--tranbolico-azul);
+}
+
+.imagen-rabbit {
+  
+}
+
+.como-funciona h3 {
+  margin-top: 20px;
+  text-align: left;
+  color: var(--tranbolico-azul);
+  margin-bottom: 20px;
+  font-family: "Akkurat", sans-serif;
+}
+
+.funciona-item {
+  color: var(--tranbolico-azul);
+  margin-bottom: 20px;
+}
+
+.funciona-item h2 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.funciona-item span {
+  font-size: 1em;
+}
+
+.Amarillo {
+  background-color: var(--tranbolico-amarillo);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.Amarillo h3 {
+  
+  color: var(--tranbolico-azul);
+  text-align: right; 
+  margin: 0; 
+  font-family: "VinaSans-Regular.ttf", system-ui;
+  font-size: 3.5rem;
+ 
+}
+
+.Amarillo img {
+  max-height: 100px;
+  margin-right: 20px;
+}
+
+.testimonios {
+  background-color: var(--tranbolico-amarillo);
+  padding: 20px;
+}
+
+.testimonio {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  color: var(--tranbolico-azul);
+  max-width: 100%; 
+  height: auto; 
+  overflow: hidden; 
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.testimonio p {
+  margin: 0; 
+  line-height: 1.5; 
+}
