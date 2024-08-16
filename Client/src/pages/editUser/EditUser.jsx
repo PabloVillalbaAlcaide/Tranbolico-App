@@ -3,32 +3,96 @@ import { AppContext } from "../../context/TranbolicoContextProvider";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import "./editUser.scss";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const EditUser = () => {
   
-  const { globalState, setGlobalState } = useContext(AppContext);
-  const [editedUser, setEditedUser] = useState(globalState?.user)
+  const { globalState, loading } = useContext(AppContext);
+  const [editedUser, setEditedUser] = useState(globalState.user || {})
+  const [files, setFiles] = useState();
   const navigate = useNavigate();
-  console.log(globalState);
+
+
 
   useEffect(()=>{
-
-  },[])
+    if(!loading && globalState.user){
+      setEditedUser(globalState.user)
+    }
+  },[loading, globalState.user])
 
   const handleChange = (e) => {
     const {value, name} = e.target;
     setEditedUser({...editedUser, [name]: value})
   };
 
-  const onSubmit = () => {
+  const handleFilesChange = (e)=>{
+    setFiles(e.target.files[0])
+  }
 
-  };
+
+  const onSubmit = () =>{
+
+    editedUser.name = editedUser.name.trimStart() == "" ? globalState.user.name : editedUser.name;
+    editedUser.surname = editedUser.surname.trimStart() == "" ? globalState.user.surname : editedUser.surname;
+    editedUser.email = editedUser.email.trimStart() == "" ? globalState.user.email : editedUser.email;
+    editedUser.phone_number = editedUser.phone_number.trimStart() == "" ? globalState.user.phone_number : editedUser.phone_number;
+    
+    editedUser.province_name = editedUser.province_name.trimStart() == "" ? globalState.user.province_name : editedUser.province_name;
+    editedUser.city_name = editedUser.city_name.trimStart() == "" ? globalState.user.city_name : editedUser.city_name;
+
+    
+    const newFormData = new FormData();
+    newFormData.append("editUser", JSON.stringify(editedUser));
+    newFormData.append("file", files);
+    console.log("pruebaaaaaaaaaaaaaa")
+
+    axios
+      .put('http://localhost:4000/users/editOneUser', newFormData, {headers: {Authorization: `Bearer ${globalState.token}`}})
+      
+      .then(res=>{
+        console.log("*******", res)
+      })
+      .catch(err=>console.log(err))
+  }
+  /* const onSubmit = async (e) => {
+    e.preventDefault();
+    console.log(editedUser, files);
+  
+    try {
+      // Preparar la data
+      const newFormData = new FormData();
+      newFormData.append("editedUser", JSON.stringify(editedUser));
+      newFormData.append("file", files);
+      console.log("pruebaaaaaaaaaaaaaa")
+  
+      // Enviar la data al backend
+      const res = await axios.put(
+        "http://localhost:4000/users/editOneUser",
+        newFormData,
+        {
+          headers: { Authorization: `Bearer ${globalState.token}` },
+        }
+      );
+  
+      console.log("+++++++++", res);
+  
+      // Actualizar el estado del usuario según la respuesta
+      if (res.data.image) {
+        setEditedUser({ ...editedUser, user_img: res.data.image });
+      } else {
+        setEditedUser(editedUser);
+      }
+
+    } catch (err) {
+      console.log("Error al enviar la solicitud:", err);
+    }
+  }; */
 
   return (
     <>
       <Row>
         <div className="ppal-edit text-center">
-          <h2 className="">EDITAR</h2>
+          <h2>EDITAR</h2>
         </div>
         <div className="contenedor-edit d-flex justify-content-center align-items-center ">
           <Col xs={12} md={8} lg={6} xl={4}>
@@ -47,7 +111,7 @@ export const EditUser = () => {
                   type="text"
                   placeholder="Nombre"
                   name="name"
-                  value={editedUser?.name}
+                  value={editedUser?.name?editedUser?.name:""}
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -61,7 +125,7 @@ export const EditUser = () => {
                   type="text"
                   placeholder="Apellidos"
                   name="surname"
-                  value={editedUser?.surname}
+                  value={editedUser?.surname?editedUser?.surname:""}
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -76,7 +140,7 @@ export const EditUser = () => {
                   type="email"
                   placeholder="Email"
                   name="email"
-                  value={editedUser?.email}
+                  value={editedUser?.email?editedUser?.email:""}
                   onChange={handleChange}
                   /* pattern="[a-z-A-Z-0-9._%+-]+@[a-z0-9.-]+\.[a-z-A-Z]{2,4}$" */
                 />
@@ -92,7 +156,7 @@ export const EditUser = () => {
                   type="tel"
                   placeholder="Teléfono"
                   name="phone_number"
-                  value={editedUser?.phone_number}
+                  value={editedUser?.phone_number?editedUser?.phone_number:""}
                   onChange={handleChange}
                   /* pattern="[6-7]{1}-[0-9]{8}" */
                 />
@@ -102,9 +166,11 @@ export const EditUser = () => {
                   {errors.phone_number}
                 </p>
               )} */}
-              <Form.Group className="mb-2" controlId="formBasicGenre">
+              
+              <Form.Group className="mb-2" htmlFor="selectGenre">
                 <Form.Control
                   className="input-form-edit"
+                  id="selectGenre"
                   as="select"
                   name="genre"
                   value={editedUser?.genre?editedUser?.genre:""}
@@ -116,6 +182,7 @@ export const EditUser = () => {
                   <option value="3">Otro</option>
                 </Form.Control>
               </Form.Group>
+
               {/* {errors.genre && (
                 <p className="text-center text-danger fw-bold">
                   {errors.genre}
@@ -126,8 +193,8 @@ export const EditUser = () => {
                   className="input-form-edit"
                   type="text"
                   placeholder="Provincia"
-                  name="province"
-                  value={editedUser?.province_name}
+                  name="province_name"
+                  value={editedUser?.province_name?editedUser?.province_name:""}
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -141,8 +208,8 @@ export const EditUser = () => {
                   className="input-form-edit"
                   type="text"
                   placeholder="Ciudad"
-                  name="city"
-                  value={editedUser?.city_name}
+                  name="city_name"
+                  value={editedUser?.city_name?editedUser?.city_name:""}
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -154,8 +221,7 @@ export const EditUser = () => {
                 <Form.Control
                   type="file"
                   name="avatar"
-                  // value={avatar}
-                  onChange={handleChange}
+                  onChange={handleFilesChange}
                 />
               </Form.Group>
               {/* {errors.img && (
