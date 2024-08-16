@@ -107,7 +107,15 @@ export const SearchBar = () => {
               return (
                 <div
                   key={key}
-                  onClick={() => handleSelected(e.city_name, e.name,setOrigin,setOriginFinal,setOriginSuggestions)}
+                  onClick={() =>
+                    handleSelected(
+                      e.city_name,
+                      e.name,
+                      setOrigin,
+                      setOriginFinal,
+                      setOriginSuggestions
+                    )
+                  }
                 >
                   <p>
                     {e.city_name}, {e.name}
@@ -135,7 +143,15 @@ export const SearchBar = () => {
               return (
                 <div
                   key={key}
-                  onClick={() => handleSelected(e.city_name, e.name, setDestination,setDestinationFinal,setDestinationSuggestions)}
+                  onClick={() =>
+                    handleSelected(
+                      e.city_name,
+                      e.name,
+                      setDestination,
+                      setDestinationFinal,
+                      setDestinationSuggestions
+                    )
+                  }
                 >
                   <p>
                     {e.city_name}, {e.name}
