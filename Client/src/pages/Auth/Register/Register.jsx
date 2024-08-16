@@ -154,14 +154,15 @@ export const Register = () => {
   return (
     <>
       <Row>
-        <div className="ppal-register text-center text-white mt-2">
+        <div className="ppal-register text-center text-white mt-2 mb-2 ">
           <h2 className="mb-0 py-2">REGISTRO</h2>
         </div>
-        <div className="d-flex justify-content-center p-5">
+        <div className="contenedor-register d-flex justify-content-center p-5 mt-5 ">
           <Col xs={12} md={8} lg={6} xl={4}>
             <Form>
-              <div className="text-center mb-3">
+              <div className="text-center">
                 <img
+                  className="register-img"
                   src="/public/images/perfil2.png"
                   alt="personIcon"
                   width={"50px"}
@@ -177,7 +178,9 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {errors.name && <p className="text-center text-danger fw-bold">{errors.name}</p>}
+              {errors.name && (
+                <p className="text-center text-danger fw-bold">{errors.name}</p>
+              )}
 
               <Form.Group className="mb-2" controlId="formBasicSurname">
                 <Form.Control
@@ -189,7 +192,11 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {errors.surname && <p className="text-center text-danger fw-bold">{errors.surname}</p>}
+              {errors.surname && (
+                <p className="text-center text-danger fw-bold">
+                  {errors.surname}
+                </p>
+              )}
               <Form.Group className="mb-2" controlId="formBasicEmail">
                 <Form.Control
                   className="input-form"
@@ -201,7 +208,11 @@ export const Register = () => {
                   /* pattern="[a-z-A-Z-0-9._%+-]+@[a-z0-9.-]+\.[a-z-A-Z]{2,4}$" */
                 />
               </Form.Group>
-              {errors.email && <p className="text-center text-danger fw-bold">{errors.email}</p>}
+              {errors.email && (
+                <p className="text-center text-danger fw-bold">
+                  {errors.email}
+                </p>
+              )}
               <Form.Group className="mb-2" controlId="formBasicPhoneNumber">
                 <Form.Control
                   className="input-form"
@@ -213,7 +224,11 @@ export const Register = () => {
                   /* pattern="[6-7]{1}-[0-9]{8}" */
                 />
               </Form.Group>
-              {errors.phone_number && <p className="text-center text-danger fw-bold">{errors.phone_number}</p>}
+              {errors.phone_number && (
+                <p className="text-center text-danger fw-bold">
+                  {errors.phone_number}
+                </p>
+              )}
               <Form.Group className="mb-2" controlId="formBasicBirthDate">
                 <Form.Control
                   className="input-form"
@@ -224,7 +239,11 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {errors.birthdate && <p className="text-center text-danger fw-bold">{errors.birthdate}</p>}
+              {errors.birthdate && (
+                <p className="text-center text-danger fw-bold">
+                  {errors.birthdate}
+                </p>
+              )}
               <Form.Group className="mb-2" controlId="formBasicGenre">
                 <Form.Control
                   className="input-form"
@@ -249,7 +268,11 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {errors.province && <p className="text-center text-danger fw-bold">{errors.province}</p>}
+              {errors.province && (
+                <p className="text-center text-danger fw-bold">
+                  {errors.province}
+                </p>
+              )}
               <Form.Group className="mb-2" controlId="formBasicCity">
                 <Form.Control
                   className="input-form"
@@ -260,7 +283,9 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {errors.city && <p className="text-center text-danger fw-bold">{errors.city}</p>}
+              {errors.city && (
+                <p className="text-center text-danger fw-bold">{errors.city}</p>
+              )}
 
               <Form.Group className="mb-2" controlId="formBasicPassword">
                 <Form.Control
@@ -272,7 +297,11 @@ export const Register = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {errors.password && <p className="text-center text-danger fw-bold">{errors.password}</p>}
+              {errors.password && (
+                <p className="text-center text-danger fw-bold">
+                  {errors.password}
+                </p>
+              )}
               <Form.Group className="mb-2" controlId="formBasicPassword2">
                 <Form.Control
                   className="input-form"
@@ -283,22 +312,26 @@ export const Register = () => {
                   onChange={handleChangePassword2}
                 />
               </Form.Group>
-              {errors.password2 && <p className="text-center text-danger fw-bold">{errors.password2}</p>}
-              <p className="fw-bold fst-italic text-center mb-2">
-                <span className="text-decoration-underline">
-                  ¿Ya tienes una cuenta?
+              {errors.password2 && (
+                <p className="text-center text-danger fw-bold">
+                  {errors.password2}
+                </p>
+              )}
+              <p className="fw-bold fst-italic text-center mb-4 fs-6">
+                <span>
+                  ¿Ya tienes una cuenta? <br />
                 </span>{" "}
                 Ve a <Link to={"/login"}>Login</Link>
               </p>
-              <div className="d-flex justify-content-center gap-4">
+              <div className="d-flex justify-content-center gap-2">
                 <Button
-                  className="aceptar border-0 fst-italic"
+                  className="btn-iniciar-login aceptar border-0 fst-italic"
                   onClick={onSubmit}
                 >
                   Registrar
                 </Button>
                 <Button
-                  className="cancelar border-0 fst-italic"
+                  className="btn-volver-login cancelar border-0 fst-italic"
                   onClick={() => navigate("/")}
                 >
                   Volver
@@ -308,6 +341,7 @@ export const Register = () => {
           </Col>
         </div>
       </Row>
+      <br /> <br />
     </>
   );
 };

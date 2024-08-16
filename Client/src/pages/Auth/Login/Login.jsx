@@ -1,6 +1,6 @@
 // Button, Col
 import "./login.scss";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Container, Form, Row } from "react-bootstrap";
 import icono from "/images/perfil2.png";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -51,61 +51,71 @@ export const Login = () => {
   };
   return (
     <>
-      <Container
-        fluid
-        className="d-flex justify-content-center align-items-start"
-        style={{ minHeight: "100vh" }}
-      >
-        <div className="contenedor-login mt-5 text-center p-5 d-flex align-items-center justify-content-center flex-column">
-          <div>
-            <img src={icono} alt="personIcon" className="login-img p-2" />
-          </div>
-          <h2 className="h2-login pt-3 fs-2">login</h2>
-          <Form.Group>
-            <Form.Control
-              className="input-form-login"
-              type="email"
-              placeholder="Email"
-              onChange={handleChange}
-              value={login.email}
-              name="email"
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Control
-              className="input-form-login mt-3 "
-              type="password"
-              placeholder="Contraseña"
-              onChange={handleChange}
-              value={login.password}
-              name="password"
-            />
-          </Form.Group>
-          {msg && <p style={{ color: "red" }}>Datos incorrectos</p>}
-          {msg && (
-            <p>
-              <Link to="/recoverPassword">
-                <span>¿Has olvidado tu contraseña?</span>
-              </Link>
-            </p>
-          )}
-          <p>
-            <br />
-            ¿No estás Registrado?, <Link to="/register">Registrate</Link>
-          </p>
-          <br />
-          <Button onClick={handleSubmit} className="btn-iniciar-login">
-            Iniciar Sesión
-          </Button>
-          <br />
-          <Button
-            className="cancelar border-0 fst-italic"
-            onClick={() => navigate("/")}
-          >
-            Volver
-          </Button>
+      <Row>
+        <div className="ppal-login text-center text-white  mt-2">
+          <h2 className="mb-0 py-2">LOGIN</h2>
         </div>
-      </Container>
+        <Container
+          fluid
+          className="p-0 mt-1  d-flex justify-content-center align-items-start"
+          style={{ minHeight: "80vh" }}
+        >
+          <div className="contenedor-login mt-5 text-center d-flex align-items-center justify-content-center flex-column">
+            <img src={icono} alt="personIcon" className="login-img  mt-1  " />
+            {/* <h2 className="h2-login fs-2">login</h2> */}
+            <Form.Group>
+              <Form.Control
+                className="input-form-login pb-2"
+                type="email"
+                placeholder="Email"
+                onChange={handleChange}
+                value={login.email}
+                name="email"
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Control
+                className="input-form-login pb-2 mt-2 "
+                type="password"
+                placeholder="Contraseña"
+                onChange={handleChange}
+                value={login.password}
+                name="password"
+              />
+            </Form.Group>
+            {/* {msg && <p style={{ color: "#e72957"}}>Datos incorrectos</p>} */}
+            {msg && (
+              <p className="frase-2-login fs-5 ">
+                <Link to="/recoverPassword">
+                  <span>¿Has olvidado tu contraseña?</span>
+                </Link>
+              </p>
+            )}
+            <strong>
+              <i>
+                <p className="fs-6">
+                  <br />
+                  ¿No estás Registrado? <br />
+                  Ve a <Link to="/register">Registro</Link>
+                </p>
+              </i>
+            </strong>
+            <br />
+            <div className="contenedor-btns-login d-flex flex-row gap-2 align-items-center justify-content-center">
+              <Button onClick={handleSubmit} className="btn-iniciar-login">
+                Iniciar Sesión
+              </Button>
+
+              <Button
+                className="btn-volver-login border-0 "
+                onClick={() => navigate("/")}
+              >
+                Volver
+              </Button>
+            </div>
+          </div>
+        </Container>
+      </Row>
     </>
   );
 };
