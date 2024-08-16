@@ -259,10 +259,14 @@ class UserController {
   };
 
   recoverPassword = (req, res) => {
+    console.log("Hasta aqui");
     const { email } = req.body;
 
     let sql = `SELECT * FROM user WHERE email='${email}' AND is_disabled = 0 AND is_validated = 1`;
+    console.log("Hasta aqui");
     connection.query(sql, (err, result) => {
+      console.log("Hasta aqui 1");
+
       if (err) {
         res.status(500).json(err);
       } else if (result.length === 0) {
@@ -276,7 +280,7 @@ class UserController {
           uppercase: true, // Incluir letras mayúsculas
           lowercase: true, // Incluir letras minúsculas
         });
-
+        console.log("Hasta aqui 2");
         //Genera Token
         const resetToken = tokenGenerator(
           result[0].user_id,
@@ -286,6 +290,7 @@ class UserController {
 
         //Encripta el token y hace el envio
         const hashToken = encryptToken(resetToken, process.env.SECRET_KEY_3);
+
         let saltRounds = 10;
         bcrypt.hash(password, saltRounds, (error, hash) => {
           if (error) {

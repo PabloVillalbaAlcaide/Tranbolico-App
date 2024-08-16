@@ -17,9 +17,12 @@ import { MsgRecoverPassword } from "../pages/msg-recoverPassword/MsgRecoverPassw
 import { OneWayDate } from "../pages/oneWayDate/OneWayDate";
 import { ReturnDate } from "../pages/returnDate/ReturnDate";
 import { DetailReservation } from "../pages/detailReservation/DetailReservation";
+import { Historical } from "../pages/historical/Historical";
+import { UserReservations } from "../pages/userReservations/UserReservations";
 import { Profile } from "../pages/profile/Profile";
 import { ErrorPage } from "../pages/errorPage/ErrorPage";
 import { EditUser } from "../pages/editUser/EditUser";
+
 
 export const AppRoutes = () => {
   return (
@@ -47,7 +50,10 @@ export const AppRoutes = () => {
         <Route path="/resetPassword/:hashtoken" element={<ResetPassword />} />
         <Route path="/MsgVerifyEmail" element={<MsgVerifyEmail />} />
         <Route path="/MsgVerifyEmail/:hashtoken" element={<MsgToken />} />
-
+        <Route path="/historical" element={<Historical />} >
+          <Route index element={<UserReservations />} />
+          <Route path="nextReservations" element={<UserReservations />} />
+        </Route>
         <Route path="*" element={<ErrorPage />}></Route>
       </Routes>
       <Row>
