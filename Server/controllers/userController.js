@@ -259,10 +259,14 @@ class UserController {
   };
 
   recoverPassword = (req, res) => {
+    console.log("Hasta aqui");
     const { email } = req.body;
 
     let sql = `SELECT * FROM user WHERE email='${email}' AND is_disabled = 0 AND is_validated = 1`;
+    console.log("Hasta aqui");
     connection.query(sql, (err, result) => {
+      console.log("Hasta aqui 1");
+
       if (err) {
         res.status(500).json(err);
       } else if (result.length === 0) {
@@ -276,7 +280,7 @@ class UserController {
           uppercase: true, // Incluir letras mayúsculas
           lowercase: true, // Incluir letras minúsculas
         });
-
+        console.log("Hasta aqui 2");
         //Genera Token
         const resetToken = tokenGenerator(
           result[0].user_id,
@@ -287,7 +291,7 @@ class UserController {
         //Encripta el token y hace el envio
         const hashToken = encryptToken(resetToken, process.env.SECRET_KEY_3);
 
-        let data = (password, result[0].user_id);
+        let data = [password, result[0].user_id];
         let sql2 =
           "UPDATE user SET password = ?, is_auto_generated = 1 WHERE user_id = ?";
         connection.query(sql2, data, (err, resultUpdate) => {
@@ -340,7 +344,7 @@ class UserController {
                         if (!resultSelect || resultSelect.length === 0) {
                           res.status(401).json("No autorizado");
                         } else {
-                          const resultF = result[0].is_auto_generated
+                          const resultF = result[0].is_auto_generated;
                           if (result[0].is_auto_generated === 1) {
                             res.status(200).json({ resultF });
                           } else {
