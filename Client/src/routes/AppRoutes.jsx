@@ -22,11 +22,15 @@ import { UserReservations } from "../pages/userReservations/UserReservations";
 import { Profile } from "../pages/profile/Profile";
 import { ErrorPage } from "../pages/errorPage/ErrorPage";
 import { EditUser } from "../pages/editUser/EditUser";
+import { useContext } from "react";
+import { AppContext } from "../context/TranbolicoContextProvider";
 
 
 export const AppRoutes = () => {
+  const {loading} = useContext(AppContext)
   return (
-    <BrowserRouter>
+    <>
+   {!loading && <BrowserRouter>
       <Row>
         <NavBarApp />
       </Row>
@@ -59,6 +63,7 @@ export const AppRoutes = () => {
       <Row>
         <Footer />
       </Row>
-    </BrowserRouter>
+    </BrowserRouter>}
+    </>
   );
 };

@@ -5,12 +5,14 @@ export const AppContext = createContext();
 
 export const TranbolicoContextProvider = ({ children }) => {
   const [globalState, setGlobalState] = useState({});
+  const [loading, setloading] = useState(true)
 
   useEffect(()=>{
     const tokenLocal = localStorage.getItem("token")
     if(tokenLocal){
       getUser(tokenLocal)
     }
+    setloading(false)
   },[])
 
   const getUser = async (token) => {
@@ -28,7 +30,7 @@ export const TranbolicoContextProvider = ({ children }) => {
 
   return (
     <>
-      <AppContext.Provider value={{globalState, setGlobalState}}>
+      <AppContext.Provider value={{globalState, setGlobalState, loading}}>
         {children}
       </AppContext.Provider>
     </>

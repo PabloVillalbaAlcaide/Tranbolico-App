@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import axios from "axios";
+import {Row, Table} from 'react-bootstrap'
 
 export const UserReservations = () => {
   const [reservationsList, setReservationsList] = useState([]);
@@ -28,5 +29,26 @@ export const UserReservations = () => {
     }
   };
 
-  return <div>UserReservations</div>;
+  return (
+    <Row>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+        </tbody>
+      </Table>
+    </Row>
+  );
 };
