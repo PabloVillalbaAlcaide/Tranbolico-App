@@ -192,7 +192,10 @@ class UserController {
 
     console.log(id);
 
-    let sql = `SELECT * FROM user WHERE user_id = ${id}`;
+    let sql = `SELECT user.*, province.name AS province_name, city.city_name 
+    FROM user JOIN province ON user.province_id = province.province_id JOIN 
+    city ON user.province_id = city.province_id AND user.city_id = city.city_id 
+    WHERE user.user_id = ${id}`;
     connection.query(sql, (err, result) => {
       if (err) {
         res.status(500).json(err);

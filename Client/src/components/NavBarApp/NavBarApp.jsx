@@ -55,7 +55,7 @@ export const NavBarApp = () => {
                       FAQ´S
                     </Nav.Link>
                   </div>
-                  {!globalState ? (
+                  {!globalState.user || !globalState.token ? (
                     <div className="d-flex justify-content-xl-end justify-content-start flex-lg-row flex-column col-4">
                       <div className="NavbarRegisterLogin">
                         <Nav.Link
