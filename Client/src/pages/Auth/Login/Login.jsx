@@ -37,9 +37,9 @@ export const Login = () => {
       localStorage.setItem("token", res.data.token);
 
       if (res.data.resultSelect[0].user_type === 1) {
-        navigate("/home"); //enviar al administrador
+        navigate("/"); //enviar al administrador
       } else if (res.data.resultSelect[0].user_type === 2) {
-        navigate("/home");
+        navigate("/");
       }
     } catch (err) {
       console.log(err);

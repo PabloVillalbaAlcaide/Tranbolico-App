@@ -110,7 +110,7 @@ export const Register = () => {
     }
 
     //Validamos password
-    const passwordPattern = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
+    const passwordPattern = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
     if (!register.password) {
       newErrors.password = "La contraseña es obligatoria";
       valid = false;
