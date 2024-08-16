@@ -1,17 +1,28 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import "./editUser.scss";
 import { useNavigate } from "react-router-dom";
 
 export const EditUser = () => {
-  const navigate = useNavigate();
+  
   const { globalState, setGlobalState } = useContext(AppContext);
+  const [editedUser, setEditedUser] = useState(globalState?.user)
+  const navigate = useNavigate();
   console.log(globalState);
 
-  const handleChange = (e) => {};
+  useEffect(()=>{
 
-  const onSubmit = () => {};
+  },[])
+
+  const handleChange = (e) => {
+    const {value, name} = e.target;
+    setEditedUser({...editedUser, [name]: value})
+  };
+
+  const onSubmit = () => {
+
+  };
 
   return (
     <>
@@ -36,7 +47,7 @@ export const EditUser = () => {
                   type="text"
                   placeholder="Nombre"
                   name="name"
-                  // value={globalState.user.name}
+                  value={editedUser?.name}
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -50,7 +61,7 @@ export const EditUser = () => {
                   type="text"
                   placeholder="Apellidos"
                   name="surname"
-                  // value={globalState.user.surname}
+                  value={editedUser?.surname}
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -65,7 +76,7 @@ export const EditUser = () => {
                   type="email"
                   placeholder="Email"
                   name="email"
-                  // value={globalState.user.email}
+                  value={editedUser?.email}
                   onChange={handleChange}
                   /* pattern="[a-z-A-Z-0-9._%+-]+@[a-z0-9.-]+\.[a-z-A-Z]{2,4}$" */
                 />
@@ -81,7 +92,7 @@ export const EditUser = () => {
                   type="tel"
                   placeholder="Teléfono"
                   name="phone_number"
-                  // value={globalState.user.phone_number}
+                  value={editedUser?.phone_number}
                   onChange={handleChange}
                   /* pattern="[6-7]{1}-[0-9]{8}" */
                 />
@@ -96,7 +107,7 @@ export const EditUser = () => {
                   className="input-form-edit"
                   as="select"
                   name="genre"
-                  // value={globalState.user.genre}
+                  value={editedUser?.genre?editedUser?.genre:""}
                   onChange={handleChange}
                 >
                   <option value="">Seleccione</option>
@@ -116,7 +127,7 @@ export const EditUser = () => {
                   type="text"
                   placeholder="Provincia"
                   name="province"
-                  // value={globalState.user.province}
+                  value={editedUser?.province_name}
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -131,7 +142,7 @@ export const EditUser = () => {
                   type="text"
                   placeholder="Ciudad"
                   name="city"
-                  // value={globalState.user.city}
+                  value={editedUser?.city_name}
                   onChange={handleChange}
                 />
               </Form.Group>
