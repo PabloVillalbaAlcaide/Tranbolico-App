@@ -318,7 +318,7 @@ class UserController {
           res.status(401).json("Credenciales incorrectas");
         } else {
           const hash = result[0].password;
-          bcrypt.compare(password, hash, (errHash, resHash) => {
+          bcrypt.compare(oldPassword, hash, (errHash, resHash) => {
             if (errHash) {
               resHash.status(500).json(errHash);
             } else {
@@ -328,8 +328,9 @@ class UserController {
                   if (error) {
                     res.status(500).json(error);
                   } else {
-                    let data = [password, id];
-                    let sql2 = "UPDATE user SET password = ?, is_auto_generated = 0 WHERE user_id = ?";
+                    let data = [hash, id];
+                    let sql2 =
+                      "UPDATE user SET password = ?, is_auto_generated = 0 WHERE user_id = ?";
                     connection.query(sql2, data, (errSelect, resultSelect) => {
                       if (errSelect) {
                         res
@@ -339,14 +340,12 @@ class UserController {
                         if (!resultSelect || resultSelect.length === 0) {
                           res.status(401).json("No autorizado");
                         } else {
-                          let token = tokenGenerator(
-                            resultSelect[0].user_id,
-                            process.env.SECRET_KEY,
-                            1
-                          );
-                          //Encripta el token
-                          token = encryptToken(token, process.env.SECRET_KEY_3);
-                          res.status(200).json({ resultSelect, token });
+                          const resultF = result[0].is_auto_generated
+                          if (result[0].is_auto_generated === 1) {
+                            res.status(200).json({ resultF });
+                          } else {
+                            res.status(200).json({ resultF, hash });
+                          }
                         }
                       }
                     });
