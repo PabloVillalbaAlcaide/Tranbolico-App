@@ -291,15 +291,23 @@ class UserController {
         //Encripta el token y hace el envio
         const hashToken = encryptToken(resetToken, process.env.SECRET_KEY_3);
 
-        let data = [password, result[0].user_id];
-        let sql2 =
-          "UPDATE user SET password = ?, is_auto_generated = 1 WHERE user_id = ?";
-        connection.query(sql2, data, (err, resultUpdate) => {
-          if (err) {
-            res.status(500).json(err);
+        let saltRounds = 10;
+        bcrypt.hash(password, saltRounds, (error, hash) => {
+          if (error) {
+            res.status(500).json(error);
           } else {
-            sendMailRecover(email, result[0].name, password, hashToken);
-            res.status(200).json(resultUpdate);
+            let data = [hash, result[0].user_id];
+            console.log(result[0].user_id);
+            let sql2 =
+              "UPDATE user SET password = ?, is_auto_generated = 1 WHERE user_id = ?";
+            connection.query(sql2, data, (err, resultUpdate) => {
+              if (err) {
+                res.status(500).json(err);
+              } else {
+                sendMailRecover(email, result[0].name, password, hashToken);
+                res.status(200).json(resultUpdate);
+              }
+            });
           }
         });
       }
@@ -308,11 +316,14 @@ class UserController {
 
   changePassword = (req, res) => {
     const { oldPassword, password } = req.body;
-    const hashtoken = req.headers.authorization.split(" ")[1];
+    console.log(oldPassword, "*****", password);
 
+    const hashtoken = req.headers.authorization.split(" ")[1];
+    console.log("1111");
     const token = decryptToken(hashtoken, process.env.SECRET_KEY_3);
 
     const { id } = jwt.decode(token);
+
     let sql = `SELECT * FROM user WHERE user_id='${id}' AND is_disabled = 0 AND is_validated = 1`;
     connection.query(sql, (err, result) => {
       if (err) {
@@ -326,6 +337,7 @@ class UserController {
             if (errHash) {
               resHash.status(500).json(errHash);
             } else {
+              console.log("22222");
               if (resHash) {
                 let saltRounds = 10;
                 bcrypt.hash(password, saltRounds, (error, hash) => {

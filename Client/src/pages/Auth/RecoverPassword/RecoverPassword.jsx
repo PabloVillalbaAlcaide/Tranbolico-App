@@ -1,9 +1,9 @@
-import React from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Container, Form, Row } from "react-bootstrap";
 import icono from "/images/perfil2.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./RecoverPassword.scss";
 
 export const RecoverPassword = () => {
   const [mail, setMail] = useState({});
@@ -29,38 +29,49 @@ export const RecoverPassword = () => {
   };
   return (
     <>
-      <Container
-        fluid
-        className="d-flex justify-content-center align-items-start"
-        style={{ minHeight: "100vh" }}
-      >
-        <div className="contenedor-login mt-5 text-center p-5 d-flex align-items-center justify-content-center flex-column">
-          <div>
-            <img src={icono} alt="personIcon" className="login-img p-2" />
-          </div>
-          <h2 className="h2-login pt-3 fs-2">Recuperar Contraseña</h2>
-          <Form.Group>
-            <Form.Control
-              className="input-form-login"
-              type="email"
-              placeholder="Email"
-              onChange={handleChange}
-              value={mail.email}
-              name="email"
-            />
-          </Form.Group>
-          <Button onClick={onSubmit} className="btn-iniciar-login">
-            Recuperar Contraseña
-          </Button>
-          <br />
-          <Button
-            className="cancelar border-0 fst-italic"
-            onClick={() => navigate("/")}
-          >
-            Volver
-          </Button>
+      <Row>
+        <div className="ppal-register text-center text-white mt-2 mb-2 ">
+          <h2 className="mb-0 py-2">Nueva Contraseña</h2>{" "}
         </div>
-      </Container>
+        <Container
+          fluid
+          className="p-0 mt-1 d-flex justify-content-center align-items-start"
+          style={{ minHeight: "80vh" }}
+        >
+          <div className="contenedor-restablecer-password mt-5 text-center p-5 d-flex align-items-center justify-content-center flex-column">
+            <div>
+              <img
+                src={icono}
+                alt="personIcon"
+                className="restablecer-img mt-1"
+              />
+            </div>
+            <Form.Group>
+              <Form.Control
+                className="input-form-login"
+                type="email"
+                placeholder="Email"
+                onChange={handleChange}
+                value={mail.email}
+                name="email"
+              />
+            </Form.Group>
+            <br />
+            <div className="d-flex flex-row gap-2 align-items-center justify-content-center flex-column gap-2">
+              <Button onClick={onSubmit} className="btn-iniciar-login">
+                Recuperar Contraseña
+              </Button>
+
+              <Button
+                className="btn-volver-login border-0 fst-italic"
+                onClick={() => navigate("/")}
+              >
+                Volver
+              </Button>
+            </div>
+          </div>
+        </Container>
+      </Row>
     </>
   );
 };

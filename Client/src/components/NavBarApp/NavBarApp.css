@@ -47,6 +47,10 @@
 }
 .NavbarAvatar {
   width: 50px;
+  cursor: pointer;
+}
+.avatar-user {
+  cursor: pointer;
 }
 @media (width < 992px) {
   .NavbarRegisterLogin {

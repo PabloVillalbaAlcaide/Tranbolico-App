@@ -16,3 +16,45 @@ p {
   text-align: center;
   font-size: 1.2rem;
 }
+
+.contenedor-register {
+  font-family: "Akkurat-Regular.ttf";
+  font-size: 1rem;
+  background-color: #91cad8;
+  border-radius: 10px;
+  padding: 50px;
+  width: 100%;
+  max-width: 700px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+  position: relative;
+  margin: 0 auto;
+}
+
+.register-img {
+  background-color: #91cad8;
+  border-radius: 100px;
+  border: 1px solid black;
+  width: 65px;
+  position: relative;
+  top: -90px;
+  box-shadow: 0 0 0 5px;
+}
+
+.input-form {
+  border-radius: 10px;
+  border: 2px solid black;
+  font-style: italic;
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 0 auto;
+}
+
+@media (max-width: 800px) {
+  .contenedor-register {
+    width: 80%;
+    min-width: 300px;
+  }
+  .input-form {
+    max-width: 100%;
+  }
+}

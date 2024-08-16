@@ -19,6 +19,10 @@ import { ReturnDate } from "../pages/returnDate/ReturnDate";
 import { DetailReservation } from "../pages/detailReservation/DetailReservation";
 import { Historical } from "../pages/historical/Historical";
 import { UserReservations } from "../pages/userReservations/UserReservations";
+import { Profile } from "../pages/profile/Profile";
+import { ErrorPage } from "../pages/errorPage/ErrorPage";
+import { EditUser } from "../pages/editUser/EditUser";
+
 
 export const AppRoutes = () => {
   return (
@@ -28,16 +32,18 @@ export const AppRoutes = () => {
       </Row>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/reservations" element={<Reservations />} >
+        <Route path="/reservations" element={<Reservations />}>
           <Route index element={<OneWayDate />} />
           <Route path="returnDate" element={<ReturnDate />} />
           <Route path="detailReservation" element={<DetailReservation />} />
         </Route>
+        <Route path="/profile" element={<Profile />} />
         <Route path="/routes" element={<Rutas />} />
         <Route path="/about" element={<About />} />
         <Route path="/faqs" element={<Faqs />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/editUser" element={<EditUser />} />
         <Route path="/recoverPassword" element={<RecoverPassword />} />
         <Route path="/MsgRecoverPassword" element={<MsgRecoverPassword />} />
         <Route path="/resetPassword" element={<ResetPassword />} />
@@ -48,6 +54,7 @@ export const AppRoutes = () => {
           <Route index element={<UserReservations />} />
           <Route path="nextReservations" element={<UserReservations />} />
         </Route>
+        <Route path="*" element={<ErrorPage />}></Route>
       </Routes>
       <Row>
         <Footer />

@@ -1,0 +1,18 @@
+.input-form-edit {
+  border-radius: 10px;
+  border: 2px solid black;
+  font-style: italic;
+  text-align: center;
+  font-size: 1.2rem;
+  max-width: 200px;
+}
+
+.btn-iniciar-login {
+  border: none;
+  background-color: var(--tranbolico-azul);
+  font-style: italic;
+}
+
+.btn-volver-login {
+  background-color: var(--tranbolico-fucsia);
+}
