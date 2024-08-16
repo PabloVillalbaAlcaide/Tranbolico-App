@@ -12,6 +12,7 @@ export const SearchBar = () => {
   const [destinationFinal, setDestinationFinal] = useState({});
   const [originSuggestions, setOriginSuggestions] = useState([]);
   const [destinationSuggestions, setDestinationSuggestions] = useState([]);
+  const [errMsg, setErrMsg] = useState({ show: false, text: "" });
 
   const navigate = useNavigate();
 
@@ -19,9 +20,7 @@ export const SearchBar = () => {
     let { value } = e.target;
     setOrigin(value);
 
-    if (value[0] === " ") {
-      value = value.trimStart();
-    }
+    value = value.trimStart();
 
     if (value !== "") {
       try {
@@ -38,55 +37,55 @@ export const SearchBar = () => {
   };
 
   const handleDestinationChange = async (e) => {
-  const { value } = e.target;
-  setDestination(value);
+    const { value } = e.target;
+    setDestination(value);
 
-  if (value !== "" && originFinal.city && originFinal.province) {
-    try {
-      const res = await axios.get(
-        `http://localhost:4000/reservation/returnTrip?search=${value}&city=${originFinal.city}&province=${originFinal.province}`
-      );
-      
-      console.log(res); 
-      console.log(res.data); 
-      
-      setDestinationSuggestions(res.data);
-    } catch (err) {
-      console.log(err);
+    if (value !== "" && originFinal.city && originFinal.province) {
+      try {
+        const res = await axios.get(
+          `http://localhost:4000/reservation/returnTrip?search=${value}&city=${originFinal.city}&province=${originFinal.province}`
+        );
+
+        setDestinationSuggestions(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      setDestinationSuggestions([]);
     }
-  } else {
-    setDestinationSuggestions([]);
-  }
-};
-
-
-  const handleOriginSelected = (city, province) => {
-    setOriginFinal({ city, province });
-    setOrigin(`${city}, ${province}`);
-    setOriginSuggestions([]);
   };
 
-  const handleDestinationSelected = (city, province) => {
-    setDestinationFinal({ city, province });
-    setDestination(`${city}, ${province}`);
-    setDestinationSuggestions([]);
+  const handleSelected = (city, province, set, setFinal, setSuggestion) => {
+    setFinal({ city, province });
+    set(`${city}, ${province}`);
+    setSuggestion([]);
   };
 
-  const onSubmit = async () => {
-    try {
-      const response = await axios.post("http://localhost:4000/reservation", {
-        origin: originFinal,
-        destination: destinationFinal,
-      });
-      if (response.status === 200) {
+  // const handleOriginSelected = (city, province) => {
+  //   setOriginFinal({ city, province });
+  //   setOrigin(`${city}, ${province}`);
+  //   setOriginSuggestions([]);
+  // };
+
+  // const handleDestinationSelected = (city, province) => {
+  //   setDestinationFinal({ city, province });
+  //   setDestination(`${city}, ${province}`);
+  //   setDestinationSuggestions([]);
+  // };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (!originFinal.city || !destinationFinal.city) {
+      setErrMsg({ show: true, text: "Por favor, seleccione ciudades válidas" });
+    } else {
+      setErrMsg({ show: false, text: "" });
+      try {
         navigate("/reservations", {
           state: { origin: originFinal, destination: destinationFinal },
         });
-      } else {
-        console.log("Error al enviar los datos");
+      } catch (err) {
+        console.log(err);
       }
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -108,9 +107,11 @@ export const SearchBar = () => {
               return (
                 <div
                   key={key}
-                  onClick={() => handleOriginSelected(e.city_name, e.name)}
+                  onClick={() => handleSelected(e.city_name, e.name,setOrigin,setOriginFinal,setOriginSuggestions)}
                 >
-                  <p>{e.city_name}, {e.name}</p>
+                  <p>
+                    {e.city_name}, {e.name}
+                  </p>
                 </div>
               );
             })}
@@ -134,16 +135,19 @@ export const SearchBar = () => {
               return (
                 <div
                   key={key}
-                  onClick={() => handleDestinationSelected(e.city_name, e.name)}
+                  onClick={() => handleSelected(e.city_name, e.name, setDestination,setDestinationFinal,setDestinationSuggestions)}
                 >
-                  <p>{e.city_name}, {e.name}</p>
+                  <p>
+                    {e.city_name}, {e.name}
+                  </p>
                 </div>
               );
             })}
           </div>
         )}
       </Form.Group>
-      
+      {errMsg.show && <p className="text-danger fw-bold mb-3">{errMsg.text}</p>}
+
       <Button variant="primary" onClick={onSubmit}>
         Buscar
       </Button>
