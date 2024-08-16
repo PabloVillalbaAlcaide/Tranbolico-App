@@ -50,7 +50,7 @@ JOIN route ON reservation.route_id = route.route_id JOIN  province dp ON route.d
 JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
 JOIN province ap ON route.arrival_province_id = ap.province_id JOIN city ac ON route.arrival_city_id = ac.city_id
 AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${userID}
-AND planning.departure_date <= CURDATE() AND planning.departure_time < CURTIME();`;
+AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) <= CURRENT_TIMESTAMP`;
     connection.query(sql, (err, result) => {
       if (err) {
         res.status(500).json(err);
@@ -78,7 +78,7 @@ JOIN route ON reservation.route_id = route.route_id JOIN  province dp ON route.d
 JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
 JOIN province ap ON route.arrival_province_id = ap.province_id JOIN city ac ON route.arrival_city_id = ac.city_id
 AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${userID}
-AND planning.departure_date >= CURDATE() AND planning.departure_time >= CURTIME();`;
+AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) >= CURRENT_TIMESTAMP`;
     connection.query(sql, (err, result) => {
       if (err) {
         res.status(500).json(err);
