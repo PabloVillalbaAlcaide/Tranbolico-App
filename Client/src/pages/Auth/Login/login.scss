@@ -1,3 +1,8 @@
+.ppal-login {
+  background-color: var(--tranbolico-azul);
+  width: 100%;
+}
+
 .contenedor-login {
   font-family: "Akkurat-Regular.ttf";
   font-size: 1rem;
@@ -12,27 +17,59 @@
 
 .login-img {
   background-color: #28b7c7;
-  border: 1px solid black;
   border-radius: 100px;
+  border: 1px solid black;
   width: 65px;
   position: relative;
-  top: -80px;
+  top: -90px;
   box-shadow: 0 0 0 5px;
 }
 
 .input-form-login {
-  border-radius: 20px;
+  border-radius: 10px;
   border: 2px solid black;
   font-style: italic;
   text-align: center;
   font-size: 1.2rem;
   max-width: 200px;
-  margin: 0 auto;
 }
 
 .btn-iniciar-login {
   border: none;
   background-color: var(--tranbolico-azul);
+  font-style: italic;
+}
+
+.btn-volver-login {
+  background-color: var(--tranbolico-fucsia);
+}
+
+.contenedor-btns-login {
+  width: 100%;
+  max-width: 100px;
+}
+.btn-iniciar-login,
+.btn-volver-login {
+  min-width: 125px;
+  border-radius: 30px;
+}
+
+.btn-iniciar-login:hover,
+.btn-iniciar-login:focus,
+.btn-iniciar-login:active,
+.btn-iniciar-login:focus:active {
+  background-color: #13268e;
+}
+
+.btn-volver-login:hover,
+.btn-volver-login:focus,
+.btn-volver-login:active,
+.btn-volver-login:focus:active {
+  background-color: #e30d42;
+}
+
+.frase-2-login a {
+  color: var(--tranbolico-fucsia);
 }
 
 @media (max-width: 800px) {
