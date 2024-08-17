@@ -10,7 +10,7 @@
 .contenedor-edit{
   font-family: "Akkurat-Regular.ttf";
   font-size: 1rem;
-  background-color: #91cad8;
+  background-color: rgb(255, 217, 45, 0.5);
   border-radius: 10px;
   padding: 50px;
   width: 100%;
@@ -19,6 +19,20 @@
   position: relative;
   margin: 0 auto;
 }
+
+.avatar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; 
+  width: 100%; 
+  margin-bottom: 20px;
+}
+
+.Row {
+  min-height: 100vh; 
+}
+
 
 .btn-iniciar-login {
   border: none;
