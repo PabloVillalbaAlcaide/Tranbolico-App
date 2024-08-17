@@ -1,0 +1,18 @@
+.buttonAdmin {
+  background-color: var(--tranbolico-amarillo);
+  color: black;
+  font-family: "Akkurat-Regular.ttf";
+  font-style: italic;
+  border: 0;
+  width: 50dvw;
+  margin-block: 10px;
+}
+.buttonAdmin:hover {
+  background-color: #b49404;
+}
+
+@media (width < 500px) {
+  .buttonAdmin {
+    width: 80dvw;
+  }
+}
