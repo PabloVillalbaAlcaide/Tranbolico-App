@@ -22,6 +22,10 @@ import { EditUser } from "../pages/editUser/EditUser";
 import { useContext } from "react";
 import { AppContext } from "../context/TranbolicoContextProvider";
 import Layout from "../layout/Layout";
+import { Admin } from "../pages/Admin/Admin/Admin";
+import { CreateRouteAdmin } from "../pages/Admin/CreateRouteAdmin/CreateRouteAdmin";
+import { EditRouteAdmin } from "../pages/Admin/EditRouteAdmin/EditRouteAdmin";
+import { ViewUserAdmin } from "../pages/Admin/ViewUserAdmin/ViewUserAdmin";
 
 export const AppRoutes = () => {
   const { loading } = useContext(AppContext);
@@ -63,6 +67,11 @@ export const AppRoutes = () => {
                 <Route index element={<UserReservations />} />
                 <Route path="nextReservations" element={<UserReservations />} />
               </Route>
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/admin/createRoute" element={<CreateRouteAdmin />} />
+              <Route path="/admin/editRoute" element={<EditRouteAdmin />} />
+              <Route path="/admin/viewUser" element={<ViewUserAdmin />} />
+
               <Route path="*" element={<ErrorPage />}></Route>
             </Route>
           </Routes>
