@@ -1,0 +1,54 @@
+.ppal-rutas {
+  background-color: var(--tranbolico-azul);
+  width: 100%;
+  font-family: "VinaSans-Regular.ttf";
+}
+
+.ppal-rutas h2 {
+  font-size: 4rem;
+}
+
+.h1-rutas {
+  color: var(--tranbolico-azul);
+  font-weight: bolder;
+}
+
+.input-reducido-rutas {
+  width: 250px;
+  text-align: center;
+}
+
+.input-reducido-rutas::placeholder {
+  font-size: 1.1rem;
+}
+
+
+
+.card-ruta-info {
+  background-color: transparent;
+  border: 1px solid #28b7c7;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 300px;
+  min-width: 200px;
+  text-align: center;
+}
+
+.btn-reservar_rutas {
+  border: none;
+  background-color: var(--tranbolico-fucsia);
+  font-style: italic;
+  border-radius: 20px;
+  
+}
+
+.btn-reservar_rutas:hover,
+.btn-reservar_rutas:focus,
+.btn-reservar_rutas:active,
+.btn-reservar_rutas:focus:active {
+  background-color: #e30d42;
+}
+
+

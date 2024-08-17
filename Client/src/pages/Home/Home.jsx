@@ -5,8 +5,11 @@ import tranbolic10 from "/images/Trambólico10.png";
 import tranbolic7 from "/images/Trambólico7.png";
 import "./Home.scss";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
+import { useNavigate } from 'react-router-dom';  
 
 export const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <Container fluid className="contenedor-home">
       <main>
@@ -35,7 +38,7 @@ export const Home = () => {
         <div className="contenedor-botones-home d-flex mt-4  flex-column flex-md-row mt-4 align-items-center justify-content-center gap-4">
 
           <Button className="btn-reservas-home">RESERVAS</Button>
-          <Button className="btn-rutas-home">RUTAS</Button>
+          <Button className="btn-rutas-home" onClick={() => navigate('/routes')}>RUTAS</Button>
           <Button className="btn-conocenos-home">CONÓCENOS</Button>
           <Button className="btn-faqs-home">FAQS</Button>
         </div>

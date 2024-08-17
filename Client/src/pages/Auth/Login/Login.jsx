@@ -101,7 +101,7 @@ export const Login = () => {
               </i>
             </strong>
             <br />
-            <div className="contenedor-btns-login d-flex flex-row gap-2 align-items-center justify-content-center">
+            <div className=" d-flex flex-row gap-2 align-items-center justify-content-center">
               <Button onClick={handleSubmit} className="btn-iniciar-login">
                 Iniciar Sesión
               </Button>
