@@ -4,15 +4,14 @@ import { Register } from "../pages/Auth/Register/Register";
 import { Login } from "../pages/Auth/Login/Login";
 import { MsgVerifyEmail } from "../pages/msg-verify-email/MsgVerifyEmail";
 import { MsgToken } from "../pages/msg-token/MsgToken";
-import { Reservations } from "../pages/reservations/Reservations";
+import { GetReservations } from "../pages/Getreservations/GetReservations";
 import { Rutas } from "../pages/rutas/Rutas";
 import { About } from "../pages/about/About";
 import { Faqs } from "../pages/faqs/Faqs";
 import { ResetPassword } from "../pages/Auth/ResetPassword/ResetPassword";
 import { RecoverPassword } from "../pages/Auth/RecoverPassword/RecoverPassword";
 import { MsgRecoverPassword } from "../pages/msg-recoverPassword/MsgRecoverPassword";
-import { OneWayDate } from "../pages/oneWayDate/OneWayDate";
-import { ReturnDate } from "../pages/returnDate/ReturnDate";
+import { SelectDate } from "../pages/SelectDate/SelectDate";
 import { DetailReservation } from "../pages/detailReservation/DetailReservation";
 import { Historical } from "../pages/historical/Historical";
 import { UserReservations } from "../pages/userReservations/UserReservations";
@@ -32,9 +31,9 @@ export const AppRoutes = () => {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
-              <Route path="/reservations" element={<Reservations />}>
-                <Route index element={<OneWayDate />} />
-                <Route path="returnDate" element={<ReturnDate />} />
+              <Route path="/reservations" element={<GetReservations />}>
+                <Route index element={<SelectDate/>} />
+                <Route path="returnDate" element={<SelectDate />} />
                 <Route
                   path="detailReservation"
                   element={<DetailReservation />}

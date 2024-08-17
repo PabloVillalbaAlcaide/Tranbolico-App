@@ -99,6 +99,9 @@ export const UserReservations = () => {
               {hist === "nextReservations" && elem.reservation_type === 1 && (
                 <td onClick={() => handleShow(elem)}>{iconoCancelar}</td>
               )}
+              {hist === "historical" && elem.is_deleted === 1 && (
+                <td style={{backgroundColor:"#e72958bf", color:"white"}}>Cancelada</td>
+              )}
             </tr>
           ))}
         </tbody>
