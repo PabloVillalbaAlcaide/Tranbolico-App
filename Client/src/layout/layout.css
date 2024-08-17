@@ -1,0 +1,18 @@
+/* Layout.css */
+.navbar {
+  height: fit-content;
+}
+
+.container-ppal {
+  min-height: calc(100vh - var(--navbar-height) - var(--footer-height));
+}
+
+.contenedor-footer {
+  height: fit-content;
+}
+
+/* Estilos adicionales para asegurar que las variables CSS se actualicen */
+:root {
+  --navbar-height: 0px;
+  --footer-height: 0px;
+}

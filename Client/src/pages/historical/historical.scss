@@ -1,0 +1,12 @@
+.historical-button {
+  width: 50%;
+  padding-block: 10px;
+  border: none;
+  background-color: #E3B6D4;
+  color: #000000;
+}
+
+.historical-button.active {
+  background-color: #E72957;
+  color: #ffffff;
+}
