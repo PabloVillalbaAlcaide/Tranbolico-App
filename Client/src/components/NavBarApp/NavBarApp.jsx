@@ -18,7 +18,7 @@ export const NavBarApp = () => {
   };
 
   return (
-    <div className="p-0">
+    <div className="p-0 navbar">
       <header
         className="container-fluid d-flex justify-content-center"
         style={{ background: "var(--tranbolico-azul" }}

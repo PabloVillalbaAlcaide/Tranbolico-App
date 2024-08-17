@@ -50,7 +50,7 @@ JOIN route ON reservation.route_id = route.route_id JOIN  province dp ON route.d
 JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
 JOIN province ap ON route.arrival_province_id = ap.province_id JOIN city ac ON route.arrival_city_id = ac.city_id
 AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${userID}
-AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) <= CURRENT_TIMESTAMP`;
+AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) <= NOW()`;
     connection.query(sql, (err, result) => {
       if (err) {
         res.status(500).json(err);
@@ -78,8 +78,39 @@ JOIN route ON reservation.route_id = route.route_id JOIN  province dp ON route.d
 JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
 JOIN province ap ON route.arrival_province_id = ap.province_id JOIN city ac ON route.arrival_city_id = ac.city_id
 AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${userID}
-AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) >= CURRENT_TIMESTAMP`;
+AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) >= NOW()`;
     connection.query(sql, (err, result) => {
+      if (err) {
+        res.status(500).json(err);
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  };
+
+  cancelReservation = (req, res) => {
+    console.log(req.body);
+    const { reservationForCancel } = req.body;
+    const data = [
+      reservationForCancel.user_id,
+      reservationForCancel.reservation_id,
+    ];
+    const sql = `
+    UPDATE reservation
+    SET is_deleted = 1
+    WHERE user_id = ?
+    AND reservation_id = ?
+    AND reservation_type IN (1, 2)
+    AND EXISTS (
+    SELECT 1
+    FROM planning
+    WHERE planning.route_id = reservation.route_id
+    AND planning.planning_id = reservation.planning_id
+    AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) > NOW()
+    );
+    `;
+
+    connection.query(sql, data, (err, result) => {
       if (err) {
         res.status(500).json(err);
       } else {
