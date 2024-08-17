@@ -12,6 +12,7 @@
   font-style: normal;
 }
 
+
 :root {
   --tranbolico-amarillo: #ffd92d;
   --tranbolico-azul: #283583;
@@ -19,6 +20,7 @@
 
 body {
   font-family: "VinaSans", sans-serif;
+ 
 }
 
 .conocenos {
@@ -26,71 +28,117 @@ body {
   font-family: "Akkurat", sans-serif;
   font-size: 3.5rem;
   color: var(--tranbolico-azul);
+  padding: 20px;
+  border-radius: 15px;
+  max-width: 70%;
+  margin: 30px auto 0 auto;
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
 }
 
-.imagen-rabbit {
-  
+.conocenos img {
+  border-radius: 50%; 
+  width: 150px; 
+  height: auto; 
+  margin-left: 20px; 
+}
+.como-funciona {
+  background-color: #f9f9f9; 
+  border-radius: 15px; 
+  margin: 30px auto;
+  max-width: 90%;
 }
 
 .como-funciona h3 {
-  margin-top: 20px;
-  text-align: left;
   color: var(--tranbolico-azul);
-  margin-bottom: 20px;
   font-family: "Akkurat", sans-serif;
+  font-size: 2.5rem; 
+  margin-bottom: 30px;
+  text-align: center; 
+  font-style: italic;
+}
+
+.funciona-content {
+  margin-top: 20px;
 }
 
 .funciona-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px; 
+}
+
+.funciona-point {
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  background-color: var(--tranbolico-azul); 
+  color: white;
+  border-radius: 50%; 
+  width: 40px;
+  height: 40px;
+  margin-right: 15px; 
+}
+
+.funciona-number {
+  font-size: 1 rem; 
+  font-weight: bold; 
+}
+
+.funciona-text {
+  flex: 1;
   color: var(--tranbolico-azul);
-  margin-bottom: 20px;
+  font-style: italic;
 }
 
-.funciona-item h2 {
-  font-size: 1.2em;
-  margin-bottom: 10px;
+.funciona-text h2 {
+  font-size: 1.2rem; 
+  margin-bottom: 10px; 
 }
 
-.funciona-item span {
-  font-size: 1em;
+.funciona-text span {
+  font-size: 1rem; 
 }
+
 
 .Amarillo {
   background-color: var(--tranbolico-amarillo);
   padding: 20px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .Amarillo h3 {
-  
   color: var(--tranbolico-azul);
+  margin-right: 300px; 
   text-align: right; 
-  margin: 0; 
   font-family: "VinaSans-Regular.ttf", system-ui;
   font-size: 3.5rem;
- 
 }
 
 .Amarillo img {
-  max-height: 100px;
-  margin-right: 20px;
+  max-height: 200px;
+  width: auto; 
+  height: auto;
+  margin-left: 700px;
 }
-
 .testimonios {
   background-color: var(--tranbolico-amarillo);
   padding: 20px;
+  margin-bottom: 0; 
 }
 
 .testimonio {
   background-color: white;
   padding: 15px;
   border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 15px;
   color: var(--tranbolico-azul);
-  max-width: 100%; 
-  height: auto; 
-  overflow: hidden; 
+  max-width: 100%;
+  height: auto;
+  overflow: hidden;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -98,6 +146,6 @@ body {
 }
 
 .testimonio p {
-  margin: 0; 
-  line-height: 1.5; 
+  margin: 0;
+  line-height: 1.5;
 }
