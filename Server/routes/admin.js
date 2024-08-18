@@ -1,20 +1,22 @@
 var express = require("express");
 const adminController = require("../controllers/adminController");
-const verifyToken = require("../middlewares/verifyToken");
+const verifyAdmin = require("../middlewares/verifyAdmin");
 var router = express.Router();
 
-const verifyAdmin = (req, res, next) => {
-  if (req.user && req.user_type === 1) {
-    next();
-  } else {
-    res.status(403).send("Aceso denegado: no eres administrador");
-  }
-};
+// const verifyAdmin = (req, res, next) => {
+//   if (req.user && req.user_type === 1) {
+//     next();
+//   } else {
+//     res.status(403).send("Aceso denegado: no eres administrador");
+//   }
+// };
 
-router.get("/admin", verifyToken, verifyAdmin, adminController.getAdmin);
-router.post("/createRoute", verifyToken, verifyAdmin, adminController.createRoute);
-router.put("/editRoute/:id", verifyToken, verifyAdmin, adminController.editRoute);
-router.get("/viewUser", verifyToken, verifyAdmin, adminController.viewUser);
+router.get("/getRoutes", verifyAdmin, adminController.getRoutes);
+router.get("/searchLocations", verifyAdmin, adminController.searchLocations);
+router.post("/addRoute", verifyAdmin, adminController.addRoute);
+router.put("/editRoute", verifyAdmin, adminController.editRoute);
+router.delete("/deleteRoute/:id", verifyAdmin, adminController.deleteRoute);
+router.delete("/disableRoute", verifyAdmin, adminController.disableRoute);
+router.get("/viewUser", verifyAdmin, adminController.viewUser);
 
 module.exports = router;
-
