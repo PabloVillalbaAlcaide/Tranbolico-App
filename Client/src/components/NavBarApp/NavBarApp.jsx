@@ -10,8 +10,7 @@ import { UserAvatar } from "../UserAvatar/UserAvatar";
 export const NavBarApp = () => {
   const navigate = useNavigate();
   const { globalState, setGlobalState } = useContext(AppContext);
-  console.log(globalState);
-
+ 
   const logOut = () => {
     const newGlobalState = { ...globalState };
     delete newGlobalState.user;

@@ -58,11 +58,11 @@ CREATE TABLE planning (
 
 CREATE TABLE reservation(
 	user_id int unsigned NOT NULL,
-    reservation_id int unsigned NOT NULL ,
+    reservation_id int unsigned NOT NULL,
     reservation_type TINYINT NOT NULL, -- 1 ida - 2 vuelta
     route_id int unsigned NOT NULL,
     planning_id int unsigned NOT NULL,    
-    is_deleted BOOLEAN NOT NULL DEFAULT 0,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY(user_id,reservation_id, reservation_type),
     CONSTRAINT fk_reservation_user_id FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_reservation_planning_id FOREIGN KEY (route_id, planning_id) REFERENCES planning (route_id, planning_id) ON DELETE CASCADE ON UPDATE CASCADE

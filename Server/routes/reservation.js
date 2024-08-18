@@ -9,5 +9,6 @@ router.get("/historical/:id", verifyToken, reservationController.historical)
 router.get("/nextReservations/:id", verifyToken, reservationController.nextReservations)
 router.put("/cancelReservation", verifyToken, reservationController.cancelReservation)
 router.get("/getSchedules", verifyToken, reservationController.getSchedules)
+router.post("/setReservation", verifyToken, reservationController.setReservation)
 
 module.exports = router
