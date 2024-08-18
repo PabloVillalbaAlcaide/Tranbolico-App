@@ -9,8 +9,7 @@ import { AppContext } from "../../context/TranbolicoContextProvider";
 export const NavBarApp = () => {
   const navigate = useNavigate();
   const { globalState, setGlobalState } = useContext(AppContext);
-  console.log(globalState);
-
+ 
   const logOut = () => {
     localStorage.removeItem("token");
     setGlobalState();

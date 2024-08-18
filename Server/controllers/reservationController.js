@@ -121,8 +121,13 @@ AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETI
   };
 
   getSchedules = (req, res) => {
-    const { origin_province, origin_city, destination_province, destination_city } = req.query;
-  
+    const {
+      origin_province,
+      origin_city,
+      destination_province,
+      destination_city,
+    } = req.query;
+
     let sql = `SELECT planning.route_id, planning.planning_id, planning.departure_date, planning.departure_time, dp.name AS departure_province_name,
     dc.city_name AS departure_city_name, ap.name AS arrival_province_name, ac.city_name AS arrival_city_name
     FROM planning JOIN route ON planning.route_id = route.route_id JOIN province dp ON route.departure_province_id = dp.province_id
@@ -132,10 +137,50 @@ AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETI
     connection.query(sql, (err, result) => {
       if (err) {
         res.status(500).json(err);
-        return
+        return;
       } else {
         res.status(200).json(result);
-        return
+        return;
+      }
+    });
+  };
+
+  setReservation = (req, res) => {
+    const {
+      user_id,
+      departure_planning_id,
+      departure_route_id,
+      arrival_planning_id,
+      arrival_route_id,
+    } = req.body;
+
+    let sqlMaxId = `SELECT COALESCE(MAX(reservation_id), 0) + 1 AS new_id FROM reservation WHERE reservation_type = 1`;
+    connection.query(sqlMaxId, (err, result) => {
+      if (err) {
+        res.status(500).json(err);
+      } else {
+        console.log(result);
+        
+        let data = [user_id, result[0].new_id,departure_route_id, departure_planning_id];
+        let sql = `INSERT INTO reservation (user_id, reservation_id, reservation_type, route_id, planning_id) 
+               VALUES (?, ?, 1, ?, ?);`;
+        connection.query(sql, data, (err, resultIns) => {
+          if (err) {
+            res.status(500).json(err);
+          } else {
+            data = [user_id, result[0].new_id,arrival_route_id, arrival_planning_id];
+            let sql2 = `INSERT INTO reservation (user_id, reservation_id, reservation_type, route_id, planning_id) 
+                    VALUES (?, ?, 2, ?, ?);`;
+
+            connection.query(sql2, data, (err, resultIns2) => {
+              if (err) {
+                res.status(500).json(err);
+              } else {
+                res.status(200).json(resultIns2);
+              }
+            });
+          }
+        });
       }
     });
   };
