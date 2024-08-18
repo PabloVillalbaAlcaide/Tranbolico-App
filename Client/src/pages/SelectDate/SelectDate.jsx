@@ -3,7 +3,8 @@ import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import TranbolicoDatePicker from "../../components/DatePicker/DatePicker";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import axios from "axios";
-import { Button } from "react-bootstrap";
+import {Container, Row, Col, Button } from 'react-bootstrap';
+import './selectDate.scss'
 
 export const SelectDate = () => {
   const { reservation, setReservation, route } = useOutletContext();
@@ -108,38 +109,48 @@ export const SelectDate = () => {
   };
 
   return (
-    <>
-      <div className="d-flex justify-content-between">
-        <TranbolicoDatePicker
-          date={date}
-          setDate={setDate}
-          planningList={planningList}
-        />
-
-        {date ? (
-          <div>
+<Container fluid className="p-0 m-0 mt-5 mb-5">
+    <Row className="justify-content-center selectDatepicker">
+      <Col xs={12} md={6} className="d-flex flex-column align-items-center w-100 p-0 m-0">
+        <Row className="w-100">
+          <Col xs={4} className="d-flex justify-content-center align-items-center p-0 m-0">
             <p>{date}</p>
-            <div>
-              {planningList.map((elem) => {
-                if (elem.departure_date == date) {
+          </Col>
+          <Col xs={4} className="d-flex justify-content-center align-items-center p-0 m-0">
+            <TranbolicoDatePicker
+              date={date}
+              setDate={setDate}
+              planningList={planningList}
+            />
+          </Col>
+          <Col xs={4} className="d-flex flex-column justify-content-center align-items-center p-0 m-0">
+            {date ? 
+              planningList.map((elem) => {
+                if (elem.departure_date === date) {
                   return (
-                    <button
+                    <Button
                       key={elem.planning_id}
                       onClick={() => setPlanning(elem)}
+                      className="m-2"
                     >
                       {elem.departure_time}
-                    </button>
+                    </Button>
                   );
                 }
-              })}
-            </div>
-          </div>
-        ) : null}
+              })
+            : ""}
+          </Col>
+        </Row>
+      </Col>
+    </Row>
 
-        <Button onClick={nextStep}>Continuar</Button>
-        <Button onClick={() => navigate(-1)}>Atras</Button>
-        <Button onClick={() => navigate("/")}>Cancelar</Button>
-      </div>
-    </>
+    <Row className="justify-content-center mt-3">
+      <Col xs={12} md={4} className="d-flex justify-content-around p-0 m-0">
+        <Button onClick={nextStep} className="btn btn-success">Continuar</Button>
+        <Button onClick={() => navigate(-1)} className="btn btn-warning">Atras</Button>
+        <Button onClick={() => navigate("/")} className="btn btn-danger">Cancelar</Button>
+      </Col>
+    </Row>
+</Container>
   );
 };
