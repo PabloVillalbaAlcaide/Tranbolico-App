@@ -22,7 +22,7 @@ class AdminController {
     connection.query(sql, (err, result) => {
       if (err) {
         if (!res.headersSent) {
-          res.status(500).json(err);
+          return  res.status(500).json(err);
         }
       } else {
         if (!res.headersSent) {
@@ -39,7 +39,7 @@ class AdminController {
 
     connection.query(sql, [searchTerm, searchTerm], (err, results) => {
       if (err) {
-        return res
+       return res
           .status(500)
           .json({ error: "Error en la búsqueda de ubicaciones" });
       }

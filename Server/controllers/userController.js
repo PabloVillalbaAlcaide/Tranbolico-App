@@ -7,6 +7,7 @@ const sendMailRecover = require("../services/emailServiceRecoverPassword");
 const tokenGenerator = require("../helpers/tokenGenerator");
 const { encryptToken, decryptToken } = require("../helpers/encryptToken");
 const generator = require("generate-password");
+const delFile = require("../helper/delFile");
 
 const tranbolicAvatar = [
   "/tram1.png",
@@ -39,16 +40,16 @@ class UserController {
     let sql = `SELECT * FROM user where email = "${email}"`;
     connection.query(sql, (error, result) => {
       if (error) {
-        res.status(500).json(error);
+        return res.status(500).json(error);
       } else {
         if (!result || result.length !== 0) {
-          res.status(401).json("usuario ya existe");
+          return res.status(401).json("usuario ya existe");
         } else {
           // si no existe encripta contraseña
           let saltRounds = 10;
           bcrypt.hash(password, saltRounds, (error, hash) => {
             if (error) {
-              res.status(500).json(error);
+              return res.status(500).json(error);
             } else {
               let data = [
                 name,
@@ -70,7 +71,7 @@ class UserController {
               (SELECT city_id FROM city WHERE city_name = ? AND province_id = (SELECT province_id FROM province WHERE name = ?)));`;
               connection.query(sql2, data, (errorIns, resultIns) => {
                 if (errorIns) {
-                  res.status(500).json(errorIns);
+                  return res.status(500).json(errorIns);
                 } else {
                   // Genera el token para verificación de registro
                   const registerToken = tokenGenerator(
@@ -100,27 +101,27 @@ class UserController {
     let sql = `SELECT * FROM user WHERE email='${email}' AND is_disabled = 0 AND is_validated = 1`;
     connection.query(sql, (err, result) => {
       if (err) {
-        res.status(401).json("Credenciales incorrectas");
+        return res.status(401).json("Credenciales incorrectas");
       } else {
         if (!result || result.length === 0) {
-          res.status(401).json("Credenciales incorrectas");
+          return res.status(401).json("Credenciales incorrectas");
         } else {
           const hash = result[0].password;
           bcrypt.compare(password, hash, (errHash, resHash) => {
             if (errHash) {
-              resHash.status(500).json(errHash);
+              return resHash.status(500).json(errHash);
             } else {
               if (resHash) {
                 let data = result[0].user_id;
                 let sql2 = "SELECT * FROM user WHERE user_id = ?";
                 connection.query(sql2, data, (errSelect, resultSelect) => {
                   if (errSelect) {
-                    res
+                    return res
                       .status(401)
                       .json({ status: 401, message: "No autorizado" });
                   } else {
                     if (!resultSelect || resultSelect.length === 0) {
-                      res.status(401).json("No autorizado");
+                      return res.status(401).json("No autorizado");
                     } else {
                       let token = tokenGenerator(
                         resultSelect[0].user_id,
@@ -129,7 +130,7 @@ class UserController {
                       );
                       //Encripta el token
                       token = encryptToken(token, process.env.SECRET_KEY_3);
-                      res.status(200).json({ resultSelect, token });
+                      return res.status(200).json({ resultSelect, token });
                     }
                   }
                 });
@@ -159,22 +160,28 @@ class UserController {
     //Verifica el token
     jwt.verify(registerToken, process.env.SECRET_KEY_2, (error, decode) => {
       if (error) {
-        res.status(401).json({ status: 401, message: "No autorizado 2" });
+        return res
+          .status(401)
+          .json({ status: 401, message: "No autorizado 2" });
       } else {
         console.log(decode);
         let data = [decode.id];
         let sql = `UPDATE user SET is_validated = 1 WHERE user_id = ?`;
         connection.query(sql, data, (err, result) => {
           if (err) {
-            res.status(401).json({ status: 401, message: "No autorizado" });
+            return res
+              .status(401)
+              .json({ status: 401, message: "No autorizado" });
           } else {
             let sql2 = "SELECT * FROM user WHERE user_id = ?";
             connection.query(sql2, data, (errSelect, resultSelect) => {
               if (errSelect) {
-                res.status(401).json({ status: 401, message: "No autorizado" });
+                return res
+                  .status(401)
+                  .json({ status: 401, message: "No autorizado" });
               } else {
                 if (!resultSelect || resultSelect.length === 0) {
-                  res.status(401).json("No autorizado");
+                  return res.status(401).json("No autorizado");
                 } else {
                   let token = tokenGenerator(
                     resultSelect[0].user_id,
@@ -210,9 +217,9 @@ class UserController {
     WHERE user.user_id = ${id}`;
     connection.query(sql, (err, result) => {
       if (err) {
-        res.status(500).json(err);
+        return res.status(500).json(err);
       } else if (result.length === 0) {
-        res.status(401).json("No autorizado");
+        return res.status(401).json("No autorizado");
       } else {
         res.status(200).json(result);
       }
@@ -278,12 +285,13 @@ class UserController {
 
       connection.query(sql, data, (err, result) => {
         if (err) {
-          res.status(500).json(err);
+          delFile(req.file.filename, "users");
+          return res.status(500).json(err);
         } else {
           if (req.file) {
-            res.status(200).json({ result, image: req.file.filename });
+            return res.status(200).json({ result, image: req.file.filename });
           } else {
-            res.status(200).json({ result });
+            return res.status(200).json({ result });
           }
         }
       });
@@ -302,9 +310,9 @@ class UserController {
       console.log("Hasta aqui 1");
 
       if (err) {
-        res.status(500).json(err);
+        return res.status(500).json(err);
       } else if (result.length === 0) {
-        res.status(401).json("No autorizado");
+        return res.status(401).json("No autorizado");
       } else {
         //Genera la contraseña de recuperacion
         const password = generator.generate({
@@ -328,7 +336,7 @@ class UserController {
         let saltRounds = 10;
         bcrypt.hash(password, saltRounds, (error, hash) => {
           if (error) {
-            res.status(500).json(error);
+            return res.status(500).json(error);
           } else {
             let data = [hash, result[0].user_id];
             console.log(result[0].user_id);
@@ -336,7 +344,7 @@ class UserController {
               "UPDATE user SET password = ?, is_auto_generated = 1 WHERE user_id = ?";
             connection.query(sql2, data, (err, resultUpdate) => {
               if (err) {
-                res.status(500).json(err);
+                return res.status(500).json(err);
               } else {
                 sendMailRecover(email, result[0].name, password, hashToken);
                 res.status(200).json(resultUpdate);
@@ -361,40 +369,40 @@ class UserController {
     let sql = `SELECT * FROM user WHERE user_id='${id}' AND is_disabled = 0 AND is_validated = 1`;
     connection.query(sql, (err, result) => {
       if (err) {
-        res.status(401).json("Credenciales incorrectas");
+        return res.status(401).json("Credenciales incorrectas");
       } else {
         if (!result || result.length === 0) {
-          res.status(401).json("Credenciales incorrectas");
+          return res.status(401).json("Credenciales incorrectas");
         } else {
           const hash = result[0].password;
           bcrypt.compare(oldPassword, hash, (errHash, resHash) => {
             if (errHash) {
-              resHash.status(500).json(errHash);
+              return resHash.status(500).json(errHash);
             } else {
               console.log("22222");
               if (resHash) {
                 let saltRounds = 10;
                 bcrypt.hash(password, saltRounds, (error, hash) => {
                   if (error) {
-                    res.status(500).json(error);
+                    return res.status(500).json(error);
                   } else {
                     let data = [hash, id];
                     let sql2 =
                       "UPDATE user SET password = ?, is_auto_generated = 0 WHERE user_id = ?";
                     connection.query(sql2, data, (errSelect, resultSelect) => {
                       if (errSelect) {
-                        res
+                        return res
                           .status(401)
                           .json({ status: 401, message: "No autorizado" });
                       } else {
                         if (!resultSelect || resultSelect.length === 0) {
-                          res.status(401).json("No autorizado");
+                          return res.status(401).json("No autorizado");
                         } else {
                           const resultF = result[0].is_auto_generated;
                           if (result[0].is_auto_generated === 1) {
-                            res.status(200).json({ resultF });
+                            return res.status(200).json({ resultF });
                           } else {
-                            res.status(200).json({ resultF, hash });
+                            return res.status(200).json({ resultF, hash });
                           }
                         }
                       }
