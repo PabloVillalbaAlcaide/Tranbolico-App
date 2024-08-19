@@ -8,7 +8,7 @@ class ReservationController {
     let sql = `SELECT city.city_name, province.name FROM city, province WHERE city.province_id = province.province_id AND (city.city_name LIKE "${search}%" OR province.name LIKE "${search}%")`;
     connection.query(sql, (err, result) => {
       if (err) {
-        res.status(500).json(err);
+        return res.status(500).json(err);
       } else {
         res.status(200).json(result);
       }
@@ -21,9 +21,9 @@ class ReservationController {
     JOIN province ON city.province_id = province.province_id WHERE route.departure_city_id = (SELECT city_id FROM city WHERE city_name = '${city}' AND province_id = (SELECT province_id FROM province WHERE name = '${province}')) AND (province.name LIKE '${search}%' OR city.city_name LIKE '${search}%')`;
     connection.query(sql, (err, result) => {
       if (err) {
-        res.status(500).json(err);
+        return res.status(500).json(err);
       } else {
-        res.status(200).json(result);
+         res.status(200).json(result);
       }
     });
   };
@@ -54,7 +54,7 @@ AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${use
 AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) <= NOW() OR reservation.is_deleted = 1`;
     connection.query(sql, (err, result) => {
       if (err) {
-        res.status(500).json(err);
+        return res.status(500).json(err);
       } else {
         res.status(200).json(result);
       }
@@ -82,7 +82,7 @@ AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${use
 AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) >= NOW() AND reservation.is_deleted = 0`;
     connection.query(sql, (err, result) => {
       if (err) {
-        res.status(500).json(err);
+        return res.status(500).json(err);
       } else {
         res.status(200).json(result);
       }
@@ -113,7 +113,7 @@ AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETI
 
     connection.query(sql, data, (err, result) => {
       if (err) {
-        res.status(500).json(err);
+        return res.status(500).json(err);
       } else {
         res.status(200).json(result);
       }
@@ -155,7 +155,7 @@ AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETI
     let sqlMaxId = `SELECT COALESCE(MAX(reservation_id), 0) + 1 AS new_id FROM reservation WHERE reservation_type = 1`;
     connection.query(sqlMaxId, (err, result) => {
       if (err) {
-        res.status(500).json(err);
+        return res.status(500).json(err);
       } else {
         console.log(result);
         
@@ -164,7 +164,7 @@ AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETI
                VALUES (?, ?, 1, ?, ?);`;
         connection.query(sql, data, (err, resultIns) => {
           if (err) {
-            res.status(500).json(err);
+            return res.status(500).json(err);
           } else {
             data = [user_id, result[0].new_id,arrival_route_id, arrival_planning_id];
             let sql2 = `INSERT INTO reservation (user_id, reservation_id, reservation_type, route_id, planning_id) 
@@ -172,7 +172,7 @@ AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETI
 
             connection.query(sql2, data, (err, resultIns2) => {
               if (err) {
-                res.status(500).json(err);
+                return  res.status(500).json(err);
               } else {
                 res.status(200).json(resultIns2);
               }
