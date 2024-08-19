@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
 import axios from "axios";
-import { Button, Table } from "react-bootstrap";
-import AddNewPlanningModal from "../AddNewPlanningModal/AddNewPlanningModal"; // Ajusta la ruta correcta
 
-const ViewAddPlanning = () => {
+import { Button, Table } from 'react-bootstrap';
+import {AddNewPlanningModal} from "../../../components/Admin/AddNewPlanningModal/AddNewPlanningModal"
+
+export const ViewAddPlanning = () => {
   const { globalState, loading } = useContext(AppContext);
   const [planningList, setPlanningList] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -28,7 +29,7 @@ const ViewAddPlanning = () => {
 
   const handleSavePlanning = (newPlanning) => {
     // Aquí puedes manejar la lógica para guardar el nuevo planning
-    console.log("Nuevo planning:", newPlanning);
+    console.log('Nuevo planning:', newPlanning);
     // Actualiza la lista de plannings si es necesario
   };
 
@@ -70,6 +71,5 @@ const ViewAddPlanning = () => {
       />
     </div>
   );
-};
 
-export default ViewAddPlanning;
+};
