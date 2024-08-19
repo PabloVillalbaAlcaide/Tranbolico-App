@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Modal, Button, Form, Dropdown } from "react-bootstrap";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
 
@@ -10,6 +10,7 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
   const [selectedRoute, setSelectedRoute] = useState({});
   const { globalState } = useContext(AppContext);
   const [routesList, setRoutesList] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const getPlanningRoutes = async (value) => {
     try {
@@ -21,6 +22,7 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
       );
 
       setRoutesList(res.data);
+      setShowDropdown(true);
     } catch (error) {
       console.log(error);
       // Consider showing an error message to the user
@@ -31,7 +33,11 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
     const { name, value } = e.target;
     switch (name) {
       case "route":
-        getPlanningRoutes(value);
+        if (value === "") {
+          setShowDropdown(false);
+        } else {
+          getPlanningRoutes(value);
+        }
         setRoute(value);
         break;
       case "date":
@@ -54,24 +60,17 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
     setRoute(
       `${routeItem.departure_city_name} - ${routeItem.arrival_city_name}`
     );
+    setShowDropdown(false);
   };
 
-  const handleSave = async () => {
-    try {
-      const res = await axios.post(
-        "http://localhost:4000/admin/addPlanning",
-        selectedRoute,
-        {
-          headers: { Authorization: `Bearer ${globalState.token}` },
-        }
-      );
-      console.log("Nuevo planning guardado:", res.data);
-      onSave(selectedRoute);
-      onHide(); // Cierra el modal
-    } catch (error) {
-      console.log("Error al guardar el nuevo planning:", error);
-      // Consider showing an error message to the user
-    }
+  const handleSave = () => {
+    const newPlanning = {
+      ...selectedRoute,
+      departure_date: date,
+      departure_time: time,
+    };
+    onSave(newPlanning);
+    onHide(); // Cierra el modal
   };
 
   return (
@@ -90,7 +89,7 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
               onChange={handleChange}
               name="route"
             />
-            {routesList.length > 0 && (
+            {showDropdown && routesList.length > 0 && (
               <Dropdown.Menu show>
                 {routesList.map((routeItem) => (
                   <Dropdown.Item
