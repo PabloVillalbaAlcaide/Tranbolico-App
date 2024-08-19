@@ -2,8 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import axios from "axios";
-import { Table } from "react-bootstrap";
+import { Col, Container, Row, Table } from "react-bootstrap";
 import { ModalApp } from "../../components/modal/Modal";
+import { UserAvatar } from "../../components/UserAvatar/UserAvatar";
 
 const iconoCancelar = (
   <svg
@@ -71,41 +72,41 @@ export const UserReservations = () => {
 
   return (
     <>
-      <Table striped bordered hover responsive>
-        <thead className="text-center">
-          <tr>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>Origen</th>
-            <th>Destino</th>
-            <th>Complementos</th>
-            <th>Precio</th>
-            {hist === "nextReservations" && <th>Cancelar</th>}
-          </tr>
-        </thead>
-        <tbody>
-          {reservationsList.map((elem, index) => (
-            <tr key={index}>
-              <td>{elem.departure_day}</td>
-              <td>{elem.departure_time}</td>
-              <td>
-                {elem.departure_city_name} - {elem.departure_province_name}
-              </td>
-              <td>
-                {elem.arrival_city_name} - {elem.arrival_province_name}
-              </td>
-              <td>Guía Turístico</td>
-              <td>12€</td>
-              {hist === "nextReservations" && elem.reservation_type === 1 && (
-                <td onClick={() => handleShow(elem)}>{iconoCancelar}</td>
-              )}
-              {hist === "historical" && elem.is_deleted === 1 && (
-                <td style={{backgroundColor:"#e72958bf", color:"white"}}>Cancelada</td>
-              )}
+        <Table striped bordered hover responsive>
+          <thead className="text-center">
+            <tr>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Origen</th>
+              <th>Destino</th>
+              <th>Complementos</th>
+              <th>Precio</th>
+              {hist === "nextReservations" && <th>Cancelar</th>}
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {reservationsList.map((elem, index) => (
+              <tr key={index}>
+                <td>{elem.departure_day}</td>
+                <td>{elem.departure_time}</td>
+                <td>
+                  {elem.departure_city_name} - {elem.departure_province_name}
+                </td>
+                <td>
+                  {elem.arrival_city_name} - {elem.arrival_province_name}
+                </td>
+                <td>Guía Turístico</td>
+                <td>12€</td>
+                {hist === "nextReservations" && elem.reservation_type === 1 && (
+                  <td onClick={() => handleShow(elem)}>{iconoCancelar}</td>
+                )}
+                {hist === "historical" && elem.is_deleted === 1 && (
+                  <td style={{backgroundColor:"#e72958bf", color:"white"}}>Cancelada</td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </Table>
 
       <ModalApp
         element={element}
