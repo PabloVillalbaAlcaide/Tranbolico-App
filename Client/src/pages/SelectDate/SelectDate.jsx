@@ -3,8 +3,8 @@ import { useLocation, useNavigate, useOutletContext } from "react-router-dom";
 import TranbolicoDatePicker from "../../components/DatePicker/DatePicker";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import axios from "axios";
-import {Container, Row, Col, Button } from 'react-bootstrap';
-import './selectDate.scss'
+import { Container, Row, Col, Button } from "react-bootstrap";
+import "./selectDate.scss";
 
 export const SelectDate = () => {
   const { reservation, setReservation, route } = useOutletContext();
@@ -109,6 +109,7 @@ export const SelectDate = () => {
   };
 
   return (
+
 <Container fluid className="p-0 m-0 mt-5 mb-5">
     <Row className="justify-content-center selectDatepicker">
       <Col xs={12} md={6} className="d-flex flex-column align-items-center w-100 p-0 m-0">
@@ -144,13 +145,19 @@ export const SelectDate = () => {
       </Col>
     </Row>
 
-    <Row className="justify-content-center mt-3">
-      <Col xs={12} md={4} className="d-flex justify-content-around p-0 m-0">
-        <Button onClick={nextStep} className="btn btn-success">Continuar</Button>
-        <Button onClick={() => navigate(-1)} className="btn btn-warning">Atras</Button>
-        <Button onClick={() => navigate("/")} className="btn btn-danger">Cancelar</Button>
-      </Col>
-    </Row>
-</Container>
+      <Row className="justify-content-center mt-3">
+        <Col xs={12} md={4} className="d-flex justify-content-around p-0 m-0">
+          <Button onClick={nextStep} className="btn btn-success">
+            Continuar
+          </Button>
+          <Button onClick={() => navigate(-1)} className="btn btn-warning">
+            Atras
+          </Button>
+          <Button onClick={() => navigate("/")} className="btn btn-danger">
+            Cancelar
+          </Button>
+        </Col>
+      </Row>
+    </Container>
   );
 };

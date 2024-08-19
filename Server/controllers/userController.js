@@ -8,6 +8,17 @@ const tokenGenerator = require("../helpers/tokenGenerator");
 const { encryptToken, decryptToken } = require("../helpers/encryptToken");
 const generator = require("generate-password");
 
+const tranbolicAvatar = [
+  "/tram1.png",
+  "/tram2.png",
+  "/tram3.png",
+  "/tram4.png",
+  "/tram5.png",
+  "/tram6.png",
+  "/tram7.png",
+  "/tram8.png",
+  "/tram9.png",
+];
 class UserController {
   //Controlador que realiza el registro de usuario
   registerUser = (req, res) => {
@@ -22,7 +33,8 @@ class UserController {
       province,
       city,
     } = req.body;
-
+    const randomIndex = Math.floor(Math.random() * tranbolicAvatar.length);
+    let avatar = tranbolicAvatar[randomIndex];
     //Comprueba si existe el usuario
     let sql = `SELECT * FROM user where email = "${email}"`;
     connection.query(sql, (error, result) => {
@@ -46,14 +58,15 @@ class UserController {
                 email,
                 hash,
                 phone_number,
+                avatar,
                 province,
                 city,
                 province,
               ];
               //Insert del usuario en la base de datos, obteniendo el id de provincia y ciudad de sus respectivas tablas
-              let sql2 = `INSERT INTO user (name, surname, birthdate, genre, email, password, phone_number, province_id, city_id)
-              VALUES (?,?,?,?,?,?,?, 
-              (SELECT province_id FROM province WHERE name = ?), 
+              let sql2 = `INSERT INTO user (name, surname, birthdate, genre, email, password, phone_number, avatar, province_id, city_id)
+              VALUES (?,?,?,?,?,?,?,?,
+              (SELECT province_id FROM province WHERE name = ?),
               (SELECT city_id FROM city WHERE city_name = ? AND province_id = (SELECT province_id FROM province WHERE name = ?)));`;
               connection.query(sql2, data, (errorIns, resultIns) => {
                 if (errorIns) {
@@ -65,7 +78,6 @@ class UserController {
                     process.env.SECRET_KEY_2,
                     1
                   );
-
                   //Encripta el token y hace el envio
                   const hashToken = encryptToken(
                     registerToken,
@@ -208,57 +220,76 @@ class UserController {
   };
 
   editOneUser = (req, res) => {
-    const {
-      user_id,
-      name,
-      surname,
-      email,
-      genre,
-      phone_number,
-      province_name,
-      city_name,
-    } = JSON.parse(req.body.editUser);
-    let data = [
-      name,
-      surname,
-      email,
-      genre,
-      phone_number,
-      province_name,
-      city_name,
-      province_name,
-      user_id,
-    ];
-    let sql =
-      "UPDATE user SET name = ?, surname = ?, email = ?, genre = ?, phone_number = ?, province_id = (SELECT province_id FROM province WHERE name = ?), city_id = (SELECT city_id FROM city WHERE city_name = ? AND province_id = (SELECT province_id FROM province WHERE name = ?)) WHERE user_id = ?";
-
-    if (req.file != undefined) {
-      data = [
+    try {
+      const {
+        user_id,
         name,
         surname,
         email,
         genre,
         phone_number,
-        province,
-        city,
-        province,
-        req.file.filename,
+        province_name,
+        city_name,
+      } = JSON.parse(req.body.editedUser);
+
+      let data = [
+        name,
+        surname,
+        email,
+        genre,
+        phone_number,
+        province_name,
+        city_name,
+        province_name,
         user_id,
       ];
-      sql =
-        "UPDATE user SET name = ?, surname = ?, email = ?, genre = ?, phone_number = ?, province_id = (SELECT province_id FROM province WHERE name = ?), city_id = (SELECT city_id FROM city WHERE city_name = ? AND province_id = (SELECT province_id FROM province WHERE name = ?)), avatar = ? WHERE user_id = ?";
-    }
-    connection.query(sql, data, (err, result) => {
-      if (err) {
-        res.status(500).json(err);
-      } else {
-        if (req.file) {
-          res.status(200).json({ result, image: req.file.filename });
-        } else {
-          res.status(200).json({ result });
-        }
+
+      let sql = `
+            UPDATE user 
+            SET name = ?, surname = ?, email = ?, genre = ?, phone_number = ?, 
+                province_id = (SELECT province_id FROM province WHERE name = ?), 
+                city_id = (SELECT city_id FROM city WHERE city_name = ? AND province_id = (SELECT province_id FROM province WHERE name = ?)) 
+            WHERE user_id = ?
+        `;
+
+      if (req.file) {
+        data = [
+          name,
+          surname,
+          email,
+          genre,
+          phone_number,
+          province_name,
+          city_name,
+          province_name,
+          req.file.filename,
+          user_id,
+        ];
+
+        sql = `
+                UPDATE user 
+                SET name = ?, surname = ?, email = ?, genre = ?, phone_number = ?, 
+                    province_id = (SELECT province_id FROM province WHERE name = ?), 
+                    city_id = (SELECT city_id FROM city WHERE city_name = ? AND province_id = (SELECT province_id FROM province WHERE name = ?)), 
+                    avatar = ? 
+                WHERE user_id = ?
+            `;
       }
-    });
+
+      connection.query(sql, data, (err, result) => {
+        if (err) {
+          res.status(500).json(err);
+        } else {
+          if (req.file) {
+            res.status(200).json({ result, image: req.file.filename });
+          } else {
+            res.status(200).json({ result });
+          }
+        }
+      });
+    } catch (error) {
+      res.status(400).json(error);
+    }
   };
 
   recoverPassword = (req, res) => {

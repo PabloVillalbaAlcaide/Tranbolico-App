@@ -5,14 +5,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Nav, Navbar } from "react-bootstrap";
 import { useContext } from "react";
 import { AppContext } from "../../context/TranbolicoContextProvider";
+import { UserAvatar } from "../UserAvatar/UserAvatar";
 
 export const NavBarApp = () => {
   const navigate = useNavigate();
   const { globalState, setGlobalState } = useContext(AppContext);
- 
+
   const logOut = () => {
+    const newGlobalState = { ...globalState };
+    delete newGlobalState.user;
+    delete newGlobalState.token;
+
     localStorage.removeItem("token");
-    setGlobalState();
+    setGlobalState(newGlobalState);
     navigate("/");
   };
 
@@ -87,10 +92,18 @@ export const NavBarApp = () => {
                         className="avatar-user text-center"
                         onClick={() => navigate("/profile")}
                       >
-                        <p className="text-danger">Imagen usuario</p>
+
+                        <UserAvatar user={globalState.user} size={50} />
+
+                        {/*<p className="text-danger">Imagen usuario</p>*/}
                       </div>
-                      <div className="avatar-user text-center" onClick={() => navigate("/profile")}>
-                        <p className="text-white fw-bold">{globalState.user?.name} {globalState.user?.surname}</p>
+                      <div
+                        className="avatar-user text-center"
+                        onClick={() => navigate("/profile")}
+                      >
+                        <p className="text-white fw-bold">
+                          {globalState.user?.name} {globalState.user?.surname}
+                        </p>
                       </div>
                       <div>
                         <Button

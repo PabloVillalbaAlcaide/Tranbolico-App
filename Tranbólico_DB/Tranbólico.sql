@@ -34,7 +34,7 @@ CREATE TABLE user(
     user_type TINYINT NOT NULL DEFAULT 2,
     CONSTRAINT fk_user_city_id FOREIGN KEY (province_id, city_id) REFERENCES city (province_id, city_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
+SELECT * FROM user;
 CREATE TABLE route(
 	route_id int unsigned NOT NULL PRIMARY KEY auto_increment,
 	departure_province_id TINYINT unsigned NOT NULL,
