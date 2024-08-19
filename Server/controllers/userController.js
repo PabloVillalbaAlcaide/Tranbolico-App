@@ -8,6 +8,17 @@ const tokenGenerator = require("../helpers/tokenGenerator");
 const { encryptToken, decryptToken } = require("../helpers/encryptToken");
 const generator = require("generate-password");
 
+const tranbolicAvatar = [
+  "/tram1.png",
+  "/tram2.png",
+  "/tram3.png",
+  "/tram4.png",
+  "/tram5.png",
+  "/tram6.png",
+  "/tram7.png",
+  "/tram8.png",
+  "/tram9.png",
+];
 class UserController {
   //Controlador que realiza el registro de usuario
   registerUser = (req, res) => {
@@ -22,7 +33,8 @@ class UserController {
       province,
       city,
     } = req.body;
-
+    const randomIndex = Math.floor(Math.random() * tranbolicAvatar.length);
+    let avatar = tranbolicAvatar[randomIndex];
     //Comprueba si existe el usuario
     let sql = `SELECT * FROM user where email = "${email}"`;
     connection.query(sql, (error, result) => {
@@ -46,14 +58,15 @@ class UserController {
                 email,
                 hash,
                 phone_number,
+                avatar,
                 province,
                 city,
                 province,
               ];
               //Insert del usuario en la base de datos, obteniendo el id de provincia y ciudad de sus respectivas tablas
-              let sql2 = `INSERT INTO user (name, surname, birthdate, genre, email, password, phone_number, province_id, city_id)
-              VALUES (?,?,?,?,?,?,?, 
-              (SELECT province_id FROM province WHERE name = ?), 
+              let sql2 = `INSERT INTO user (name, surname, birthdate, genre, email, password, phone_number, avatar, province_id, city_id)
+              VALUES (?,?,?,?,?,?,?,?,
+              (SELECT province_id FROM province WHERE name = ?),
               (SELECT city_id FROM city WHERE city_name = ? AND province_id = (SELECT province_id FROM province WHERE name = ?)));`;
               connection.query(sql2, data, (errorIns, resultIns) => {
                 if (errorIns) {
@@ -65,7 +78,6 @@ class UserController {
                     process.env.SECRET_KEY_2,
                     1
                   );
-
                   //Encripta el token y hace el envio
                   const hashToken = encryptToken(
                     registerToken,
