@@ -92,7 +92,9 @@ export const NavBarApp = () => {
                         className="avatar-user text-center"
                         onClick={() => navigate("/profile")}
                       >
+
                         <UserAvatar user={globalState.user} size={50} />
+
                         {/*<p className="text-danger">Imagen usuario</p>*/}
                       </div>
                       <div
