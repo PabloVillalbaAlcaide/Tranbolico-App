@@ -20,5 +20,11 @@ router.patch("/disableRoute", verifyAdmin, adminController.disableRoute);
 router.get("/getPlanning", verifyAdmin, adminController.getPlanning);
 router.get("/getPlanningRoutes", verifyAdmin, adminController.getPlanningRoutes);
 router.get("/viewUser", verifyAdmin, adminController.viewUser);
+router.get("/getPlanning", verifyAdmin, adminController.getPlanning);
+router.get(
+  "/getPlanningRoutes",
+  verifyAdmin,
+  adminController.getPlanningRoutes
+);
 
 module.exports = router;

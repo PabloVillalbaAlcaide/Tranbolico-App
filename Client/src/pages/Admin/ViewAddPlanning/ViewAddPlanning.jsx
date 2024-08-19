@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
 import axios from "axios";
+
 import { Button, Table } from 'react-bootstrap';
 import {AddNewPlanningModal} from "../../../components/Admin/AddNewPlanningModal/AddNewPlanningModal"
 
@@ -70,4 +71,5 @@ export const ViewAddPlanning = () => {
       />
     </div>
   );
+
 };
