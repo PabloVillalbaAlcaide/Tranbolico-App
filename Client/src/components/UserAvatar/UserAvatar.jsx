@@ -1,4 +1,5 @@
-import React from 'react';
+import './userAvatar.scss'
+
 export const UserAvatar = ({ user, size = 50 }) => {
   const avatarStyle = {
     width: `${size}px`,
@@ -17,6 +18,7 @@ export const UserAvatar = ({ user, size = 50 }) => {
           alt="avatar"
           width={size}
           height={size}
+          className='imagen-avatar'
         />
         </div>
     </>

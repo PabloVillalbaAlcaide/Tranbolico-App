@@ -10,7 +10,7 @@ import { UserAvatar } from "../UserAvatar/UserAvatar";
 export const NavBarApp = () => {
   const navigate = useNavigate();
   const { globalState, setGlobalState } = useContext(AppContext);
- 
+
   const logOut = () => {
     const newGlobalState = { ...globalState };
     delete newGlobalState.user;
@@ -92,7 +92,9 @@ export const NavBarApp = () => {
                         className="avatar-user text-center"
                         onClick={() => navigate("/profile")}
                       >
-                        <UserAvatar user={globalState.user} size={70} />
+
+                        <UserAvatar user={globalState.user} size={50} />
+
                         {/*<p className="text-danger">Imagen usuario</p>*/}
                       </div>
                       <div

@@ -1,6 +1,15 @@
-.avatar-circular {
-  border: 1px solid;
-  border-radius: 50%;
-  width: 150px;
-  height: 150px;
+.div-profile {
+  position: relative;
+  .skater-icon {
+    position: absolute;
+    top: 0px;
+    left: 350px;
+    transform: rotate(45deg);
+  }
+  .rabbit-icon {
+    position: absolute;
+    bottom: -100px;
+    right: 350px;
+    transform: rotate(315deg);
+  }
 }
