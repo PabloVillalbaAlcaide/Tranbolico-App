@@ -24,7 +24,7 @@ import Layout from "../layout/Layout";
 import { Admin } from "../pages/Admin/Admin/Admin";
 import { ViewUserAdmin } from "../pages/Admin/ViewUserAdmin/ViewUserAdmin";
 import { ViewEditRoute } from "../pages/Admin/ViewEditRoute/ViewEditRoute";
-import ViewAddPlanning from "../pages/Admin/ViewAddPlanning/ViewAddPlanning";
+import { ViewAddPlanning } from "../pages/Admin/ViewAddPlanning/ViewAddPlanning";
 
 export const AppRoutes = () => {
   const { loading } = useContext(AppContext);

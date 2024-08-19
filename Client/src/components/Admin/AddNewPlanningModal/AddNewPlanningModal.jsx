@@ -7,10 +7,11 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
   const [route, setRoute] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [selectedRoute, setSelectedRoute] = useState({});
   const { globalState } = useContext(AppContext);
   const [routesList, setRoutesList] = useState([]);
 
-   const getPlanningRoutes = async (value) => {
+  const getPlanningRoutes = async (value) => {
     try {
       const res = await axios.get(
         `http://localhost:4000/admin/getPlanningRoutes?search=${value}`,
@@ -18,6 +19,7 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
       );
+
       setRoutesList(res.data);
     } catch (error) {
       console.log(error);
@@ -28,14 +30,14 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     switch (name) {
-      case 'route':
-        getPlanningRoutes(value)
+      case "route":
+        getPlanningRoutes(value);
         setRoute(value);
         break;
-      case 'date':
+      case "date":
         setDate(value);
         break;
-      case 'time':
+      case "time":
         setTime(value);
         break;
       default:
@@ -44,24 +46,30 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
   };
 
   const handleSelectRoute = (routeItem) => {
-    setRoute(`${routeItem.departure_city_name} - ${routeItem.arrival_city_name}`);
+    setSelectedRoute({
+      ...routeItem,
+      departure_date: date,
+      departure_time: time,
+    });
+    setRoute(
+      `${routeItem.departure_city_name} - ${routeItem.arrival_city_name}`
+    );
   };
 
   const handleSave = async () => {
     try {
-      const newPlanning = { route, date, time };
       const res = await axios.post(
         "http://localhost:4000/admin/addPlanning",
-        newPlanning,
+        selectedRoute,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
       );
-      console.log('Nuevo planning guardado:', res.data);
-      onSave(newPlanning);
+      console.log("Nuevo planning guardado:", res.data);
+      onSave(selectedRoute);
       onHide(); // Cierra el modal
     } catch (error) {
-      console.log('Error al guardar el nuevo planning:', error);
+      console.log("Error al guardar el nuevo planning:", error);
       // Consider showing an error message to the user
     }
   };
