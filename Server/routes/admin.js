@@ -26,10 +26,8 @@ router.get(
   verifyAdmin,
   adminController.getPlanningRoutes
 );
-router.post(
-  "/addPlanning",
-  verifyAdmin,
-  adminController.addPlanning
-);
+router.post("/addPlanning", verifyAdmin, adminController.addPlanning);
+router.delete("/delPlanning/:routeId/:planningId", verifyAdmin, adminController.delPlanning);
+router.put("/editPlanning/:routeId/:planningId", verifyAdmin, adminController.editPlanning);
 
 module.exports = router;

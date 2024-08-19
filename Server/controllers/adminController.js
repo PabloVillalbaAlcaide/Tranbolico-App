@@ -237,16 +237,51 @@ WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' O
         return res.status(500).json(err);
       } else {
         console.log(result);
-        let data = [route_id, departure_date, departure_time, sqlMaxRouteId];
+        let newPlanningId = result[0].new_planning_id;
+        let data = [route_id, departure_date, departure_time, newPlanningId];
         let sql = `INSERT INTO planning (route_id, departure_date, departure_time, planning_id) VALUES (?, ?, ?, ?)`;
-        connection.query(sql, (err2, finalResult) => {
-          if (err) {
+        connection.query(sql, data, (err2, finalResult) => {
+          if (err2) {
             return res.status(500).json(err2);
           } else {
             res.status(200).json(finalResult);
           }
         });
       }
+    });
+  };
+
+  delPlanning = (req, res) => {
+    console.log(req.params);
+
+    const { routeId, planningId } = req.params;
+    const data = [routeId, planningId];
+    const sql = `DELETE FROM planning WHERE route_id = ? AND planning_id = ?`;
+    connection.query(sql, data, (err, result) => {
+      if (err) {
+        return res.status(500).json(err);
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  };
+
+  editPlanning = (req, res) => {
+    const { routeId, planningId } = req.params;
+    const { departure_date, departure_time } = req.body;
+  
+    if (!routeId || !planningId || !departure_date || !departure_time) {
+      return res.status(400).json({ error: 'Faltan parámetros' });
+    }
+
+    const data = [departure_date, departure_time, routeId, planningId];
+    const sql = `UPDATE planning SET departure_date = ?, departure_time = ? WHERE route_id = ? AND planning_id = ?`;
+    
+    connection.query(sql, data, (err, result) => {
+      if (err) {
+        return res.status(500).json(err);
+      }
+      res.status(200).json(result);
     });
   };
 
