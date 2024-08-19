@@ -7,7 +7,7 @@ const sendMailRecover = require("../services/emailServiceRecoverPassword");
 const tokenGenerator = require("../helpers/tokenGenerator");
 const { encryptToken, decryptToken } = require("../helpers/encryptToken");
 const generator = require("generate-password");
-const delFile = require("../helper/delFile");
+const delFile = require("../helpers/delFile");
 
 const tranbolicAvatar = [
   "/tram1.png",

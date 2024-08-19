@@ -24,7 +24,7 @@ import Layout from "../layout/Layout";
 import { Admin } from "../pages/Admin/Admin/Admin";
 import { ViewUserAdmin } from "../pages/Admin/ViewUserAdmin/ViewUserAdmin";
 import { ViewEditRoute } from "../pages/Admin/ViewEditRoute/ViewEditRoute";
-import { ViewAddPlanning } from "../pages/Admin/ViewAddPlanning/ViewAddPlanning";
+import ViewAddPlanning from "../pages/Admin/ViewAddPlanning/ViewAddPlanning";
 
 export const AppRoutes = () => {
   const { loading } = useContext(AppContext);
@@ -36,7 +36,7 @@ export const AppRoutes = () => {
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="/reservations" element={<GetReservations />}>
-                <Route index element={<SelectDate/>} />
+                <Route index element={<SelectDate />} />
                 <Route path="returnDate" element={<SelectDate />} />
                 <Route
                   path="detailReservation"
