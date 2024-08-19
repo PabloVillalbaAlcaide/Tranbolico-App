@@ -6,7 +6,7 @@ import { AppContext } from '../../../context/TranbolicoContextProvider';
 export const AutocompleteInput = ({ value, onChange, onSelect, disabled }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const {globalState} = useContext(AppContext)
+  const { globalState } = useContext(AppContext);
 
   useEffect(() => {
     if (value.length > 2 && !disabled) {
@@ -16,7 +16,11 @@ export const AutocompleteInput = ({ value, onChange, onSelect, disabled }) => {
             params: { q: value },
             headers: { Authorization: `Bearer ${globalState.token}` }
           });
-          setSuggestions(response.data);
+          const suggestionsWithCityProvince = response.data.map(suggestion => ({
+            ...suggestion,
+            city_province: `${suggestion.city_name} - ${suggestion.name}`
+          }));
+          setSuggestions(suggestionsWithCityProvince);
           setShowSuggestions(true);
         } catch (err) {
           console.log(err);
@@ -26,11 +30,20 @@ export const AutocompleteInput = ({ value, onChange, onSelect, disabled }) => {
     } else {
       setShowSuggestions(false);
     }
-  }, [value, disabled]);
+  }, [value, disabled, globalState.token]);
 
   const handleSelect = (suggestion) => {
+    console.log(suggestion);
+      
     onSelect(suggestion);
     setShowSuggestions(false);
+  };
+
+  const handleFocus = () => {
+    if (!disabled) {
+      onChange('');
+      setShowSuggestions(false);
+    }
   };
 
   return (
@@ -40,14 +53,14 @@ export const AutocompleteInput = ({ value, onChange, onSelect, disabled }) => {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
-        onFocus={() => value.length > 2 && !disabled && setShowSuggestions(true)}
+        onFocus={handleFocus}
         disabled={disabled}
       />
       {showSuggestions && (
         <ListGroup>
           {suggestions.map((suggestion, index) => (
-            <ListGroup.Item key={index} onClick={() => handleSelect(suggestion)}>
-              {suggestion.city_name} - {suggestion.name}
+            <ListGroup.Item key={index} onMouseDown={() => handleSelect(suggestion)}>
+              {suggestion.city_province}
             </ListGroup.Item>
           ))}
         </ListGroup>

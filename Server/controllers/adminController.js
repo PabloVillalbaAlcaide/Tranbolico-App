@@ -47,7 +47,9 @@ class AdminController {
     });
   };
 
-    addRoute = (req, res) => {
+  addRoute = (req, res) => {
+    console.log(req.body);
+    
     const {
       departure_city_id,
       departure_province_id,
@@ -56,19 +58,20 @@ class AdminController {
       text,
     } = req.body;
     if (
-      !departure_province_id ||
-      !departure_city_id ||
-      !arrival_province_id ||
-      !arrival_city_id ||
-      !text
+      departure_city_id &&
+      departure_province_id &&
+      arrival_city_id &&
+      arrival_province_id
     ) {
       const data = [
         departure_city_id,
         departure_province_id,
         arrival_city_id,
         arrival_province_id,
-        text,
+        text
       ];
+      console.log(data);
+      
       const sql = `INSERT INTO route (departure_city_id, departure_province_id, arrival_city_id, arrival_province_id, text) VALUES (?, ?, ?, ?, ?)`;
 
       connection.query(sql, data, (err, result) => {
@@ -83,7 +86,7 @@ class AdminController {
           arrival_city_id,
           arrival_province_id,
           text,
-          is_disabled: false
+          is_disabled: false,
         };
 
         res.status(200).json(newRoute);
@@ -92,7 +95,7 @@ class AdminController {
   };
 
   //editar una ruta
-  editRoute = (req, res) => {
+  editRoute = (req, res) => {  
     const {
       route_id,
       departure_province_id,
@@ -107,39 +110,39 @@ class AdminController {
       !departure_province_id ||
       !departure_city_id ||
       !arrival_province_id ||
-      !arrival_city_id ||
-      !text
+      !arrival_city_id
     ) {
       return res
         .status(400)
         .json({ error: "Todos los campos son obligatorios" });
     }
 
+    const data = [
+      departure_province_id,
+      departure_city_id,
+      arrival_province_id,
+      arrival_city_id,
+      text,
+      route_id,
+    ];
+
     const sql = `UPDATE route SET departure_province_id = ?, departure_city_id = ?, arrival_province_id = ?, arrival_city_id = ?, text = ? WHERE route_id = ?`;
 
-    connection.query(
-      sql,
-      [
-        departure_province_id,
-        departure_city_id,
-        arrival_province_id,
-        arrival_city_id,
-        text,
-        route_id,
-      ],
-      (err, result) => {
-        if (err) {
-          console.error("error en editar la ruta", err);
-          return res.status(500).json({ error: "error en editar la ruta" });
-        }
-        res
-          .status(200)
-          .json({ message: `Ruta con ID ${id} editada exitosamente` });
+    console.log(data);
+    
+    connection.query(sql, data, (err, result) => {
+      if (err) {
+        console.error("error en editar la ruta", err);
+        return res.status(500).json({ error: "error en editar la ruta" });
       }
-    );
+      res
+        .status(200).json(result);
+    });
   };
 
   disableRoute = (req, res) => {
+    console.log(req.body);
+    
     const { route_id, is_disabled } = req.body;
 
     // Validar datos de entrada
@@ -164,8 +167,8 @@ class AdminController {
 
   deleteRoute = (req, res) => {
     const data = [req.params.id];
-
-    const sql = `DELETE FROM routes WHERE route_id = ?;`;
+  
+    const sql = `DELETE FROM route WHERE route_id = ?;`;
 
     connection.query(sql, data, (err, result) => {
       if (err) {

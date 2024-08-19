@@ -136,11 +136,9 @@ AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETI
     WHERE dp.name = '${origin_province}' AND dc.city_name = '${origin_city}' AND ap.name = '${destination_province}' AND ac.city_name = '${destination_city}' AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) > NOW()`;
     connection.query(sql, (err, result) => {
       if (err) {
-        res.status(500).json(err);
-        return;
+        return res.status(500).json(err);
       } else {
         res.status(200).json(result);
-        return;
       }
     });
   };

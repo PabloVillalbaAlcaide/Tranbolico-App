@@ -16,7 +16,7 @@ router.get("/searchLocations", verifyAdmin, adminController.searchLocations);
 router.post("/addRoute", verifyAdmin, adminController.addRoute);
 router.put("/editRoute", verifyAdmin, adminController.editRoute);
 router.delete("/deleteRoute/:id", verifyAdmin, adminController.deleteRoute);
-router.delete("/disableRoute", verifyAdmin, adminController.disableRoute);
+router.patch("/disableRoute", verifyAdmin, adminController.disableRoute);
 router.get("/viewUser", verifyAdmin, adminController.viewUser);
 
 module.exports = router;
