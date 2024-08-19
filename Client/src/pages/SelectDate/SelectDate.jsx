@@ -109,53 +109,41 @@ export const SelectDate = () => {
   };
 
   return (
-    <Container fluid className="p-0 m-0 mt-5 mb-5">
-      <Row className="selectDatepicker">
-        <Col
-          xs={12}
-          md={6}
-          className="d-flex flex-column align-items-center w-100 p-0 m-0"
-        >
-          <Row className="w-100">
-            <Col
-              xs={4}
-              className="d-flex justify-content-center align-items-center p-0 m-0"
-            >
-              <p>{date}</p>
-            </Col>
-            <Col
-              xs={4}
-              className="d-flex justify-content-center align-items-center p-0 m-0"
-            >
-              <TranbolicoDatePicker
-                date={date}
-                setDate={setDate}
-                planningList={planningList}
-              />
-            </Col>
-            <Col
-              xs={4}
-              className="d-flex flex-column justify-content-center align-items-center p-0 m-0"
-            >
-              {date
-                ? planningList.map((elem) => {
-                    if (elem.departure_date === date) {
-                      return (
-                        <Button
-                          key={elem.planning_id}
-                          onClick={() => setPlanning(elem)}
-                          className="m-2"
-                        >
-                          {elem.departure_time}
-                        </Button>
-                      );
-                    }
-                  })
-                : ""}
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+
+<Container fluid className="p-0 m-0 mt-5 mb-5">
+    <Row className="justify-content-center selectDatepicker">
+      <Col xs={12} md={6} className="d-flex flex-column align-items-center w-100 p-0 m-0">
+        <Row className="w-100">
+          <Col xs={4} className="d-flex justify-content-center align-items-center p-0 m-0 bg-info">
+            {/* <p>{date}</p> */}<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolore, deleniti.</p>
+          </Col>
+          <Col xs={4} className="d-flex justify-content-center align-items-center p-0 m-0 bg-danger">
+            <TranbolicoDatePicker
+              date={date}
+              setDate={setDate}
+              planningList={planningList}
+            />
+          </Col>
+          <Col xs={4} className="d-flex flex-column justify-content-center align-items-center p-0 m-0 bg-primary">
+            {date ? 
+              planningList.map((elem) => {
+                if (elem.departure_date === date) {
+                  return (
+                    <Button
+                      key={elem.planning_id}
+                      onClick={() => setPlanning(elem)}
+                      className="m-2"
+                    >
+                      {elem.departure_time}
+                    </Button>
+                  );
+                }
+              })
+            : ""}
+          </Col>
+        </Row>
+      </Col>
+    </Row>
 
       <Row className="justify-content-center mt-3">
         <Col xs={12} md={4} className="d-flex justify-content-around p-0 m-0">
