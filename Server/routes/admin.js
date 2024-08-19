@@ -26,5 +26,10 @@ router.get(
   verifyAdmin,
   adminController.getPlanningRoutes
 );
+router.post(
+  "/addPlanning",
+  verifyAdmin,
+  adminController.addPlanning
+);
 
 module.exports = router;

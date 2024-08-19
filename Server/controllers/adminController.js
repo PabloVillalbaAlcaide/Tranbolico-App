@@ -227,6 +227,29 @@ WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' O
     });
   };
 
+  addPlanning = (req, res) => {
+    const { route_id, departure_date, departure_time } = req.body;
+    console.log(req.body);
+
+    let sqlMaxRouteId = `SELECT COALESCE(MAX(planning_id), 0) + 1 AS new_planning_id FROM planning WHERE route_id = ${route_id}`;
+    connection.query(sqlMaxRouteId, (err, result) => {
+      if (err) {
+        return res.status(500).json(err);
+      } else {
+        console.log(result);
+        let data = [route_id, departure_date, departure_time, sqlMaxRouteId];
+        let sql = `INSERT INTO planning (route_id, departure_date, departure_time, planning_id) VALUES (?, ?, ?, ?)`;
+        connection.query(sql, (err2, finalResult) => {
+          if (err) {
+            return res.status(500).json(err2);
+          } else {
+            res.status(200).json(finalResult);
+          }
+        });
+      }
+    });
+  };
+
   //ver usuarios
   viewUser = (req, res) => {
     const sql = `SELECT user_id, name, surname, email, phone_number, user_type, is_disabled FROM user`;
