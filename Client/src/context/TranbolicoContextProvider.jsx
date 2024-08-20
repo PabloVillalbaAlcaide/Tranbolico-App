@@ -9,6 +9,8 @@ export const TranbolicoContextProvider = ({ children }) => {
 
   useEffect(()=>{
     const tokenLocal = localStorage.getItem("token")
+    console.log(tokenLocal);
+    
     if(tokenLocal){
       getUser(tokenLocal)
     }

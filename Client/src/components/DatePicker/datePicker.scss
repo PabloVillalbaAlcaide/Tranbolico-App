@@ -1,188 +1,79 @@
-/* Variables para colores */
-$calendar-bg: white;
-$calendar-border: #a0a096;
-$calendar-font: 'Arial', 'Helvetica', sans-serif;
-$weekend-color: #d10000;
-$neighboring-color: #757575;
-$disabled-bg: #f0f0f0;
-$hover-bg: #e6e6e6;
-$today-bg: #ffff76;
-$today-hover-bg: #ffffa9;
-$active-bg: #006edc;
-$active-hover-bg: #1087ff;
-$allowed-bg: #e3b6d4;
-$allowed-color: black;
+/* datePicker.scss */
 
-.react-calendar {
-  width: 350px;
-  max-width: 100%;
-  background: $calendar-bg;
-  border: 1px solid $calendar-border;
-  font-family: $calendar-font;
-  line-height: 1.125em;
-
-  &--doubleView {
-    width: 700px;
-
-    .react-calendar__viewContainer {
-      display: flex;
-      margin: -0.5em;
-
-      > * {
-        width: 50%;
-        margin: 0.5em;
-      }
-    }
-  }
-
-  *,
-  *:before,
-  *:after {
-    box-sizing: border-box;
-  }
-
-  button {
-    margin: 0;
-    border: 0;
-    outline: none;
-
-    &:enabled:hover {
-      cursor: pointer;
-    }
-  }
-
-  &__navigation {
-    display: flex;
-    height: 44px;
-    margin-bottom: 1em;
-
-    button {
-      min-width: 44px;
-      background: none;
-
-      &:disabled {
-        background-color: $disabled-bg;
-      }
-
-      &:enabled:hover {
-        background-color: $hover-bg;
-      }
-    }
-  }
-
-  &__month-view {
-    &__weekdays {
-      text-align: center;
-      text-transform: uppercase;
-      font: inherit;
-      font-size: 0.75em;
-      font-weight: bold;
-
-      &__weekday {
-        padding: 0.5em;
-      }
-    }
-
-    &__weekNumbers .react-calendar__tile {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font: inherit;
-      font-size: 0.75em;
-      font-weight: bold;
-    }
-
-    &__days {
-      &__day--weekend {
-        color: $weekend-color;
-      }
-
-      &__day--neighboringMonth,
-      .react-calendar__decade-view__years__year--neighboringDecade,
-      .react-calendar__century-view__decades__decade--neighboringCentury {
-        color: $neighboring-color;
-      }
-
-      &__day--neighboringMonth:disabled,
-      .react-calendar__decade-view__years__year--neighboringDecade:disabled,
-      .react-calendar__century-view__decades__decade--neighboringCentury:disabled {
-        color: #cdcdcd;
-      }
-    }
-  }
-
-  &__year-view .react-calendar__tile,
-  &__decade-view .react-calendar__tile,
-  &__century-view .react-calendar__tile {
-    padding: 2em 0.5em;
-  }
-
-  &__tile {
-    max-width: 100%;
-    padding: 10px 6.6667px;
-    background: none;
-    text-align: center;
-    line-height: 16px;
-    font: inherit;
-    font-size: 0.833em;
-
-    &:disabled {
-      background-color: $disabled-bg;
-      pointer-events: none;
-    }
-
-    &:enabled:hover {
-      background-color: $hover-bg;
-    }
-
-    &--now {
-      background: $today-bg;
-
-      &:enabled:hover,
-      &:enabled:focus {
-        background: $today-hover-bg;
-      }
-    }
-
-    &--hasActive {
-      background: #76baff;
-
-      &:enabled:hover,
-      &:enabled:focus {
-        background: #a9d4ff;
-      }
-    }
-
-    &--active {
-      background: $active-bg;
-      color: white;
-
-      &:enabled:hover,
-      &:enabled:focus {
-        background: $active-hover-bg;
-      }
-    }
-
-    &--allowed {
-      background: $allowed-bg;
-      color: $allowed-color;
-    }
-  }
-
-  &--selectRange .react-calendar__tile--hover {
-    background-color: $hover-bg;
-  }
+/* Personalización de la barra de navegación */
+.custom-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
 }
 
-/* Oculta el input de fecha y sus selectores */
-.tranbolico-datepicker {
-  .react-date-picker__wrapper,
-  .react-date-picker__inputGroup__divider {
-    display: none;
-  }
-  .react-date-picker__calendar--open{
-    width: 350px;
-    height: 282px;
-    position: static !important;
-  }
+.custom-navigation button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-navigation button:hover {
+  background-color: #0056b3;
+}
+
+.custom-navigation span {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+/* Personalización del contenedor del calendario */
+.DayPicker {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Personalización del encabezado del calendario */
+.DayPicker-Caption {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Personalización de los nombres de los días de la semana */
+.DayPicker-Weekday {
+  color: #007bff;
+  font-weight: bold;
+}
+
+/* Personalización de los días del calendario */
+.DayPicker-Day {
+  border-radius: 50%;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.DayPicker-Day--today {
+  background-color: #007bff;
+  color: white;
+}
+
+.DayPicker-Day--selected {
+  background-color: #28a745;
+  color: white;
+}
+
+.DayPicker-Day--disabled {
+  color: #ddd;
+  cursor: not-allowed;
+}
+
+.allowed-day {
+  background-color: #ffc107;
+  color: white;
 }

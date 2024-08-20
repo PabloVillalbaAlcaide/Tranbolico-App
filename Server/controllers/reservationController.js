@@ -82,9 +82,13 @@ AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${use
 AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) >= NOW() AND reservation.is_deleted = 0`;
     connection.query(sql, (err, result) => {
       if (err) {
-        return res.status(500).json(err);
+        console.log(err);
+        
+      return res.status(500).json(err);
+        
       } else {
-        res.status(200).json(result);
+
+       return res.status(200).json(result);
       }
     });
   };
