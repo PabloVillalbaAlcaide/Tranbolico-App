@@ -67,3 +67,15 @@
   box-shadow: none;
   outline: none;
 }
+
+@media (max-width: 800px) {
+  .faqs-image {
+    width: 200px; 
+    right: -40px; 
+    top: 10; 
+  }
+
+  .ppal-faqs h2 {
+    font-size: 3rem; 
+  }
+}
