@@ -27,9 +27,11 @@ export const Footer = () => {
           <FaInstagram color="white" size={25} />
         </Button>
       </div>
+
         <div className="">
           <Link to={"/legalNotice"} className="avisolegal-footer">Aviso legal</Link> <span className="text-white">|</span> <Link to={"/privacyPolicy"} className="avisolegal-footer">Política de privacidad</Link>
         </div>
+
       <hr className="hr-footer m-4" />
 
       <p className="derechos-footer">© 2023 | Todos los derechos reservados</p>
