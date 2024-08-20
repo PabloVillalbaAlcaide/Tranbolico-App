@@ -29,7 +29,7 @@ import { PrivacyPolicy } from "../pages/PrivacyPolicy/PrivacyPolicy";
 import { LegalNotice } from "../pages/legalNotice/LegalNotice";
 
 export const AppRoutes = () => {
-  const { loading } = useContext(AppContext);
+  const { globalState, loading } = useContext(AppContext);
   return (
     <>
       {!loading && (
@@ -37,43 +37,56 @@ export const AppRoutes = () => {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
-              <Route path="/reservations" element={<GetReservations />}>
-                <Route index element={<SelectDate />} />
-                <Route path="returnDate" element={<SelectDate />} />
-                <Route
-                  path="detailReservation"
-                  element={<DetailReservation />}
-                />
-              </Route>
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/routes" element={<Rutas />} />
               <Route path="/about" element={<About />} />
               <Route path="/faqs" element={<Faqs />} />
               <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
               <Route path="/legalNotice" element={<LegalNotice />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/editUser" element={<EditUser />} />
               <Route path="/recoverPassword" element={<RecoverPassword />} />
               <Route
                 path="/MsgRecoverPassword"
                 element={<MsgRecoverPassword />}
               />
-              <Route path="/resetPassword" element={<ResetPassword />} />
-              <Route
-                path="/resetPassword/:hashtoken"
-                element={<ResetPassword />}
-              />
               <Route path="/MsgVerifyEmail" element={<MsgVerifyEmail />} />
               <Route path="/MsgVerifyEmail/:hashtoken" element={<MsgToken />} />
-              <Route path="/historical" element={<Historical />}>
-                <Route index element={<UserReservations />} />
-                <Route path="nextReservations" element={<UserReservations />} />
-              </Route>
-              <Route path="/admin" element={<Admin />} />
-              <Route path="/admin/routes" element={<ViewEditRoute />} />
-              <Route path="/admin/planning" element={<ViewAddPlanning />} />
-              <Route path="/admin/viewUser" element={<ViewUserAdmin />} />
+              <Route path="/routes" element={<Rutas />} />
+
+              {globalState?.user && (
+                <>
+                  <Route path="/reservations" element={<GetReservations />}>
+                    <Route index element={<SelectDate />} />
+                    <Route path="returnDate" element={<SelectDate />} />
+                    <Route
+                      path="detailReservation"
+                      element={<DetailReservation />}
+                    />
+                  </Route>
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/editUser" element={<EditUser />} />
+                  <Route path="/resetPassword" element={<ResetPassword />} />
+                  <Route
+                    path="/resetPassword/:hashtoken"
+                    element={<ResetPassword />}
+                  />
+                  <Route path="/historical" element={<Historical />}>
+                    <Route index element={<UserReservations />} />
+                    <Route
+                      path="nextReservations"
+                      element={<UserReservations />}
+                    />
+                  </Route>
+                </>
+              )}
+
+              {globalState?.user?.user_type === 1 && (
+                <>
+                  <Route path="/admin" element={<Admin />} />
+                  <Route path="/admin/routes" element={<ViewEditRoute />} />
+                  <Route path="/admin/planning" element={<ViewAddPlanning />} />
+                  <Route path="/admin/viewUser" element={<ViewUserAdmin />} />
+                </>
+              )}
 
               <Route path="*" element={<ErrorPage />}></Route>
             </Route>
