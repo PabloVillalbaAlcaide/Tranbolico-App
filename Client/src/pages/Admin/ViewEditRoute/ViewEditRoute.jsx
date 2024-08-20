@@ -4,6 +4,8 @@ import { AppContext } from "../../../context/TranbolicoContextProvider";
 import { Table, Form, Button } from "react-bootstrap";
 import { AutocompleteInput } from "../../../components/Admin/AutoCompleteInput/AutoCompleteInput";
 import { AddRouteModal } from "../../../components/Admin/Modal/AddRouteModal";
+import "./viewEditRoute.scss";
+import "../../../App.css";
 
 export const ViewEditRoute = () => {
   const { globalState, loading } = useContext(AppContext);
@@ -150,7 +152,7 @@ export const ViewEditRoute = () => {
         const addedRoute = response.data;
         setRoutes((prevRoutes) => [...prevRoutes, addedRoute]);
         setShowModal(false);
-        setUpdateRoutes(!updateRoutes)
+        setUpdateRoutes(!updateRoutes);
       }
     } catch (err) {
       console.log(err);
@@ -160,14 +162,8 @@ export const ViewEditRoute = () => {
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          marginBottom: "10px",
-        }}
-      >
-        <Button variant="primary" onClick={() => setShowModal(true)}>
+      <div className="d-flex justify-content-center my-4">
+        <Button className="btn-add-route" onClick={() => setShowModal(true)}>
           Añadir Nueva Ruta
         </Button>
       </div>
@@ -272,26 +268,31 @@ export const ViewEditRoute = () => {
                     </Button>
                   ) : (
                     <>
-                      <Button
-                        variant="primary"
-                        onClick={() => handleEditClick(route)}
-                      >
-                        Editar
-                      </Button>
-                      <Button
-                        variant="warning"
-                        onClick={() =>
-                          handleDisableClick(route.route_id, !route.is_disabled)
-                        }
-                      >
-                        {route.is_disabled ? "Habilitar" : "Deshabilitar"}
-                      </Button>
-                      <Button
-                        variant="danger"
-                        onClick={() => handleDeleteClick(route.route_id)}
-                      >
-                        Eliminar
-                      </Button>
+                      <div className="d-flex flex-column flex-md-row justify-content-around gap-2">
+                        <Button
+                          variant="info"
+                          onClick={() => handleEditClick(route)}
+                        >
+                          Editar
+                        </Button>
+                        <Button
+                          variant="warning"
+                          onClick={() =>
+                            handleDisableClick(
+                              route.route_id,
+                              !route.is_disabled
+                            )
+                          }
+                        >
+                          {route.is_disabled ? "Habilitar" : "Deshabilitar"}
+                        </Button>
+                        <Button
+                          variant="danger"
+                          onClick={() => handleDeleteClick(route.route_id)}
+                        >
+                          Eliminar
+                        </Button>
+                      </div>
                     </>
                   )}
                 </td>

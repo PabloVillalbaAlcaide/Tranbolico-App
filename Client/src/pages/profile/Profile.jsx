@@ -3,49 +3,102 @@ import { Col, Row } from "react-bootstrap";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import { Link } from "react-router-dom";
 import "./profile.scss";
+import "../../App.css";
 import { UserAvatar } from "../../components/UserAvatar/UserAvatar";
-// import { locationIcon } from "./dataIcons/profileIcons";
+import emailIcon from "../../../src/assets/icons/email.svg";
+import locationIcon from "../../../src/assets/icons/location.svg";
+import birthdateIcon from "../../../src/assets/icons/birthdate.svg";
+import pastBookingsIcon from "../../../src/assets/icons/pastBookings.svg";
+import futureBookingsIcon from "../../../src/assets/icons/futureBookings.svg";
+import editUserProfile from "../../../src/assets/icons/editUserProfile.svg";
 
 export const Profile = () => {
   const { globalState } = useContext(AppContext);
-  // console.log(globalState);
+  console.log(globalState);
 
   return (
     <>
       <Row>
         <Col>
-          <div className="div-profile d-flex flex-column justify-content-center align-items-center py-5 gap-5">
-            <div className="avatar-circular d-flex flex-column justify-content-center align-align-items-center">
+          <div className="div-profile d-flex flex-column align-items-center gap-5">
+            <div className="d-flex flex-column justify-content-center">
               <img
                 src="/images/Trambólico3.png"
                 alt="skater-icon"
                 width={"200px"}
                 className="skater-icon"
               />
-
-              <div className="text-center">
+            </div>
+            <div className="bloque-datos-usuario d-flex flex-column align-items-center gap-3">
+              <div className="img-circular-usuario">
                 <UserAvatar user={globalState.user} size={200} />
               </div>
-            </div>
-            <div className="">
-              <h4>
-                {globalState.user.name} {globalState.user.surname}
-              </h4>
-              <p>{globalState.user.email}</p>
-              <div>
-                {/* {locationIcon} */}
-                <p>provincia, ciudad</p>
+              <h3>
+                {globalState.user?.name} {globalState.user?.surname}
+              </h3>
+
+              <div className="d-flex flex-column gap-3">
+                <div className="d-flex align-items-center gap-2">
+                  <img src={emailIcon} alt="email-icon" width={"50px"} />
+                  <p>{globalState.user?.email}</p>
+                </div>
+                <div className="d-flex align-items-center gap-2">
+                  <img src={locationIcon} alt="location-icon" width={"50px"} />
+                  <p>
+                    {globalState.user?.province_name},{" "}
+                    {globalState.user?.city_name}
+                  </p>
+                </div>
+                <div className="d-flex align-items-center gap-2">
+                  <img
+                    src={birthdateIcon}
+                    alt="birthdate-icon"
+                    width={"50px"}
+                  />
+                  <p>
+                    {globalState.user?.birthdate.split("-").reverse().join("-")}
+                  </p>
+                </div>
+                <div className="profile-links d-flex align-items-center gap-2">
+                  <img
+                    src={pastBookingsIcon}
+                    alt="past-bookings-icon"
+                    width={"50px"}
+                  />
+                  <p>
+                    <Link to={"/historical"} className="fst-italic text-dark">
+                      Historial de reservas
+                    </Link>
+                  </p>
+                </div>
+                <div className="profile-links d-flex align-items-center gap-2">
+                  <img
+                    src={futureBookingsIcon}
+                    alt="future-bookings-icon"
+                    width={"50px"}
+                  />
+                  <p>
+                    <Link
+                      to={"/nextReservations"}
+                      className="fst-italic text-dark"
+                    >
+                      Próximas reservas
+                    </Link>
+                  </p>
+                </div>
+                <div className="profile-links d-flex align-items-center gap-2">
+                  <img
+                    src={editUserProfile}
+                    alt="future-bookings-icon"
+                    width={"50px"}
+                  />
+                  <p className="fst-italic text-decoration-underline">
+                    <Link to={"/editUser"} className="text-dark">
+                      Editar perfil
+                    </Link>
+                  </p>
+                </div>
               </div>
-              <p>{globalState.user.birthdate}</p>
-              <p>
-                <Link to={"/historical"}>Historial de reservas</Link>
-              </p>
-              <p>
-                <Link to={"/nextReservations"}>Próximas reservas</Link>
-              </p>
-              <p className="fst-italic text-decoration-underline">
-                <Link to={"/editUser"}>Editar perfil</Link>
-              </p>
               <img
                 src="/images/Trambólico6.png"
                 alt="rabbit-icon"

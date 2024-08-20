@@ -25,6 +25,8 @@ import { Admin } from "../pages/Admin/Admin/Admin";
 import { ViewUserAdmin } from "../pages/Admin/ViewUserAdmin/ViewUserAdmin";
 import { ViewEditRoute } from "../pages/Admin/ViewEditRoute/ViewEditRoute";
 import { ViewAddPlanning } from "../pages/Admin/ViewAddPlanning/ViewAddPlanning";
+import { PrivacyPolicy } from "../pages/PrivacyPolicy/PrivacyPolicy";
+import { LegalNotice } from "../pages/legalNotice/LegalNotice";
 
 export const AppRoutes = () => {
   const { loading } = useContext(AppContext);
@@ -47,6 +49,8 @@ export const AppRoutes = () => {
               <Route path="/routes" element={<Rutas />} />
               <Route path="/about" element={<About />} />
               <Route path="/faqs" element={<Faqs />} />
+              <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+              <Route path="/legalNotice" element={<LegalNotice />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/editUser" element={<EditUser />} />

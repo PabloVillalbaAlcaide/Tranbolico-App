@@ -8,7 +8,7 @@ export const UserAvatar = ({ user, size = 50 }) => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    //backgrounColor: '#E3B6D4'
+    backgroundColor: '#91cad8'
   };
   return (
     <>

@@ -2,6 +2,7 @@ import { Button, Container } from "react-bootstrap";
 import { FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
 import busTranbólico from "/images/busTrambólico.jpg";
 import "./Footer.scss";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
@@ -27,8 +28,9 @@ export const Footer = () => {
         </Button>
       </div>
       <p></p>
-      <a className="avisolegal-footer " href="">
-        Aviso legal | Política de privacidad
+      <a>
+        <Link to={"/legalNotice"} className="avisolegal-footer">Aviso legal</Link> |{" "}
+        <Link to={"/privacyPolicy"} className="avisolegal-footer">Política de privacidad</Link>
       </a>
       <hr className="hr-footer m-4" />
 

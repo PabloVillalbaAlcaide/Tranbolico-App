@@ -38,7 +38,6 @@
   border: 2px solid white;
   border-radius: 5px;
 }
-
 .color {
   color: var(--tranbolico-azul);
 }
@@ -56,11 +55,10 @@
   .NavbarRegisterLogin {
     background-color: var(--tranbolico-azul);
     margin-inline: 0;
-
     font-weight: normal;
+    border: 0;
     border-radius: 0px;
     padding-inline: 0px;
-
     font-size: 1.1rem;
   }
   .NavbarRegisterLoginColor {

@@ -10,6 +10,7 @@ export const EditUser = () => {
   const { globalState, setGlobalState, loading } = useContext(AppContext);
   const [editedUser, setEditedUser] = useState(globalState.user || {});
   const [files, setFiles] = useState();
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,7 +30,10 @@ export const EditUser = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("onSubmit: editedUser =", editedUser, "files =", files);
+
+    if (!validateForm()) {
+      return;
+    }
 
     editedUser.name =
       editedUser.name.trimStart() === ""
@@ -102,10 +106,90 @@ export const EditUser = () => {
     navigate("/profile");
   };
 
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {
+      name: "",
+      surname: "",
+      email: "",
+      phone_number: "",
+      birthdate: "",
+      province: "",
+      city: "",
+      password: "",
+      password2: "",
+    };
+
+    //Validamos
+    if (!editedUser.name) {
+      newErrors.name = "El nombre es obligatorio";
+      valid = false;
+    } else if (editedUser.name.length < 3 || editedUser.name.length > 15) {
+      newErrors.name = "El nombre debe contener entre 3 y 15 caracteres";
+      valid = false;
+    }
+
+    //Validamos apellido
+    if (!editedUser.surname) {
+      newErrors.surname = "El apellido es obligatorio";
+      valid = false;
+    } else if (
+      editedUser.surname.length < 3 ||
+      editedUser.surname.length > 40
+    ) {
+      newErrors.surname = "El nombre debe contener entre 3 y 40 caracteres";
+      valid = false;
+    }
+
+    //Validamos email
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!editedUser.email) {
+      newErrors.email = "El email es obligatorio";
+      valid = false;
+    } else if (editedUser.email.length > 320) {
+      newErrors.surname = "El email debe contener como máximo 320 caracteres";
+      valid = false;
+    } else if (!emailPattern.test(editedUser.email)) {
+      newErrors.email = "Formato de email no válido";
+      valid = false;
+    }
+
+    //Validamos teléfono
+    if (!editedUser.phone_number) {
+      newErrors.phone_number = "El teléfono es obligatorio";
+      valid = false;
+    } else if (editedUser.phone_number.length > 25) {
+      newErrors.phone_number =
+        "El teléfono debe contener como máximo 25 caracteres";
+      valid = false;
+    }
+
+    //Validamos fecha de nacimiento
+    if (!editedUser.birthdate) {
+      newErrors.birthdate = "La fecha de nacimiento es obligatoria";
+      valid = false;
+    }
+
+    //Validamos provincia
+    if (!editedUser.province) {
+      newErrors.province = "La provincia es obligatoria";
+      valid = false;
+    }
+
+    //Validamos ciudad
+    if (!editedUser.city) {
+      newErrors.city = "La ciudad es obligatoria";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
   return (
     <>
-      <Row className="justify-content-center align-items-center">
-        <div className="avatar-container">
+      <Row className="justify-content-center align-items-center pt-5">
+        <div className="user-avatar-container">
           <UserAvatar user={editedUser} size={120} />
         </div>
         <div className="contenedor-edit d-flex justify-content-center align-items-center mb-5">
@@ -125,6 +209,9 @@ export const EditUser = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
+              {errors.name && (
+                <p className="text-center text-danger fw-bold">{errors.name}</p>
+              )}
 
               <Form.Group className="mb-2" controlId="formBasicSurname">
                 <Form.Control
@@ -136,6 +223,11 @@ export const EditUser = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
+              {errors.surname && (
+                <p className="text-center text-danger fw-bold">
+                  {errors.surname}
+                </p>
+              )}
 
               <Form.Group className="mb-2" controlId="formBasicEmail">
                 <Form.Control
@@ -147,6 +239,11 @@ export const EditUser = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
+              {errors.email && (
+                <p className="text-center text-danger fw-bold">
+                  {errors.email}
+                </p>
+              )}
 
               <Form.Group className="mb-2" controlId="formBasicPhoneNumber">
                 <Form.Control
@@ -158,6 +255,11 @@ export const EditUser = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
+              {errors.phone_number && (
+                <p className="text-center text-danger fw-bold">
+                  {errors.phone_number}
+                </p>
+              )}
 
               <Form.Group className="mb-2" htmlFor="selectGenre">
                 <Form.Control
@@ -185,6 +287,11 @@ export const EditUser = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
+              {errors.province && (
+                <p className="text-center text-danger fw-bold">
+                  {errors.province}
+                </p>
+              )}
 
               <Form.Group className="mb-2" controlId="formBasicCity">
                 <Form.Control
@@ -196,6 +303,9 @@ export const EditUser = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
+              {errors.city && (
+                <p className="text-center text-danger fw-bold">{errors.city}</p>
+              )}
 
               <Form.Group className="mb-2" controlId="formBasicImg">
                 <Form.Control
