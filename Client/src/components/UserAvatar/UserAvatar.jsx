@@ -14,7 +14,7 @@ export const UserAvatar = ({ user, size = 50 }) => {
     <>
     <div style={avatarStyle}>
         <img
-          src={`http://localhost:4000/images/users/${user.avatar}`}
+          src={`http://localhost:4000/images/users/${user?.avatar}`}
           alt="avatar"
           width={size}
           height={size}

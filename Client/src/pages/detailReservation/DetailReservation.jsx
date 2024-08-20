@@ -57,13 +57,13 @@ export const DetailReservation = () => {
                 </div>
               </div>
               <div className="d-flex flex-column justify-content-center align-items-center gap-2">
-                <h5 className="fw-bold">
+                <h5 className="fw-bold desglose-precio">
                   Viaje de ida y vuelta: <span>7,60€</span>
                 </h5>
-                <h5 className="fw-bold">
+                <h5 className="fw-bold desglose-precio">
                   Guía turístico: <span>4,40€</span>
                 </h5>
-                <h5 className="fw-bold">
+                <h5 className="fw-bold desglose-precio">
                   Total: <span>12€</span>
                 </h5>
               </div>

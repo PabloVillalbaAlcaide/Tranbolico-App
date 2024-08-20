@@ -15,16 +15,9 @@ export const Admin = () => {
           <div className="d-flex flex-column align-items-center ">
             <Button
               className="buttonAdmin"
-              onClick={() => navigate("/admin/createRoute")}
+              onClick={() => navigate("/admin/Routes")}
             >
-              <h3 className="m-auto">Crear Rutas</h3>
-            </Button>
-
-            <Button
-              className="buttonAdmin"
-              onClick={() => navigate("/admin/editRoute")}
-            >
-              <h3 className="m-auto">Editar Rutas</h3>
+              <h3 className="m-auto">Rutas</h3>
             </Button>
 
             <Button

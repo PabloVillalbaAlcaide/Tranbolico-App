@@ -48,7 +48,6 @@ class AdminController {
   };
 
   addRoute = (req, res) => {
-    console.log(req.body);
 
     const {
       departure_city_id,
@@ -287,7 +286,9 @@ WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' O
 
   //ver usuarios
   viewUser = (req, res) => {
-    const sql = `SELECT user_id, name, surname, email, phone_number, user_type, is_disabled FROM user`;
+    const { opt, text } = req.query;
+
+    const sql = `select user_id, concat(name," ", surname) AS full_name, birthdate, email, phone_number from user where ${opt} LIKE "${text}%"`;
 
     connection.query(sql, (err, result) => {
       if (err) {

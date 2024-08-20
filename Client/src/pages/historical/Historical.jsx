@@ -13,7 +13,7 @@ export const Historical = () => {
     <Container>
       <Row className="py-4 flex-column align-items-center justify-content-center">
         <Col>
-          <div className="text-center">
+          <div className="d-flex justify-content-center align-items-center">
             <UserAvatar user={globalState.user} size={200} />
           </div>
         </Col>
