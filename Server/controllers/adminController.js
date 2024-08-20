@@ -47,7 +47,7 @@ class AdminController {
     });
   };
 
-    addRoute = (req, res) => {
+  addRoute = (req, res) => {
     const {
       departure_city_id,
       departure_province_id,
@@ -83,7 +83,7 @@ class AdminController {
           arrival_city_id,
           arrival_province_id,
           text,
-          is_disabled: false
+          is_disabled: false,
         };
 
         res.status(200).json(newRoute);
@@ -177,7 +177,9 @@ class AdminController {
 
   //ver usuarios
   viewUser = (req, res) => {
-    const sql = `SELECT user_id, name, surname, email, phone_number, user_type, is_disabled FROM user`;
+    const { opt, text } = req.query;
+
+    const sql = `select user_id, concat(name," ", surname) AS full_name, birthdate, email, phone_number from user where ${opt} LIKE "${text}%"`;
 
     connection.query(sql, (err, result) => {
       if (err) {
