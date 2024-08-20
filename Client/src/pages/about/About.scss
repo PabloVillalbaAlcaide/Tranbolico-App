@@ -12,7 +12,6 @@
   font-style: normal;
 }
 
-
 :root {
   --tranbolico-amarillo: #ffd92d;
   --tranbolico-azul: #283583;
@@ -20,7 +19,6 @@
 
 body {
   font-family: "VinaSans", sans-serif;
- 
 }
 
 .conocenos {
@@ -30,32 +28,45 @@ body {
   color: var(--tranbolico-azul);
   padding: 20px;
   border-radius: 15px;
-  max-width: 70%;
-  margin: 30px auto 0 auto;
-  display: flex; 
-  align-items: center; 
-  justify-content: space-between; 
+  max-width: 90%;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 70%;
+  }
 }
 
 .conocenos img {
-  border-radius: 50%; 
-  width: 150px; 
-  height: auto; 
-  margin-left: 20px; 
+  border-radius: 50%;
+  width: 150px;
+  height: auto;
+  margin-top: 20px;
+
+  @media (min-width: 768px) {
+    margin-top: 0;
+    margin-left: 20px;
+  }
 }
+
 .como-funciona {
-  background-color: #f9f9f9; 
-  border-radius: 15px; 
+  background-color: #f9f9f9;
+  border-radius: 15px;
   margin: 30px auto;
   max-width: 90%;
+  padding: 20px;
 }
 
 .como-funciona h3 {
   color: var(--tranbolico-azul);
   font-family: "Akkurat", sans-serif;
-  font-size: 2.5rem; 
+  font-size: 2.5rem;
   margin-bottom: 30px;
-  text-align: center; 
+  text-align: center;
   font-style: italic;
 }
 
@@ -66,68 +77,91 @@ body {
 .funciona-item {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
+  flex-direction: column;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 }
 
 .funciona-point {
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  background-color: var(--tranbolico-azul); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--tranbolico-azul);
   color: white;
-  border-radius: 50%; 
+  border-radius: 50%;
   width: 40px;
   height: 40px;
-  margin-right: 15px; 
+  margin-bottom: 10px;
+
+  @media (min-width: 768px) {
+    margin-right: 15px;
+    margin-bottom: 0;
+  }
 }
 
 .funciona-number {
-  font-size: 1 rem; 
-  font-weight: bold; 
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 .funciona-text {
-  flex: 1;
   color: var(--tranbolico-azul);
   font-style: italic;
 }
 
 .funciona-text h2 {
-  font-size: 1.2rem; 
-  margin-bottom: 10px; 
+  font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 
 .funciona-text span {
-  font-size: 1rem; 
+  font-size: 1rem;
 }
 
-
-.Amarillo {
+.amarillo {
   background-color: var(--tranbolico-amarillo);
   padding: 20px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
-.Amarillo h3 {
+.amarillo h3 {
   color: var(--tranbolico-azul);
-  margin-right: 300px; 
-  text-align: right; 
+  margin: 0;
+  text-align: center;
   font-family: "VinaSans-Regular.ttf", system-ui;
   font-size: 3.5rem;
+
+  @media (min-width: 768px) {
+    text-align: right;
+    margin-right: 300px;
+  }
 }
 
-.Amarillo img {
+.amarillo img {
   max-height: 200px;
-  width: auto; 
+  width: auto;
   height: auto;
-  margin-left: 700px;
+
+  @media (min-width: 768px) {
+    margin-left: 20px;
+  }
 }
+
 .testimonios {
   background-color: var(--tranbolico-amarillo);
   padding: 20px;
-  margin-bottom: 0; 
+  margin-bottom: 0;
 }
 
 .testimonio {
@@ -143,9 +177,27 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 }
 
 .testimonio p {
   margin: 0;
   line-height: 1.5;
+}
+
+.twitter-button {
+  background: none;
+  border: none;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+
+  @media (min-width: 768px) {
+    position: static;
+    margin-left: auto;
+  }
 }
