@@ -28,12 +28,12 @@ export const NavBarApp = () => {
         style={{ background: "var(--tranbolico-azul" }}
       >
         <div className="container-xxl d-flex justify-content-between row">
-          <div className="col-lg-3 col-0 d-flex align-items-center">
+          <div className="col-lg-4 col-0 d-flex align-items-center">
             <Link to="/" className="NavbarLogo">
               TRANBÓLICO
             </Link>
           </div>
-          <div className="d-flex justify-content-start col-8 ">
+          <div className="d-flex justify-content-start align-items-center col-8 ">
             <Navbar expand="lg " className="w-100">
               <Navbar.Toggle
                 aria-controls="basic-navbar-nav"
@@ -41,7 +41,7 @@ export const NavBarApp = () => {
               />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto NavbarCollapse w-100">
-                  <div className="d-flex justify-content-start align-items-center flex-lg-row flex-column col-8">
+                  <div className="d-flex justify-content-start align-items-lg-center flex-lg-row flex-column col-8">
                     <Nav.Link
                       as={Link}
                       to="/reservations"
@@ -60,7 +60,7 @@ export const NavBarApp = () => {
                     </Nav.Link>
                   </div>
                   {!globalState.user || !globalState.token ? (
-                    <div className="d-flex justify-content-xl-end justify-content-start flex-lg-row flex-column col-4">
+                    <div className="d-flex justify-content-xl-end  flex-lg-row flex-column align-items-lg-center">
                       <div className="NavbarRegisterLogin">
                         <Nav.Link
                           className="NavbarRegisterLoginColor"
@@ -77,25 +77,22 @@ export const NavBarApp = () => {
                           Login
                         </Nav.Link>
                       </div>
-                      <div className="col-1 d-flex justify-content-center align-items-lg-center align-items-start mt-1 mt-lg-0">
+                      {/* <div className="col-1 d-flex justify-content-center align-items-lg-center align-items-start mt-1 mt-lg-0">
                         <img
                           className="NavbarAvatar"
                           src="./images/avatar.png"
                           alt="avatar"
                           onClick={() => navigate("/profile")}
                         />
-                      </div>
+                      </div> */}
                     </div>
                   ) : (
-                    <div className="d-flex justify-content-xl-end align-items-xl-center flex-lg-row col-4 gap-4">
+                    <div className="d-flex justify-content-xl-end  align-items-lg-center align-items-center flex-lg-row col-4 gap-4">
                       <div
                         className="avatar-user text-center"
                         onClick={() => navigate("/profile")}
                       >
-
                         <UserAvatar user={globalState.user} size={50} />
-
-                        {/*<p className="text-danger">Imagen usuario</p>*/}
                       </div>
                       <div
                         className="avatar-user text-center"

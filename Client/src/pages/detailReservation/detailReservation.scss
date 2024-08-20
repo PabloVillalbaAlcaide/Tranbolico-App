@@ -23,7 +23,8 @@ main {
     box-shadow: 1px 1px 5px 1px var(--tranbolico-fucsia);
   }
 }
-span {
-  color: var(--tranbolico-fucsia);
-  text-decoration: underline;
+.desglose-precio {
+  span {
+    color: var(--tranbolico-fucsia);
+  }
 }

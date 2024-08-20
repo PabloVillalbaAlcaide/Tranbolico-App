@@ -1,5 +1,6 @@
 .div-profile {
   position: relative;
+  padding-block: 80px;
   .skater-icon {
     position: absolute;
     top: 0px;
@@ -9,7 +10,32 @@
   .rabbit-icon {
     position: absolute;
     bottom: -100px;
-    right: 350px;
+    right: -200px;
     transform: rotate(315deg);
+  }
+  .bloque-datos-usuario {
+    position: relative;
+    padding: 150px 50px 50px 50px;
+    // padding-top: 150px;
+    // padding-bottom: 50px;
+    // padding-inline: 50px;
+    border: 1px solid var(--tranbolico-azul);
+    border-radius: 20px;
+    background-color: #abd7ff;
+    .img-circular-usuario {
+      position: absolute;
+      top: -100px;
+    }
+    h3 {
+      color: var(--tranbolico-azul);
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+  @media (width <= 1400px) {
+    .skater-icon,
+    .rabbit-icon {
+      display: none;
+    }
   }
 }
