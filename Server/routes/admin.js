@@ -16,7 +16,18 @@ router.get("/searchLocations", verifyAdmin, adminController.searchLocations);
 router.post("/addRoute", verifyAdmin, adminController.addRoute);
 router.put("/editRoute", verifyAdmin, adminController.editRoute);
 router.delete("/deleteRoute/:id", verifyAdmin, adminController.deleteRoute);
-router.delete("/disableRoute", verifyAdmin, adminController.disableRoute);
+router.patch("/disableRoute", verifyAdmin, adminController.disableRoute);
+router.get("/getPlanning", verifyAdmin, adminController.getPlanning);
+router.get("/getPlanningRoutes", verifyAdmin, adminController.getPlanningRoutes);
 router.get("/viewUser", verifyAdmin, adminController.viewUser);
+router.get("/getPlanning", verifyAdmin, adminController.getPlanning);
+router.get(
+  "/getPlanningRoutes",
+  verifyAdmin,
+  adminController.getPlanningRoutes
+);
+router.post("/addPlanning", verifyAdmin, adminController.addPlanning);
+router.delete("/delPlanning/:routeId/:planningId", verifyAdmin, adminController.delPlanning);
+router.put("/editPlanning/:routeId/:planningId", verifyAdmin, adminController.editPlanning);
 
 module.exports = router;

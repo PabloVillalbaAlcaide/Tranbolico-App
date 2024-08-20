@@ -22,9 +22,9 @@ import { useContext } from "react";
 import { AppContext } from "../context/TranbolicoContextProvider";
 import Layout from "../layout/Layout";
 import { Admin } from "../pages/Admin/Admin/Admin";
-import { EditRouteAdmin } from "../pages/Admin/EditRouteAdmin/EditRouteAdmin";
 import { ViewUserAdmin } from "../pages/Admin/ViewUserAdmin/ViewUserAdmin";
 import { ViewEditRoute } from "../pages/Admin/ViewEditRoute/ViewEditRoute";
+import { ViewAddPlanning } from "../pages/Admin/ViewAddPlanning/ViewAddPlanning";
 
 export const AppRoutes = () => {
   const { loading } = useContext(AppContext);
@@ -36,7 +36,7 @@ export const AppRoutes = () => {
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="/reservations" element={<GetReservations />}>
-                <Route index element={<SelectDate/>} />
+                <Route index element={<SelectDate />} />
                 <Route path="returnDate" element={<SelectDate />} />
                 <Route
                   path="detailReservation"
@@ -67,8 +67,8 @@ export const AppRoutes = () => {
                 <Route path="nextReservations" element={<UserReservations />} />
               </Route>
               <Route path="/admin" element={<Admin />} />
-              <Route path="/admin/Routes" element={<ViewEditRoute />} />
-              <Route path="/admin/editRoute" element={<EditRouteAdmin />} />
+              <Route path="/admin/routes" element={<ViewEditRoute />} />
+              <Route path="/admin/planning" element={<ViewAddPlanning />} />
               <Route path="/admin/viewUser" element={<ViewUserAdmin />} />
 
               <Route path="*" element={<ErrorPage />}></Route>

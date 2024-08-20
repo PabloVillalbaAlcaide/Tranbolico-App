@@ -22,7 +22,7 @@ class AdminController {
     connection.query(sql, (err, result) => {
       if (err) {
         if (!res.headersSent) {
-          res.status(500).json(err);
+          return res.status(500).json(err);
         }
       } else {
         if (!res.headersSent) {
@@ -48,6 +48,7 @@ class AdminController {
   };
 
   addRoute = (req, res) => {
+
     const {
       departure_city_id,
       departure_province_id,
@@ -56,11 +57,10 @@ class AdminController {
       text,
     } = req.body;
     if (
-      !departure_province_id ||
-      !departure_city_id ||
-      !arrival_province_id ||
-      !arrival_city_id ||
-      !text
+      departure_city_id &&
+      departure_province_id &&
+      arrival_city_id &&
+      arrival_province_id
     ) {
       const data = [
         departure_city_id,
@@ -69,6 +69,8 @@ class AdminController {
         arrival_province_id,
         text,
       ];
+      console.log(data);
+
       const sql = `INSERT INTO route (departure_city_id, departure_province_id, arrival_city_id, arrival_province_id, text) VALUES (?, ?, ?, ?, ?)`;
 
       connection.query(sql, data, (err, result) => {
@@ -107,39 +109,38 @@ class AdminController {
       !departure_province_id ||
       !departure_city_id ||
       !arrival_province_id ||
-      !arrival_city_id ||
-      !text
+      !arrival_city_id
     ) {
       return res
         .status(400)
         .json({ error: "Todos los campos son obligatorios" });
     }
 
+    const data = [
+      departure_province_id,
+      departure_city_id,
+      arrival_province_id,
+      arrival_city_id,
+      text,
+      route_id,
+    ];
+
     const sql = `UPDATE route SET departure_province_id = ?, departure_city_id = ?, arrival_province_id = ?, arrival_city_id = ?, text = ? WHERE route_id = ?`;
 
-    connection.query(
-      sql,
-      [
-        departure_province_id,
-        departure_city_id,
-        arrival_province_id,
-        arrival_city_id,
-        text,
-        route_id,
-      ],
-      (err, result) => {
-        if (err) {
-          console.error("error en editar la ruta", err);
-          return res.status(500).json({ error: "error en editar la ruta" });
-        }
-        res
-          .status(200)
-          .json({ message: `Ruta con ID ${id} editada exitosamente` });
+    console.log(data);
+
+    connection.query(sql, data, (err, result) => {
+      if (err) {
+        console.error("error en editar la ruta", err);
+        return res.status(500).json({ error: "error en editar la ruta" });
       }
-    );
+      res.status(200).json(result);
+    });
   };
 
   disableRoute = (req, res) => {
+    console.log(req.body);
+
     const { route_id, is_disabled } = req.body;
 
     // Validar datos de entrada
@@ -165,8 +166,116 @@ class AdminController {
   deleteRoute = (req, res) => {
     const data = [req.params.id];
 
-    const sql = `DELETE FROM routes WHERE route_id = ?;`;
+    const sql = `DELETE FROM route WHERE route_id = ?;`;
 
+    connection.query(sql, data, (err, result) => {
+      if (err) {
+        return res.status(500).json(err);
+      }
+      res.status(200).json(result);
+    });
+  };
+
+  //Rutas de Planning
+  getPlanning = (req, res) => {
+    const sql = `SELECT 
+    planning.route_id,
+    planning.planning_id,
+    planning.departure_date,
+    planning.departure_time,
+    dp.city_name AS departure_city,
+    dp_prov.name AS departure_province,
+    ap.city_name AS arrival_city,
+    ap_prov.name AS arrival_province
+FROM planning JOIN route ON planning.route_id = route.route_id
+JOIN city dp ON route.departure_city_id = dp.city_id 
+AND route.departure_province_id = dp.province_id
+JOIN province dp_prov ON dp.province_id = dp_prov.province_id
+JOIN city ap ON route.arrival_city_id = ap.city_id AND route.arrival_province_id = ap.province_id
+JOIN province ap_prov ON ap.province_id = ap_prov.province_id`;
+    connection.query(sql, (err, result) => {
+      if (err) {
+        return res.status(500).json(err);
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  };
+
+  getPlanningRoutes = (req, res) => {
+    const { search } = req.query;
+    const sql = `SELECT 
+    route.*,
+    departure_city.city_name AS departure_city_name,
+    departure_province.name AS departure_province_name,
+    arrival_city.city_name AS arrival_city_name,
+    arrival_province.name AS arrival_province_name
+FROM route
+JOIN city AS departure_city ON route.departure_city_id = departure_city.city_id AND route.departure_province_id = departure_city.province_id
+JOIN province AS departure_province ON departure_city.province_id = departure_province.province_id
+JOIN city AS arrival_city ON route.arrival_city_id = arrival_city.city_id AND route.arrival_province_id = arrival_city.province_id
+JOIN province AS arrival_province ON arrival_city.province_id = arrival_province.province_id
+WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' OR departure_city.city_name LIKE '${search}%')`;
+    connection.query(sql, (err, result) => {
+      if (err) {
+        return res.status(500).json(err);
+      } else {
+        console.log(result);
+        res.status(200).json(result);
+      }
+    });
+  };
+
+  addPlanning = (req, res) => {
+    const { route_id, departure_date, departure_time } = req.body;
+    console.log(req.body);
+
+    let sqlMaxRouteId = `SELECT COALESCE(MAX(planning_id), 0) + 1 AS new_planning_id FROM planning WHERE route_id = ${route_id}`;
+    connection.query(sqlMaxRouteId, (err, result) => {
+      if (err) {
+        return res.status(500).json(err);
+      } else {
+        console.log(result);
+        let newPlanningId = result[0].new_planning_id;
+        let data = [route_id, departure_date, departure_time, newPlanningId];
+        let sql = `INSERT INTO planning (route_id, departure_date, departure_time, planning_id) VALUES (?, ?, ?, ?)`;
+        connection.query(sql, data, (err2, finalResult) => {
+          if (err2) {
+            return res.status(500).json(err2);
+          } else {
+            res.status(200).json(finalResult);
+          }
+        });
+      }
+    });
+  };
+
+  delPlanning = (req, res) => {
+    console.log(req.params);
+
+    const { routeId, planningId } = req.params;
+    const data = [routeId, planningId];
+    const sql = `DELETE FROM planning WHERE route_id = ? AND planning_id = ?`;
+    connection.query(sql, data, (err, result) => {
+      if (err) {
+        return res.status(500).json(err);
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  };
+
+  editPlanning = (req, res) => {
+    const { routeId, planningId } = req.params;
+    const { departure_date, departure_time } = req.body;
+  
+    if (!routeId || !planningId || !departure_date || !departure_time) {
+      return res.status(400).json({ error: 'Faltan parámetros' });
+    }
+
+    const data = [departure_date, departure_time, routeId, planningId];
+    const sql = `UPDATE planning SET departure_date = ?, departure_time = ? WHERE route_id = ? AND planning_id = ?`;
+    
     connection.query(sql, data, (err, result) => {
       if (err) {
         return res.status(500).json(err);
@@ -204,6 +313,55 @@ class AdminController {
       res
         .status(200)
         .json({ message: `Usuario con ID ${id} está deshabilitado` });
+    });
+  };
+
+  getPlanning = (req, res) => {
+    const sql = `SELECT 
+    planning.route_id,
+    planning.planning_id,
+    planning.departure_date,
+    planning.departure_time,
+    dp.city_name AS departure_city,
+    dp_prov.name AS departure_province,
+    ap.city_name AS arrival_city,
+    ap_prov.name AS arrival_province
+FROM planning JOIN route ON planning.route_id = route.route_id
+JOIN city dp ON route.departure_city_id = dp.city_id 
+AND route.departure_province_id = dp.province_id
+JOIN province dp_prov ON dp.province_id = dp_prov.province_id
+JOIN city ap ON route.arrival_city_id = ap.city_id AND route.arrival_province_id = ap.province_id
+JOIN province ap_prov ON ap.province_id = ap_prov.province_id`;
+    connection.query(sql, (err, result) => {
+      if (err) {
+        return res.status(500).json(err);
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  };
+
+  getPlanningRoutes = (req, res) => {
+    const { search } = req.query;
+    const sql = `SELECT 
+    route.*,
+    departure_city.city_name AS departure_city_name,
+    departure_province.name AS departure_province_name,
+    arrival_city.city_name AS arrival_city_name,
+    arrival_province.name AS arrival_province_name
+FROM route
+JOIN city AS departure_city ON route.departure_city_id = departure_city.city_id AND route.departure_province_id = departure_city.province_id
+JOIN province AS departure_province ON departure_city.province_id = departure_province.province_id
+JOIN city AS arrival_city ON route.arrival_city_id = arrival_city.city_id AND route.arrival_province_id = arrival_city.province_id
+JOIN province AS arrival_province ON arrival_city.province_id = arrival_province.province_id
+WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' OR departure_city.city_name LIKE '${search}%')`;
+    connection.query(sql, (err, result) => {
+      if (err) {
+        return res.status(500).json(err);
+      } else {
+        console.log(result);
+        res.status(200).json(result);
+      }
     });
   };
 }

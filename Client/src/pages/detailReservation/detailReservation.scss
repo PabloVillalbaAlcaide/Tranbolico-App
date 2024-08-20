@@ -1,0 +1,29 @@
+main {
+  color: var(--tranbolico-azul);
+  .resumen-reseva {
+    border: 1px solid var(--tranbolico-fucsia);
+    border-radius: 20px;
+    width: fit-content;
+    padding: 20px;
+    box-shadow: 0px 0px 10px 2px var(--tranbolico-azulClaro);
+  }
+  .boton-detail-date-reservation {
+    background-color: var(--tranbolico-fucsia);
+    border: 0;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 1px 1px 5px 1px var(--tranbolico-rosa);
+    color: white;
+  }
+  .boton-detail-time-reservation {
+    background-color: var(--tranbolico-rosa);
+    border: 0;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 1px 1px 5px 1px var(--tranbolico-fucsia);
+  }
+}
+span {
+  color: var(--tranbolico-fucsia);
+  text-decoration: underline;
+}
