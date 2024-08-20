@@ -8,7 +8,7 @@ import { UserAvatar } from "../../components/UserAvatar/UserAvatar";
 
 export const EditUser = () => {
   const { globalState, setGlobalState, loading } = useContext(AppContext);
-  const [editedUser, setEditedUser] = useState(globalState.user || {});
+  const [editedUser, setEditedUser] = useState({});
   const [files, setFiles] = useState();
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -121,32 +121,32 @@ export const EditUser = () => {
     };
 
     //Validamos
-    if (!editedUser.name) {
+    /* if (!editedUser.name) {
       newErrors.name = "El nombre es obligatorio";
       valid = false;
-    } else if (editedUser.name.length < 3 || editedUser.name.length > 15) {
+    } else  */
+    if (editedUser.name.length < 3 || editedUser.name.length > 15) {
       newErrors.name = "El nombre debe contener entre 3 y 15 caracteres";
       valid = false;
     }
 
     //Validamos apellido
-    if (!editedUser.surname) {
+    /* if (!editedUser.surname) {
       newErrors.surname = "El apellido es obligatorio";
       valid = false;
-    } else if (
-      editedUser.surname.length < 3 ||
-      editedUser.surname.length > 40
-    ) {
+    } else  */
+    if (editedUser.surname.length < 3 || editedUser.surname.length > 40) {
       newErrors.surname = "El nombre debe contener entre 3 y 40 caracteres";
       valid = false;
     }
 
     //Validamos email
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!editedUser.email) {
+    /* if (!editedUser.email) {
       newErrors.email = "El email es obligatorio";
       valid = false;
-    } else if (editedUser.email.length > 320) {
+    } else  */
+    if (editedUser.email.length > 320) {
       newErrors.surname = "El email debe contener como máximo 320 caracteres";
       valid = false;
     } else if (!emailPattern.test(editedUser.email)) {
@@ -155,23 +155,18 @@ export const EditUser = () => {
     }
 
     //Validamos teléfono
-    if (!editedUser.phone_number) {
+    /* if (!editedUser.phone_number) {
       newErrors.phone_number = "El teléfono es obligatorio";
       valid = false;
-    } else if (editedUser.phone_number.length > 25) {
+    } else  */
+    if (editedUser.phone_number.length > 25) {
       newErrors.phone_number =
         "El teléfono debe contener como máximo 25 caracteres";
       valid = false;
     }
 
-    //Validamos fecha de nacimiento
-    if (!editedUser.birthdate) {
-      newErrors.birthdate = "La fecha de nacimiento es obligatoria";
-      valid = false;
-    }
-
     //Validamos provincia
-    if (!editedUser.province) {
+    /*  if (!editedUser.province) {
       newErrors.province = "La provincia es obligatoria";
       valid = false;
     }
@@ -180,7 +175,7 @@ export const EditUser = () => {
     if (!editedUser.city) {
       newErrors.city = "La ciudad es obligatoria";
       valid = false;
-    }
+    } */
 
     setErrors(newErrors);
     return valid;
@@ -205,7 +200,7 @@ export const EditUser = () => {
                   type="text"
                   placeholder="Nombre"
                   name="name"
-                  value={editedUser.name || ""}
+                  value={editedUser?.name}
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -219,7 +214,7 @@ export const EditUser = () => {
                   type="text"
                   placeholder="Apellidos"
                   name="surname"
-                  value={editedUser.surname || ""}
+                  value={editedUser?.surname}
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -235,7 +230,7 @@ export const EditUser = () => {
                   type="email"
                   placeholder="Email"
                   name="email"
-                  value={editedUser.email || ""}
+                  value={editedUser?.email}
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -251,7 +246,7 @@ export const EditUser = () => {
                   type="tel"
                   placeholder="Teléfono"
                   name="phone_number"
-                  value={editedUser.phone_number || ""}
+                  value={editedUser?.phone_number}
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -283,7 +278,7 @@ export const EditUser = () => {
                   type="text"
                   placeholder="Provincia"
                   name="province_name"
-                  value={editedUser.province_name || ""}
+                  value={editedUser?.province_name}
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -299,7 +294,7 @@ export const EditUser = () => {
                   type="text"
                   placeholder="Ciudad"
                   name="city_name"
-                  value={editedUser.city_name || ""}
+                  value={editedUser?.city_name}
                   onChange={handleChange}
                 />
               </Form.Group>
