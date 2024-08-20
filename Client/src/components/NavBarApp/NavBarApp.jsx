@@ -21,6 +21,14 @@ export const NavBarApp = () => {
     navigate("/");
   };
 
+  const handleNavigation = () => {
+    if (globalState.user) {
+      navigate('/reservations');
+    } else {
+      navigate('/login');
+    }
+  };
+
   return (
     <div className="p-0 navbar">
       <header
@@ -43,8 +51,7 @@ export const NavBarApp = () => {
                 <Nav className="me-auto NavbarCollapse w-100">
                   <div className="d-flex justify-content-start align-items-center flex-lg-row flex-column col-8">
                     <Nav.Link
-                      as={Link}
-                      to="/reservations"
+                      onClick={handleNavigation}
                       className="NavbarNavLink"
                     >
                       Reservas
@@ -77,14 +84,16 @@ export const NavBarApp = () => {
                           Login
                         </Nav.Link>
                       </div>
+                      {/*
                       <div className="col-1 d-flex justify-content-center align-items-lg-center align-items-start mt-1 mt-lg-0">
                         <img
                           className="NavbarAvatar"
                           src="./images/avatar.png"
                           alt="avatar"
-                          onClick={() => navigate("/profile")}
+                          onClick={() => navigate("/login")}
                         />
                       </div>
+                      */}
                     </div>
                   ) : (
                     <div className="d-flex justify-content-xl-end align-items-xl-center flex-lg-row col-4 gap-4">
