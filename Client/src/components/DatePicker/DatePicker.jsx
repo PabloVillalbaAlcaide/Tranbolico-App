@@ -1,62 +1,57 @@
-import { useEffect, useState } from "react";
-import DatePicker from "react-date-picker";
+import { useCallback, useMemo } from "react";
+import { DayPicker } from "react-day-picker";
+import { es } from 'date-fns/locale';
+import { format, isSameDay, parseISO } from 'date-fns';
+import "react-day-picker/style.css";
 import "./datePicker.scss";
 
-const TranbolicoDatePicker = ({date, setDate, planningList}) => {
-  const [allowedDates, setAllowedDates] = useState([])
-  const today = new Date()
-  
-  useEffect(()=>{
-    setAllowedDates(planningList.map((elem)=>{
-      const newDate = elem.departure_date.replace(/-/g,", ")
-      return new Date(newDate);
-    }))
-  },[planningList]) 
+export const TranbolicoDatePicker = ({ date, setDate, planningList }) => {
+  const allowedDates = useMemo(() => 
+    planningList.map((elem) => parseISO(elem.departure_date)), 
+    [planningList]
+  );
 
-  const isAllowedDate  = (date) => {
-    return allowedDates.some(
-      (allowedDate) =>
-        date.getFullYear() === allowedDate.getFullYear() &&
-        date.getMonth() === allowedDate.getMonth() &&
-        date.getDate() === allowedDate.getDate()
-    );
-  };
+  const isAllowedDate = useCallback((date) => {
+    return allowedDates.some((allowedDate) => isSameDay(date, allowedDate));
+  }, [allowedDates]);
 
-  const handleDateChange = (date) => {
-    if (isAllowedDate(date)){
-      setDate(formatDate(date));
+  const handleDateChange = (newDate) => {
+    if (newDate instanceof Date && !isNaN(newDate)) {
+      if (isAllowedDate(newDate)) {
+        const formattedDate = format(newDate, 'yyyy-MM-dd');
+        setDate(formattedDate);
+      }
     }
-  }
-
-  const formatDate = (date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
   };
 
-  const tileClassName = ({ date, view }) => {
-    if (view === 'month' && isAllowedDate(date)) {
-      return 'react-calendar__tile--allowed';
-    }
-    return null;
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
-  return (
-    <div className="tranbolico-datepicker">
-     {allowedDates && <DatePicker
-        onChange={handleDateChange}
-        value={date}
-        highlightDates={allowedDates}
-        minDate={today}
-        isOpen={true}
-        calendarIcon={null}
-        clearIcon={null}
-        tileClassName={tileClassName}
-        className="tranbolico-datepicker"
-      />}
+  const CustomNavigation = ({ onPreviousClick, onNextClick, month }) => (
+    <div className="custom-navigation">
+      <button onClick={onPreviousClick}>Anterior</button>
+      <span>{capitalizeFirstLetter(format(month, 'MMMM yyyy', { locale: es }))}</span>
+      <button onClick={onNextClick}>Siguiente</button>
     </div>
   );
-};
 
-export default TranbolicoDatePicker;
+  return (
+    <DayPicker
+      mode="single"
+      selected={date}
+      onSelect={handleDateChange}
+      disabled={(day) => !isAllowedDate(day)}
+      modifiers={{ allowed: allowedDates }}
+      modifiersClassNames={{ allowed: "allowed-day" }}
+      locale={es}
+      components={{
+        Navigation: CustomNavigation,
+      }}
+      formatters={{
+        formatCaption: (date) => capitalizeFirstLetter(format(date, 'MMMM yyyy', { locale: es })),
+        formatWeekdayName: (date) => format(date, 'EEEEEE', { locale: es }),
+      }}
+    />
+  );
+};

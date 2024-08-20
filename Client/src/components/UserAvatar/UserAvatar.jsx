@@ -13,13 +13,13 @@ export const UserAvatar = ({ user, size = 50 }) => {
   return (
     <>
     <div style={avatarStyle}>
-        <img
+        {user?.avatar && <img
           src={`http://localhost:4000/images/users/${user.avatar}`}
           alt="avatar"
           width={size}
           height={size}
           className='imagen-avatar'
-        />
+        />}
         </div>
     </>
   );
