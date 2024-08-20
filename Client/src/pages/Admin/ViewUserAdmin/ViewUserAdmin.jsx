@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Row } from "react-bootstrap";
 import "./ViewUserAdmin.scss";
 import axios from "axios";
 import { AdminUser } from "../../../components/Admin/AdminUser/AdminUser";
 import { AdminUserSearch } from "../../../components/Admin/AdminUser/AdminUserSearch";
+import { AppContext } from "../../../context/TranbolicoContextProvider";
 
 export const ViewUserAdmin = () => {
   const [textSearch, setTextSearch] = useState("");
-  const [option, setOption] = useState("");
+  const [option, setOption] = useState("name");
   const [info, setInfo] = useState();
   const [errMsg, setErrMsg] = useState("");
+  const { globalState } = useContext(AppContext);
 
   //seteamos los parámetros del buscador
   const handleChange = (e) => {
@@ -24,15 +26,18 @@ export const ViewUserAdmin = () => {
   const onSearch = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:4000/admin/viewUser?opt=${option}&text=${textSearch}`
+        `http://localhost:4000/admin/viewUser?opt=${option}&text=${textSearch}`,
+        {
+          headers: { Authorization: `Bearer ${globalState.token}` },
+        }
       );
       setInfo(res.data);
       setErrMsg("");
     } catch (error) {
       console.log(error);
     }
-    if (!option || !textSearch) {
-      setErrMsg("Parámetros incorrectos");
+    if (!option) {
+      setErrMsg("Debes de selecionar una opción");
     }
   };
 
@@ -50,17 +55,21 @@ export const ViewUserAdmin = () => {
         onSearch={onSearch}
         errMsg={errMsg}
       />
-      {info &&
-        info.map((elem, index) => (
-          <div key={index}>
-            <AdminUser
-              full_name={elem.full_name}
-              email={elem.email}
-              birthdate={elem.birthdate}
-              phone_number={elem.phone_number}
-            />
-          </div>
-        ))}
+
+      <div className="d-flex flex-column flex-md-row align-items-center justify-content-center ">
+        {info &&
+          info.map((elem, index) => (
+            <div key={index}>
+              <AdminUser
+                full_name={elem.full_name}
+                email={elem.email}
+                birthdate={elem.birthdate}
+                phone_number={elem.phone_number}
+                is_disabled={elem.is_disabled}
+              />
+            </div>
+          ))}
+      </div>
     </>
   );
 };

@@ -48,7 +48,6 @@ class AdminController {
   };
 
   addRoute = (req, res) => {
-
     const {
       departure_city_id,
       departure_province_id,
@@ -268,14 +267,14 @@ WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' O
   editPlanning = (req, res) => {
     const { routeId, planningId } = req.params;
     const { departure_date, departure_time } = req.body;
-  
+
     if (!routeId || !planningId || !departure_date || !departure_time) {
-      return res.status(400).json({ error: 'Faltan parámetros' });
+      return res.status(400).json({ error: "Faltan parámetros" });
     }
 
     const data = [departure_date, departure_time, routeId, planningId];
     const sql = `UPDATE planning SET departure_date = ?, departure_time = ? WHERE route_id = ? AND planning_id = ?`;
-    
+
     connection.query(sql, data, (err, result) => {
       if (err) {
         return res.status(500).json(err);
@@ -288,7 +287,7 @@ WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' O
   viewUser = (req, res) => {
     const { opt, text } = req.query;
 
-    const sql = `select user_id, concat(name," ", surname) AS full_name, birthdate, email, phone_number from user where ${opt} LIKE "${text}%"`;
+    const sql = `select user_id, concat(name," ", surname) AS full_name, birthdate, email, phone_number, is_disabled from user where ${opt} LIKE "${text}%"`;
 
     connection.query(sql, (err, result) => {
       if (err) {
@@ -300,19 +299,76 @@ WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' O
   };
   //deshabilitar usuarios
   disableUser = (req, res) => {
-    const { id } = req.params;
-    const sql = `UPDATE user SET is_disabled = TRUE WHERE user_id = ?;`;
-
-    connection.query(sql, [id], (err, result) => {
+    const { user_id, is_disabled } = req.body;
+    console.log(user_id, "userid", is_disabled, "is_disabled");
+    const sql = `UPDATE user SET is_disabled = ${is_disabled} WHERE user_id = ${user_id}`;
+    connection.query(sql, (err, result) => {
       if (err) {
-        console.log("error al deshabilitar usuario");
+        console.error("error al habilitar7deshabilitar usuario", err);
+        return res.status(500).json({ error: "error al habi/deshabi usuario" });
+      }
+      res.status(200).json("Todo ok");
+    });
+  };
+
+  historicalUser = (req, res) => {
+    const { user_id } = req.query;
+    const sql = ` SELECT
+    reservation.user_id,
+    reservation.reservation_id,
+    reservation.reservation_type,
+    reservation.is_deleted,
+    route.text AS route_name,
+    planning.departure_date AS departure_day,
+    planning.departure_time AS departure_time,
+    dp.name AS departure_province_name,
+    dc.city_name AS departure_city_name,
+    ap.name AS arrival_province_name,
+    ac.city_name AS arrival_city_name
+FROM reservation JOIN planning ON reservation.route_id = planning.route_id AND reservation.planning_id = planning.planning_id
+JOIN route ON reservation.route_id = route.route_id JOIN  province dp ON route.departure_province_id = dp.province_id
+JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
+JOIN province ap ON route.arrival_province_id = ap.province_id JOIN city ac ON route.arrival_city_id = ac.city_id
+AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${user_id}
+AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) <= NOW() OR reservation.is_deleted = 1;`;
+    connection.query(sql, (err, result) => {
+      if (err) {
+        console.error("error en traer usuario", err);
         return res
           .status(500)
-          .json({ error: "Error al deshabilitar al usuario" });
+          .json({ error: "error en traer historial del usuario" });
       }
-      res
-        .status(200)
-        .json({ message: `Usuario con ID ${id} está deshabilitado` });
+      res.status(200).json(result);
+    });
+  };
+
+  reservationUser = (req, res) => {
+    const { user_id } = req.query;
+    const sql = `SELECT
+    reservation.user_id,
+    reservation.reservation_id,
+    reservation.reservation_type,
+    route.text AS route_name,
+    planning.departure_date AS departure_day,
+    planning.departure_time AS departure_time,
+    dp.name AS departure_province_name,
+    dc.city_name AS departure_city_name,
+    ap.name AS arrival_province_name,
+    ac.city_name AS arrival_city_name
+FROM reservation JOIN planning ON reservation.route_id = planning.route_id AND reservation.planning_id = planning.planning_id
+JOIN route ON reservation.route_id = route.route_id JOIN  province dp ON route.departure_province_id = dp.province_id
+JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
+JOIN province ap ON route.arrival_province_id = ap.province_id JOIN city ac ON route.arrival_city_id = ac.city_id
+AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${user_id}
+AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) >= NOW() AND reservation.is_deleted = 0 `;
+    connection.query(sql, (err, result) => {
+      if (err) {
+        console.error("error en traer usuario", err);
+        return res
+          .status(500)
+          .json({ error: "error en traer reservas del usuario" });
+      }
+      res.status(200).json(result);
     });
   };
 
@@ -355,6 +411,7 @@ JOIN province AS departure_province ON departure_city.province_id = departure_pr
 JOIN city AS arrival_city ON route.arrival_city_id = arrival_city.city_id AND route.arrival_province_id = arrival_city.province_id
 JOIN province AS arrival_province ON arrival_city.province_id = arrival_province.province_id
 WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' OR departure_city.city_name LIKE '${search}%')`;
+
     connection.query(sql, (err, result) => {
       if (err) {
         return res.status(500).json(err);

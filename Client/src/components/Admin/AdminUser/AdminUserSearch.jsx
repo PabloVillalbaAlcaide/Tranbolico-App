@@ -1,6 +1,4 @@
-import React from "react";
 import { Button, Form } from "react-bootstrap";
-
 export const AdminUserSearch = ({
   handleChange,
   option,
@@ -15,22 +13,22 @@ export const AdminUserSearch = ({
           <Form.Check
             className="m-2"
             type="radio"
-            label="Teléfono"
-            aria-label="radio 1"
-            name="select"
-            value="phone_number"
-            onChange={handleChange}
-            checked={option === "phone_number"}
-          />
-          <Form.Check
-            className="m-2"
-            type="radio"
             label="Nombre"
             aria-label="radio 1"
             name="select"
             value="name"
             onChange={handleChange}
             checked={option === "name"}
+          />
+          <Form.Check
+            className="m-2"
+            type="radio"
+            label="Teléfono"
+            aria-label="radio 1"
+            name="select"
+            value="phone_number"
+            onChange={handleChange}
+            checked={option === "phone_number"}
           />
           <Form.Check
             className="m-2"
