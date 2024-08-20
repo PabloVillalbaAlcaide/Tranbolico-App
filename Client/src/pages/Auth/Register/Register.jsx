@@ -205,7 +205,6 @@ export const Register = () => {
                   name="email"
                   value={register.email}
                   onChange={handleChange}
-                  /* pattern="[a-z-A-Z-0-9._%+-]+@[a-z0-9.-]+\.[a-z-A-Z]{2,4}$" */
                 />
               </Form.Group>
               {errors.email && (
@@ -221,7 +220,6 @@ export const Register = () => {
                   name="phone_number"
                   value={register.phone_number}
                   onChange={handleChange}
-                  /* pattern="[6-7]{1}-[0-9]{8}" */
                 />
               </Form.Group>
               {errors.phone_number && (
