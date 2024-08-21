@@ -24,7 +24,7 @@ class UserController {
   //Controlador que realiza el registro de usuario
   registerUser = (req, res) => {
     console.log(req.body);
-    
+
     const {
       name,
       surname,
@@ -67,7 +67,7 @@ class UserController {
               ];
               let sql2 = `INSERT INTO user (name, surname, birthdate, genre, email, password, phone_number, avatar, province_id, city_id)
               VALUES (?,?,?,?,?,?,?,?,?,?);`;
-              if(genre === ""){
+              if (genre === "") {
                 data = [
                   name,
                   surname,
@@ -144,7 +144,30 @@ class UserController {
                       );
                       //Encripta el token
                       token = encryptToken(token, process.env.SECRET_KEY_3);
-                      return res.status(200).json({ resultSelect, token });
+
+                      const finalResult = {
+                        user_id: resultSelect[0].user_id,
+                        name: resultSelect[0].name,
+                        surname: resultSelect[0].surname,
+                        birthdate: resultSelect[0].birthdate,
+                        genre: resultSelect[0].genre,
+                        email: resultSelect[0].email,
+                        phone_number: resultSelect[0].phone_number,
+                        avatar: resultSelect[0].avatar,
+                        province: {
+                          name: resultSelect[0].province,
+                          province_id: resultSelect[0].province_id,
+                        },
+                        city: {
+                          city_name: resultSelect[0].city,
+                          city_id: resultSelect[0].city_id,
+                          province_id: resultSelect[0].province_id,
+                        },
+                        user_type: resultSelect[0].user_type,
+                      };
+                      console.log(finalResult);
+
+                      return res.status(200).json({ finalResult, token });
                     }
                   }
                 });
@@ -231,7 +254,7 @@ class UserController {
         return res.status(500).json(err);
       } else if (result.length === 0) {
         return res.status(401).json("No autorizado");
-      } else {    
+      } else {
         const finalResult = {
           user_id: result[0].user_id,
           name: result[0].name,
@@ -241,84 +264,107 @@ class UserController {
           email: result[0].email,
           phone_number: result[0].phone_number,
           avatar: result[0].avatar,
-          province:{name: result[0].province, province_id:result[0].province_id},
-          city: {city_name:result[0].city, city_id:result[0].city_id, province_id:result[0].province_id}
-        }
+          province: {
+            name: result[0].province,
+            province_id: result[0].province_id,
+          },
+          city: {
+            city_name: result[0].city,
+            city_id: result[0].city_id,
+            province_id: result[0].province_id,
+          },
+          user_type: result[0].user_type,
+        };
         res.status(200).json(finalResult);
       }
     });
   };
 
   editOneUser = (req, res) => {
+    // console.log("Request body:", req.body);
+    // console.log("Request file:", req.file);
 
-  
-      const {
-        user_id,
+    if (!req.body) {
+      return res
+        .status(400)
+        .json({ error: "No se recibieron datos en el cuerpo de la solicitud" });
+    }
+
+    let user = JSON.parse(req.body.user);
+    const {
+      user_id,
+      name,
+      surname,
+      email,
+      phone_number,
+      genre,
+      province,
+      city,
+    } = user;
+
+    if (
+      !user_id ||
+      !name ||
+      !surname ||
+      !email ||
+      !phone_number ||
+      !province ||
+      !city
+    ) {
+      return res
+        .status(400)
+        .json({
+          error: "Faltan datos necesarios en el cuerpo de la solicitud",
+        });
+    }
+
+    let data = [
+      name,
+      surname,
+      email,
+      genre,
+      phone_number,
+      province.province_id,
+      city.city_id,
+      user_id,
+    ];
+    let sql = `UPDATE user SET name = ?, surname = ?, email = ?, genre = ?, phone_number = ?, province_id = ?, city_id = ? WHERE user_id = ?`;
+
+    if (req.file) {
+      console.log("Imagen recibida:", req.file.filename);
+
+      data = [
         name,
         surname,
         email,
         genre,
         phone_number,
-        province_name,
-        city_name,
-      } = req.body
-
-      let data = [
-        name,
-        surname,
-        email,
-        genre,
-        phone_number,
-        province_name,
-        city_name,
-        province_name,
+        province.province_id,
+        city.city_id,
+        req.file.filename,
         user_id,
       ];
 
-      let sql = `
-            UPDATE user 
-            SET name = ?, surname = ?, email = ?, genre = ?, phone_number = ?, 
-                province_id = (SELECT province_id FROM province WHERE name = ?), 
-                city_id = (SELECT city_id FROM city WHERE city_name = ? AND province_id = (SELECT province_id FROM province WHERE name = ?)) 
-            WHERE user_id = ?
-        `;
+      sql = `UPDATE user SET name = ?, surname = ?, email = ?, genre = ?, phone_number = ?, province_id = ?, city_id = ?, avatar = ? WHERE user_id = ?`;
+    }
 
-      if (req.file) {
-        data = [
-          name,
-          surname,
-          email,
-          genre,
-          phone_number,
-          province_name,
-          city_name,
-          province_name,
-          req.file.filename,
-          user_id,
-        ];
+    console.log("SQL query:", sql);
+    console.log("Data:", data);
 
-        sql = `
-                UPDATE user 
-                SET name = ?, surname = ?, email = ?, genre = ?, phone_number = ?, 
-                    province_id = (SELECT province_id FROM province WHERE name = ?), 
-                    city_id = (SELECT city_id FROM city WHERE city_name = ? AND province_id = (SELECT province_id FROM province WHERE name = ?)), 
-                    avatar = ? 
-                WHERE user_id = ?
-            `;
-      }
-
-      connection.query(sql, data, (err, result) => {
-        if (err) {
+    connection.query(sql, data, (err, result) => {
+      if (err) {
+        if (req.file) {
           delFile(req.file.filename, "users");
-          return res.status(500).json(err);
-        } else {
-          if (req.file) {
-            return res.status(200).json({ result, image: req.file.filename });
-          } else {
-            return res.status(200).json({ result });
-          }
         }
-      });
+        return res.status(500).json(err);
+      } else {
+        if (req.file) {
+          return res.status(200).json({ result, image: req.file.filename });
+        } else {
+          return res.status(200).json({ result });
+        }
+      }
+    });
   };
 
   recoverPassword = (req, res) => {

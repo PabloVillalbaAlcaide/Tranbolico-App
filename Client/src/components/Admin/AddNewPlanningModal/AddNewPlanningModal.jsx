@@ -70,6 +70,9 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
       departure_time: time,
     };
     onSave(newPlanning);
+    setRoute("");
+    setDate("");
+    setTime("");
     onHide(); // Cierra el modal
   };
 
@@ -123,7 +126,15 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            onHide();
+            setRoute("");
+            setDate("");
+            setTime("");
+          }}
+        >
           Cancelar
         </Button>
         <Button variant="primary" onClick={handleSave}>

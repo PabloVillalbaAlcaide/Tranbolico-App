@@ -13,6 +13,10 @@ export const ViewUserAdmin = () => {
   const [errMsg, setErrMsg] = useState("");
   const { globalState } = useContext(AppContext);
 
+  useEffect(() => {
+    onSearch();
+  }, []);
+
   //seteamos los parámetros del buscador
   const handleChange = (e) => {
     if (e.target.type === "search") {

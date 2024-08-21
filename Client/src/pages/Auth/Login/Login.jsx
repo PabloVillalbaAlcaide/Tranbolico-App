@@ -32,13 +32,13 @@ export const Login = () => {
       setGlobalState({
         ...globalState,
         token: res.data.token,
-        user: res.data.resultSelect[0],
+        user: res.data.finalResult,
       });
       localStorage.setItem("token", res.data.token);
 
-      if (res.data.resultSelect[0].user_type === 1) {
+      if (res.data.finalResult.user_type === 1) {
         navigate("/admin"); //enviar al administrador
-      } else if (res.data.resultSelect[0].user_type === 2) {
+      } else if (res.data.finalResult.user_type === 2) {
         navigate("/");
       }
     } catch (err) {

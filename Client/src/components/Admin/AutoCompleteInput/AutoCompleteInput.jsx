@@ -9,7 +9,7 @@ export const AutocompleteInput = ({ value, onChange, onSelect, disabled }) => {
   const { globalState } = useContext(AppContext);
 
   useEffect(() => {
-    if (value.length > 2 && !disabled) {
+    if (value?.length > 1 && !disabled) {
       const fetchSuggestions = async () => {
         try {
           const response = await axios.get(
