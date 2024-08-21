@@ -232,6 +232,7 @@ export const Register = () => {
                   placeholder="Fecha de nacimiento"
                   name="birthdate"
                   value={register.birthdate}
+                  onChange={handleChange}
                   autoComplete="off"
                 />
               </Form.Group>
