@@ -1,14 +1,16 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Form, FormControl, ListGroup, Row, Col } from "react-bootstrap";
-import debounce from 'lodash.debounce';
-import './locationSelector.scss';
+import debounce from "lodash.debounce";
+import "./locationSelector.scss";
+
 
 export const SearchDropdown = ({
   type,
   selectedOption,
   handleSelect,
   placeholder,
+  provinceId
 }) => {
   const [options, setOptions] = useState([]);
   const [inputValue, setInputValue] = useState(selectedOption);
@@ -16,14 +18,22 @@ export const SearchDropdown = ({
 
   useEffect(() => {
     if (selectedOption) {
-      setInputValue(selectedOption.name || selectedOption.city_name || selectedOption);
+      setInputValue(
+        selectedOption.name || selectedOption.city_name || selectedOption
+      );
     }
   }, [selectedOption]);
 
   const fetchOptions = async (query) => {
     try {
+
+      console.log(provinceId);
+      
+
+      const partialUrl = type === "province" ? `${type}?query=${query}` : `${type}?query=${query}&province=${provinceId}`
+
       const response = await axios.get(
-        `http://localhost:4000/${type}?query=${query}`
+        `http://localhost:4000/${partialUrl}`
       );
       setOptions(response.data);
       setShowDropdown(true);
@@ -32,21 +42,14 @@ export const SearchDropdown = ({
     }
   };
 
-  const debouncedFetchOptions = useCallback(
-    debounce((query) => {
-      fetchOptions(query);
-    }, 300),
-    [type]
-  );
-
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
-    debouncedFetchOptions(inputValue);
+    fetchOptions(inputValue);
   };
 
   const handleOptionSelect = (option) => {
-    console.log("OPCION",option);
+    console.log("OPCION", option);
     const displayValue = option.name || option.city_name;
     setInputValue(displayValue);
     handleSelect(option);
@@ -57,21 +60,28 @@ export const SearchDropdown = ({
     <Form.Group
       controlId={`form${type.charAt(0).toUpperCase() + type.slice(1)}`}
     >
-      <FormControl
+       <FormControl
         className="input-form"
         type="text"
         value={inputValue}
         onChange={handleInputChange}
         placeholder={placeholder}
-        onFocus={() => setShowDropdown(true)} // Abre el dropdown al enfocar
+        onFocus={() => setShowDropdown(true)}
+        autoComplete="off"
       />
       {inputValue && showDropdown && options.length > 0 && (
         <ListGroup className="dropdown-list">
           <Row>
             {options.map((option) => (
-              <Col xs={12} key={option.province_id + (option.city_id ? `_${option.city_id}` : '')}>
-                <ListGroup.Item 
-                  className="dropdown-item" 
+              <Col
+                xs={12}
+                key={
+                  option.province_id +
+                  (option.city_id ? `_${option.city_id}` : "")
+                }
+              >
+                <ListGroup.Item
+                  className="dropdown-item"
                   onClick={() => handleOptionSelect(option)}
                 >
                   {option.name || option.city_name}

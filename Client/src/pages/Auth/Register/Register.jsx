@@ -3,9 +3,9 @@ import "../../../App.css";
 import "./register.scss";
 
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { SearchDropdown } from "../../../components/locationSelector/LocationSelector"; // 
+import { SearchDropdown } from "../../../components/locationSelector/LocationSelector"; //
 
 const initialValue = {
   name: "",
@@ -24,11 +24,20 @@ export const Register = () => {
   const navigate = useNavigate();
   const [password2, setPassword2] = useState("");
   const [errors, setErrors] = useState({});
+  const [showCityDropdown, setShowCityDropdown] = useState(false);
+
+  useEffect(() => {
+    if (register.province.province_id) {
+      setShowCityDropdown(true);
+    } else {
+      setShowCityDropdown(false);
+    }
+  }, [register.province]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value );
-    
+    console.log(name, value);
+
     setRegister({ ...register, [name]: value });
   };
 
@@ -131,21 +140,25 @@ export const Register = () => {
     return valid;
   };
 
+  console.log(register.province.province_id);
+  
+
   const onSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
       try {
         console.log("register", register);
-        
+
         await axios.post("http://localhost:4000/users/registerUser", register);
         console.log("registrado");
-        
+
         navigate("/MsgVerifyEmail");
       } catch (error) {
         console.error("Error registering:", error);
       }
     }
   };
+  
   return (
     <>
       <Row>
@@ -171,6 +184,7 @@ export const Register = () => {
                   name="name"
                   value={register.name}
                   onChange={handleChange}
+                  autoComplete="off"
                 />
               </Form.Group>
               {errors.name && (
@@ -184,6 +198,7 @@ export const Register = () => {
                   name="surname"
                   value={register.surname}
                   onChange={handleChange}
+                  autoComplete="off"
                 />
               </Form.Group>
               {errors.surname && (
@@ -199,6 +214,7 @@ export const Register = () => {
                   name="email"
                   value={register.email}
                   onChange={handleChange}
+                  autoComplete="off"
                 />
               </Form.Group>
               {errors.email && (
@@ -214,6 +230,7 @@ export const Register = () => {
                   name="phone_number"
                   value={register.phone_number}
                   onChange={handleChange}
+                  autoComplete="off"
                 />
               </Form.Group>
               {errors.phone_number && (
@@ -229,6 +246,7 @@ export const Register = () => {
                   name="birthdate"
                   value={register.birthdate}
                   onChange={handleChange}
+                  autoComplete="off"
                 />
               </Form.Group>
               {errors.birthdate && (
@@ -256,6 +274,7 @@ export const Register = () => {
                   selectedOption={register.province}
                   handleSelect={handleSelect("province")}
                   placeholder="Provincia"
+                  autoComplete="off"
                 />
               </Form.Group>
               {errors.province && (
@@ -263,14 +282,16 @@ export const Register = () => {
                   {errors.province}
                 </p>
               )}
-              <Form.Group className="mb-2" controlId="formBasicCity">
+              {showCityDropdown  && <Form.Group className="mb-2" controlId="formBasicCity">
                 <SearchDropdown
                   type="city"
+                  provinceId={register.province.province_id}
                   selectedOption={register.city}
                   handleSelect={handleSelect("city")}
                   placeholder="Ciudad"
+                  autoComplete="off"
                 />
-              </Form.Group>
+              </Form.Group>}
               {errors.city && (
                 <p className="text-center text-danger fw-bold">{errors.city}</p>
               )}
@@ -331,4 +352,4 @@ export const Register = () => {
       <br /> <br />
     </>
   );
-}  
+};

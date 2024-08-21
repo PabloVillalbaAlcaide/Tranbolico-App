@@ -94,6 +94,7 @@ export const SearchBar = () => {
   };
 
   return (
+
     
     <div className="contenedor-searchbar">
       <Form>

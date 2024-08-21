@@ -21,7 +21,7 @@ CREATE TABLE user(
 	name varchar(50) NOT NULL,
     surname varchar(100) NOT NULL,
     birthdate DATE NOT NULL,
-    genre TINYINT,
+    genre TINYINT DEFAULT NULL,
     email varchar(320) UNIQUE NOT NULL,
     password varchar(100) NOT NULL,
     phone_number varchar(25) NOT NULL,
