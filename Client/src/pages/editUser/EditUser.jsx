@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserAvatar } from "../../components/UserAvatar/UserAvatar";
 import { SearchDropdown } from "../../components/locationSelector/LocationSelector";
-import debounce from 'lodash.debounce';
 
 export const EditUser = () => {
   const { globalState, setGlobalState, loading } = useContext(AppContext);
@@ -58,7 +57,8 @@ export const EditUser = () => {
     }
 
     if (editedUser.phone_number?.length > 25) {
-      newErrors.phone_number = "El teléfono debe contener como máximo 25 caracteres";
+      newErrors.phone_number =
+        "El teléfono debe contener como máximo 25 caracteres";
       isValid = false;
     }
 
@@ -69,18 +69,22 @@ export const EditUser = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    validateForm(editedUser)
-
+    validateForm(editedUser);
     console.log(editedUser);
-    
+
     const sanitizedUser = {
       ...editedUser,
       name: editedUser.name.trim() || globalState.user.name,
       surname: editedUser.surname.trim() || globalState.user.surname,
       email: editedUser.email.trim() || globalState.user.email,
-      phone_number: editedUser.phone_number.trim() || globalState.user.phone_number,
-      province_name: editedUser.province_name.name.trim() || globalState.user.province_name.name,
-      city_name: editedUser.city_name.city_name.trim() || globalState.user.city_name.name,
+      phone_number:
+        editedUser.phone_number.trim() || globalState.user.phone_number,
+      province_name:
+        editedUser.province_name.name.trim() ||
+        globalState.user.province_name.name,
+      city_name:
+        editedUser.city_name.city_name.trim() ||
+        globalState.user.city_name.name,
     };
 
     try {
@@ -90,12 +94,12 @@ export const EditUser = () => {
         formData.append("avatar", files);
       }
       console.log("Voy a actualizar");
-      
+
       const response = await axios.put(
         `http://localhost:4000/users/editOneUser`,
         formData,
-        {headers: {Authorization:`Bearer ${globalState.token}`}},
-      )
+        { headers: { Authorization: `Bearer ${globalState.token}` } }
+      );
       if (response.status === 200) {
         setGlobalState({ ...globalState, user: sanitizedUser });
         navigate("/profile");
@@ -105,9 +109,8 @@ export const EditUser = () => {
       setErrors({ ...errors, form: "Error al actualizar el usuario" });
     }
   };
- 
+
   console.log(globalState.user);
-  
 
   return (
     <>
@@ -203,8 +206,9 @@ export const EditUser = () => {
                 <SearchDropdown
                   type="province"
                   selectedOption={editedUser.province_name}
-                  handleSelect={handleSelect('province_name')}
+                  handleSelect={handleSelect("province_name")}
                   placeholder="Provincia"
+                  autoComplete="off"
                 />
               </Form.Group>
               {errors.province && (
@@ -217,8 +221,9 @@ export const EditUser = () => {
                 <SearchDropdown
                   type="city"
                   selectedOption={editedUser.city_name}
-                  handleSelect={handleSelect('city_name')}
+                  handleSelect={handleSelect("city_name")}
                   placeholder="Ciudad"
+                  autoComplete="off"
                 />
               </Form.Group>
               {errors.city && (
