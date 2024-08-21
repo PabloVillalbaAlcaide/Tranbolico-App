@@ -23,6 +23,8 @@ export const Home = () => {
   };
 
   return (
+    <>
+    <br />
     <Container fluid className="contenedor-home">
       <main>
         <div className="d-flex align-items-center justify-content-center flex-column text-center ">
@@ -33,10 +35,10 @@ export const Home = () => {
             className="bus-footer me-4"
             alt="Bus Tranbolico"
           />
-
+          <br />
           <SearchBar />
+          <br />
         </div>
-
         <div className="contenedor-botones-home d-flex mt-4  flex-column flex-md-row mt-4 align-items-center justify-content-center gap-4">
 
           <Button className="btn-reservas-home" onClick={handleNavigation}>RESERVAS</Button>
@@ -83,5 +85,7 @@ export const Home = () => {
         </Row>
       </main>
     </Container>
+    <br />
+    </>
   );
 };

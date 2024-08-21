@@ -44,10 +44,15 @@ export const NavBarApp = () => {
           </div>
           <div className="d-flex justify-content-start align-items-center col-8 ">
             <Navbar expand="lg " className="w-100">
-              <Navbar.Toggle
-                aria-controls="basic-navbar-nav"
-                className="custom-menu"
-              />
+              <div className="d-flex align-items-center">
+                <Navbar.Toggle
+                  aria-controls="basic-navbar-nav"
+                  className="custom-menu"
+                />
+                <Link to="/" className="NavbarLogoMobile">
+                  TRANBÓLICO
+                </Link>
+              </div>
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto NavbarCollapse w-100">
                   <div className="d-flex justify-content-start align-items-lg-center flex-lg-row flex-column col-8">

@@ -1,6 +1,11 @@
 .ppal-login {
   background-color: var(--tranbolico-azul);
   width: 100%;
+  font-family: "VinaSans-Regular.ttf";
+}
+
+.ppal-login h2 {
+  font-size: 3rem;
 }
 
 .contenedor-login {

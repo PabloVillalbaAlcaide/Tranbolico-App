@@ -59,7 +59,11 @@ export const SearchBar = () => {
     setFinal({ city, province });
     set(`${city}, ${province}`);
     setSuggestion([]);
+     
+    
   };
+
+
 
   // const handleOriginSelected = (city, province) => {
   //   setOriginFinal({ city, province });
@@ -90,85 +94,87 @@ export const SearchBar = () => {
   };
 
   return (
-    <Form>
-      <Form.Group className="mb-3" controlId="formBasicOrigin">
-        <Form.Label>Origen</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="origen"
-          onChange={handleOriginChange}
-          value={origin || ""}
-          name="origin"
-          autoComplete="off"
-        />
-        {originSuggestions.length > 0 && (
-          <div className="suggestions">
-            {originSuggestions.map((e, index) => {
-              const key = `${e.province_id || index}-${e.city_id || index}`;
-              return (
-                <div
-                  key={key}
-                  onClick={() =>
-                    handleSelected(
-                      e.city_name,
-                      e.name,
-                      setOrigin,
-                      setOriginFinal,
-                      setOriginSuggestions
-                    )
-                  }
-                >
-                  <p>
-                    {e.city_name}, {e.name}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formBasicDestination">
-        <Form.Label>Destino</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="destino"
-          onChange={handleDestinationChange}
-          value={destination || ""}
-          name="destination"
-          autoComplete="off"
-        />
-        {destinationSuggestions.length > 0 && (
-          <div className="suggestions">
-            {destinationSuggestions.map((e, index) => {
-              const key = `${e.province_id || index}-${e.city_id || index}`;
-              return (
-                <div
-                  key={key}
-                  onClick={() =>
-                    handleSelected(
-                      e.city_name,
-                      e.name,
-                      setDestination,
-                      setDestinationFinal,
-                      setDestinationSuggestions
-                    )
-                  }
-                >
-                  <p>
-                    {e.city_name}, {e.name}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </Form.Group>
-      {errMsg.show && <p className="text-danger fw-bold mb-3">{errMsg.text}</p>}
-
-      <Button variant="primary" onClick={onSubmit}>
-        Buscar
-      </Button>
-    </Form>
+    
+    <div className="contenedor-searchbar">
+      <Form>
+        <Form.Group className="mb-3 form-origen-destino_SB d-flex flex-column justify-content-center align-items-center" controlId="formBasicOrigin">
+          <Form.Label>Origen</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="estoy en...."
+            onChange={handleOriginChange}
+            value={origin || ""}
+            name="origin"
+            className="form-99-buscador d-flex text-center"
+          />
+          {originSuggestions.length > 0 && (
+            <div className="suggestions">
+              {originSuggestions.map((e, index) => {
+                const key = `${e.province_id || index}-${e.city_id || index}`;
+                return (
+                  <div
+                    key={key}
+                    onClick={() =>
+                      handleSelected(
+                        e.city_name,
+                        e.name,
+                        setOrigin,
+                        setOriginFinal,
+                        setOriginSuggestions
+                      )
+                    }
+                  >
+                    <p>
+                      {e.city_name}, {e.name}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </Form.Group>
+        <Form.Group className="mb-3 form-origen-destino_SB d-flex flex-column justify-content-center align-items-center" controlId="formBasicDestination">
+          <Form.Label>Destino</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="voy a.."
+            onChange={handleDestinationChange}
+            value={destination || ""}
+            name="destination"
+           className="form-99-buscador d-flex text-center"
+          />
+          {destinationSuggestions.length > 0 && (
+            <div className="suggestions">
+              {destinationSuggestions.map((e, index) => {
+                const key = `${e.province_id || index}-${e.city_id || index}`;
+                return (
+                  <div
+                    key={key}
+                    onClick={() =>
+                      handleSelected(
+                        e.city_name,
+                        e.name,
+                        setDestination,
+                        setDestinationFinal,
+                        setDestinationSuggestions
+                      )
+                    }
+                  >
+                    <p>
+                      {e.city_name}, {e.name}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </Form.Group>
+        {errMsg.show && <p className="msg-error-home text-danger fw-bold mb-3">{errMsg.text}</p>}
+        <Button className="btn-buscarSBH"  onClick={onSubmit}> 
+          Buscar
+        </Button>
+      </Form>
+    </div>
   );
 };
