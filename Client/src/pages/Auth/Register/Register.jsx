@@ -135,8 +135,12 @@ export const Register = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        await axios.post("http://localhost:4000/register", register);
-        navigate("/login");
+        console.log("register", register);
+        
+        await axios.post("http://localhost:4000/users/registerUser", register);
+        console.log("registrado");
+        
+        navigate("/MsgVerifyEmail");
       } catch (error) {
         console.error("Error registering:", error);
       }
@@ -309,7 +313,7 @@ export const Register = () => {
               <div className="d-flex justify-content-center gap-2">
                 <Button
                   className="btn-iniciar-login aceptar border-0 fst-italic"
-                  type="submit"
+                  onClick={onSubmit}
                 >
                   Registrar
                 </Button>

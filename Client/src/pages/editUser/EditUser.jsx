@@ -74,15 +74,16 @@ export const EditUser = () => {
     if (!debouncedValidateForm()) {
       return;
     }
-
+    console.log(editedUser);
+    
     const sanitizedUser = {
       ...editedUser,
       name: editedUser.name.trim() || globalState.user.name,
       surname: editedUser.surname.trim() || globalState.user.surname,
       email: editedUser.email.trim() || globalState.user.email,
       phone_number: editedUser.phone_number.trim() || globalState.user.phone_number,
-      province_name: editedUser.province_name.trim() || globalState.user.province_name,
-      city_name: editedUser.city_name.trim() || globalState.user.city_name,
+      province_name: editedUser.province_name.name.trim() || globalState.user.province_name.name,
+      city_name: editedUser.city_name.city_name.trim() || globalState.user.city_name.name,
     };
 
     try {
@@ -91,19 +92,15 @@ export const EditUser = () => {
       if (files) {
         formData.append("avatar", files);
       }
-
+      console.log("Voy a actualizar");
+      
       const response = await axios.put(
-        `http://localhost:4000/users/${globalState.user.id}`,
+        `http://localhost:4000/users/editOneUser`,
         formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
+        {headers: {Authorization:`Bearer ${globalState.token}`}},
+      )
       if (response.status === 200) {
-        setGlobalState({ ...globalState, user: response.data });
+        setGlobalState({ ...globalState, user: sanitizedUser });
         navigate("/profile");
       }
     } catch (error) {
@@ -111,6 +108,9 @@ export const EditUser = () => {
       setErrors({ ...errors, form: "Error al actualizar el usuario" });
     }
   };
+ 
+  console.log(globalState.user);
+  
 
   return (
     <>
@@ -239,7 +239,7 @@ export const EditUser = () => {
               <div className="d-flex justify-content-center gap-2">
                 <Button
                   className="btn-iniciar-login aceptar border-0 fst-italic"
-                  type="submit"
+                  onClick={onSubmit}
                 >
                   Aceptar
                 </Button>

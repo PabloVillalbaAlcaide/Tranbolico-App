@@ -6,12 +6,19 @@ import './locationSelector.scss';
 
 export const SearchDropdown = ({
   type,
+  selectedOption,
   handleSelect,
   placeholder,
 }) => {
   const [options, setOptions] = useState([]);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(selectedOption);
   const [showDropdown, setShowDropdown] = useState(false);
+
+  useEffect(() => {
+    if (selectedOption) {
+      setInputValue(selectedOption.name || selectedOption.city_name || "");
+    }
+  }, [selectedOption]);
 
   const fetchOptions = async (query) => {
     try {
@@ -39,7 +46,9 @@ export const SearchDropdown = ({
   };
 
   const handleOptionSelect = (option) => {
-    setInputValue(option.name || option.city_name); // Ajusta según el formato de tus datos
+    console.log("OPCION",option);
+    const displayValue = option.name || option.city_name;
+    setInputValue(displayValue);
     handleSelect(option);
     setShowDropdown(false); // Cierra el dropdown
   };
