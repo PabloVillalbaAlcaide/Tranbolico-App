@@ -125,6 +125,8 @@ AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETI
   };
 
   getSchedules = (req, res) => {
+    console.log(req.query);
+    
     const {
       origin_province,
       origin_city,

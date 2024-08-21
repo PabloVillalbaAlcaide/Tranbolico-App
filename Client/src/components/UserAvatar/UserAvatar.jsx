@@ -2,8 +2,6 @@ import './userAvatar.scss'
 
 export const UserAvatar = ({ user, size = 50 }) => {
 
-  console.log(user.avatar)
-
   let bgColor = '#91cad8 '
 
   if(user.avatar === '/tram6.png' || user.avatar === '/tram7.png'|| user.avatar === '/tram8.png'|| user.avatar === '/tram1.png'){
