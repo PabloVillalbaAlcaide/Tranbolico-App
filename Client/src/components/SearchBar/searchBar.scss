@@ -1,15 +1,85 @@
+.form-99-buscador {
+  max-width: 200px;
+  transition: all 0.3s ease-in-out;
+}
+
+.form-99-buscador:hover {
+  transform: scale(1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-origen-destino_SB {
+  font-weight: bold;
+  font-size: 1.4rem;
+
+  input:focus,
+  button:focus,
+  textarea:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(0.8deg);
+  }
+  50% {
+    transform: rotate(-1.5deg);
+  }
+  75% {
+    transform: rotate(0.8deg); 
+  }
+  100% {
+    transform: rotate(0deg); 
+  }
+}
+
+.btn-buscarSBH:active {
+  animation: spin 0.4s ease-in-out; 
+}
+
+
+.btn-buscarSBH {
+  border: none;
+  background-color: var(--tranbolico-azul);
+  font-style: italic;
+  padding: 10px 50px;
+  font-size: 1.6rem;
+}
+
+.btn-buscarSBH:hover,
+.btn-buscarSBH:focus,
+.btn-buscarSBH:active,
+.btn-buscarSBH:focus:active {
+  background-color: #13268e;
+}
+
 .suggestions {
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 10000;
-  border: 1px solid;
+  border: 1px solid #cbd5e1;
   overflow-y: auto;
   min-height: 50px;
   max-height: 150px;
   text-align: left;
+  font-size: 0.92rem;
+  border-radius: 8px;
+  transition: opacity 0.3s ease-in-out;
+
   cursor: pointer;
-}
-.input-orig-dest {
-  min-width: 400px;
+  div {
+    padding: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+      transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+      box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    &:hover {
+      background-color: #f0f0f0;
+      transform: translateY(-0.01px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+  }
 }
