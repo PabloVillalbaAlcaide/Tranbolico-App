@@ -66,14 +66,9 @@ export const EditUser = () => {
     return isValid;
   }, [editedUser]);
 
-  const debouncedValidateForm = useCallback(debounce(validateForm, 300), [validateForm]);
-
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (!debouncedValidateForm()) {
-      return;
-    }
     console.log(editedUser);
     
     const sanitizedUser = {
