@@ -99,6 +99,7 @@ export const SearchBar = () => {
           onChange={handleOriginChange}
           value={origin || ""}
           name="origin"
+          autoComplete="off"
         />
         {originSuggestions.length > 0 && (
           <div className="suggestions">
@@ -135,6 +136,7 @@ export const SearchBar = () => {
           onChange={handleDestinationChange}
           value={destination || ""}
           name="destination"
+          autoComplete="off"
         />
         {destinationSuggestions.length > 0 && (
           <div className="suggestions">

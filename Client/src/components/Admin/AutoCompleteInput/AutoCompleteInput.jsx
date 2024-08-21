@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import { Form, ListGroup } from 'react-bootstrap';
-import { AppContext } from '../../../context/TranbolicoContextProvider';
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { Form, ListGroup } from "react-bootstrap";
+import { AppContext } from "../../../context/TranbolicoContextProvider";
 
 export const AutocompleteInput = ({ value, onChange, onSelect, disabled }) => {
   const [suggestions, setSuggestions] = useState([]);
@@ -12,14 +12,19 @@ export const AutocompleteInput = ({ value, onChange, onSelect, disabled }) => {
     if (value.length > 2 && !disabled) {
       const fetchSuggestions = async () => {
         try {
-          const response = await axios.get('http://localhost:4000/admin/searchLocations', {
-            params: { q: value },
-            headers: { Authorization: `Bearer ${globalState.token}` }
-          });
-          const suggestionsWithCityProvince = response.data.map(suggestion => ({
-            ...suggestion,
-            city_province: `${suggestion.city_name} - ${suggestion.name}`
-          }));
+          const response = await axios.get(
+            "http://localhost:4000/admin/searchLocations",
+            {
+              params: { q: value },
+              headers: { Authorization: `Bearer ${globalState.token}` },
+            }
+          );
+          const suggestionsWithCityProvince = response.data.map(
+            (suggestion) => ({
+              ...suggestion,
+              city_province: `${suggestion.city_name} - ${suggestion.name}`,
+            })
+          );
           setSuggestions(suggestionsWithCityProvince);
           setShowSuggestions(true);
         } catch (err) {
@@ -34,14 +39,14 @@ export const AutocompleteInput = ({ value, onChange, onSelect, disabled }) => {
 
   const handleSelect = (suggestion) => {
     console.log(suggestion);
-      
+
     onSelect(suggestion);
     setShowSuggestions(false);
   };
 
   const handleFocus = () => {
     if (!disabled) {
-      onChange('');
+      onChange("");
       setShowSuggestions(false);
     }
   };
@@ -55,11 +60,15 @@ export const AutocompleteInput = ({ value, onChange, onSelect, disabled }) => {
         onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
         onFocus={handleFocus}
         disabled={disabled}
+        autoComplete="off"
       />
       {showSuggestions && (
         <ListGroup>
           {suggestions.map((suggestion, index) => (
-            <ListGroup.Item key={index} onMouseDown={() => handleSelect(suggestion)}>
+            <ListGroup.Item
+              key={index}
+              onMouseDown={() => handleSelect(suggestion)}
+            >
               {suggestion.city_province}
             </ListGroup.Item>
           ))}
