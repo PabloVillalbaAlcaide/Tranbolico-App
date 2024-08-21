@@ -9,7 +9,6 @@ export const TranbolicoContextProvider = ({ children }) => {
 
   useEffect(()=>{
     const tokenLocal = localStorage.getItem("token")
-    console.log(tokenLocal);
     
     if(tokenLocal){
       getUser(tokenLocal)
@@ -29,7 +28,7 @@ export const TranbolicoContextProvider = ({ children }) => {
       console.log(err);
     }
   };
-
+  
   return (
     <>
       <AppContext.Provider value={{globalState, setGlobalState, loading}}>

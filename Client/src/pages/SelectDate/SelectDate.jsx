@@ -33,7 +33,7 @@ export const SelectDate = () => {
 
       getSchedules(provDeparture, provArrival);
     }
-  }, [route, location.pathname]);
+  }, [route, location.pathname, loadingReservation, loading]);
 
   useEffect(() => {
     if (loadingReservation && loading) {
@@ -68,9 +68,6 @@ export const SelectDate = () => {
       navigate("/reservations/detailReservation");
     }
   };
-
-  console.log(reservation);
-  console.log(planningList);
 
   const getSchedules = async (departure, arrival) => {
     console.log(globalState);
@@ -112,6 +109,9 @@ export const SelectDate = () => {
       });
     }
   };
+
+  console.log(reservation);
+  console.log(planningList);
 
   return (
     <Container fluid className="p-0 m-0 mt-5 mb-5">

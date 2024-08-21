@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Row } from "react-bootstrap";
 import "./ViewUserAdmin.scss";
 import axios from "axios";
@@ -12,6 +12,10 @@ export const ViewUserAdmin = () => {
   const [info, setInfo] = useState();
   const [errMsg, setErrMsg] = useState("");
   const { globalState } = useContext(AppContext);
+
+  useEffect(() => {
+    onSearch();
+  }, []);
 
   //seteamos los parámetros del buscador
   const handleChange = (e) => {
@@ -56,10 +60,10 @@ export const ViewUserAdmin = () => {
         errMsg={errMsg}
       />
 
-      <div className="d-flex flex-column flex-md-row align-items-center justify-content-center ">
+      <div className="row d-flex flex-column flex-md-row align-items-center justify-content-center ">
         {info &&
           info.map((elem, index) => (
-            <div key={index}>
+            <div key={index} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
               <AdminUser
                 full_name={elem.full_name}
                 email={elem.email}
