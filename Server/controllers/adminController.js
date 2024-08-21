@@ -138,7 +138,7 @@ class AdminController {
   };
 
   disableRoute = (req, res) => {
-    console.log(req.body);
+    console.log(req.body);  
 
     const { route_id, is_disabled } = req.body;
 
@@ -177,6 +177,7 @@ class AdminController {
 
   //Rutas de Planning
   getPlanning = (req, res) => {
+     
     const sql = `SELECT 
     planning.route_id,
     planning.planning_id,
@@ -265,6 +266,9 @@ WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' O
   };
 
   editPlanning = (req, res) => {
+    console.log(req.params);
+    console.log(req.body);
+    
     const { routeId, planningId } = req.params;
     const { departure_date, departure_time } = req.body;
 
@@ -279,6 +283,8 @@ WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' O
       if (err) {
         return res.status(500).json(err);
       }
+      console.log("realizado");
+      
       res.status(200).json(result);
     });
   };

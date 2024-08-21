@@ -3,7 +3,7 @@ import "../../../App.css";
 import "./register.scss";
 
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { SearchDropdown } from "../../../components/locationSelector/LocationSelector"; // 
 
@@ -24,6 +24,15 @@ export const Register = () => {
   const navigate = useNavigate();
   const [password2, setPassword2] = useState("");
   const [errors, setErrors] = useState({});
+  const [showCityDropdown, setShowCityDropdown] = useState(false);
+
+  useEffect(() => {
+    if (register.province.province_id) {
+      setShowCityDropdown(true);
+    } else {
+      setShowCityDropdown(false);
+    }
+  }, [register.province]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -131,6 +140,9 @@ export const Register = () => {
     return valid;
   };
 
+  console.log(register.province.province_id);
+  
+
   const onSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
@@ -146,6 +158,7 @@ export const Register = () => {
       }
     }
   };
+  
   return (
     <>
       <Row>
@@ -263,14 +276,15 @@ export const Register = () => {
                   {errors.province}
                 </p>
               )}
-              <Form.Group className="mb-2" controlId="formBasicCity">
+              {showCityDropdown  && <Form.Group className="mb-2" controlId="formBasicCity">
                 <SearchDropdown
                   type="city"
+                  provinceId={register.province.province_id}
                   selectedOption={register.city}
                   handleSelect={handleSelect("city")}
                   placeholder="Ciudad"
                 />
-              </Form.Group>
+              </Form.Group>}
               {errors.city && (
                 <p className="text-center text-danger fw-bold">{errors.city}</p>
               )}

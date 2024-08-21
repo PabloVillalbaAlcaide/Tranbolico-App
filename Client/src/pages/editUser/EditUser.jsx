@@ -69,6 +69,8 @@ export const EditUser = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
+    validateForm(editedUser)
+
     console.log(editedUser);
     
     const sanitizedUser = {

@@ -91,6 +91,8 @@ export const ViewEditRoute = () => {
   };
 
   const handleDisableClick = async (routeId, isDisabled) => {
+    console.log("LLEGO");
+    
     try {
       const response = await axios.patch(
         "http://localhost:4000/admin/disableRoute",
@@ -99,6 +101,8 @@ export const ViewEditRoute = () => {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
       );
+      console.log("LLEGO 2");
+      
       if (response.status === 200) {
         setRoutes(
           routes.map((route) =>
