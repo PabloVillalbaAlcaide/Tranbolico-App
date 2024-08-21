@@ -1,10 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import "./editUser.scss";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserAvatar } from "../../components/UserAvatar/UserAvatar";
+import { SearchDropdown } from "../../components/locationSelector/LocationSelector";
+import debounce from 'lodash.debounce';
 
 export const EditUser = () => {
   const { globalState, setGlobalState, loading } = useContext(AppContext);
@@ -28,158 +30,87 @@ export const EditUser = () => {
     setFiles(e.target.files[0]);
   };
 
+  const handleSelect = (field) => (value) => {
+    setEditedUser({ ...editedUser, [field]: value });
+  };
+
+  const validateForm = useCallback(() => {
+    const newErrors = {};
+    let isValid = true;
+
+    if (editedUser.name?.length < 3 || editedUser.name?.length > 15) {
+      newErrors.name = "El nombre debe contener entre 3 y 15 caracteres";
+      isValid = false;
+    }
+
+    if (editedUser.surname?.length < 3 || editedUser.surname?.length > 40) {
+      newErrors.surname = "El apellido debe contener entre 3 y 40 caracteres";
+      isValid = false;
+    }
+
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (editedUser.email?.length > 320) {
+      newErrors.email = "El email debe contener como máximo 320 caracteres";
+      isValid = false;
+    } else if (!emailPattern.test(editedUser.email)) {
+      newErrors.email = "Formato de email no válido";
+      isValid = false;
+    }
+
+    if (editedUser.phone_number?.length > 25) {
+      newErrors.phone_number = "El teléfono debe contener como máximo 25 caracteres";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  }, [editedUser]);
+
+  const debouncedValidateForm = useCallback(debounce(validateForm, 300), [validateForm]);
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) {
+    if (!debouncedValidateForm()) {
       return;
     }
-
-    editedUser.name =
-      editedUser.name.trimStart() === ""
-        ? globalState.user.name
-        : editedUser.name;
-    editedUser.surname =
-      editedUser.surname.trimStart() === ""
-        ? globalState.user.surname
-        : editedUser.surname;
-    editedUser.email =
-      editedUser.email.trimStart() === ""
-        ? globalState.user.email
-        : editedUser.email;
-    editedUser.phone_number =
-      editedUser.phone_number.trimStart() === ""
-        ? globalState.user.phone_number
-        : editedUser.phone_number;
-    editedUser.province_name =
-      editedUser.province_name.trimStart() === ""
-        ? globalState.user.province_name
-        : editedUser.province_name;
-    editedUser.city_name =
-      editedUser.city_name.trimStart() === ""
-        ? globalState.user.city_name
-        : editedUser.city_name;
-
-    console.log("onSubmit: after sanitization =", editedUser);
-
-    try {
-      const newFormData = new FormData();
-      newFormData.append("editedUser", JSON.stringify(editedUser));
-
-      if (files) {
-        console.log("onSubmit: adding file to FormData");
-        newFormData.append("file", files);
-      }
-
-      console.log("onSubmit: sending request to backend");
-
-      const res = await axios.put(
-        "http://localhost:4000/users/editOneUser",
-        newFormData,
-        {
-          headers: { Authorization: `Bearer ${globalState.token}` },
-        }
-      );
-
-      console.log("onSubmit: response from backend =", res);
-
-      if (res.data.image) {
-        setEditedUser({ ...editedUser, avatar: res.data.image });
-        setGlobalState((prev) => ({
-          ...prev,
-          user: { ...prev.user, avatar: res.data.image },
-        }));
-        console.log(
-          "onSubmit: updated editedUser with new image =",
-          res.data.image
-        );
-      } else {
-        setEditedUser(editedUser);
-        setGlobalState((prev) => ({ ...prev, user: editedUser }));
-        console.log("onSubmit: updated editedUser without new image");
-      }
-
-      console.log("onSubmit: final state of editedUser =", editedUser);
-    } catch (err) {
-      console.error("Error al enviar la solicitud:", err);
-    }
-    navigate("/profile");
-  };
-
-  const validateForm = () => {
-    let valid = true;
-    const newErrors = {
-      name: "",
-      surname: "",
-      email: "",
-      phone_number: "",
-      birthdate: "",
-      province: "",
-      city: "",
-      password: "",
-      password2: "",
+    console.log(editedUser);
+    
+    const sanitizedUser = {
+      ...editedUser,
+      name: editedUser.name.trim() || globalState.user.name,
+      surname: editedUser.surname.trim() || globalState.user.surname,
+      email: editedUser.email.trim() || globalState.user.email,
+      phone_number: editedUser.phone_number.trim() || globalState.user.phone_number,
+      province_name: editedUser.province_name.name.trim() || globalState.user.province_name.name,
+      city_name: editedUser.city_name.city_name.trim() || globalState.user.city_name.name,
     };
 
-    //Validamos
-    /* if (!editedUser.name) {
-      newErrors.name = "El nombre es obligatorio";
-      valid = false;
-    } else  */
-    if (editedUser.name.length < 3 || editedUser.name.length > 15) {
-      newErrors.name = "El nombre debe contener entre 3 y 15 caracteres";
-      valid = false;
+    try {
+      const formData = new FormData();
+      formData.append("user", JSON.stringify(sanitizedUser));
+      if (files) {
+        formData.append("avatar", files);
+      }
+      console.log("Voy a actualizar");
+      
+      const response = await axios.put(
+        `http://localhost:4000/users/editOneUser`,
+        formData,
+        {headers: {Authorization:`Bearer ${globalState.token}`}},
+      )
+      if (response.status === 200) {
+        setGlobalState({ ...globalState, user: sanitizedUser });
+        navigate("/profile");
+      }
+    } catch (error) {
+      console.error("Error updating user:", error);
+      setErrors({ ...errors, form: "Error al actualizar el usuario" });
     }
-
-    //Validamos apellido
-    /* if (!editedUser.surname) {
-      newErrors.surname = "El apellido es obligatorio";
-      valid = false;
-    } else  */
-    if (editedUser.surname.length < 3 || editedUser.surname.length > 40) {
-      newErrors.surname = "El nombre debe contener entre 3 y 40 caracteres";
-      valid = false;
-    }
-
-    //Validamos email
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,}$/;
-    /* if (!editedUser.email) {
-      newErrors.email = "El email es obligatorio";
-      valid = false;
-    } else  */
-    if (editedUser.email.length > 320) {
-      newErrors.surname = "El email debe contener como máximo 320 caracteres";
-      valid = false;
-    } else if (!emailPattern.test(editedUser.email)) {
-      newErrors.email = "Formato de email no válido";
-      valid = false;
-    }
-
-    //Validamos teléfono
-    /* if (!editedUser.phone_number) {
-      newErrors.phone_number = "El teléfono es obligatorio";
-      valid = false;
-    } else  */
-    if (editedUser.phone_number.length > 25) {
-      newErrors.phone_number =
-        "El teléfono debe contener como máximo 25 caracteres";
-      valid = false;
-    }
-
-    //Validamos provincia
-    /*  if (!editedUser.province) {
-      newErrors.province = "La provincia es obligatoria";
-      valid = false;
-    }
-
-    //Validamos ciudad
-    if (!editedUser.city) {
-      newErrors.city = "La ciudad es obligatoria";
-      valid = false;
-    } */
-
-    setErrors(newErrors);
-    return valid;
   };
+ 
+  console.log(globalState.user);
+  
 
   return (
     <>
@@ -189,7 +120,7 @@ export const EditUser = () => {
         </div>
         <div className="contenedor-edit d-flex justify-content-center align-items-center mb-5">
           <Col xs={12} md={8} lg={6} xl={4}>
-            <Form>
+            <Form onSubmit={onSubmit}>
               <div className="ppal-edit text-center">
                 <h2>EDITAR</h2>
               </div>
@@ -256,13 +187,12 @@ export const EditUser = () => {
                 </p>
               )}
 
-              <Form.Group className="mb-2" htmlFor="selectGenre">
+              <Form.Group className="mb-2" controlId="formBasicGenre">
                 <Form.Control
                   className="input-form-edit"
-                  id="selectGenre"
                   as="select"
                   name="genre"
-                  value={editedUser.genre || ""}
+                  value={editedUser.genre}
                   onChange={handleChange}
                 >
                   <option value="">Seleccione</option>
@@ -273,13 +203,11 @@ export const EditUser = () => {
               </Form.Group>
 
               <Form.Group className="mb-2" controlId="formBasicProvince">
-                <Form.Control
-                  className="input-form-edit"
-                  type="text"
+                <SearchDropdown
+                  type="province"
+                  selectedOption={editedUser.province_name}
+                  handleSelect={handleSelect('province_name')}
                   placeholder="Provincia"
-                  name="province_name"
-                  value={editedUser?.province_name}
-                  onChange={handleChange}
                 />
               </Form.Group>
               {errors.province && (
@@ -289,13 +217,11 @@ export const EditUser = () => {
               )}
 
               <Form.Group className="mb-2" controlId="formBasicCity">
-                <Form.Control
-                  className="input-form-edit"
-                  type="text"
+                <SearchDropdown
+                  type="city"
+                  selectedOption={editedUser.city_name}
+                  handleSelect={handleSelect('city_name')}
                   placeholder="Ciudad"
-                  name="city_name"
-                  value={editedUser?.city_name}
-                  onChange={handleChange}
                 />
               </Form.Group>
               {errors.city && (

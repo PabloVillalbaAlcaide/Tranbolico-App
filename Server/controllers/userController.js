@@ -23,6 +23,8 @@ const tranbolicAvatar = [
 class UserController {
   //Controlador que realiza el registro de usuario
   registerUser = (req, res) => {
+    console.log(req.body);
+    
     const {
       name,
       surname,
@@ -60,15 +62,12 @@ class UserController {
                 hash,
                 phone_number,
                 avatar,
-                province,
-                city,
-                province,
+                province.province_id,
+                city.city_id,
               ];
               //Insert del usuario en la base de datos, obteniendo el id de provincia y ciudad de sus respectivas tablas
               let sql2 = `INSERT INTO user (name, surname, birthdate, genre, email, password, phone_number, avatar, province_id, city_id)
-              VALUES (?,?,?,?,?,?,?,?,
-              (SELECT province_id FROM province WHERE name = ?),
-              (SELECT city_id FROM city WHERE city_name = ? AND province_id = (SELECT province_id FROM province WHERE name = ?)));`;
+              VALUES (?,?,?,?,?,?,?,?,?,?);`;
               connection.query(sql2, data, (errorIns, resultIns) => {
                 if (errorIns) {
                   return res.status(500).json(errorIns);
@@ -227,7 +226,10 @@ class UserController {
   };
 
   editOneUser = (req, res) => {
-    try {
+
+    console.log(req.body);
+    
+  
       const {
         user_id,
         name,
@@ -237,7 +239,7 @@ class UserController {
         phone_number,
         province_name,
         city_name,
-      } = JSON.parse(req.body.editedUser);
+      } = req.body
 
       let data = [
         name,
@@ -295,9 +297,6 @@ class UserController {
           }
         }
       });
-    } catch (error) {
-      res.status(400).json(error);
-    }
   };
 
   recoverPassword = (req, res) => {

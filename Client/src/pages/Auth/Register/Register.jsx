@@ -5,6 +5,7 @@ import "./register.scss";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
+import { SearchDropdown } from "../../../components/locationSelector/LocationSelector"; // 
 
 const initialValue = {
   name: "",
@@ -21,15 +22,19 @@ const initialValue = {
 export const Register = () => {
   const [register, setRegister] = useState(initialValue);
   const navigate = useNavigate();
-  // const [msg, setMsg] = useState({ text: "", show: false });
   const [password2, setPassword2] = useState("");
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(name, value );
+    
     setRegister({ ...register, [name]: value });
   };
-  console.log(register);
+
+  const handleSelect = (field) => (value) => {
+    setRegister({ ...register, [field]: value });
+  };
 
   const handleChangePassword2 = (e) => {
     const { value } = e.target;
@@ -50,7 +55,7 @@ export const Register = () => {
       password2: "",
     };
 
-    //Validamos
+    // Validaciones
     if (!register.name) {
       newErrors.name = "El nombre es obligatorio";
       valid = false;
@@ -59,7 +64,6 @@ export const Register = () => {
       valid = false;
     }
 
-    //Validamos apellido
     if (!register.surname) {
       newErrors.surname = "El apellido es obligatorio";
       valid = false;
@@ -68,7 +72,6 @@ export const Register = () => {
       valid = false;
     }
 
-    //Validamos email
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!register.email) {
       newErrors.email = "El email es obligatorio";
@@ -81,7 +84,6 @@ export const Register = () => {
       valid = false;
     }
 
-    //Validamos teléfono
     if (!register.phone_number) {
       newErrors.phone_number = "El teléfono es obligatorio";
       valid = false;
@@ -91,25 +93,21 @@ export const Register = () => {
       valid = false;
     }
 
-    //Validamos fecha de nacimiento
     if (!register.birthdate) {
       newErrors.birthdate = "La fecha de nacimiento es obligatoria";
       valid = false;
     }
 
-    //Validamos provincia
     if (!register.province) {
       newErrors.province = "La provincia es obligatoria";
       valid = false;
     }
 
-    //Validamos ciudad
     if (!register.city) {
       newErrors.city = "La ciudad es obligatoria";
       valid = false;
     }
 
-    //Validamos password
     const passwordPattern = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
     if (!register.password) {
       newErrors.password = "La contraseña es obligatoria";
@@ -124,7 +122,6 @@ export const Register = () => {
       valid = false;
     }
 
-    //Comparamos password y password2
     if (register.password !== password2) {
       newErrors.password2 = "Las contraseñas no coinciden";
       valid = false;
@@ -134,23 +131,21 @@ export const Register = () => {
     return valid;
   };
 
-  const onSubmit = async () => {
-    if (!validateForm()) {
-      return;
-    }
-
-    try {
-      const res = await axios.post(
-        "http://localhost:4000/users/registerUser",
-        register
-      );
-      console.log(res);
-      navigate("/MsgVerifyEmail");
-    } catch (err) {
-      console.log(err);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      try {
+        console.log("register", register);
+        
+        await axios.post("http://localhost:4000/users/registerUser", register);
+        console.log("registrado");
+        
+        navigate("/MsgVerifyEmail");
+      } catch (error) {
+        console.error("Error registering:", error);
+      }
     }
   };
-
   return (
     <>
       <Row>
@@ -159,7 +154,7 @@ export const Register = () => {
         </div>
         <div className="contenedor-register d-flex justify-content-center p-5 mt-5 ">
           <Col xs={12} md={8} lg={6} xl={4}>
-            <Form>
+            <Form onSubmit={onSubmit}>
               <div className="text-center">
                 <img
                   className="register-img"
@@ -181,7 +176,6 @@ export const Register = () => {
               {errors.name && (
                 <p className="text-center text-danger fw-bold">{errors.name}</p>
               )}
-
               <Form.Group className="mb-2" controlId="formBasicSurname">
                 <Form.Control
                   className="input-form"
@@ -257,13 +251,11 @@ export const Register = () => {
                 </Form.Control>
               </Form.Group>
               <Form.Group className="mb-2" controlId="formBasicProvince">
-                <Form.Control
-                  className="input-form"
-                  type="text"
+                <SearchDropdown
+                  type="province"
+                  selectedOption={register.province}
+                  handleSelect={handleSelect("province")}
                   placeholder="Provincia"
-                  name="province"
-                  value={register.province}
-                  onChange={handleChange}
                 />
               </Form.Group>
               {errors.province && (
@@ -272,19 +264,16 @@ export const Register = () => {
                 </p>
               )}
               <Form.Group className="mb-2" controlId="formBasicCity">
-                <Form.Control
-                  className="input-form"
-                  type="text"
+                <SearchDropdown
+                  type="city"
+                  selectedOption={register.city}
+                  handleSelect={handleSelect("city")}
                   placeholder="Ciudad"
-                  name="city"
-                  value={register.city}
-                  onChange={handleChange}
                 />
               </Form.Group>
               {errors.city && (
                 <p className="text-center text-danger fw-bold">{errors.city}</p>
               )}
-
               <Form.Group className="mb-2" controlId="formBasicPassword">
                 <Form.Control
                   className="input-form"
@@ -342,4 +331,4 @@ export const Register = () => {
       <br /> <br />
     </>
   );
-};
+}  

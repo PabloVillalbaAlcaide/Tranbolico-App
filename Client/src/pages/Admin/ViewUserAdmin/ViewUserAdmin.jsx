@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Row } from "react-bootstrap";
 import "./ViewUserAdmin.scss";
 import axios from "axios";
@@ -12,6 +12,10 @@ export const ViewUserAdmin = () => {
   const [info, setInfo] = useState();
   const [errMsg, setErrMsg] = useState("");
   const { globalState } = useContext(AppContext);
+
+  useEffect(() => {
+    onSearch();
+  }, []);
 
   //seteamos los parámetros del buscador
   const handleChange = (e) => {
@@ -60,6 +64,7 @@ export const ViewUserAdmin = () => {
         {info &&
           info.map((elem, index) => (
             <div key={index} className="mt-4">
+
               <AdminUser
                 user_id={elem.user_id}
                 full_name={elem.full_name}

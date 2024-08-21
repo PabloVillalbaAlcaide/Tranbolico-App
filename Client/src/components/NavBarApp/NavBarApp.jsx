@@ -23,11 +23,12 @@ export const NavBarApp = () => {
 
   const handleNavigation = () => {
     if (globalState.user) {
-      navigate('/reservations');
+      navigate("/reservations");
     } else {
-      navigate('/login');
+      navigate("/login");
     }
   };
+  console.log(globalState);
 
   return (
     <div className="p-0 navbar">
@@ -50,12 +51,18 @@ export const NavBarApp = () => {
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto NavbarCollapse w-100">
                   <div className="d-flex justify-content-start align-items-lg-center flex-lg-row flex-column col-8">
-                    <Nav.Link
-                      onClick={handleNavigation}
-                      className="NavbarNavLink"
-                    >
-                      Reservas
-                    </Nav.Link>
+                    {globalState.user?.user_type === 1 ? (
+                      <Nav.Link as={Link} to="/admin" className="NavbarNavLink">
+                        Admin
+                      </Nav.Link>
+                    ) : (
+                      <Nav.Link
+                        onClick={handleNavigation}
+                        className="NavbarNavLink"
+                      >
+                        Reservas
+                      </Nav.Link>
+                    )}
                     <Nav.Link as={Link} to="/routes" className="NavbarNavLink">
                       Rutas
                     </Nav.Link>
@@ -84,7 +91,6 @@ export const NavBarApp = () => {
                           Login
                         </Nav.Link>
                       </div>
-
                     </div>
                   ) : (
                     <div className="d-flex justify-content-xl-end  align-items-lg-center align-items-center flex-lg-row col-4 gap-4">
