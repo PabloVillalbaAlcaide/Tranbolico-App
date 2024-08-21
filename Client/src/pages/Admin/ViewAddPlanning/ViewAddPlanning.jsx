@@ -3,6 +3,7 @@ import { AppContext } from "../../../context/TranbolicoContextProvider";
 import axios from "axios";
 import { Button, Table, Form } from "react-bootstrap";
 import { AddNewPlanningModal } from "../../../components/Admin/AddNewPlanningModal/AddNewPlanningModal";
+import { format } from "date-fns";
 import "./viewAddPlanning.scss";
 import "../../../App.css";
 
@@ -104,6 +105,14 @@ export const ViewAddPlanning = () => {
     setEditData({ ...editData, [name]: value });
   };
 
+  const onEdit = (item) => {
+    setEditing({
+      routeId: item.route_id,
+      planningId: item.planning_id,
+    });
+    setEditData(item);
+  };
+
   return (
     <div>
       <div className="d-flex justify-content-center my-4">
@@ -129,80 +138,77 @@ export const ViewAddPlanning = () => {
         </thead>
         <tbody>
           {planningList &&
-            planningList.map((item) => (
-              <tr key={`${item.route_id}-${item.planning_id}`}>
-                <td>
-                  {editing.routeId === item.route_id &&
-                  editing.planningId === item.planning_id ? (
-                    <Form.Group controlId="formDepartureDate">
-                      <Form.Control
-                        type="date"
-                        name="departure_date"
-                        value={editData.departure_date || item.departure_date}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
-                  ) : (
-                    item.departure_date
-                  )}
-                </td>
-                <td>
-                  {editing.routeId === item.route_id &&
-                  editing.planningId === item.planning_id ? (
-                    <Form.Group controlId="formDepartureTime">
-                      <Form.Control
-                        type="time"
-                        name="departure_time"
-                        value={editData.departure_time || item.departure_time}
-                        onChange={handleInputChange}
-                      />
-                    </Form.Group>
-                  ) : (
-                    item.departure_time
-                  )}
-                </td>
-                <td>{item.departure_city}</td>
-                <td>{item.departure_province}</td>
-                <td>{item.arrival_city}</td>
-                <td>{item.arrival_province}</td>
-                <td>
-                  <div className="d-flex flex-column flex-md-row justify-content-around gap-2">
+            planningList.map((item) => {
+              return (
+                <tr key={`${item.route_id}-${item.planning_id}`}>
+                  <td>
                     {editing.routeId === item.route_id &&
                     editing.planningId === item.planning_id ? (
-                      <Button
-                        variant="success"
-                        onClick={() =>
-                          handleEditPlanning(item.route_id, item.planning_id)
-                        }
-                      >
-                        Guardar
-                      </Button>
+                      <Form.Group controlId="formDepartureDate">
+                        <Form.Control
+                          type="date"
+                          name="departure_date"
+                          value={
+                            editData.departure_date ||
+                            format(item.departure_date, "dd-MM-yyyy")
+                          }
+                          onChange={handleInputChange}
+                        />
+                      </Form.Group>
                     ) : (
-                      <Button
-                        variant="warning"
-                        onClick={() =>
-                          setEditing({
-                            routeId: item.route_id,
-                            planningId: item.planning_id,
-                          })
-                        }
-                      >
-                        Editar
-                      </Button>
+                      format(item.departure_date, "dd-MM-yyyy")
                     )}
-                    <Button
-                      variant="danger"
-                      onClick={() =>
-                        handleDeletePlanning(item.route_id, item.planning_id)
-                      }
-                      aria-label={`Eliminar planning ${item.route_id}-${item.planning_id}`}
-                    >
-                      Eliminar
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td>
+                    {editing.routeId === item.route_id &&
+                    editing.planningId === item.planning_id ? (
+                      <Form.Group controlId="formDepartureTime">
+                        <Form.Control
+                          type="time"
+                          name="departure_time"
+                          value={editData.departure_time || item.departure_time}
+                          onChange={handleInputChange}
+                        />
+                      </Form.Group>
+                    ) : (
+                      item.departure_time
+                    )}
+                  </td>
+                  <td>{item.departure_city}</td>
+                  <td>{item.departure_province}</td>
+                  <td>{item.arrival_city}</td>
+                  <td>{item.arrival_province}</td>
+                  <td>
+                    <div className="d-flex flex-column flex-md-row justify-content-around gap-2">
+                      {editing.routeId === item.route_id &&
+                      editing.planningId === item.planning_id ? (
+                        <Button
+                          variant="success"
+                          onClick={() =>
+                            handleEditPlanning(item.route_id, item.planning_id)
+                          }
+                        >
+                          Guardar
+                        </Button>
+                      ) : (
+                        <Button variant="warning" onClick={() => onEdit(item)}>
+                          Editar
+                        </Button>
+                      )}
+                      <Button
+                        variant="danger"
+                        onClick={() =>
+                          handleDeletePlanning(item.route_id, item.planning_id)
+                        }
+                        aria-label={`Eliminar planning ${item.route_id}-${item.planning_id}`}
+                      >
+                        Eliminar
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </Table>
 

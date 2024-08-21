@@ -13,10 +13,6 @@ export const ViewUserAdmin = () => {
   const [errMsg, setErrMsg] = useState("");
   const { globalState } = useContext(AppContext);
 
-  useEffect(() => {
-    onSearch();
-  }, []);
-
   //seteamos los parámetros del buscador
   const handleChange = (e) => {
     if (e.target.type === "search") {
@@ -64,7 +60,6 @@ export const ViewUserAdmin = () => {
         {info &&
           info.map((elem, index) => (
             <div key={index} className="mt-4">
-
               <AdminUser
                 user_id={elem.user_id}
                 full_name={elem.full_name}

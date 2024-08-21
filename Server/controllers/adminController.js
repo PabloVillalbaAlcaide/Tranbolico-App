@@ -138,7 +138,7 @@ class AdminController {
   };
 
   disableRoute = (req, res) => {
-    console.log(req.body);
+    console.log(req.body);  
 
     const { route_id, is_disabled } = req.body;
 
@@ -177,6 +177,7 @@ class AdminController {
 
   //Rutas de Planning
   getPlanning = (req, res) => {
+     
     const sql = `SELECT 
     planning.route_id,
     planning.planning_id,
@@ -265,6 +266,9 @@ WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' O
   };
 
   editPlanning = (req, res) => {
+    console.log(req.params);
+    console.log(req.body);
+    
     const { routeId, planningId } = req.params;
     const { departure_date, departure_time } = req.body;
 
@@ -279,6 +283,8 @@ WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' O
       if (err) {
         return res.status(500).json(err);
       }
+      console.log("realizado");
+      
       res.status(200).json(result);
     });
   };
@@ -330,7 +336,7 @@ JOIN route ON reservation.route_id = route.route_id JOIN  province dp ON route.d
 JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
 JOIN province ap ON route.arrival_province_id = ap.province_id JOIN city ac ON route.arrival_city_id = ac.city_id
 AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${userid}
-AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) <= NOW() OR reservation.is_deleted = 1;`;
+AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) >= NOW() AND reservation.is_deleted = 1;`;
     connection.query(sql, (err, result) => {
       if (err) {
         console.error("error en traer usuario", err);
