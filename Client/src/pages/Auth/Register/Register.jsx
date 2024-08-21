@@ -42,7 +42,13 @@ export const Register = () => {
   };
 
   const handleSelect = (field) => (value) => {
-    setRegister({ ...register, [field]: value });
+    setRegister((prevState) => {
+      const newState = { ...prevState, [field]: value };
+      if (field === 'province') {
+        newState.city = {}; // Reiniciar city a un objeto vacío
+      }
+      return newState;
+    });
   };
 
   const handleChangePassword2 = (e) => {

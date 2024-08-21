@@ -18,18 +18,14 @@ export const SearchDropdown = ({
 
   useEffect(() => {
     if (selectedOption) {
-      setInputValue(
-        selectedOption.name || selectedOption.city_name || selectedOption
-      );
+
+      setInputValue(selectedOption.name || selectedOption.city_name || "");
+
     }
   }, [selectedOption]);
 
-  const fetchOptions = async (query) => {
+  const fetchOptions = useCallback(async (query) => {
     try {
-
-      console.log(provinceId);
-      
-
       const partialUrl = type === "province" ? `${type}?query=${query}` : `${type}?query=${query}&province=${provinceId}`
 
       const response = await axios.get(
@@ -40,7 +36,7 @@ export const SearchDropdown = ({
     } catch (error) {
       console.error(`Error fetching ${type}:`, error);
     }
-  };
+  });
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -49,7 +45,7 @@ export const SearchDropdown = ({
   };
 
   const handleOptionSelect = (option) => {
-    console.log("OPCION", option);
+
     const displayValue = option.name || option.city_name;
     setInputValue(displayValue);
     handleSelect(option);

@@ -22,12 +22,14 @@ export const TranbolicoContextProvider = ({ children }) => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      setGlobalState({...globalState,"token":token, "user":res.data[0]})
+      setGlobalState({...globalState,"token":token, "user":res.data})
       
     } catch (err) {
       console.log(err);
     }
   };
+  
+  console.log("GLOBALSTATE",globalState);
   
   return (
     <>
