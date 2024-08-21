@@ -192,7 +192,7 @@ export const EditUser = () => {
                   className="input-form-edit"
                   as="select"
                   name="genre"
-                  value={editedUser.genre || ""}
+                  value={editedUser.genre}
                   onChange={handleChange}
                 >
                   <option value="">Seleccione</option>
