@@ -15,7 +15,7 @@ export const SelectDate = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (loadingReservation && loading) {
+    if (!loadingReservation && !loading) {
       const provDeparture =
         location.pathname === "/reservations"
           ? route?.origin
@@ -36,7 +36,7 @@ export const SelectDate = () => {
   }, [route, location.pathname, loadingReservation, loading]);
 
   useEffect(() => {
-    if (loadingReservation && loading) {
+    if (!loadingReservation && !loading) {
     if (location.pathname === "/reservations") {
       let newReservation = {
         user_id: globalState.user.user_id,
