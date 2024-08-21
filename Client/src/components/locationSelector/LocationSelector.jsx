@@ -16,7 +16,7 @@ export const SearchDropdown = ({
 
   useEffect(() => {
     if (selectedOption) {
-      setInputValue(selectedOption.name || selectedOption.city_name || "");
+      setInputValue(selectedOption.name || selectedOption.city_name || selectedOption);
     }
   }, [selectedOption]);
 
