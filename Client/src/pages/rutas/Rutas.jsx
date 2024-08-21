@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Row, Col} from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -14,8 +14,7 @@ export const Rutas = () => {
   const [destinationSuggestions, setDestinationSuggestions] = useState([]);
   const [errMsg, setErrMsg] = useState({ show: false, text: "" });
   const navigate = useNavigate();
-  console.log(origin);
-  console.log(destinationSuggestions[1]);
+
   const handleOriginChange = async (e) => {
     let { value } = e.target;
     setOrigin(value);
@@ -118,6 +117,7 @@ export const Rutas = () => {
                 onChange={handleOriginChange}
                 value={origin || ""}
                 name="origin"
+                autocomplete="off"
               />
               {originSuggestions.length > 0 && (
                 <div className="suggestions">
@@ -197,17 +197,27 @@ export const Rutas = () => {
                 const key = `${e.province_id || index}-${e.city_id || index}`;
                 return (
                   <>
-                  <Col xs={12} md={6} lg={4} className="card-ruta-info">
-                    <p>
-                      {originFinal.city} -
-                      {/* {originFinal.province} */}
-                    </p>
-                    <p>
-                      {e.city_name}
-                      {/* {e.name} */}
-                    </p>
-                    <Button onClick={onSubmit2} className="btn-reservar_rutas mt-2">Reservar</Button>
-                  </Col>
+                    <Col
+                      xs={12}
+                      md={6}
+                      lg={4}
+                      className="card-ruta-info"
+                      key={key}
+                    >
+                      <p>
+                        {originFinal.city} -{/* {originFinal.province} */}
+                      </p>
+                      <p>
+                        {e.city_name}
+                        {/* {e.name} */}
+                      </p>
+                      <Button
+                        onClick={onSubmit2}
+                        className="btn-reservar_rutas mt-2"
+                      >
+                        Reservar
+                      </Button>
+                    </Col>
                   </>
                 );
               })}

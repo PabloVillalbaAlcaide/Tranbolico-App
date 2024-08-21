@@ -5,7 +5,7 @@ import "./register.scss";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { SearchDropdown } from "../../../components/locationSelector/LocationSelector"; // 
+import { SearchDropdown } from "../../../components/locationSelector/LocationSelector"; //
 
 const initialValue = {
   name: "",
@@ -36,8 +36,8 @@ export const Register = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value );
-    
+    console.log(name, value);
+
     setRegister({ ...register, [name]: value });
   };
 
@@ -154,10 +154,10 @@ export const Register = () => {
     if (validateForm()) {
       try {
         console.log("register", register);
-        
+
         await axios.post("http://localhost:4000/users/registerUser", register);
         console.log("registrado");
-        
+
         navigate("/MsgVerifyEmail");
       } catch (error) {
         console.error("Error registering:", error);
@@ -190,6 +190,7 @@ export const Register = () => {
                   name="name"
                   value={register.name}
                   onChange={handleChange}
+                  autoComplete="off"
                 />
               </Form.Group>
               {errors.name && (
@@ -203,6 +204,7 @@ export const Register = () => {
                   name="surname"
                   value={register.surname}
                   onChange={handleChange}
+                  autoComplete="off"
                 />
               </Form.Group>
               {errors.surname && (
@@ -218,6 +220,7 @@ export const Register = () => {
                   name="email"
                   value={register.email}
                   onChange={handleChange}
+                  autoComplete="off"
                 />
               </Form.Group>
               {errors.email && (
@@ -233,6 +236,7 @@ export const Register = () => {
                   name="phone_number"
                   value={register.phone_number}
                   onChange={handleChange}
+                  autoComplete="off"
                 />
               </Form.Group>
               {errors.phone_number && (
@@ -248,6 +252,7 @@ export const Register = () => {
                   name="birthdate"
                   value={register.birthdate}
                   onChange={handleChange}
+                  autoComplete="off"
                 />
               </Form.Group>
               {errors.birthdate && (
@@ -275,6 +280,7 @@ export const Register = () => {
                   selectedOption={register.province}
                   handleSelect={handleSelect("province")}
                   placeholder="Provincia"
+                  autoComplete="off"
                 />
               </Form.Group>
               {errors.province && (
@@ -289,6 +295,7 @@ export const Register = () => {
                   selectedOption={register.city}
                   handleSelect={handleSelect("city")}
                   placeholder="Ciudad"
+                  autoComplete="off"
                 />
               </Form.Group>}
               {errors.city && (
@@ -351,4 +358,4 @@ export const Register = () => {
       <br /> <br />
     </>
   );
-}  
+};
