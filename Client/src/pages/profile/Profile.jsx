@@ -45,8 +45,8 @@ export const Profile = () => {
                 <div className="d-flex align-items-center gap-2">
                   <img src={locationIcon} alt="location-icon" width={"50px"} />
                   <p>
-                    {globalState.user?.province_name},{" "}
-                    {globalState.user?.city_name}
+                    {globalState.user?.province.name},{" "}
+                    {globalState.user?.city.city_name}
                   </p>
                 </div>
                 <div className="d-flex align-items-center gap-2">

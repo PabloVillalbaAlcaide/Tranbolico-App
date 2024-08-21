@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useCallback } from "react";
+import { useContext, useEffect, useState, useCallback} from "react";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import "./editUser.scss";
@@ -6,13 +6,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserAvatar } from "../../components/UserAvatar/UserAvatar";
 import { SearchDropdown } from "../../components/locationSelector/LocationSelector";
-import debounce from 'lodash.debounce';
 
 export const EditUser = () => {
   const { globalState, setGlobalState, loading } = useContext(AppContext);
   const [editedUser, setEditedUser] = useState({});
   const [files, setFiles] = useState();
   const [errors, setErrors] = useState({});
+  const [provinceId, setProvinceId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,6 +20,12 @@ export const EditUser = () => {
       setEditedUser(globalState.user);
     }
   }, [loading, globalState.user]);
+
+  useEffect(() => {
+    if (editedUser.province?.province_id) {
+      setProvinceId(editedUser.province.province_id);
+    }
+  }, [editedUser.province?.province_id]);
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -30,9 +36,15 @@ export const EditUser = () => {
     setFiles(e.target.files[0]);
   };
 
-  const handleSelect = (field) => (value) => {
-    setEditedUser({ ...editedUser, [field]: value });
-  };
+  const handleSelect = useCallback((field) => (value) => {
+    setEditedUser((prevState) => {
+      const newState = { ...prevState, [field]: value };
+      if (field === 'province') {
+        newState.city = {}; // Reiniciar city a un objeto vacío
+      }
+      return newState;
+    });
+  }, []);
 
   const validateForm = useCallback(() => {
     const newErrors = {};
@@ -71,16 +83,14 @@ export const EditUser = () => {
 
     validateForm(editedUser)
 
-    console.log(editedUser);
-    
     const sanitizedUser = {
       ...editedUser,
       name: editedUser.name.trim() || globalState.user.name,
       surname: editedUser.surname.trim() || globalState.user.surname,
       email: editedUser.email.trim() || globalState.user.email,
       phone_number: editedUser.phone_number.trim() || globalState.user.phone_number,
-      province_name: editedUser.province_name.name.trim() || globalState.user.province_name.name,
-      city_name: editedUser.city_name.city_name.trim() || globalState.user.city_name.name,
+      province_name: editedUser.province.name.trim() || globalState.user.province.name,
+      city_name: editedUser.city.city_name.trim() || globalState.user.city.city_name,
     };
 
     try {
@@ -89,8 +99,7 @@ export const EditUser = () => {
       if (files) {
         formData.append("avatar", files);
       }
-      console.log("Voy a actualizar");
-      
+          
       const response = await axios.put(
         `http://localhost:4000/users/editOneUser`,
         formData,
@@ -106,9 +115,6 @@ export const EditUser = () => {
     }
   };
  
-  console.log(globalState.user);
-  
-
   return (
     <>
       <Row className="justify-content-center align-items-center pt-5">
@@ -202,8 +208,8 @@ export const EditUser = () => {
               <Form.Group className="mb-2" controlId="formBasicProvince">
                 <SearchDropdown
                   type="province"
-                  selectedOption={editedUser.province_name}
-                  handleSelect={handleSelect('province_name')}
+                  selectedOption={editedUser.province}
+                  handleSelect={handleSelect('province')}
                   placeholder="Provincia"
                 />
               </Form.Group>
@@ -216,8 +222,9 @@ export const EditUser = () => {
               <Form.Group className="mb-2" controlId="formBasicCity">
                 <SearchDropdown
                   type="city"
-                  selectedOption={editedUser.city_name}
-                  handleSelect={handleSelect('city_name')}
+                  provinceId={provinceId}
+                  selectedOption={editedUser.city}
+                  handleSelect={handleSelect('city')}
                   placeholder="Ciudad"
                 />
               </Form.Group>

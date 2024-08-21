@@ -28,7 +28,6 @@ export const NavBarApp = () => {
       navigate("/login");
     }
   };
-  console.log(globalState);
 
   return (
     <div className="p-0 navbar">

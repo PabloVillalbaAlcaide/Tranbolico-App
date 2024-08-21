@@ -204,13 +204,10 @@ class UserController {
     let hashtoken = req.headers.authorization.split(" ")[1];
 
     const token = decryptToken(hashtoken, process.env.SECRET_KEY_3);
-    console.log("Token desencriptado", token);
 
     const { id } = jwt.decode(token);
 
-    console.log(id);
-
-    let sql = `SELECT user.*, province.name AS province_name, city.city_name 
+    let sql = `SELECT user.*, province.name AS province, city.city_name AS city
     FROM user JOIN province ON user.province_id = province.province_id JOIN 
     city ON user.province_id = city.province_id AND user.city_id = city.city_id 
     WHERE user.user_id = ${id}`;
@@ -219,8 +216,20 @@ class UserController {
         return res.status(500).json(err);
       } else if (result.length === 0) {
         return res.status(401).json("No autorizado");
-      } else {
-        res.status(200).json(result);
+      } else {    
+        const finalResult = {
+          user_id: result[0].user_id,
+          name: result[0].name,
+          surname: result[0].surname,
+          birthdate: result[0].birthdate,
+          genre: result[0].genre,
+          email: result[0].email,
+          phone_number: result[0].phone_number,
+          avatar: result[0].avatar,
+          province:{name: result[0].province, province_id:result[0].province_id},
+          city: {city_name:result[0].city, city_id:result[0].city_id, province_id:result[0].province_id}
+        }
+        res.status(200).json(finalResult);
       }
     });
   };
