@@ -65,9 +65,24 @@ class UserController {
                 province.province_id,
                 city.city_id,
               ];
-              //Insert del usuario en la base de datos, obteniendo el id de provincia y ciudad de sus respectivas tablas
               let sql2 = `INSERT INTO user (name, surname, birthdate, genre, email, password, phone_number, avatar, province_id, city_id)
               VALUES (?,?,?,?,?,?,?,?,?,?);`;
+              if(genre === ""){
+                data = [
+                  name,
+                  surname,
+                  birthdate,
+                  email,
+                  hash,
+                  phone_number,
+                  avatar,
+                  province.province_id,
+                  city.city_id,
+                ];
+                sql2 = `INSERT INTO user (name, surname, birthdate, email, password, phone_number, avatar, province_id, city_id)
+                VALUES (?,?,?,?,?,?,?,?,?);`;
+              }
+
               connection.query(sql2, data, (errorIns, resultIns) => {
                 if (errorIns) {
                   return res.status(500).json(errorIns);
@@ -236,8 +251,6 @@ class UserController {
 
   editOneUser = (req, res) => {
 
-    console.log(req.body);
-    
   
       const {
         user_id,
