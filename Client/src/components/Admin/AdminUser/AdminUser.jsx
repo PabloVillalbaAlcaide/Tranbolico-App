@@ -16,9 +16,11 @@ export const AdminUser = ({
   const [activeKey, setActiveKey] = useState("");
   const [error, setError] = useState(null);
   const { globalState } = useContext(AppContext);
+  const [reservation, setReservation] = useState([]);
 
   //cargamos en isChecked el estado is_disabled del usuario
   useEffect(() => {
+    console.log("User ID en AdminUser:", user_id);
     if (is_disabled === 0) {
       setIsChecked(true);
     } else {
@@ -30,21 +32,21 @@ export const AdminUser = ({
   const handleChange = async () => {
     setIsChecked(!isChecked);
     try {
-      const res = await axios.patch(
+      await axios.patch(
         `http://localhost:4000/admin/disableUser`,
         { user_id: user_id, is_disabled: isChecked },
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
       );
-      console.log(res);
     } catch (error) {
       console.log(error);
     }
   };
 
-  // nos traer para ver el historia de reservas del usuario
+  // nos traer para ver el historial del usuario
   const viewHistory = async () => {
+    console.log("User ID:", user_id);
     try {
       const res = await axios.get(
         `http://localhost:4000/admin/historicalUser?userid=${user_id}`,
@@ -59,17 +61,37 @@ export const AdminUser = ({
     }
   };
 
+  // nos traer para ver reservas del usuario
+  const viewReservation = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:4000/admin/reservationUser?userid=${user_id}`,
+        {
+          headers: { Authorization: `Bearer ${globalState.token}` },
+        }
+      );
+      console.log(res.data, "de vuelta");
+      setReservation(res.data);
+    } catch (error) {
+      console.error(error);
+      setError("Error al cargar el historial de reservas.");
+    }
+  };
+
   // select del acordéon
   const handleSelect = (key) => {
     setActiveKey(key);
     if (key === "2") {
-      console.log("Selected key:", key);
-      viewHistory(key);
+      viewHistory();
+    }
+    setActiveKey(key);
+    if (key === "3") {
+      viewReservation();
     }
   };
 
   return (
-    <div className="contenedor-userView d-flex flex-column p-3 align-items-center justify-content-center m-auto">
+    <div className="contenedor-userView d-flex flex-column p-3 align-items-center justify-content-center m-auto ">
       <br />
       <Accordion
         className="w-100"
@@ -79,21 +101,19 @@ export const AdminUser = ({
         <Accordion.Item eventKey="0" className="accordion-user p-2">
           <Accordion.Header>
             <h4>{full_name}</h4>
-          </Accordion.Header>
-          <Accordion.Body>
-            <Form>
-              <Form.Check // prettier-ignore
-                className="d-flex align-items-center justify-content-center"
-                type="switch"
-                id="custom-switch"
-                label={isChecked ? "Deshabilitar usuario" : "Habilitar usuario"}
-                checked={isChecked}
-                onChange={handleChange}
-                value={isChecked}
-              />
-            </Form>
-          </Accordion.Body>
-
+          </Accordion.Header>{" "}
+          <Form>
+            <Form.Check // prettier-ignore
+              className="d-flex align-items-center justify-content-center"
+              type="switch"
+              id="custom-switch"
+              label={isChecked ? "Deshabilitar usuario" : "Habilitar usuario"}
+              checked={isChecked}
+              onChange={handleChange}
+              value={isChecked}
+            />
+          </Form>
+          <Accordion.Body></Accordion.Body>
           <Accordion.Item eventKey="1">
             <Accordion.Header>
               <strong>Datos</strong>
@@ -112,15 +132,21 @@ export const AdminUser = ({
             <Accordion.Body>
               {error && <Alert variant="danger">{error}</Alert>}
               {reservationHistory.length > 0 ? (
-                <ul>
-                  {reservationHistory.map((reservation) => (
-                    <li key={reservation.reservation_id}>
-                      <p>Tipo de Reserva: {reservation.reservation_type}</p>
-                      <p>Fecha de Salida: {reservation.departure_date}</p>
-                      <p>Hora de Salida: {reservation.departure_time}</p>
-                    </li>
-                  ))}
-                </ul>
+                reservationHistory.map((reservation, index) => (
+                  <div key={index}>
+                    <p>{reservation.route_name}</p>
+                    <p>
+                      {reservation.departure_city_name} -{" "}
+                      {reservation.arrival_city_name}
+                    </p>
+                    <p>
+                      {reservation.departure_day}&nbsp;&nbsp;/{" "}
+                      {reservation.departure_time}
+                    </p>
+                    <p>12€</p> {/* Precio hardcodeado */}
+                    <hr className="hr-viewUser" />
+                  </div>
+                ))
               ) : (
                 <p>No hay reservas disponibles.</p>
               )}
@@ -131,7 +157,23 @@ export const AdminUser = ({
               <strong>Reservas</strong>
             </Accordion.Header>
             <Accordion.Body>
-              {/* Aquí puedes añadir contenido relacionado con las reservas */}
+              {reservation.length > 0 ? (
+                reservation.map((elem, index) => (
+                  <div key={index}>
+                    <p>{elem.route_name}</p>
+                    <p>
+                      {elem.departure_city_name} - {elem.arrival_city_name}
+                    </p>
+                    <p>
+                      {elem.departure_day}&nbsp;&nbsp;/ {elem.departure_time}
+                    </p>
+                    <p>12€</p> {/* Precio hardcodeado */}
+                    <hr className="hr-viewUser" />
+                  </div>
+                ))
+              ) : (
+                <p>No hay reservas disponibles.</p>
+              )}
             </Accordion.Body>
           </Accordion.Item>
         </Accordion.Item>

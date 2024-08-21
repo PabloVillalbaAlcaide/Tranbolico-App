@@ -1,5 +1,23 @@
-.search {
-  border: 1px solid black;
+.ppal-userView {
+  background-color: var(--tranbolico-azul);
+  width: 100%;
+  font-family: "VinaSans-Regular.ttf";
+  
+}
+
+.hr-viewUser {
+  border-top: 3px solid var(--tranbolico-fucsia);
+  margin: 20px 0;
+  width: 100%;
+  opacity: 1 !important;
+}
+
+.ppal-userView h2 {
+  font-size: 3rem;
+}
+.form-user-search {
+  border: 3px solid var(--tranbolico-azul);
+  font-family: "Akkurat-Regular.ttf";
   padding: 8px;
   border-radius: 5px;
 }
@@ -27,4 +45,17 @@
 
 .input-buscar-viewUser{
   min-width: 150px;
+}
+
+.btn-buscarUser {
+  border: none;
+  background-color: var(--tranbolico-azul);
+  font-style: italic;
+}
+
+.btn-buscarUser:hover ,
+.btn-buscarUser:focus ,
+.btn-buscarUser:active ,
+.btn-buscarUser:focus:active  {
+  background-color: #13268e;
 }

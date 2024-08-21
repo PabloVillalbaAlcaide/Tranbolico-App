@@ -65,21 +65,30 @@
   color: white;
   border-radius: 1rem;
   font-family: "VinaSans-Regular.ttf";
-  padding: 5px 20px;
+  padding: 10px 35px;
+  min-width: 120px;
+
 }
 
 .btn-reservas-home {
   background-color: var(--tranbolico-azul);
 }
-.btn-reservas-home:hover {
-  background-color: #273897;
+
+.btn-reservas-home:hover,
+.btn-reservas-home:focus,
+.btn-reservas-home:active,
+.btn-reservas-home:focus:active {
+  background-color: #13268e;
 }
 
 .btn-rutas-home {
   background-color: var(--tranbolico-fucsia);
 }
 
-.btn-rutas-home:hover {
+.btn-rutas-home:hover,
+.btn-rutas-home:focus,
+.btn-rutas-home:active,
+.btn-rutas-home:focus:active {
   background-color: #ea013b;
 }
 
@@ -87,15 +96,21 @@
   background-color: var(--tranbolico-amarillo);
 }
 
-.btn-conocenos-home:hover {
+.btn-conocenos-home:hover,
+.btn-conocenos-home:focus,
+.btn-conocenos-home:active, 
+.btn-conocenos-home:focus:active {
   background-color: #facc00;
 }
 
-.btn-faqs-home {
+.btn-faqs-home{
   background-color: var(--tranbolico-azulClaro);
 }
 
-.btn-faqs-home:hover {
+.btn-faqs-home:hover,
+.btn-faqs-home:focus,
+.btn-faqs-home:active, 
+.btn-faqs-home:focus:active {
   background-color: #53afc6;
 }
 

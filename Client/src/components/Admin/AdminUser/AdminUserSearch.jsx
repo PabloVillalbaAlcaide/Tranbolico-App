@@ -8,7 +8,7 @@ export const AdminUserSearch = ({
 }) => {
   return (
     <div className="w-100 d-flex justify-content-center">
-      <Form className="d-flex flex-column w-25 m-3 search">
+      <Form className="d-flex flex-column m-3 search form-user-search ">
         <div className="d-flex justify-content-center">
           <Form.Check
             className="m-2"
@@ -50,7 +50,7 @@ export const AdminUserSearch = ({
             className="me-2"
             aria-label="Search"
           />
-          <Button variant="outline-success" onClick={onSearch}>
+          <Button className="btn-buscarUser " onClick={onSearch}>
             Buscar
           </Button>
         </div>

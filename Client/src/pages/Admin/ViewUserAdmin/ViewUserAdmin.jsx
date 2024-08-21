@@ -48,7 +48,7 @@ export const ViewUserAdmin = () => {
   return (
     <>
       <Row>
-        <div className="ppal-login text-center text-white  mt-2">
+        <div className="ppal-userView text-center text-white  mt-3">
           <h2 className="mb-0 py-2">USUARIOS</h2>
         </div>
       </Row>
@@ -60,11 +60,13 @@ export const ViewUserAdmin = () => {
         errMsg={errMsg}
       />
 
-      <div className="row d-flex flex-column flex-md-row align-items-center justify-content-center ">
+      <div className="d-flex flex-column flex-md-row align-items-center justify-content-center flex-wrap">
         {info &&
           info.map((elem, index) => (
-            <div key={index} className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+            <div key={index} className="mt-4">
+
               <AdminUser
+                user_id={elem.user_id}
                 full_name={elem.full_name}
                 email={elem.email}
                 birthdate={elem.birthdate}
