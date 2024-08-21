@@ -70,7 +70,8 @@ export const EditUser = () => {
     }
 
     if (editedUser.phone_number?.length > 25) {
-      newErrors.phone_number = "El teléfono debe contener como máximo 25 caracteres";
+      newErrors.phone_number =
+        "El teléfono debe contener como máximo 25 caracteres";
       isValid = false;
     }
 
@@ -80,6 +81,7 @@ export const EditUser = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
 
     validateForm(editedUser)
 
@@ -99,12 +101,12 @@ export const EditUser = () => {
       if (files) {
         formData.append("avatar", files);
       }
-          
+
       const response = await axios.put(
         `http://localhost:4000/users/editOneUser`,
         formData,
-        {headers: {Authorization:`Bearer ${globalState.token}`}},
-      )
+        { headers: { Authorization: `Bearer ${globalState.token}` } }
+      );
       if (response.status === 200) {
         setGlobalState({ ...globalState, user: sanitizedUser });
         navigate("/profile");
@@ -114,7 +116,7 @@ export const EditUser = () => {
       setErrors({ ...errors, form: "Error al actualizar el usuario" });
     }
   };
- 
+
   return (
     <>
       <Row className="justify-content-center align-items-center pt-5">
@@ -208,9 +210,12 @@ export const EditUser = () => {
               <Form.Group className="mb-2" controlId="formBasicProvince">
                 <SearchDropdown
                   type="province"
+
                   selectedOption={editedUser.province}
                   handleSelect={handleSelect('province')}
+
                   placeholder="Provincia"
+                  autoComplete="off"
                 />
               </Form.Group>
               {errors.province && (
@@ -222,10 +227,13 @@ export const EditUser = () => {
               <Form.Group className="mb-2" controlId="formBasicCity">
                 <SearchDropdown
                   type="city"
+
                   provinceId={provinceId}
                   selectedOption={editedUser.city}
                   handleSelect={handleSelect('city')}
+
                   placeholder="Ciudad"
+                  autoComplete="off"
                 />
               </Form.Group>
               {errors.city && (

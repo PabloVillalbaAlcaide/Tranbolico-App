@@ -46,7 +46,6 @@ export const AdminUser = ({
 
   // nos traer para ver el historial del usuario
   const viewHistory = async () => {
-    console.log("User ID:", user_id);
     try {
       const res = await axios.get(
         `http://localhost:4000/admin/historicalUser?userid=${user_id}`,
@@ -93,12 +92,11 @@ export const AdminUser = ({
   return (
     <div className="contenedor-userView d-flex flex-column p-3 align-items-center justify-content-center m-auto ">
       <br />
-      <Accordion
-        className="w-100"
-        activeKey={activeKey}
-        onSelect={handleSelect}
-      >
-        <Accordion.Item eventKey="0" className="accordion-user p-2">
+      <Accordion className="w-100" onSelect={handleSelect}>
+        <Accordion.Item
+          eventKey={activeKey ? activeKey : "0"}
+          className="accordion-user p-2"
+        >
           <Accordion.Header>
             <h4>{full_name}</h4>
           </Accordion.Header>{" "}
@@ -113,69 +111,70 @@ export const AdminUser = ({
               value={isChecked}
             />
           </Form>
-          <Accordion.Body></Accordion.Body>
-          <Accordion.Item eventKey="1">
-            <Accordion.Header>
-              <strong>Datos</strong>
-            </Accordion.Header>
-            <Accordion.Body>
-              <p>Nombre: {full_name}</p>
-              <p>Teléfono: {phone_number}</p>
-              <p>Email: {email}</p>
-              <p>Fecha de Nacimiento: {birthdate}</p>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="2">
-            <Accordion.Header>
-              <strong>Historial</strong>
-            </Accordion.Header>
-            <Accordion.Body>
-              {error && <Alert variant="danger">{error}</Alert>}
-              {reservationHistory.length > 0 ? (
-                reservationHistory.map((reservation, index) => (
-                  <div key={index}>
-                    <p>{reservation.route_name}</p>
-                    <p>
-                      {reservation.departure_city_name} -{" "}
-                      {reservation.arrival_city_name}
-                    </p>
-                    <p>
-                      {reservation.departure_day}&nbsp;&nbsp;/{" "}
-                      {reservation.departure_time}
-                    </p>
-                    <p>12€</p> {/* Precio hardcodeado */}
-                    <hr className="hr-viewUser" />
-                  </div>
-                ))
-              ) : (
-                <p>No hay reservas disponibles.</p>
-              )}
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="3">
-            <Accordion.Header>
-              <strong>Reservas</strong>
-            </Accordion.Header>
-            <Accordion.Body>
-              {reservation.length > 0 ? (
-                reservation.map((elem, index) => (
-                  <div key={index}>
-                    <p>{elem.route_name}</p>
-                    <p>
-                      {elem.departure_city_name} - {elem.arrival_city_name}
-                    </p>
-                    <p>
-                      {elem.departure_day}&nbsp;&nbsp;/ {elem.departure_time}
-                    </p>
-                    <p>12€</p> {/* Precio hardcodeado */}
-                    <hr className="hr-viewUser" />
-                  </div>
-                ))
-              ) : (
-                <p>No hay reservas disponibles.</p>
-              )}
-            </Accordion.Body>
-          </Accordion.Item>
+          <Accordion.Body>
+            <Accordion.Item eventKey="1">
+              <Accordion.Header>
+                <strong>Datos</strong>
+              </Accordion.Header>
+              <Accordion.Body>
+                <p>Nombre: {full_name}</p>
+                <p>Teléfono: {phone_number}</p>
+                <p>Email: {email}</p>
+                <p>Fecha de Nacimiento: {birthdate}</p>
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="2">
+              <Accordion.Header>
+                <strong>Historial</strong>
+              </Accordion.Header>
+              <Accordion.Body>
+                {error && <Alert variant="danger">{error}</Alert>}
+                {reservationHistory.length > 0 ? (
+                  reservationHistory.map((reservation, index) => (
+                    <div key={index}>
+                      <p>{reservation.route_name}</p>
+                      <p>
+                        {reservation.departure_city_name} -{" "}
+                        {reservation.arrival_city_name}
+                      </p>
+                      <p>
+                        {reservation.departure_day}&nbsp;&nbsp;/{" "}
+                        {reservation.departure_time}
+                      </p>
+                      <p>12€</p> {/* Precio hardcodeado */}
+                      <hr className="hr-viewUser" />
+                    </div>
+                  ))
+                ) : (
+                  <p>No hay reservas disponibles.</p>
+                )}
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="3">
+              <Accordion.Header>
+                <strong>Reservas</strong>
+              </Accordion.Header>
+              <Accordion.Body>
+                {reservation.length > 0 ? (
+                  reservation.map((elem, index) => (
+                    <div key={index}>
+                      <p>{elem.route_name}</p>
+                      <p>
+                        {elem.departure_city_name} - {elem.arrival_city_name}
+                      </p>
+                      <p>
+                        {elem.departure_day}&nbsp;&nbsp;/ {elem.departure_time}
+                      </p>
+                      <p>12€</p> {/* Precio hardcodeado */}
+                      <hr className="hr-viewUser" />
+                    </div>
+                  ))
+                ) : (
+                  <p>No hay reservas disponibles.</p>
+                )}
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion.Body>
         </Accordion.Item>
       </Accordion>
     </div>

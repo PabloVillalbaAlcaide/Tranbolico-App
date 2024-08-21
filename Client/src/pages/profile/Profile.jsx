@@ -9,7 +9,7 @@ import emailIcon from "../../../src/assets/icons/email.svg";
 import locationIcon from "../../../src/assets/icons/location.svg";
 import birthdateIcon from "../../../src/assets/icons/birthdate.svg";
 import pastBookingsIcon from "../../../src/assets/icons/pastBookings.svg";
-import futureBookingsIcon from "../../../src/assets/icons/futureBookings.svg";
+// import futureBookingsIcon from "../../../src/assets/icons/futureBookings.svg";
 import editUserProfile from "../../../src/assets/icons/editUserProfile.svg";
 
 export const Profile = () => {
@@ -36,7 +36,6 @@ export const Profile = () => {
               <h3>
                 {globalState.user?.name} {globalState.user?.surname}
               </h3>
-
               <div className="d-flex flex-column gap-3">
                 <div className="d-flex align-items-center gap-2">
                   <img src={emailIcon} alt="email-icon" width={"50px"} />
@@ -65,11 +64,19 @@ export const Profile = () => {
                     alt="past-bookings-icon"
                     width={"50px"}
                   />
-                  <p>
+                  <Link to={"/historical"} className="fst-italic text-dark">
+                    Mis reservas
+                  </Link>
+                </div>
+                {/* <div className="profile-links d-flex align-items-center gap-2">
+                  <img
+                    src={pastBookingsIcon}
+                    alt="past-bookings-icon"
+                    width={"50px"}
+                  />
                     <Link to={"/historical"} className="fst-italic text-dark">
                       Historial de reservas
                     </Link>
-                  </p>
                 </div>
                 <div className="profile-links d-flex align-items-center gap-2">
                   <img
@@ -77,26 +84,22 @@ export const Profile = () => {
                     alt="future-bookings-icon"
                     width={"50px"}
                   />
-                  <p>
                     <Link
-                      to={"/nextReservations"}
+                      to={"/historical/nextReservations"}
                       className="fst-italic text-dark"
                     >
                       Próximas reservas
                     </Link>
-                  </p>
-                </div>
+                </div> */}
                 <div className="profile-links d-flex align-items-center gap-2">
                   <img
                     src={editUserProfile}
                     alt="future-bookings-icon"
                     width={"50px"}
                   />
-                  <p className="fst-italic text-decoration-underline">
-                    <Link to={"/editUser"} className="text-dark">
-                      Editar perfil
-                    </Link>
-                  </p>
+                  <Link to={"/editUser"} className="text-dark fst-italic">
+                    Editar perfil
+                  </Link>
                 </div>
               </div>
               <img

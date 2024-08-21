@@ -19,6 +19,12 @@ export const Admin = () => {
             >
               <h3 className="m-auto">Rutas</h3>
             </Button>
+            <Button
+              className="buttonAdmin"
+              onClick={() => navigate("/admin/planning")}
+            >
+              <h3 className="m-auto">Planning</h3>
+            </Button>
 
             <Button
               className="buttonAdmin"
