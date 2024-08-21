@@ -312,7 +312,7 @@ WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' O
   };
 
   historicalUser = (req, res) => {
-    const { user_id } = req.query;
+    const { userid } = req.query;
     const sql = ` SELECT
     reservation.user_id,
     reservation.reservation_id,
@@ -329,7 +329,7 @@ FROM reservation JOIN planning ON reservation.route_id = planning.route_id AND r
 JOIN route ON reservation.route_id = route.route_id JOIN  province dp ON route.departure_province_id = dp.province_id
 JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
 JOIN province ap ON route.arrival_province_id = ap.province_id JOIN city ac ON route.arrival_city_id = ac.city_id
-AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${user_id}
+AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${userid}
 AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) <= NOW() OR reservation.is_deleted = 1;`;
     connection.query(sql, (err, result) => {
       if (err) {
@@ -342,8 +342,9 @@ AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETI
     });
   };
 
+  //vista reservas de usuario
   reservationUser = (req, res) => {
-    const { user_id } = req.query;
+    const { userid } = req.query;
     const sql = `SELECT
     reservation.user_id,
     reservation.reservation_id,
@@ -359,7 +360,7 @@ FROM reservation JOIN planning ON reservation.route_id = planning.route_id AND r
 JOIN route ON reservation.route_id = route.route_id JOIN  province dp ON route.departure_province_id = dp.province_id
 JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
 JOIN province ap ON route.arrival_province_id = ap.province_id JOIN city ac ON route.arrival_city_id = ac.city_id
-AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${user_id}
+AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${userid}
 AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) >= NOW() AND reservation.is_deleted = 0 `;
     connection.query(sql, (err, result) => {
       if (err) {
