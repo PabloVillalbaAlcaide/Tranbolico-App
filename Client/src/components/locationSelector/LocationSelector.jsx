@@ -10,19 +10,16 @@ export const SearchDropdown = ({
   placeholder,
 }) => {
   const [options, setOptions] = useState([]);
-  const [filteredOptions, setFilteredOptions] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const fetchOptions = async (query) => {
     try {
       const response = await axios.get(
         `http://localhost:4000/${type}?query=${query}`
       );
-      const formattedOptions = response.data.map(option => ({
-        id: option.province_id || option.city_id, // Ajusta según el formato de tus datos
-        label: option.name || option.city_name // Ajusta según el formato de tus datos
-      }));
-      setOptions(formattedOptions);
+      setOptions(response.data);
+      setShowDropdown(true);
     } catch (error) {
       console.error(`Error fetching ${type}:`, error);
     }
@@ -35,27 +32,16 @@ export const SearchDropdown = ({
     [type]
   );
 
-  useEffect(() => {
-    if (inputValue) {
-      debouncedFetchOptions(inputValue);
-    }
-  }, [inputValue, debouncedFetchOptions]);
-
-  useEffect(() => {
-    const filtered = options.filter((option) =>
-      option.label && option.label.toLowerCase().includes(inputValue.toLowerCase())
-    );
-    setFilteredOptions(filtered);
-  }, [options, inputValue]);
-
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
+    debouncedFetchOptions(inputValue);
   };
 
   const handleOptionSelect = (option) => {
-    setInputValue(option.label);
-    handleSelect(option.id);
+    setInputValue(option.name || option.city_name); // Ajusta según el formato de tus datos
+    handleSelect(option);
+    setShowDropdown(false); // Cierra el dropdown
   };
 
   return (
@@ -68,17 +54,18 @@ export const SearchDropdown = ({
         value={inputValue}
         onChange={handleInputChange}
         placeholder={placeholder}
+        onFocus={() => setShowDropdown(true)} // Abre el dropdown al enfocar
       />
-      {inputValue && filteredOptions.length > 0 && (
+      {inputValue && showDropdown && options.length > 0 && (
         <ListGroup className="dropdown-list">
           <Row>
-            {filteredOptions.map((option) => (
-              <Col xs={12} key={option.id}>
+            {options.map((option) => (
+              <Col xs={12} key={option.province_id + (option.city_id ? `_${option.city_id}` : '')}>
                 <ListGroup.Item 
                   className="dropdown-item" 
                   onClick={() => handleOptionSelect(option)}
                 >
-                  {option.label}
+                  {option.name || option.city_name}
                 </ListGroup.Item>
               </Col>
             ))}
