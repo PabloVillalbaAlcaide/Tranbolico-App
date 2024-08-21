@@ -49,7 +49,7 @@ class UserController {
         if (error) {
             return res.status(500).json(error);
         } else {
-            if (result && result.length !== 0) {
+            if (!result && result.length !== 0) {
                 return res.status(401).json("usuario ya existe");
             } else {
                 // Si no existe, encripta contraseña
