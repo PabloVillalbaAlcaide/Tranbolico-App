@@ -24,91 +24,90 @@ class UserController {
   //Controlador que realiza el registro de usuario
   registerUser = (req, res) => {
     console.log(req.body);
-
-    // Extraer todos los campos menos 'genre'
+    
     const {
-        name,
-        surname,
-        birthdate,
-        email,
-        password,
-        phone_number,
-        province,
-        city,
+      name,
+      surname,
+      birthdate,
+      genre,
+      email,
+      password,
+      phone_number,
+      province,
+      city,
     } = req.body;
-
-    // Obtener 'genre' si está presente
-    const genre = req.body.genre;
-
     const randomIndex = Math.floor(Math.random() * tranbolicAvatar.length);
     let avatar = tranbolicAvatar[randomIndex];
-
-    // Comprueba si existe el usuario
-    let sql = `SELECT * FROM user WHERE email = "${email}"`;
+    //Comprueba si existe el usuario
+    let sql = `SELECT * FROM user where email = "${email}"`;
     connection.query(sql, (error, result) => {
-        if (error) {
-            return res.status(500).json(error);
+      if (error) {
+        return res.status(500).json(error);
+      } else {
+        if (!result || result.length !== 0) {
+          return res.status(401).json("usuario ya existe");
         } else {
-            if (!result && result.length !== 0) {
-                return res.status(401).json("usuario ya existe");
+          // si no existe encripta contraseña
+          let saltRounds = 10;
+          bcrypt.hash(password, saltRounds, (error, hash) => {
+            if (error) {
+              return res.status(500).json(error);
             } else {
-                // Si no existe, encripta contraseña
-                let saltRounds = 10;
-                bcrypt.hash(password, saltRounds, (error, hash) => {
-                    if (error) {
-                        return res.status(500).json(error);
-                    } else {
-                        // Inicializar la consulta SQL y el array de datos
-                        let sql2;
-                        let data = [
-                            name,
-                            surname,
-                            birthdate,
-                            email,
-                            hash,
-                            phone_number,
-                            avatar,
-                            province.province_id,
-                            city.city_id,
-                        ];
+              let data = [
+                name,
+                surname,
+                birthdate,
+                genre,
+                email,
+                hash,
+                phone_number,
+                avatar,
+                province.province_id,
+                city.city_id,
+              ];
+              let sql2 = `INSERT INTO user (name, surname, birthdate, genre, email, password, phone_number, avatar, province_id, city_id)
+              VALUES (?,?,?,?,?,?,?,?,?,?);`;
+              if(genre === ""){
+                data = [
+                  name,
+                  surname,
+                  birthdate,
+                  email,
+                  hash,
+                  phone_number,
+                  avatar,
+                  province.province_id,
+                  city.city_id,
+                ];
+                sql2 = `INSERT INTO user (name, surname, birthdate, email, password, phone_number, avatar, province_id, city_id)
+                VALUES (?,?,?,?,?,?,?,?,?);`;
+              }
 
-                        // Construir la consulta SQL y datos condicionalmente
-                        if (genre) {
-                            sql2 = `INSERT INTO user (name, surname, birthdate, genre, email, password, phone_number, avatar, province_id, city_id)
-                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
-                            data = [name, surname, birthdate, genre, email, hash, phone_number, avatar, province.province_id, city.city_id];
-                        } else {
-                            sql2 = `INSERT INTO user (name, surname, birthdate, email, password, phone_number, avatar, province_id, city_id)
-                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`;
-                        }
-
-                        // Insertar el usuario en la base de datos
-                        connection.query(sql2, data, (errorIns, resultIns) => {
-                            if (errorIns) {
-                                return res.status(500).json(errorIns);
-                            } else {
-                                // Genera el token para verificación de registro
-                                const registerToken = tokenGenerator(
-                                    resultIns.insertId,
-                                    process.env.SECRET_KEY_2,
-                                    1
-                                );
-                                // Encripta el token y hace el envío
-                                const hashToken = encryptToken(
-                                    registerToken,
-                                    process.env.SECRET_KEY_3
-                                );
-                                sendMail(email, name, hashToken);
-                                res.status(201).json(resultIns);
-                            }
-                        });
-                    }
-                });
+              connection.query(sql2, data, (errorIns, resultIns) => {
+                if (errorIns) {
+                  return res.status(500).json(errorIns);
+                } else {
+                  // Genera el token para verificación de registro
+                  const registerToken = tokenGenerator(
+                    resultIns.insertId,
+                    process.env.SECRET_KEY_2,
+                    1
+                  );
+                  //Encripta el token y hace el envio
+                  const hashToken = encryptToken(
+                    registerToken,
+                    process.env.SECRET_KEY_3
+                  );
+                  sendMail(email, name, hashToken);
+                  res.status(201).json(resultIns);
+                }
+              });
             }
+          });
         }
+      }
     });
-};
-
+  };
 
   //Controlador que realiza el login del usuario
   loginUser = (req, res) => {
@@ -252,8 +251,6 @@ class UserController {
 
   editOneUser = (req, res) => {
 
-    console.log(req.body);
-    
   
       const {
         user_id,
