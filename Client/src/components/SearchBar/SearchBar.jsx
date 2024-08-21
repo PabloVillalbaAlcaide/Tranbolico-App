@@ -59,23 +59,7 @@ export const SearchBar = () => {
     setFinal({ city, province });
     set(`${city}, ${province}`);
     setSuggestion([]);
-     
-    
   };
-
-
-
-  // const handleOriginSelected = (city, province) => {
-  //   setOriginFinal({ city, province });
-  //   setOrigin(`${city}, ${province}`);
-  //   setOriginSuggestions([]);
-  // };
-
-  // const handleDestinationSelected = (city, province) => {
-  //   setDestinationFinal({ city, province });
-  //   setDestination(`${city}, ${province}`);
-  //   setDestinationSuggestions([]);
-  // };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -84,7 +68,7 @@ export const SearchBar = () => {
     } else {
       setErrMsg({ show: false, text: "" });
       try {
-        navigate("/reservations", {
+        navigate("/reservations", {         
           state: { origin: originFinal, destination: destinationFinal },
         });
       } catch (err) {
@@ -94,11 +78,12 @@ export const SearchBar = () => {
   };
 
   return (
-
-    
     <div className="contenedor-searchbar">
       <Form>
-        <Form.Group className="mb-3 form-origen-destino_SB d-flex flex-column justify-content-center align-items-center" controlId="formBasicOrigin">
+        <Form.Group
+          className="mb-3 form-origen-destino_SB d-flex flex-column justify-content-center align-items-center"
+          controlId="formBasicOrigin"
+        >
           <Form.Label>Origen</Form.Label>
           <Form.Control
             type="text"
@@ -134,7 +119,10 @@ export const SearchBar = () => {
             </div>
           )}
         </Form.Group>
-        <Form.Group className="mb-3 form-origen-destino_SB d-flex flex-column justify-content-center align-items-center" controlId="formBasicDestination">
+        <Form.Group
+          className="mb-3 form-origen-destino_SB d-flex flex-column justify-content-center align-items-center"
+          controlId="formBasicDestination"
+        >
           <Form.Label>Destino</Form.Label>
           <Form.Control
             type="text"
@@ -142,7 +130,7 @@ export const SearchBar = () => {
             onChange={handleDestinationChange}
             value={destination || ""}
             name="destination"
-           className="form-99-buscador d-flex text-center"
+            className="form-99-buscador d-flex text-center"
           />
           {destinationSuggestions.length > 0 && (
             <div className="suggestions">
@@ -170,8 +158,12 @@ export const SearchBar = () => {
             </div>
           )}
         </Form.Group>
-        {errMsg.show && <p className="msg-error-home text-danger fw-bold mb-3">{errMsg.text}</p>}
-        <Button className="btn-buscarSBH"  onClick={onSubmit}> 
+        {errMsg.show && (
+          <p className="msg-error-home text-danger fw-bold mb-3">
+            {errMsg.text}
+          </p>
+        )}
+        <Button className="btn-buscarSBH" onClick={onSubmit}>
           Buscar
         </Button>
       </Form>

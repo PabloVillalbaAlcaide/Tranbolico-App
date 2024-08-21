@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useCallback} from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import "./editUser.scss";
@@ -36,15 +36,18 @@ export const EditUser = () => {
     setFiles(e.target.files[0]);
   };
 
-  const handleSelect = useCallback((field) => (value) => {
-    setEditedUser((prevState) => {
-      const newState = { ...prevState, [field]: value };
-      if (field === 'province') {
-        newState.city = {}; // Reiniciar city a un objeto vacío
-      }
-      return newState;
-    });
-  }, []);
+  const handleSelect = useCallback(
+    (field) => (value) => {
+      setEditedUser((prevState) => {
+        const newState = { ...prevState, [field]: value };
+        if (field === "province") {
+          newState.city = {}; // Reiniciar city a un objeto vacío
+        }
+        return newState;
+      });
+    },
+    []
+  );
 
   const validateForm = useCallback(() => {
     const newErrors = {};
@@ -82,17 +85,21 @@ export const EditUser = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-
-    validateForm(editedUser)
+    if (!validateForm()) {
+      return;
+    }
 
     const sanitizedUser = {
       ...editedUser,
       name: editedUser.name.trim() || globalState.user.name,
       surname: editedUser.surname.trim() || globalState.user.surname,
       email: editedUser.email.trim() || globalState.user.email,
-      phone_number: editedUser.phone_number.trim() || globalState.user.phone_number,
-      province_name: editedUser.province.name.trim() || globalState.user.province.name,
-      city_name: editedUser.city.city_name.trim() || globalState.user.city.city_name,
+      phone_number:
+        editedUser.phone_number.trim() || globalState.user.phone_number,
+      province_name:
+        editedUser.province.name.trim() || globalState.user.province.name,
+      city_name:
+        editedUser.city.city_name.trim() || globalState.user.city.city_name,
     };
 
     try {
@@ -116,7 +123,6 @@ export const EditUser = () => {
       setErrors({ ...errors, form: "Error al actualizar el usuario" });
     }
   };
-
   return (
     <>
       <Row className="justify-content-center align-items-center pt-5">
@@ -210,10 +216,8 @@ export const EditUser = () => {
               <Form.Group className="mb-2" controlId="formBasicProvince">
                 <SearchDropdown
                   type="province"
-
                   selectedOption={editedUser.province}
-                  handleSelect={handleSelect('province')}
-
+                  handleSelect={handleSelect("province")}
                   placeholder="Provincia"
                   autoComplete="off"
                 />
@@ -227,11 +231,9 @@ export const EditUser = () => {
               <Form.Group className="mb-2" controlId="formBasicCity">
                 <SearchDropdown
                   type="city"
-
                   provinceId={provinceId}
                   selectedOption={editedUser.city}
-                  handleSelect={handleSelect('city')}
-
+                  handleSelect={handleSelect("city")}
                   placeholder="Ciudad"
                   autoComplete="off"
                 />

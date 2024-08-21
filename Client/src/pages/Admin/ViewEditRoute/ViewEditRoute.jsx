@@ -10,7 +10,7 @@ import "../../../App.css";
 export const ViewEditRoute = () => {
   const { globalState, loading } = useContext(AppContext);
   const [routes, setRoutes] = useState([]);
-  const [editRouteId, setEditRouteId] = useState(null);
+  const [editRouteId, setEditRouteId] = useState("");
   const [editedRoute, setEditedRoute] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [newRoute, setNewRoute] = useState({
@@ -82,7 +82,7 @@ export const ViewEditRoute = () => {
           )
         );
       }
-      setEditRouteId(null);
+      setEditRouteId("");
     } catch (err) {
       console.log(err);
       alert("Error al guardar la ruta. Por favor, inténtalo de nuevo.");
@@ -162,6 +162,7 @@ export const ViewEditRoute = () => {
       console.log(err);
       alert("Error al añadir la ruta. Por favor, inténtalo de nuevo.");
     }
+    finally{setNewRoute({})}
   };
 
   return (
@@ -255,8 +256,8 @@ export const ViewEditRoute = () => {
                       name="text"
                       value={
                         editRouteId === route.route_id
-                          ? editedRoute.text
-                          : route.text
+                          ? (editedRoute.text !== null ? editedRoute.text : "")
+                          : (route.text !== null ? route.text : "")
                       }
                       onChange={(e) =>
                         handleInputChange("text", e.target.value)
@@ -310,7 +311,10 @@ export const ViewEditRoute = () => {
 
       <AddRouteModal
         show={showModal}
-        handleClose={() => setShowModal(false)}
+        handleClose={() => {
+          setShowModal(false);
+          setNewRoute({});
+        }}
         handleNewRouteChange={handleNewRouteChange}
         handleAddRoute={handleAddRoute}
         newRoute={newRoute}
