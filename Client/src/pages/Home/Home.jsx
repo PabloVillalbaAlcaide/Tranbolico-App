@@ -16,7 +16,7 @@ export const Home = () => {
 
   const handleNavigation = () => {
     if (globalState.user) {
-      navigate('/reservations');
+      navigate('/historical');
     } else {
       navigate('/login');
     }

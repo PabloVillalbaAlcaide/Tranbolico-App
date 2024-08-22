@@ -20,6 +20,7 @@ export const DetailReservation = () => {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
       );
+      navigate("/confirmReservation");
     } catch (err) {
       console.log(err);
     }
