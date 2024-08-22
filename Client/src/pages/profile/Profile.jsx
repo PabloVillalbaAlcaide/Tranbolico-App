@@ -1,10 +1,11 @@
+import "./profile.scss";
+import "../../App.css";
 import { useContext } from "react";
 import { Col, Row } from "react-bootstrap";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import { Link } from "react-router-dom";
-import "./profile.scss";
-import "../../App.css";
 import { UserAvatar } from "../../components/UserAvatar/UserAvatar";
+import { format } from 'date-fns'
 import emailIcon from "../../../src/assets/icons/email.svg";
 import locationIcon from "../../../src/assets/icons/location.svg";
 import birthdateIcon from "../../../src/assets/icons/birthdate.svg";
@@ -14,7 +15,9 @@ import editUserProfile from "../../../src/assets/icons/editUserProfile.svg";
 
 export const Profile = () => {
   const { globalState } = useContext(AppContext);
-  console.log(globalState);
+
+  const birthdate = globalState.user?.birthdate;
+  const formattedDate = format(new Date(birthdate), "dd-MM-yyyy");
 
   return (
     <>
@@ -54,9 +57,7 @@ export const Profile = () => {
                     alt="birthdate-icon"
                     width={"50px"}
                   />
-                  <p>
-                    {globalState.user?.birthdate.split("-").reverse().join("-")}
-                  </p>
+                  <p>{formattedDate}</p>
                 </div>
                 <div className="profile-links d-flex align-items-center gap-2">
                   <img
