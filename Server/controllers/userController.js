@@ -168,7 +168,6 @@ class UserController {
                         },
                         user_type: resultSelect[0].user_type,
                       };
-                      console.log(finalResult);
 
                       return res.status(200).json({ finalResult, token });
                     }
@@ -213,13 +212,17 @@ class UserController {
               .status(401)
               .json({ status: 401, message: "No autorizado" });
           } else {
-            let sql2 = "SELECT * FROM user WHERE user_id = ?";
+            let sql2 = `SELECT user.*, province.name AS province, city.city_name AS city
+    FROM user JOIN province ON user.province_id = province.province_id JOIN 
+    city ON user.province_id = city.province_id AND user.city_id = city.city_id 
+    WHERE user.user_id = ?`;
             connection.query(sql2, data, (errSelect, resultSelect) => {
               if (errSelect) {
                 return res
                   .status(401)
                   .json({ status: 401, message: "No autorizado" });
               } else {
+                
                 if (!resultSelect || resultSelect.length === 0) {
                   return res.status(401).json("No autorizado");
                 } else {
@@ -229,8 +232,27 @@ class UserController {
                     1
                   );
                   token = encryptToken(token, process.env.SECRET_KEY_3);
-
-                  res.status(200).json({ resultSelect, token });
+                  const finalResult = {
+                    user_id: resultSelect[0].user_id,
+                    name: resultSelect[0].name,
+                    surname: resultSelect[0].surname,
+                    birthdate: resultSelect[0].birthdate,
+                    genre: resultSelect[0].genre,
+                    email: resultSelect[0].email,
+                    phone_number: resultSelect[0].phone_number,
+                    avatar: resultSelect[0].avatar,
+                    province: {
+                      name: resultSelect[0].province,
+                      province_id: resultSelect[0].province_id,
+                    },
+                    city: {
+                      city_name: resultSelect[0].city,
+                      city_id: resultSelect[0].city_id,
+                      province_id: resultSelect[0].province_id,
+                    },
+                    user_type: resultSelect[0].user_type,
+                  };
+                  res.status(200).json({ finalResult, token });
                 }
               }
             });
