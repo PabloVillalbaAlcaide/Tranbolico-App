@@ -1,5 +1,5 @@
-import React from "react";
 import { Row } from "react-bootstrap";
+import { ScrollTopButton } from "../../components/ScrollTopButton/ScrollTopButton";
 
 export const PrivacyPolicy = () => {
   return (
@@ -12,7 +12,8 @@ export const PrivacyPolicy = () => {
       <Row className="justify-content-center">
         <div className="w-75 text-left py-5">
           <p className="my-5">
-            Lorem ipsum dolor sit amet 
+            Lorem ipsum dolor sit amet
+            </p>
             <p className="my-5">
               consectetur adipisicing elit. Et impedit
               ex sunt praesentium aliquam officia, id ab illo numquam dolorem
@@ -133,18 +134,21 @@ export const PrivacyPolicy = () => {
               quasi ab quos dicta magnam sed dolorem quae architecto corrupti hic
               cum facere, reiciendis iure modi doloremque inventore. Doloremque
             </p>
-            eos voluptatibus rem ad deserunt accusamus sunt sapiente veniam
-            mollitia incidunt perspiciatis, odio voluptates doloribus. Sit fuga
-            minima cumque amet vitae inventore ducimus, voluptas eius, explicabo
-            voluptate, velit alias omnis obcaecati iusto architecto magnam esse
-            quos eum ipsum reiciendis repellendus. Ipsa distinctio debitis
-            obcaecati, eum impedit neque nobis hic esse amet! Quas quae
-            explicabo quam omnis fugit veniam natus neque nihil dicta incidunt
-            alias quis corporis id, quidem blanditiis architecto cupiditate! Non
-            esse eaque possimus. Fugit perspiciatis nihil dolorem facilis velit
-            ipsum dicta nisi iure est vero ad modi, veniam, quas ab! Sint, nisi
-            aliquid. Officia, atque dignissimos.
-          </p>
+            <p className="my-5">
+              eos voluptatibus rem ad deserunt accusamus sunt sapiente veniam
+              mollitia incidunt perspiciatis, odio voluptates doloribus. Sit fuga
+              minima cumque amet vitae inventore ducimus, voluptas eius, explicabo
+              voluptate, velit alias omnis obcaecati iusto architecto magnam esse
+              quos eum ipsum reiciendis repellendus. Ipsa distinctio debitis
+              obcaecati, eum impedit neque nobis hic esse amet! Quas quae
+              explicabo quam omnis fugit veniam natus neque nihil dicta incidunt
+              alias quis corporis id, quidem blanditiis architecto cupiditate! Non
+              esse eaque possimus. Fugit perspiciatis nihil dolorem facilis velit
+              ipsum dicta nisi iure est vero ad modi, veniam, quas ab! Sint, nisi
+              aliquid. Officia, atque dignissimos.
+            </p>
+          
+          <ScrollTopButton />
         </div>
       </Row>
     </>
