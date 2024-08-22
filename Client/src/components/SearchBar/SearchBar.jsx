@@ -92,6 +92,7 @@ export const SearchBar = () => {
             value={origin || ""}
             name="origin"
             className="form-99-buscador d-flex text-center"
+            autoComplete="off"
           />
           {originSuggestions.length > 0 && (
             <div className="suggestions">
@@ -131,6 +132,7 @@ export const SearchBar = () => {
             value={destination || ""}
             name="destination"
             className="form-99-buscador d-flex text-center"
+            autoComplete="off"
           />
           {destinationSuggestions.length > 0 && (
             <div className="suggestions">

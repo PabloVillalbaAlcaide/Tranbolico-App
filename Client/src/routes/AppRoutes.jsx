@@ -27,6 +27,7 @@ import { ViewEditRoute } from "../pages/Admin/ViewEditRoute/ViewEditRoute";
 import { ViewAddPlanning } from "../pages/Admin/ViewAddPlanning/ViewAddPlanning";
 import { PrivacyPolicy } from "../pages/PrivacyPolicy/PrivacyPolicy";
 import { LegalNotice } from "../pages/legalNotice/LegalNotice";
+import { ConfirmReservation } from "../pages/ConfirmReservation/ConfirmReservation";
 
 export const AppRoutes = () => {
   const { globalState, loading } = useContext(AppContext);
@@ -51,6 +52,7 @@ export const AppRoutes = () => {
               <Route path="/MsgVerifyEmail" element={<MsgVerifyEmail />} />
               <Route path="/MsgVerifyEmail/:hashtoken" element={<MsgToken />} />
               <Route path="/routes" element={<Rutas />} />
+              
 
               {globalState?.user && (
                 <>
@@ -62,6 +64,7 @@ export const AppRoutes = () => {
                       element={<DetailReservation />}
                     />
                   </Route>
+                  <Route path="/confirmReservation" element={<ConfirmReservation />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/editUser" element={<EditUser />} />
                   <Route path="/resetPassword" element={<ResetPassword />} />

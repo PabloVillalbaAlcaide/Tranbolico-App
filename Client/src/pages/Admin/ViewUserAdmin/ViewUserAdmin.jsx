@@ -60,7 +60,7 @@ export const ViewUserAdmin = () => {
         errMsg={errMsg}
       />
 
-      <div className="d-flex flex-column flex-md-row align-items-center justify-content-center flex-wrap">
+      <div className="d-flex flex-column flex-md-row align-items-center justify-content-center">
         {info &&
           info.map((elem, index) => (
             <div key={index} className="mt-4">
