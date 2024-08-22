@@ -124,7 +124,7 @@ export const ViewAddPlanning = () => {
           Añadir Nuevo Planning
         </Button>
       </div>
-      <Table striped bordered hover>
+      <Table striped bordered hover responsive>
         <thead>
           <tr>
             <th>Departure Date</th>

@@ -20,7 +20,6 @@ export const AdminUser = ({
 
   //cargamos en isChecked el estado is_disabled del usuario
   useEffect(() => {
-    console.log("User ID en AdminUser:", user_id);
     if (is_disabled === 0) {
       setIsChecked(true);
     } else {

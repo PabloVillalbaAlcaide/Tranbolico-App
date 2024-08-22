@@ -29,8 +29,6 @@ export const TranbolicoContextProvider = ({ children }) => {
     }
   };
   
-  console.log("GLOBALSTATE",globalState);
-  
   return (
     <>
       <AppContext.Provider value={{globalState, setGlobalState, loading}}>

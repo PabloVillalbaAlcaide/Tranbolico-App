@@ -1,10 +1,10 @@
+import './userReservations.scss'
 import { useContext, useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import axios from "axios";
-import { Col, Container, Row, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { ModalApp } from "../../components/modal/Modal";
-import { UserAvatar } from "../../components/UserAvatar/UserAvatar";
 
 const iconoCancelar = (
   <svg
@@ -98,7 +98,7 @@ export const UserReservations = () => {
                 <td>Guía Turístico</td>
                 <td>12€</td>
                 {hist === "nextReservations" && elem.reservation_type === 1 && (
-                  <td onClick={() => handleShow(elem)}>{iconoCancelar}</td>
+                  <td onClick={() => handleShow(elem)} className="btn-cancel-reservation">{iconoCancelar}</td>
                 )}
                 {hist === "historical" && elem.is_deleted === 1 && (
                   <td style={{backgroundColor:"#e72958bf", color:"white"}}>Cancelada</td>
