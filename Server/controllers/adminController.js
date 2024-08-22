@@ -292,7 +292,8 @@ WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' O
   viewUser = (req, res) => {
     const { opt, text } = req.query;
 
-    const sql = `select user_id, concat(name," ", surname) AS full_name, birthdate, email, phone_number, is_disabled from user where ${opt} LIKE "${text}% AND user_type != 1"`;
+    const sql = `SELECT user_id, CONCAT(name, " ", surname) AS full_name, birthdate, email, phone_number, is_disabled 
+    FROM user WHERE ${opt} LIKE "${text}%" AND user_type != 1`;
 
     connection.query(sql, (err, result) => {
       if (err) {

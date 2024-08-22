@@ -23,7 +23,7 @@ class ReservationController {
       if (err) {
         return res.status(500).json(err);
       } else {
-         res.status(200).json(result);
+        res.status(200).json(result);
       }
     });
   };
@@ -83,12 +83,10 @@ AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETI
     connection.query(sql, (err, result) => {
       if (err) {
         console.log(err);
-        
-      return res.status(500).json(err);
-        
-      } else {
 
-       return res.status(200).json(result);
+        return res.status(500).json(err);
+      } else {
+        return res.status(200).json(result);
       }
     });
   };
@@ -126,12 +124,14 @@ AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETI
 
   getSchedules = (req, res) => {
     console.log(req.query);
-    
+
     const {
       origin_province,
       origin_city,
       destination_province,
       destination_city,
+      date,
+      time,
     } = req.query;
 
     let sql = `SELECT planning.route_id, planning.planning_id, planning.departure_date, planning.departure_time, dp.name AS departure_province_name,
@@ -140,6 +140,22 @@ AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETI
     JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
     JOIN province ap ON route.arrival_province_id = ap.province_id JOIN city ac ON route.arrival_city_id = ac.city_id AND route.arrival_province_id = ac.province_id
     WHERE dp.name = '${origin_province}' AND dc.city_name = '${origin_city}' AND ap.name = '${destination_province}' AND ac.city_name = '${destination_city}' AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) > NOW()`;
+    if (date && time) {
+      sql = `SELECT planning.route_id, planning.planning_id, planning.departure_date, planning.departure_time, dp.name AS departure_province_name,
+      dc.city_name AS departure_city_name, ap.name AS arrival_province_name, ac.city_name AS arrival_city_name
+      FROM planning 
+      JOIN route ON planning.route_id = route.route_id 
+      JOIN province dp ON route.departure_province_id = dp.province_id
+      JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
+      JOIN province ap ON route.arrival_province_id = ap.province_id 
+      JOIN city ac ON route.arrival_city_id = ac.city_id AND route.arrival_province_id = ac.province_id
+      WHERE dp.name = '${origin_province}' 
+      AND dc.city_name = '${origin_city}' 
+      AND ap.name = '${destination_province}' 
+      AND ac.city_name = '${destination_city}' 
+      AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) > CAST('${date} ${time}' AS DATETIME)
+      AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) <= DATE_ADD(CAST('${date} ${time}' AS DATETIME), INTERVAL 8 HOUR)`;
+    }
     connection.query(sql, (err, result) => {
       if (err) {
         return res.status(500).json(err);
@@ -164,21 +180,31 @@ AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETI
         return res.status(500).json(err);
       } else {
         console.log(result);
-        
-        let data = [user_id, result[0].new_id,departure_route_id, departure_planning_id];
+
+        let data = [
+          user_id,
+          result[0].new_id,
+          departure_route_id,
+          departure_planning_id,
+        ];
         let sql = `INSERT INTO reservation (user_id, reservation_id, reservation_type, route_id, planning_id) 
                VALUES (?, ?, 1, ?, ?);`;
         connection.query(sql, data, (err, resultIns) => {
           if (err) {
             return res.status(500).json(err);
           } else {
-            data = [user_id, result[0].new_id,arrival_route_id, arrival_planning_id];
+            data = [
+              user_id,
+              result[0].new_id,
+              arrival_route_id,
+              arrival_planning_id,
+            ];
             let sql2 = `INSERT INTO reservation (user_id, reservation_id, reservation_type, route_id, planning_id) 
                     VALUES (?, ?, 2, ?, ?);`;
 
             connection.query(sql2, data, (err, resultIns2) => {
               if (err) {
-                return  res.status(500).json(err);
+                return res.status(500).json(err);
               } else {
                 res.status(200).json(resultIns2);
               }
