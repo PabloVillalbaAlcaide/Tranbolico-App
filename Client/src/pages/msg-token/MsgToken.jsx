@@ -22,7 +22,9 @@ export const MsgToken = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      setGlobalState({...globalState,"token":res.data.token, "user":res.data.resultSelect[0]})
+      console.log(res);
+      
+      setGlobalState({...globalState,"token":res.data.token, "user":res.data.finalResult})
       localStorage.setItem("token", res.data.token)
       
     } catch (err) {
