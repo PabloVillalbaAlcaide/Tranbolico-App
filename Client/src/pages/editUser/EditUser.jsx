@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserAvatar } from "../../components/UserAvatar/UserAvatar";
 import { SearchDropdown } from "../../components/locationSelector/LocationSelector";
+import uploadIcon from "../../../src/assets/icons/upload.svg";
 
 export const EditUser = () => {
   const { globalState, setGlobalState, loading } = useContext(AppContext);
@@ -137,151 +138,191 @@ export const EditUser = () => {
   };
   return (
     <>
-      <Row className="justify-content-center align-items-center pt-5">
-        <div className="user-avatar-container">
-          <UserAvatar user={editedUser} size={120} />
-        </div>
-        <div className="contenedor-edit d-flex justify-content-center align-items-center mb-5">
-          <Col xs={12} md={8} lg={6} xl={4}>
-            <Form onSubmit={onSubmit}>
-              <div className="ppal-edit text-center">
-                <h2>EDITAR</h2>
-              </div>
-
-              <Form.Group className="mb-2" controlId="formBasicName">
-                <Form.Control
-                  className="input-form-edit"
-                  type="text"
-                  placeholder="Nombre"
-                  name="name"
-                  value={editedUser.name || ""}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              {errors.name && (
-                <p className="text-center text-danger fw-bold">{errors.name}</p>
-              )}
-
-              <Form.Group className="mb-2" controlId="formBasicSurname">
-                <Form.Control
-                  className="input-form-edit"
-                  type="text"
-                  placeholder="Apellidos"
-                  name="surname"
-                  value={editedUser.surname || ""}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              {errors.surname && (
-                <p className="text-center text-danger fw-bold">
-                  {errors.surname}
-                </p>
-              )}
-
-              <Form.Group className="mb-2" controlId="formBasicEmail">
-                <Form.Control
-                  className="input-form-edit"
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  value={editedUser.email || ""}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              {errors.email && (
-                <p className="text-center text-danger fw-bold">
-                  {errors.email}
-                </p>
-              )}
-
-              <Form.Group className="mb-2" controlId="formBasicPhoneNumber">
-                <Form.Control
-                  className="input-form-edit"
-                  type="tel"
-                  placeholder="Teléfono"
-                  name="phone_number"
-                  value={editedUser.phone_number || ""}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              {errors.phone_number && (
-                <p className="text-center text-danger fw-bold">
-                  {errors.phone_number}
-                </p>
-              )}
-
-              <Form.Group className="mb-2" controlId="formBasicGenre">
-                <Form.Control
-                  className="input-form-edit"
-                  as="select"
-                  name="genre"
-                  value={editedUser.genre || ""}
-                  onChange={handleChange}
+      <div className="container-fluid">
+        <Row className="justify-content-center align-items-center pt-5">
+          <div className="user-avatar-container">
+            <UserAvatar user={editedUser} size={120} />
+          </div>
+          <div className="contenedor-edit d-flex flex-column justify-content-center align-items-center mb-5">
+            <Col xs={12} md={8} lg={6} xl={4}>
+              <Form
+                onSubmit={onSubmit}
+                className="d-flex flex-column align-items-center"
+              >
+                <div className="ppal-edit text-center">
+                  <h2>EDITAR</h2>
+                </div>
+                <Form.Group
+                  className="mb-2 w-100 d-flex justify-content-center"
+                  controlId="formBasicName"
                 >
-                  <option value="">Seleccione</option>
-                  <option value="1">Masculino</option>
-                  <option value="2">Femenino</option>
-                  <option value="3">Otro</option>
-                </Form.Control>
-              </Form.Group>
-
-              <Form.Group className="mb-2" controlId="formBasicProvince">
-                <SearchDropdown
-                  type="province"
-                  selectedOption={
-                    editedUser.province || { name: "", province_id: "" }
-                  }
-                  handleSelect={handleSelect("province")}
-                  placeholder="Provincia"
-                  autoComplete="off"
-                />
-              </Form.Group>
-              {errors.province && (
-                <p className="text-center text-danger fw-bold">
-                  {errors.province}
-                </p>
-              )}
-
-              <Form.Group className="mb-2" controlId="formBasicCity">
-                <SearchDropdown
-                  type="city"
-                  provinceId={provinceId}
-                  selectedOption={editedUser.city || { city_name: "" }}
-                  handleSelect={handleSelect("city")}
-                  placeholder="Ciudad"
-                  autoComplete="off"
-                />
-              </Form.Group>
-              {errors.city && (
-                <p className="text-center text-danger fw-bold">{errors.city}</p>
-              )}
-
-              <Form.Group className="mb-2" controlId="formBasicImg">
-                <Form.Control
-                  type="file"
-                  name="avatar"
-                  onChange={handleFilesChange}
-                />
-              </Form.Group>
-
-              <div className="d-flex justify-content-center gap-2">
-                <Button
-                  className="btn-iniciar-login aceptar border-0 fst-italic"
-                  onClick={onSubmit}
+                  <Form.Control
+                    className="input-form-edit"
+                    type="text"
+                    placeholder="Nombre"
+                    name="name"
+                    value={editedUser.name || ""}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+                {errors.name && (
+                  <p className="text-center text-danger fw-bold">
+                    {errors.name}
+                  </p>
+                )}
+                <Form.Group
+                  className="mb-2 w-100 d-flex justify-content-center"
+                  controlId="formBasicSurname"
                 >
-                  Aceptar
-                </Button>
-                <Button
-                  className="btn-volver-login cancelar border-0 fst-italic"
-                  onClick={() => navigate("/profile")}
+                  <Form.Control
+                    className="input-form-edit"
+                    type="text"
+                    placeholder="Apellidos"
+                    name="surname"
+                    value={editedUser.surname || ""}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+                {errors.surname && (
+                  <p className="text-center text-danger fw-bold">
+                    {errors.surname}
+                  </p>
+                )}
+                <Form.Group
+                  className="mb-2 w-100 d-flex justify-content-center"
+                  controlId="formBasicEmail"
                 >
-                  Cancelar
-                </Button>
-              </div>
-            </Form>
-          </Col>
-        </div>
-      </Row>
+                  <Form.Control
+                    className="input-form-edit"
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                    value={editedUser.email || ""}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+                {errors.email && (
+                  <p className="text-center text-danger fw-bold">
+                    {errors.email}
+                  </p>
+                )}
+                <Form.Group
+                  className="mb-2 w-100 d-flex justify-content-center"
+                  controlId="formBasicPhoneNumber"
+                >
+                  <Form.Control
+                    className="input-form-edit"
+                    type="tel"
+                    placeholder="Teléfono"
+                    name="phone_number"
+                    value={editedUser.phone_number || ""}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+                {errors.phone_number && (
+                  <p className="text-center text-danger fw-bold">
+                    {errors.phone_number}
+                  </p>
+                )}
+                <Form.Group
+                  className="mb-2 w-100 d-flex justify-content-center"
+                  controlId="formBasicGenre"
+                >
+                  <Form.Control
+                    className="input-form-edit genre-select"
+                    as="select"
+                    name="genre"
+                    value={editedUser.genre || ""}
+                    onChange={handleChange}
+                  >
+                    <option value="">Seleccione</option>
+                    <option value="1">Masculino</option>
+                    <option value="2">Femenino</option>
+                    <option value="3">Otro</option>
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group
+                  className="mb-2 w-100 d-flex justify-content-center province-city-container"
+                  controlId="formBasicProvince"
+                >
+                  <SearchDropdown
+                    className="input-form-edit custom-dropdown"
+                    type="province"
+                    selectedOption={
+                      editedUser.province || { name: "", province_id: "" }
+                    }
+                    handleSelect={handleSelect("province")}
+                    placeholder="Provincia"
+                    autoComplete="off"
+                  />
+                </Form.Group>
+                {errors.province && (
+                  <p className="text-center text-danger fw-bold">
+                    {errors.province}
+                  </p>
+                )}
+                <Form.Group
+                  className="mb-2 w-100 d-flex justify-content-center province-city-container"
+                  controlId="formBasicCity"
+                >
+                  <SearchDropdown
+                    className="input-form-edit custom-dropdown"
+                    type="city"
+                    provinceId={provinceId}
+                    selectedOption={editedUser.city || { city_name: "" }}
+                    handleSelect={handleSelect("city")}
+                    placeholder="Ciudad"
+                    autoComplete="off"
+                  />
+                </Form.Group>
+                {errors.city && (
+                  <p className="text-center text-danger fw-bold">
+                    {errors.city}
+                  </p>
+                )}
+                <Form.Group
+                  className="mb-2 d-flex justify-content-center align-items-center w-100"
+                  controlId="formBasicImg"
+                >
+                  <label
+                    htmlFor="file-upload"
+                    className="custom-file-upload d-flex align-items-center"
+                  >
+                    <img
+                      src={uploadIcon}
+                      alt="Upload"
+                      className="me-2"
+                      width="20"
+                      height="20"
+                    />
+                    Seleccionar imagen
+                  </label>
+                  <Form.Control
+                    id="file-upload"
+                    type="file"
+                    name="avatar"
+                    onChange={handleFilesChange}
+                  />
+                </Form.Group>
+                <div className="d-flex justify-content-center gap-2">
+                  <Button
+                    className="btn-iniciar-login aceptar border-0 fst-italic"
+                    onClick={onSubmit}
+                  >
+                    Aceptar
+                  </Button>
+                  <Button
+                    className="btn-volver-login cancelar border-0 fst-italic"
+                    onClick={() => navigate("/profile")}
+                  >
+                    Cancelar
+                  </Button>
+                </div>
+              </Form>
+            </Col>
+          </div>
+        </Row>
+      </div>
     </>
   );
 };

@@ -11,7 +11,7 @@ export const Historical = () => {
 
   return (
     <Container>
-      <Row className="py-4 flex-column align-items-center justify-content-center">
+      <Row className="historial-contenedor py-4 flex-column align-items-center justify-content-center">
         <Col>
           <div className="d-flex justify-content-center align-items-center">
             <UserAvatar user={globalState.user} size={200} />
@@ -25,7 +25,7 @@ export const Historical = () => {
               }`}
               onClick={() => setHist("historical")}
             >
-              Historial de reservas
+              Historial
             </button>
             <button
               className={`historical-button ${
@@ -33,7 +33,7 @@ export const Historical = () => {
               }`}
               onClick={() => setHist("nextReservations")}
             >
-              Futuras reservas
+              Reservas
             </button>
           </div>
           <Outlet context={{ hist }} />
