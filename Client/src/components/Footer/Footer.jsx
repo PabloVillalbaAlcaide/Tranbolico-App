@@ -3,6 +3,7 @@ import { FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
 import busTranbólico from "/images/busTrambólico.jpg";
 import "./Footer.scss";
 import { Link } from "react-router-dom";
+import { WhatsAppWidget } from "../WhatsAppWidget/WhatsAppWidget";
 
 export const Footer = () => {
   return (
@@ -26,11 +27,19 @@ export const Footer = () => {
         <Button variant="none">
           <FaInstagram color="white" size={25} />
         </Button>
+
+        <WhatsAppWidget />
       </div>
 
-        <div className="">
-          <Link to={"/legalNotice"} className="avisolegal-footer">Aviso legal</Link> <span className="text-white">|</span> <Link to={"/privacyPolicy"} className="avisolegal-footer">Política de privacidad</Link>
-        </div>
+      <div className="">
+        <Link to={"/legalNotice"} className="avisolegal-footer">
+          Aviso legal
+        </Link>{" "}
+        <span className="text-white">|</span>{" "}
+        <Link to={"/privacyPolicy"} className="avisolegal-footer">
+          Política de privacidad
+        </Link>
+      </div>
 
       <hr className="hr-footer m-4" />
 

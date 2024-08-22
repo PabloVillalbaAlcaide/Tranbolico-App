@@ -134,12 +134,43 @@ AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETI
       time,
     } = req.query;
 
-    let sql = `SELECT planning.route_id, planning.planning_id, planning.departure_date, planning.departure_time, dp.name AS departure_province_name,
-    dc.city_name AS departure_city_name, ap.name AS arrival_province_name, ac.city_name AS arrival_city_name
-    FROM planning JOIN route ON planning.route_id = route.route_id JOIN province dp ON route.departure_province_id = dp.province_id
-    JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
-    JOIN province ap ON route.arrival_province_id = ap.province_id JOIN city ac ON route.arrival_city_id = ac.city_id AND route.arrival_province_id = ac.province_id
-    WHERE dp.name = '${origin_province}' AND dc.city_name = '${origin_city}' AND ap.name = '${destination_province}' AND ac.city_name = '${destination_city}' AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) > NOW()`;
+    let sql = `SELECT 
+    p1.route_id, 
+    p1.planning_id, 
+    p1.departure_date, 
+    p1.departure_time, 
+    dp.name AS departure_province_name,
+    dc.city_name AS departure_city_name, 
+    ap.name AS arrival_province_name, 
+    ac.city_name AS arrival_city_name
+    FROM planning p1
+    JOIN route r1 ON p1.route_id = r1.route_id
+    JOIN province dp ON r1.departure_province_id = dp.province_id
+    JOIN city dc ON r1.departure_city_id = dc.city_id AND r1.departure_province_id = dc.province_id
+    JOIN province ap ON r1.arrival_province_id = ap.province_id
+    JOIN city ac ON r1.arrival_city_id = ac.city_id AND r1.arrival_province_id = ac.province_id
+    WHERE dp.name LIKE '${origin_province}'
+    AND dc.city_name = '${origin_city}'
+    AND ap.name = '${destination_province}'
+    AND ac.city_name = '${destination_city}'
+    AND CAST(CONCAT(p1.departure_date, ' ', p1.departure_time) AS DATETIME) >= NOW()
+    AND EXISTS (
+    SELECT 1
+    FROM planning p2
+    JOIN route r2 ON p2.route_id = r2.route_id
+    JOIN province dp2 ON r2.departure_province_id = dp2.province_id
+    JOIN city dc2 ON r2.departure_city_id = dc2.city_id AND r2.departure_province_id = dc2.province_id
+    JOIN province ap2 ON r2.arrival_province_id = ap2.province_id
+    JOIN city ac2 ON r2.arrival_city_id = ac2.city_id AND r2.arrival_province_id = ac2.province_id
+    WHERE dp2.name = '${destination_province}'
+    AND dc2.city_name = '${destination_city}'
+    AND ap2.name LIKE '${origin_province}'
+    AND ac2.city_name = '${origin_city}'
+    AND CAST(CONCAT(p2.departure_date, ' ', p2.departure_time) AS DATETIME) 
+    BETWEEN CAST(CONCAT(p1.departure_date, ' ', p1.departure_time) AS DATETIME) 
+    AND DATE_ADD(CAST(CONCAT(p1.departure_date, ' ', p1.departure_time) AS DATETIME), INTERVAL 8 HOUR)
+    );`;
+
     if (date && time) {
       sql = `SELECT planning.route_id, planning.planning_id, planning.departure_date, planning.departure_time, dp.name AS departure_province_name,
       dc.city_name AS departure_city_name, ap.name AS arrival_province_name, ac.city_name AS arrival_city_name
