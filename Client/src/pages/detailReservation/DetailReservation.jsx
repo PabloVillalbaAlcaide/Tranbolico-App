@@ -72,13 +72,34 @@ export const DetailReservation = () => {
 
             <Col>
               <div className="d-flex justify-content-center gap-4">
-                <Button variant="success" onClick={confirmReservation}>
+                <Button
+                  style={{
+                    backgroundColor: "var(--tranbolico-azulClaro)",
+                    color: "black",
+                    border: "none",
+                  }}
+                  onClick={confirmReservation}
+                >
                   Confirmar
                 </Button>
-                <Button variant="warning" onClick={() => navigate(-1)}>
+                <Button
+                  style={{
+                    backgroundColor: "var(--tranbolico-amarillo)",
+                    color: "black",
+                    border: "none",
+                  }}
+                  onClick={() => navigate(-1)}
+                >
                   Atras
                 </Button>
-                <Button variant="danger" onClick={() => navigate("/")}>
+                <Button
+                  style={{
+                    backgroundColor: "var(--tranbolico-rosa)",
+                    color: "black",
+                    border: "none",
+                  }}
+                  onClick={() => navigate("/")}
+                >
                   Cancelar
                 </Button>
               </div>

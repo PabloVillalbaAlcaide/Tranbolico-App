@@ -9,8 +9,8 @@ import { Button } from "react-bootstrap";
 
 export const MsgToken = () => {
   const { globalState, setGlobalState } = useContext(AppContext);
-  const navigate = useNavigate()
- 
+  const navigate = useNavigate();
+
   const { hashtoken } = useParams();
   useEffect(() => {
     verifyUser(hashtoken);
@@ -18,22 +18,29 @@ export const MsgToken = () => {
 
   const verifyUser = async (token) => {
     try {
-      const res = await axios.put("http://localhost:4000/users/verifyUser",{}, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.put(
+        "http://localhost:4000/users/verifyUser",
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       console.log(res);
-      
-      setGlobalState({...globalState,"token":res.data.token, "user":res.data.finalResult})
-      localStorage.setItem("token", res.data.token)
-      
+
+      setGlobalState({
+        ...globalState,
+        token: res.data.token,
+        user: res.data.finalResult,
+      });
+      localStorage.setItem("token", res.data.token);
     } catch (err) {
       console.log(err);
     }
   };
-  
+
   console.log(globalState);
-  
+
   return (
     <>
       <Row>
@@ -56,8 +63,17 @@ export const MsgToken = () => {
               <h3>Verificación por email</h3>
 
               <p>Cuenta verificada correctamente</p>
-              
-              <Button onClick={()=>navigate('/')}>Aceptar</Button>
+
+              <Button
+                style={{
+                  backgroundColor: "var(--tranbolico-azulClaro)",
+                  color: "black",
+                  border: "none",
+                }}
+                onClick={() => navigate("/")}
+              >
+                Aceptar
+              </Button>
             </div>
             <div className="imagen-rabbit">
               <img

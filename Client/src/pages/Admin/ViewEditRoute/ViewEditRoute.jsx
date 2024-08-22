@@ -20,7 +20,7 @@ const initialValue = {
   text: "",
   departure_city_province: "",
   arrival_city_province: "",
-}
+};
 
 export const ViewEditRoute = () => {
   const navigate = useNavigate();
@@ -96,7 +96,7 @@ export const ViewEditRoute = () => {
 
   const handleDisableClick = async (routeId, isDisabled) => {
     console.log("LLEGO");
-    
+
     try {
       const response = await axios.patch(
         "http://localhost:4000/admin/disableRoute",
@@ -106,7 +106,7 @@ export const ViewEditRoute = () => {
         }
       );
       console.log("LLEGO 2");
-      
+
       if (response.status === 200) {
         setRoutes(
           routes.map((route) =>
@@ -165,8 +165,9 @@ export const ViewEditRoute = () => {
     } catch (err) {
       console.log(err);
       alert("Error al añadir la ruta. Por favor, inténtalo de nuevo.");
+    } finally {
+      setNewRoute(initialValue);
     }
-    finally{setNewRoute(initialValue)}
   };
 
   return (
@@ -174,147 +175,171 @@ export const ViewEditRoute = () => {
       <div className="d-flex justify-content-center align-items-center my-4 gap-2">
         <Button className="btn-add-route" onClick={() => setShowModal(true)}>
           Añadir Nueva Ruta
-        </Button> 
-        <Button className="btn-volver-panel"  onClick={()=> navigate("/admin")}>Volver al panel</Button>
+        </Button>
+        <Button className="btn-volver-panel" onClick={() => navigate("/admin")}>
+          Volver al panel
+        </Button>
       </div>
-      {routes.length > 0 ? (          
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  <th>Origen</th>
-                  <th>Destino</th>
-                  <th>Comentarios</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {routes.map((route) => (
-                  <tr key={route.route_id}>
-                    <td>
-                      <Form.Group controlId={`origin-${route.route_id}`}>
-                        <AutocompleteInput
-                          value={
-                            editRouteId === route.route_id
-                              ? (editedRoute.departure_city_province || "")
-                              : (route.departure_city && route.departure_province)
-                                ? `${route.departure_city} - ${route.departure_province}`
-                                : ""
-                          }
-                          onChange={(value) =>
-                            handleInputChange("departure_city_province", value)
-                          }
-                          onSelect={(suggestion) => {
-                            handleInputChange(
-                              "departure_city",
-                              suggestion.city_name
-                            );
-                            handleInputChange(
-                              "departure_city_id",
-                              suggestion.city_id
-                            );
-                            handleInputChange(
-                              "departure_province",
-                              suggestion.name
-                            );
-                            handleInputChange(
-                              "departure_province_id",
-                              suggestion.province_id
-                            );
-                            handleInputChange(
-                              "departure_city_province",
-                              suggestion.city_province
-                            );
+      {routes.length > 0 ? (
+        <Table striped bordered hover responsive>
+          <thead>
+            <tr>
+              <th>Origen</th>
+              <th>Destino</th>
+              <th>Comentarios</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {routes.map((route) => (
+              <tr key={route.route_id}>
+                <td>
+                  <Form.Group controlId={`origin-${route.route_id}`}>
+                    <AutocompleteInput
+                      value={
+                        editRouteId === route.route_id
+                          ? editedRoute.departure_city_province || ""
+                          : route.departure_city && route.departure_province
+                          ? `${route.departure_city} - ${route.departure_province}`
+                          : ""
+                      }
+                      onChange={(value) =>
+                        handleInputChange("departure_city_province", value)
+                      }
+                      onSelect={(suggestion) => {
+                        handleInputChange(
+                          "departure_city",
+                          suggestion.city_name
+                        );
+                        handleInputChange(
+                          "departure_city_id",
+                          suggestion.city_id
+                        );
+                        handleInputChange(
+                          "departure_province",
+                          suggestion.name
+                        );
+                        handleInputChange(
+                          "departure_province_id",
+                          suggestion.province_id
+                        );
+                        handleInputChange(
+                          "departure_city_province",
+                          suggestion.city_province
+                        );
+                      }}
+                      disabled={editRouteId !== route.route_id}
+                    />
+                  </Form.Group>
+                </td>
+                <td>
+                  <Form.Group controlId={`destination-${route.route_id}`}>
+                    <AutocompleteInput
+                      value={
+                        editRouteId === route.route_id
+                          ? editedRoute.arrival_city_province || ""
+                          : route.arrival_city && route.arrival_province
+                          ? `${route.arrival_city} - ${route.arrival_province}`
+                          : ""
+                      }
+                      onChange={(value) =>
+                        handleInputChange("arrival_city_province", value)
+                      }
+                      onSelect={(suggestion) => {
+                        handleInputChange("arrival_city", suggestion.city_name);
+                        handleInputChange(
+                          "arrival_city_id",
+                          suggestion.city_id
+                        );
+                        handleInputChange("arrival_province", suggestion.name);
+                        handleInputChange(
+                          "arrival_province_id",
+                          suggestion.province_id
+                        );
+                      }}
+                      disabled={editRouteId !== route.route_id}
+                    />
+                  </Form.Group>
+                </td>
+                <td>
+                  <Form.Group controlId={`comments-${route.route_id}`}>
+                    <Form.Control
+                      type="text"
+                      name="text"
+                      value={
+                        editRouteId === route.route_id
+                          ? editedRoute.text !== null
+                            ? editedRoute.text
+                            : ""
+                          : route.text !== null
+                          ? route.text
+                          : ""
+                      }
+                      onChange={(e) =>
+                        handleInputChange("text", e.target.value)
+                      }
+                      disabled={editRouteId !== route.route_id}
+                    />
+                  </Form.Group>
+                </td>
+                <td>
+                  {editRouteId === route.route_id ? (
+                    <Button
+                      style={{
+                        backgroundColor: "var(--tranbolico-verde)",
+                        color: "black",
+                        border:"none"
+                      }}
+                      onClick={handleSaveClick}
+                    >
+                      Guardar
+                    </Button>
+                  ) : (
+                    <>
+                      <div className="d-flex flex-column flex-md-row justify-content-around gap-2">
+                        <Button
+                          style={{
+                            backgroundColor: "var(--tranbolico-azulClaro)",
+                            color: "black",
+                            border:"none"
                           }}
-                          disabled={editRouteId !== route.route_id}
-                        />
-                      </Form.Group>
-                    </td>
-                    <td>
-                      <Form.Group controlId={`destination-${route.route_id}`}>
-                        <AutocompleteInput
-                          value={
-                            editRouteId === route.route_id
-                              ? (editedRoute.arrival_city_province || "")
-                              : (route.arrival_city && route.arrival_province)
-                                ? `${route.arrival_city} - ${route.arrival_province}`
-                                : ""
-                          }                          
-                          onChange={(value) =>
-                            handleInputChange("arrival_city_province", value)
-                          }
-                          onSelect={(suggestion) => {
-                            handleInputChange("arrival_city", suggestion.city_name);
-                            handleInputChange(
-                              "arrival_city_id",
-                              suggestion.city_id
-                            );
-                            handleInputChange("arrival_province", suggestion.name);
-                            handleInputChange(
-                              "arrival_province_id",
-                              suggestion.province_id
-                            );
-                          }}
-                          disabled={editRouteId !== route.route_id}
-                        />
-                      </Form.Group>
-                    </td>
-                    <td>
-                      <Form.Group controlId={`comments-${route.route_id}`}>
-                        <Form.Control
-                          type="text"
-                          name="text"
-                          value={
-                            editRouteId === route.route_id
-                              ? (editedRoute.text !== null ? editedRoute.text : "")
-                              : (route.text !== null ? route.text : "")
-                          }
-                          onChange={(e) =>
-                            handleInputChange("text", e.target.value)
-                          }
-                          disabled={editRouteId !== route.route_id}
-                        />
-                      </Form.Group>
-                    </td>
-                    <td>
-                      {editRouteId === route.route_id ? (
-                        <Button variant="success" onClick={handleSaveClick}>
-                          Guardar
+                          onClick={() => handleEditClick(route)}
+                        >
+                          Editar
                         </Button>
-                      ) : (
-                        <>
-                          <div className="d-flex flex-column flex-md-row justify-content-around gap-2">
-                            <Button
-                              variant="info"
-                              onClick={() => handleEditClick(route)}
-                            >
-                              Editar
-                            </Button>
-                            <Button
-                              variant="warning"
-                              onClick={() =>
-                                handleDisableClick(
-                                  route.route_id,
-                                  !route.is_disabled
-                                )
-                              }
-                            >
-                              {route.is_disabled ? "Habilitar" : "Deshabilitar"}
-                            </Button>
-                            <Button
-                              variant="danger"
-                              onClick={() => handleDeleteClick(route.route_id)}
-                            >
-                              Eliminar
-                            </Button>
-                          </div>
-                        </>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          
+                        <Button
+                          style={{
+                            backgroundColor: "var(--tranbolico-amarillo)",
+                            color: "black",
+                            border:"none"
+                          }}
+                          onClick={() =>
+                            handleDisableClick(
+                              route.route_id,
+                              !route.is_disabled
+                            )
+                          }
+                        >
+                          {route.is_disabled ? "Habilitar" : "Deshabilitar"}
+                        </Button>
+                        <Button
+                          style={{
+                            backgroundColor: "var(--tranbolico-rosa)",
+                            color: "black",
+                            border:"none"
+                          }}
+                          onClick={() => handleDeleteClick(route.route_id)}
+                        >
+                          Eliminar
+                        </Button>
+                      </div>
+                    </>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       ) : (
         <p>No hay rutas disponibles</p>
       )}

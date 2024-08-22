@@ -1,4 +1,44 @@
+//Personalizado
 .allowed-day {
-  background-color: #91cad8;
+  background-color: var(--tranbolico-azulClaro);
   color: white;
+}
+
+.rdp-selected .rdp-day_button {
+  border: var(--tranbolico-fucsia);
+  background-color: var(--tranbolico-fucsia);
+}
+
+.rdp-month_grid {
+  border-collapse: collapse;
+  background-color:rgba(227, 182, 212, 0.25);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.rdp-caption_label {
+  z-index: 1;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  white-space: nowrap;
+  border: 0;
+}
+
+.rdp-month_caption {
+  display: flex;
+  align-content: center;
+  height: var(--rdp-nav-height);
+  font: var(--rdp-month_caption-font);
+  background-color: rgba(180, 180, 32, 0.25);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding-inline: 10px;
+}
+
+.rdp-chevron {
+  display: inline-block;
+  fill: var(--rdp-accent-color);
 }

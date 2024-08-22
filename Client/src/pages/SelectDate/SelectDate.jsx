@@ -77,23 +77,39 @@ export const SelectDate = () => {
   };
 
   const getSchedules = async (departure, arrival) => {
-    console.log(globalState);
-
     try {
-      const res = await axios.get(
-        `http://localhost:4000/reservation/getSchedules`,
-        {
-          headers: { Authorization: `Bearer ${globalState.token}` },
-          params: {
-            origin_city: departure.city,
-            origin_province: departure.province,
-            destination_city: arrival.city,
-            destination_province: arrival.province,
-          },
-        }
-      );
-
-      setPlanningList(res.data);
+      if (location.pathname === "/reservations") {
+        const res = await axios.get(
+          `http://localhost:4000/reservation/getSchedules`,
+          {
+            headers: { Authorization: `Bearer ${globalState.token}` },
+            params: {
+              origin_city: departure.city,
+              origin_province: departure.province,
+              destination_city: arrival.city,
+              destination_province: arrival.province,
+            },
+          }
+        );
+        setPlanningList(res.data);
+      } else {
+        const res = await axios.get(
+          `http://localhost:4000/reservation/getSchedules`,
+          {
+            headers: { Authorization: `Bearer ${globalState.token}` },
+            params: {
+              origin_city: departure.city,
+              origin_province: departure.province,
+              destination_city: arrival.city,
+              destination_province: arrival.province,
+              date: reservation.departure_date,
+              time: reservation.departure_time
+            },
+          }
+        );
+        setPlanningList(res.data);
+      }
+      
     } catch (err) {
       console.log(err);
     }
@@ -141,7 +157,18 @@ export const SelectDate = () => {
               xs={4}
               className="d-flex justify-content-center align-items-center p-0 m-0"
             >
-              <p>{date}</p>
+              {date && (
+                <p
+                  className="btn"
+                  style={{
+                    backgroundColor: "var(--tranbolico-fucsia)",
+                    color: "white",
+                    border: "none",
+                  }}
+                >
+                  {date}
+                </p>
+              )}
             </Col>
             <Col
               xs={4}
@@ -162,6 +189,11 @@ export const SelectDate = () => {
                     if (elem.departure_date === date) {
                       return (
                         <Button
+                          style={{
+                            backgroundColor: "var(--tranbolico-azulClaro)",
+                            color: "black",
+                            border: "none",
+                          }}
                           key={elem.planning_id}
                           onClick={() => setPlanning(elem)}
                           className="m-2"
@@ -224,13 +256,31 @@ export const SelectDate = () => {
           md={4}
           className="d-flex flex-column flex-md-row justify-content-md-around justify-content-center align-items-center p-0 m-0 w-100 gap-4"
         >
-          <Button onClick={nextStep} className="btn btn-success">
+          <Button onClick={nextStep} className="btn btn-success" style={{
+              backgroundColor: "var(--tranbolico-verde)",
+              color: "black",
+              border: "none",
+            }}>
             Continuar
           </Button>
-          <Button onClick={() => navigate(-1)} className="btn btn-warning">
+          <Button
+            onClick={() => navigate(-1)}
+            style={{
+              backgroundColor: "var(--tranbolico-amarillo)",
+              color: "black",
+              border: "none",
+            }}
+          >
             Atras
           </Button>
-          <Button onClick={() => navigate("/")} className="btn btn-danger">
+          <Button
+            onClick={() => navigate("/")}
+            style={{
+              backgroundColor: "var(--tranbolico-rosa)",
+              color: "black",
+              border: "none",
+            }}
+          >
             Cancelar
           </Button>
         </Col>
