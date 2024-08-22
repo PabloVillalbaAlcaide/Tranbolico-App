@@ -2,11 +2,30 @@
   width: 50%;
   padding-block: 10px;
   border: none;
-  background-color: #E3B6D4;
+  background-color: #e3b6d4;
   color: #000000;
+  font-size: 1.3rem;
 }
 
 .historical-button.active {
-  background-color: #E72957;
+  background-color: #e72957;
   color: #ffffff;
 }
+
+.historial-contenedor {
+  font-family: "Akkurat-Regular.ttf";
+}
+
+.ppal-historical {
+  font-family: "VinaSans-Regular.ttf";
+  background-color: #e72957;
+  color: white;
+  width: 100% !important;
+}
+
+.ppal-historical h2 {
+  font-size: 3rem;
+}
+
+
+

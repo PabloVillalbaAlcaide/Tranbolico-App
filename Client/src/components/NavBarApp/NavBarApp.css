@@ -10,6 +10,18 @@
   }
 }
 
+@keyframes avatarSpin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(-10deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
 .NavbarLogo {
   font-family: "VinaSans-Regular.ttf", system-ui;
   font-size: calc(1rem + 2vw);
@@ -72,6 +84,11 @@
 
 .avatar-user {
   cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.avatar-user:active {
+  animation: avatarSpin 0.3s ease-in-out;
 }
 
 .NavbarLogoMobile {
