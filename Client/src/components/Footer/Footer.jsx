@@ -3,7 +3,6 @@ import { FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
 import busTranbólico from "/images/busTrambólico.jpg";
 import "./Footer.scss";
 import { Link } from "react-router-dom";
-import { WhatsAppWidget } from "../WhatsAppWidget/WhatsAppWidget";
 
 export const Footer = () => {
   return (
@@ -28,7 +27,6 @@ export const Footer = () => {
           <FaInstagram color="white" size={25} />
         </Button>
 
-        <WhatsAppWidget />
       </div>
 
       <div className="">
