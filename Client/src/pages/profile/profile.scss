@@ -1,6 +1,8 @@
 .div-profile {
   position: relative;
   padding-block: 80px;
+  font-family: "Akkurat-Regular.ttf";
+  font-size: 1.2rem;
   .skater-icon {
     position: absolute;
     top: 0px;
@@ -37,5 +39,28 @@
     .rabbit-icon {
       display: none;
     }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bloque-datos-usuario {
+  animation: fadeInUp 0.28s ease forwards;
+}
+
+.profile-links a {
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: white !important;
   }
 }
