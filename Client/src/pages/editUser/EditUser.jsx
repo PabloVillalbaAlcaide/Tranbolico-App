@@ -9,10 +9,18 @@ import { SearchDropdown } from "../../components/locationSelector/LocationSelect
 
 export const EditUser = () => {
   const { globalState, setGlobalState, loading } = useContext(AppContext);
-  const [editedUser, setEditedUser] = useState({});
+  const [editedUser, setEditedUser] = useState({
+    name: "",
+    surname: "",
+    email: "",
+    phone_number: "",
+    genre: "",
+    province: { name: "", province_id: "" },
+    city: { city_name: "" },
+  });
   const [files, setFiles] = useState();
   const [errors, setErrors] = useState({});
-  const [provinceId, setProvinceId] = useState(null);
+  const [provinceId, setProvinceId] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -135,75 +143,69 @@ export const EditUser = () => {
               <div className="ppal-edit text-center">
                 <h2>EDITAR</h2>
               </div>
-
+  
               <Form.Group className="mb-2" controlId="formBasicName">
                 <Form.Control
                   className="input-form-edit"
                   type="text"
                   placeholder="Nombre"
                   name="name"
-                  value={editedUser?.name}
+                  value={editedUser.name || ''}
                   onChange={handleChange}
                 />
               </Form.Group>
               {errors.name && (
                 <p className="text-center text-danger fw-bold">{errors.name}</p>
               )}
-
+  
               <Form.Group className="mb-2" controlId="formBasicSurname">
                 <Form.Control
                   className="input-form-edit"
                   type="text"
                   placeholder="Apellidos"
                   name="surname"
-                  value={editedUser?.surname}
+                  value={editedUser.surname || ''}
                   onChange={handleChange}
                 />
               </Form.Group>
               {errors.surname && (
-                <p className="text-center text-danger fw-bold">
-                  {errors.surname}
-                </p>
+                <p className="text-center text-danger fw-bold">{errors.surname}</p>
               )}
-
+  
               <Form.Group className="mb-2" controlId="formBasicEmail">
                 <Form.Control
                   className="input-form-edit"
                   type="email"
                   placeholder="Email"
                   name="email"
-                  value={editedUser?.email}
+                  value={editedUser.email || ''}
                   onChange={handleChange}
                 />
               </Form.Group>
               {errors.email && (
-                <p className="text-center text-danger fw-bold">
-                  {errors.email}
-                </p>
+                <p className="text-center text-danger fw-bold">{errors.email}</p>
               )}
-
+  
               <Form.Group className="mb-2" controlId="formBasicPhoneNumber">
                 <Form.Control
                   className="input-form-edit"
                   type="tel"
                   placeholder="Teléfono"
                   name="phone_number"
-                  value={editedUser?.phone_number}
+                  value={editedUser.phone_number || ''}
                   onChange={handleChange}
                 />
               </Form.Group>
               {errors.phone_number && (
-                <p className="text-center text-danger fw-bold">
-                  {errors.phone_number}
-                </p>
+                <p className="text-center text-danger fw-bold">{errors.phone_number}</p>
               )}
-
+  
               <Form.Group className="mb-2" controlId="formBasicGenre">
                 <Form.Control
                   className="input-form-edit"
                   as="select"
                   name="genre"
-                  value={editedUser.genre}
+                  value={editedUser.genre || ''}
                   onChange={handleChange}
                 >
                   <option value="">Seleccione</option>
@@ -212,27 +214,25 @@ export const EditUser = () => {
                   <option value="3">Otro</option>
                 </Form.Control>
               </Form.Group>
-
+  
               <Form.Group className="mb-2" controlId="formBasicProvince">
                 <SearchDropdown
                   type="province"
-                  selectedOption={editedUser.province}
+                  selectedOption={editedUser.province || { name: '', province_id: '' }}
                   handleSelect={handleSelect("province")}
                   placeholder="Provincia"
                   autoComplete="off"
                 />
               </Form.Group>
               {errors.province && (
-                <p className="text-center text-danger fw-bold">
-                  {errors.province}
-                </p>
+                <p className="text-center text-danger fw-bold">{errors.province}</p>
               )}
-
+  
               <Form.Group className="mb-2" controlId="formBasicCity">
                 <SearchDropdown
                   type="city"
                   provinceId={provinceId}
-                  selectedOption={editedUser.city}
+                  selectedOption={editedUser.city || { city_name: '' }}
                   handleSelect={handleSelect("city")}
                   placeholder="Ciudad"
                   autoComplete="off"
@@ -241,7 +241,7 @@ export const EditUser = () => {
               {errors.city && (
                 <p className="text-center text-danger fw-bold">{errors.city}</p>
               )}
-
+  
               <Form.Group className="mb-2" controlId="formBasicImg">
                 <Form.Control
                   type="file"
@@ -249,7 +249,7 @@ export const EditUser = () => {
                   onChange={handleFilesChange}
                 />
               </Form.Group>
-
+  
               <div className="d-flex justify-content-center gap-2">
                 <Button
                   className="btn-iniciar-login aceptar border-0 fst-italic"
