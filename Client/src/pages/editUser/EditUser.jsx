@@ -97,7 +97,7 @@ export const EditUser = () => {
       return;
     }
 
-    const sanitizedUser = {
+    let sanitizedUser = {
       ...editedUser,
       name: editedUser.name.trim() || globalState.user.name,
       surname: editedUser.surname.trim() || globalState.user.surname,
@@ -123,6 +123,10 @@ export const EditUser = () => {
         { headers: { Authorization: `Bearer ${globalState.token}` } }
       );
       if (response.status === 200) {
+        console.log(response);
+        if(response.data.image){
+          sanitizedUser = {...sanitizedUser, avatar:response.data.image}
+        }
         setGlobalState({ ...globalState, user: sanitizedUser });
         navigate("/profile");
       }
