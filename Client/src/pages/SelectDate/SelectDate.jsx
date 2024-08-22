@@ -72,23 +72,39 @@ export const SelectDate = () => {
   };
 
   const getSchedules = async (departure, arrival) => {
-    console.log(globalState);
-
     try {
-      const res = await axios.get(
-        `http://localhost:4000/reservation/getSchedules`,
-        {
-          headers: { Authorization: `Bearer ${globalState.token}` },
-          params: {
-            origin_city: departure.city,
-            origin_province: departure.province,
-            destination_city: arrival.city,
-            destination_province: arrival.province,
-          },
-        }
-      );
-
-      setPlanningList(res.data);
+      if (location.pathname === "/reservations") {
+        const res = await axios.get(
+          `http://localhost:4000/reservation/getSchedules`,
+          {
+            headers: { Authorization: `Bearer ${globalState.token}` },
+            params: {
+              origin_city: departure.city,
+              origin_province: departure.province,
+              destination_city: arrival.city,
+              destination_province: arrival.province,
+            },
+          }
+        );
+        setPlanningList(res.data);
+      } else {
+        const res = await axios.get(
+          `http://localhost:4000/reservation/getSchedules`,
+          {
+            headers: { Authorization: `Bearer ${globalState.token}` },
+            params: {
+              origin_city: departure.city,
+              origin_province: departure.province,
+              destination_city: arrival.city,
+              destination_province: arrival.province,
+              date: reservation.departure_date,
+              time: reservation.departure_time
+            },
+          }
+        );
+        setPlanningList(res.data);
+      }
+      
     } catch (err) {
       console.log(err);
     }
@@ -128,16 +144,18 @@ export const SelectDate = () => {
               xs={4}
               className="d-flex justify-content-center align-items-center p-0 m-0"
             >
-              {date &&<p
-                className="btn"
-                style={{
-                  backgroundColor: "var(--tranbolico-fucsia)",
-                  color: "white",
-                  border: "none",
-                }}
-              >
-                {date}
-              </p>}
+              {date && (
+                <p
+                  className="btn"
+                  style={{
+                    backgroundColor: "var(--tranbolico-fucsia)",
+                    color: "white",
+                    border: "none",
+                  }}
+                >
+                  {date}
+                </p>
+              )}
             </Col>
             <Col
               xs={4}
