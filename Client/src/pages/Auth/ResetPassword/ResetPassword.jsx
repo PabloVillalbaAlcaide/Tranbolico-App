@@ -110,7 +110,7 @@ export const ResetPassword = () => {
             <Form.Group>
               <Form.Control
                 className="input-form-login"
-                type="text"
+                type="password"
                 placeholder="Constraseña"
                 onChange={handleChange}
                 value={pass.oldPassword}

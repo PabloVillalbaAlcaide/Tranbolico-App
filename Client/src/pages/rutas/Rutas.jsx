@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Rutas.scss";
+import { AppContext } from "../../context/TranbolicoContextProvider";
 
 export const Rutas = () => {
+  const { globalState } = useContext(AppContext);
   const [origin, setOrigin] = useState("");
   const [originFinal, setOriginFinal] = useState({});
   const [originSuggestions, setOriginSuggestions] = useState([]);
@@ -56,9 +58,11 @@ export const Rutas = () => {
 
   const onSubmit2 = (elem) => {
     elem = { city: elem.city_name, province: elem.name };
-    navigate("/reservations", {
-      state: { origin: originFinal, destination: elem },
-    });
+    globalState.user
+      ? navigate("/reservations", {
+          state: { origin: originFinal, destination: elem },
+        })
+      : navigate("/login");
   };
 
   return (

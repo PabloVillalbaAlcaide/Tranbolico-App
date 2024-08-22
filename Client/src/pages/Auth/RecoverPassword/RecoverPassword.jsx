@@ -52,7 +52,7 @@ export const RecoverPassword = () => {
                 type="email"
                 placeholder="Email"
                 onChange={handleChange}
-                value={mail.email}
+                value={mail.email || ""}
                 name="email"
               />
             </Form.Group>

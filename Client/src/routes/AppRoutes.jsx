@@ -49,10 +49,13 @@ export const AppRoutes = () => {
                 path="/MsgRecoverPassword"
                 element={<MsgRecoverPassword />}
               />
+              <Route
+                path="/resetPassword/:hashtoken"
+                element={<ResetPassword />}
+              />
               <Route path="/MsgVerifyEmail" element={<MsgVerifyEmail />} />
               <Route path="/MsgVerifyEmail/:hashtoken" element={<MsgToken />} />
               <Route path="/routes" element={<Rutas />} />
-              
 
               {globalState?.user && (
                 <>
@@ -64,14 +67,14 @@ export const AppRoutes = () => {
                       element={<DetailReservation />}
                     />
                   </Route>
-                  <Route path="/confirmReservation" element={<ConfirmReservation />} />
+                  <Route
+                    path="/confirmReservation"
+                    element={<ConfirmReservation />}
+                  />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/editUser" element={<EditUser />} />
                   <Route path="/resetPassword" element={<ResetPassword />} />
-                  <Route
-                    path="/resetPassword/:hashtoken"
-                    element={<ResetPassword />}
-                  />
+
                   <Route path="/historical" element={<Historical />}>
                     <Route index element={<UserReservations />} />
                     <Route

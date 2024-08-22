@@ -26,7 +26,7 @@ const sendMailRecover = (email, name, newPassword, token) => {
     
 
     <p>Por favor, ir al siguiente enlace para restablecer tu contraseña:</p>
-    <a href="http://localhost:5173/resetPassword/${token}">http://localhost:5173/resetPassword}</a>
+    <a href="http://localhost:5173/resetPassword/${token}">http://localhost:5173/resetPassword</a>
     <p>Si tienes alguna pregunta, contáctanos en [email de soporte].</p>
     <p>¡Saludos!</p>
     <p>El equipo de Tranbólico</p>

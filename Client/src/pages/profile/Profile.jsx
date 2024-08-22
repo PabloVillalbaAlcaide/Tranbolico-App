@@ -5,17 +5,17 @@ import { Col, Row } from "react-bootstrap";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import { Link } from "react-router-dom";
 import { UserAvatar } from "../../components/UserAvatar/UserAvatar";
-import { format } from 'date-fns'
+import { format } from "date-fns";
 import emailIcon from "../../../src/assets/icons/email.svg";
 import locationIcon from "../../../src/assets/icons/location.svg";
 import birthdateIcon from "../../../src/assets/icons/birthdate.svg";
 import pastBookingsIcon from "../../../src/assets/icons/pastBookings.svg";
+import changePasswordIcon from "../../../src/assets/icons/changePassword.svg";
 // import futureBookingsIcon from "../../../src/assets/icons/futureBookings.svg";
 import editUserProfile from "../../../src/assets/icons/editUserProfile.svg";
 
 export const Profile = () => {
   const { globalState } = useContext(AppContext);
-
   const birthdate = globalState.user?.birthdate;
   const formattedDate = format(new Date(birthdate), "dd-MM-yyyy");
 
@@ -100,6 +100,16 @@ export const Profile = () => {
                   />
                   <Link to={"/editUser"} className="text-dark fst-italic">
                     Editar perfil
+                  </Link>
+                </div>
+                <div className="profile-links d-flex align-items-center gap-2">
+                  <img
+                    src={changePasswordIcon}
+                    alt="change-password-icon"
+                    width={"50px"}
+                  />
+                  <Link to={"/resetPassword"} className="text-dark fst-italic">
+                    Cambiar contraseña
                   </Link>
                 </div>
               </div>
