@@ -31,7 +31,10 @@
 }
 
 .NavbarNavLink:hover {
-  color: rgb(127, 127, 127);
+  color: var(--tranbolico-amarillo);
+}
+.NavbarNavLink:focus {
+  color: var(--tranbolico-amarillo);
 }
 
 .NavbarRegisterLogin {
@@ -47,7 +50,7 @@
 }
 
 .NavbarRegisterLogin:hover {
-  background-color: rgb(127, 127, 127);
+  background-color: var(--tranbolico-amarillo);
   transition-duration: 0.5s;
 }
 
