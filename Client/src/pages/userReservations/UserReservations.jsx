@@ -54,7 +54,7 @@ export const UserReservations = () => {
 
   const cancelReservation = async (reservation) => {
     try {
-      await axios.put(
+      const response = await axios.put(
         `http://localhost:4000/reservation/cancelReservation`,
         {
           reservationForCancel: reservation,
@@ -63,13 +63,17 @@ export const UserReservations = () => {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
       );
+      if (response.status === 200) {
+        setReservationsList(reservationsList.filter((e) => e !== reservation));
+      }
       setShow(!show);
     } catch (err) {
       setShow(!show);
       console.log(err);
     }
   };
-
+  console.log(reservationsList);
+  
   return (
     <>
         <Table striped bordered hover responsive>
