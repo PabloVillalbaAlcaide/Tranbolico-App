@@ -1,4 +1,4 @@
-import './userReservations.scss'
+import "./userReservations.scss";
 import { useContext, useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { AppContext } from "../../context/TranbolicoContextProvider";
@@ -64,7 +64,11 @@ export const UserReservations = () => {
         }
       );
       if (response.status === 200) {
-        setReservationsList(reservationsList.filter((e) => e !== reservation));
+        setReservationsList(
+          reservationsList.filter(
+            (e) => e.reservation_id !== reservation.reservation_id
+          )
+        );
       }
       setShow(!show);
     } catch (err) {
@@ -73,44 +77,51 @@ export const UserReservations = () => {
     }
   };
   console.log(reservationsList);
-  
+
   return (
     <>
-        <Table striped bordered hover responsive>
-          <thead className="text-center">
-            <tr>
-              <th>Fecha</th>
-              <th>Hora</th>
-              <th>Origen</th>
-              <th>Destino</th>
-              <th>Complementos</th>
-              <th>Precio</th>
-              {hist === "nextReservations" && <th>Cancelar</th>}
+      <Table striped bordered hover responsive>
+        <thead className="text-center">
+          <tr>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Origen</th>
+            <th>Destino</th>
+            <th>Complementos</th>
+            <th>Precio</th>
+            {hist === "nextReservations" && <th>Cancelar</th>}
+          </tr>
+        </thead>
+        <tbody>
+          {reservationsList.map((elem, index) => (
+            <tr key={index}>
+              <td>{elem.departure_day}</td>
+              <td>{elem.departure_time}</td>
+              <td>
+                {elem.departure_city_name} - {elem.departure_province_name}
+              </td>
+              <td>
+                {elem.arrival_city_name} - {elem.arrival_province_name}
+              </td>
+              <td>Guía Turístico</td>
+              <td>12€</td>
+              {hist === "nextReservations" && elem.reservation_type === 1 && (
+                <td
+                  onClick={() => handleShow(elem)}
+                  className="btn-cancel-reservation"
+                >
+                  {iconoCancelar}
+                </td>
+              )}
+              {hist === "historical" && elem.is_deleted === 1 && (
+                <td style={{ backgroundColor: "#e72958bf", color: "white" }}>
+                  Cancelada
+                </td>
+              )}
             </tr>
-          </thead>
-          <tbody>
-            {reservationsList.map((elem, index) => (
-              <tr key={index}>
-                <td>{elem.departure_day}</td>
-                <td>{elem.departure_time}</td>
-                <td>
-                  {elem.departure_city_name} - {elem.departure_province_name}
-                </td>
-                <td>
-                  {elem.arrival_city_name} - {elem.arrival_province_name}
-                </td>
-                <td>Guía Turístico</td>
-                <td>12€</td>
-                {hist === "nextReservations" && elem.reservation_type === 1 && (
-                  <td onClick={() => handleShow(elem)} className="btn-cancel-reservation">{iconoCancelar}</td>
-                )}
-                {hist === "historical" && elem.is_deleted === 1 && (
-                  <td style={{backgroundColor:"#e72958bf", color:"white"}}>Cancelada</td>
-                )}
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+          ))}
+        </tbody>
+      </Table>
 
       <ModalApp
         element={element}

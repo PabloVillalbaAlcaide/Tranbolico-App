@@ -394,7 +394,8 @@ JOIN city dp ON route.departure_city_id = dp.city_id
 AND route.departure_province_id = dp.province_id
 JOIN province dp_prov ON dp.province_id = dp_prov.province_id
 JOIN city ap ON route.arrival_city_id = ap.city_id AND route.arrival_province_id = ap.province_id
-JOIN province ap_prov ON ap.province_id = ap_prov.province_id`;
+JOIN province ap_prov ON ap.province_id = ap_prov.province_id
+WHERE CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) > NOW()`;
     connection.query(sql, (err, result) => {
       if (err) {
         return res.status(500).json(err);
