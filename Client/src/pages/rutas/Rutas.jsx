@@ -12,6 +12,7 @@ export const Rutas = () => {
   const [originFinal, setOriginFinal] = useState({});
   const [originSuggestions, setOriginSuggestions] = useState([]);
   const [destinationSuggestions, setDestinationSuggestions] = useState([]);
+  const [noRoutesMessage, setNoRoutesMessage] = useState("");
   const navigate = useNavigate();
 
   const handleOriginChange = async (e) => {
@@ -41,6 +42,7 @@ export const Rutas = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (originFinal.city && originFinal.province) {
+      setNoRoutesMessage("");
       try {
         const res = await axios.get(
           `http://localhost:4000/reservation/returnTrip?search=${""}&city=${
@@ -48,6 +50,9 @@ export const Rutas = () => {
           }&province=${originFinal.province}`
         );
         setDestinationSuggestions(res.data);
+        if (res.data.length === 0) {
+          setNoRoutesMessage("No hay rutas disponibles.");
+        }
       } catch (err) {
         console.log(err);
       }
@@ -118,6 +123,9 @@ export const Rutas = () => {
           <Button className="btn-iniciar-login" onClick={onSubmit}>
             Buscar
           </Button>
+          {noRoutesMessage && (
+            <p style={{ color: "red", marginTop: "20px" }}>{noRoutesMessage}</p>
+          )}
           {destinationSuggestions.length > 0 && (
             <Row className="contenedor-mapeo-rutas d-flex flex-row align-items-center justify-content-center gap-5 w-100 p-0 mt-4">
               {destinationSuggestions.map((e, index) => {

@@ -7,12 +7,17 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import "./selectDate.scss";
 
 export const SelectDate = () => {
-  const { reservation, setReservation, route, loadingReservation } = useOutletContext();
+  const { reservation, setReservation, route, loadingReservation } =
+    useOutletContext();
   const [planningList, setPlanningList] = useState([]);
   const [date, setDate] = useState("");
   const { globalState, loading } = useContext(AppContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const [choose, setChoose] = useState({
+    textIda: "ida",
+    textVuelta: "vuelta",
+  });
 
   useEffect(() => {
     if (!loadingReservation && !loading) {
@@ -37,19 +42,20 @@ export const SelectDate = () => {
 
   useEffect(() => {
     if (!loadingReservation && !loading) {
-    if (location.pathname === "/reservations") {
-      let newReservation = {
-        user_id: globalState.user.user_id,
-        departure_province: route?.origin.province,
-        departure_city: route?.origin.city,
-        departure_date: date,
-        arrival_province: route?.destination.province,
-        arrival_city: route?.destination.city,
-      };
-      setReservation(newReservation);
-    } else {
-      setReservation({ ...reservation, arrival_date: date });
-    }}
+      if (location.pathname === "/reservations") {
+        let newReservation = {
+          user_id: globalState.user.user_id,
+          departure_province: route?.origin.province,
+          departure_city: route?.origin.city,
+          departure_date: date,
+          arrival_province: route?.destination.province,
+          arrival_city: route?.destination.city,
+        };
+        setReservation(newReservation);
+      } else {
+        setReservation({ ...reservation, arrival_date: date });
+      }
+    }
   }, [date, location.pathname]);
 
   const nextStep = () => {
@@ -65,13 +71,14 @@ export const SelectDate = () => {
       reservation.arrival_date &&
       reservation.arrival_time
     ) {
+      setChoose({ textIda: "", textVuelta: "vuelta" });
       navigate("/reservations/detailReservation");
     }
   };
 
   const getSchedules = async (departure, arrival) => {
     console.log(globalState);
-    
+
     try {
       const res = await axios.get(
         `http://localhost:4000/reservation/getSchedules`,
@@ -115,7 +122,15 @@ export const SelectDate = () => {
 
   return (
     <Container fluid className="p-0 m-0 mt-5 mb-5">
-      <Row className="justify-content-center selectDatepicker">
+      <Row>
+        <h3 className="text-center pb-4">
+          Selecciona día de{" "}
+          {location.pathname === "/reservations"
+            ? choose.textIda
+            : choose.textVuelta}
+        </h3>
+      </Row>
+      {/* <Row className="justify-content-center selectDatepicker">
         <Col
           xs={12}
           md={6}
@@ -160,10 +175,55 @@ export const SelectDate = () => {
             </Col>
           </Row>
         </Col>
+      </Row> */}
+
+      {/* alvaro */}
+      <Row className="justify-content-center selectDatepicker">
+        <Col
+          xs={12}
+          md={6}
+          className="d-flex flex-column align-items-center w-100 p-0 m-0"
+        >
+          <div className="grid-container w-100">
+            <div className="fecha d-flex flex-column justify-content-start align-items-center btn-primary">
+              <h4>Fecha</h4>
+              <p className="mt-3">{date}</p>
+            </div>
+            <div className="calendario d-flex flex-column justify-content-center align-items-center p-0 m-0">
+              <TranbolicoDatePicker
+                date={date}
+                setDate={setDate}
+                planningList={planningList}
+              />
+            </div>
+            <div className="hora d-flex flex-column justify-content-start align-items-center p-0 m-0">
+              <h4>Hora/s disponible/s</h4>
+              {date
+                ? planningList.map((elem) => {
+                    if (elem.departure_date === date) {
+                      return (
+                        <Button
+                          key={elem.planning_id}
+                          onClick={() => setPlanning(elem)}
+                          className="m-2"
+                        >
+                          {elem.departure_time}
+                        </Button>
+                      );
+                    }
+                  })
+                : ""}
+            </div>
+          </div>
+        </Col>
       </Row>
 
       <Row className="justify-content-center mt-3">
-        <Col xs={12} md={4} className="d-flex justify-content-around p-0 m-0">
+        <Col
+          xs={12}
+          md={4}
+          className="d-flex flex-column flex-md-row justify-content-md-around justify-content-center align-items-center p-0 m-0 w-100 gap-4"
+        >
           <Button onClick={nextStep} className="btn btn-success">
             Continuar
           </Button>

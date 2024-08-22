@@ -1,3 +1,29 @@
-.selectDatepicker{
+.selectDatepicker {
   min-height: 282px;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(
+    3,
+    1fr
+  ); /* Tres columnas en pantallas grandes */
+  gap: 16px; /* Espacio entre elementos */
+}
+
+@media (max-width: 992px) {
+  .grid-container {
+    grid-template-columns: 1fr 1fr; /* Dos columnas en pantallas pequeñas */
+    grid-template-areas:
+      "calendario calendario"
+      "fecha hora";
+  }
+  .calendario {
+    grid-area: calendario; /* Coloca calendario en la primera fila */
+  }
+  .fecha {
+    grid-area: fecha; /* Coloca fecha en la segunda fila, primera columna */
+  }
+  .hora {
+    grid-area: hora; /* Coloca hora en la segunda fila, segunda columna */
+  }
 }
