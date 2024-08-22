@@ -8,6 +8,20 @@ import "./viewEditRoute.scss";
 import "../../../App.css";
 import { useNavigate } from "react-router-dom";
 
+const initialValue = {
+  departure_city: "",
+  departure_city_id: "",
+  departure_province: "",
+  departure_province_id: "",
+  arrival_city: "",
+  arrival_city_id: "",
+  arrival_province: "",
+  arrival_province_id: "",
+  text: "",
+  departure_city_province: "",
+  arrival_city_province: "",
+}
+
 export const ViewEditRoute = () => {
   const navigate = useNavigate();
   const { globalState, loading } = useContext(AppContext);
@@ -15,19 +29,7 @@ export const ViewEditRoute = () => {
   const [editRouteId, setEditRouteId] = useState("");
   const [editedRoute, setEditedRoute] = useState({});
   const [showModal, setShowModal] = useState(false);
-  const [newRoute, setNewRoute] = useState({
-    departure_city: "",
-    departure_city_id: "",
-    departure_province: "",
-    departure_province_id: "",
-    arrival_city: "",
-    arrival_city_id: "",
-    arrival_province: "",
-    arrival_province_id: "",
-    text: "",
-    departure_city_province: "",
-    arrival_city_province: "",
-  });
+  const [newRoute, setNewRoute] = useState(initialValue);
   const [updateRoutes, setUpdateRoutes] = useState(false);
 
   useEffect(() => {
@@ -164,7 +166,7 @@ export const ViewEditRoute = () => {
       console.log(err);
       alert("Error al añadir la ruta. Por favor, inténtalo de nuevo.");
     }
-    finally{setNewRoute({})}
+    finally{setNewRoute(initialValue)}
   };
 
   return (
@@ -193,8 +195,10 @@ export const ViewEditRoute = () => {
                         <AutocompleteInput
                           value={
                             editRouteId === route.route_id
-                              ? editedRoute.departure_city_province
-                              : `${route.departure_city} - ${route.departure_province}`
+                              ? (editedRoute.departure_city_province || "")
+                              : (route.departure_city && route.departure_province)
+                                ? `${route.departure_city} - ${route.departure_province}`
+                                : ""
                           }
                           onChange={(value) =>
                             handleInputChange("departure_city_province", value)
@@ -230,9 +234,11 @@ export const ViewEditRoute = () => {
                         <AutocompleteInput
                           value={
                             editRouteId === route.route_id
-                              ? editedRoute.arrival_city_province
-                              : `${route.arrival_city} - ${route.arrival_province}`
-                          }
+                              ? (editedRoute.arrival_city_province || "")
+                              : (route.arrival_city && route.arrival_province)
+                                ? `${route.arrival_city} - ${route.arrival_province}`
+                                : ""
+                          }                          
                           onChange={(value) =>
                             handleInputChange("arrival_city_province", value)
                           }
@@ -317,7 +323,7 @@ export const ViewEditRoute = () => {
         show={showModal}
         handleClose={() => {
           setShowModal(false);
-          setNewRoute({});
+          setNewRoute(initialValue);
         }}
         handleNewRouteChange={handleNewRouteChange}
         handleAddRoute={handleAddRoute}

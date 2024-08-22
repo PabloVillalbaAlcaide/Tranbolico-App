@@ -340,12 +340,12 @@ class UserController {
         error: "Faltan datos necesarios en el cuerpo de la solicitud",
       });
     }
-
+    
     let data = [
       name,
       surname,
       email,
-      genre,
+      genre || null,
       phone_number,
       province.province_id,
       city.city_id,
@@ -360,7 +360,7 @@ class UserController {
         name,
         surname,
         email,
-        genre,
+        genre || null,
         phone_number,
         province.province_id,
         city.city_id,

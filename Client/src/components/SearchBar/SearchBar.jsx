@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./searchBar.scss";
+import { AppContext } from "../../context/TranbolicoContextProvider";
 
 export const SearchBar = () => {
   const [origin, setOrigin] = useState("");
+  const { globalState } = useContext(AppContext);
   const [originFinal, setOriginFinal] = useState({});
   const [destination, setDestination] = useState("");
   const [destinationFinal, setDestinationFinal] = useState({});
@@ -68,9 +70,11 @@ export const SearchBar = () => {
     } else {
       setErrMsg({ show: false, text: "" });
       try {
-        navigate("/reservations", {         
-          state: { origin: originFinal, destination: destinationFinal },
-        });
+        globalState.user
+          ? navigate("/reservations", {
+              state: { origin: originFinal, destination: destinationFinal },
+            })
+          : navigate("/login");
       } catch (err) {
         console.log(err);
       }
