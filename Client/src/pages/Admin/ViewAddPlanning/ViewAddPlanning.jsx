@@ -129,7 +129,7 @@ export const ViewAddPlanning = () => {
           Volver al panel
         </Button>
       </div>
-      <Table striped bordered hover>
+      <Table striped bordered hover responsive>
         <thead>
           <tr>
             <th>Departure Date</th>
