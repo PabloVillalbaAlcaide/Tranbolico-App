@@ -188,7 +188,11 @@ export const ViewAddPlanning = () => {
                       {editing.routeId === item.route_id &&
                       editing.planningId === item.planning_id ? (
                         <Button
-                          variant="success"
+                          style={{
+                            backgroundColor: "var(--tranbolico-verde)",
+                            color: "black",
+                            border: "none",
+                          }}
                           onClick={() =>
                             handleEditPlanning(item.route_id, item.planning_id)
                           }
@@ -196,12 +200,23 @@ export const ViewAddPlanning = () => {
                           Guardar
                         </Button>
                       ) : (
-                        <Button variant="warning" onClick={() => onEdit(item)}>
+                        <Button
+                          style={{
+                            backgroundColor: "var(--tranbolico-azulClaro)",
+                            color: "black",
+                            border: "none",
+                          }}
+                          onClick={() => onEdit(item)}
+                        >
                           Editar
                         </Button>
                       )}
                       <Button
-                        variant="danger"
+                        style={{
+                          backgroundColor: "var(--tranbolico-rosa)",
+                          color: "black",
+                          border: "none",
+                        }}
                         onClick={() =>
                           handleDeletePlanning(item.route_id, item.planning_id)
                         }

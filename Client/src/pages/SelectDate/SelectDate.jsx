@@ -7,7 +7,8 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import "./selectDate.scss";
 
 export const SelectDate = () => {
-  const { reservation, setReservation, route, loadingReservation } = useOutletContext();
+  const { reservation, setReservation, route, loadingReservation } =
+    useOutletContext();
   const [planningList, setPlanningList] = useState([]);
   const [date, setDate] = useState("");
   const { globalState, loading } = useContext(AppContext);
@@ -37,19 +38,20 @@ export const SelectDate = () => {
 
   useEffect(() => {
     if (!loadingReservation && !loading) {
-    if (location.pathname === "/reservations") {
-      let newReservation = {
-        user_id: globalState.user.user_id,
-        departure_province: route?.origin.province,
-        departure_city: route?.origin.city,
-        departure_date: date,
-        arrival_province: route?.destination.province,
-        arrival_city: route?.destination.city,
-      };
-      setReservation(newReservation);
-    } else {
-      setReservation({ ...reservation, arrival_date: date });
-    }}
+      if (location.pathname === "/reservations") {
+        let newReservation = {
+          user_id: globalState.user.user_id,
+          departure_province: route?.origin.province,
+          departure_city: route?.origin.city,
+          departure_date: date,
+          arrival_province: route?.destination.province,
+          arrival_city: route?.destination.city,
+        };
+        setReservation(newReservation);
+      } else {
+        setReservation({ ...reservation, arrival_date: date });
+      }
+    }
   }, [date, location.pathname]);
 
   const nextStep = () => {
@@ -71,7 +73,7 @@ export const SelectDate = () => {
 
   const getSchedules = async (departure, arrival) => {
     console.log(globalState);
-    
+
     try {
       const res = await axios.get(
         `http://localhost:4000/reservation/getSchedules`,
@@ -126,7 +128,16 @@ export const SelectDate = () => {
               xs={4}
               className="d-flex justify-content-center align-items-center p-0 m-0"
             >
-              <p>{date}</p>
+              {date &&<p
+                className="btn"
+                style={{
+                  backgroundColor: "var(--tranbolico-fucsia)",
+                  color: "white",
+                  border: "none",
+                }}
+              >
+                {date}
+              </p>}
             </Col>
             <Col
               xs={4}
@@ -147,6 +158,11 @@ export const SelectDate = () => {
                     if (elem.departure_date === date) {
                       return (
                         <Button
+                          style={{
+                            backgroundColor: "var(--tranbolico-azulClaro)",
+                            color: "black",
+                            border: "none",
+                          }}
                           key={elem.planning_id}
                           onClick={() => setPlanning(elem)}
                           className="m-2"
@@ -164,13 +180,34 @@ export const SelectDate = () => {
 
       <Row className="justify-content-center mt-3">
         <Col xs={12} md={4} className="d-flex justify-content-around p-0 m-0">
-          <Button onClick={nextStep} className="btn btn-success">
+          <Button
+            onClick={nextStep}
+            style={{
+              backgroundColor: "var(--tranbolico-verde)",
+              color: "black",
+              border: "none",
+            }}
+          >
             Continuar
           </Button>
-          <Button onClick={() => navigate(-1)} className="btn btn-warning">
+          <Button
+            onClick={() => navigate(-1)}
+            style={{
+              backgroundColor: "var(--tranbolico-amarillo)",
+              color: "black",
+              border: "none",
+            }}
+          >
             Atras
           </Button>
-          <Button onClick={() => navigate("/")} className="btn btn-danger">
+          <Button
+            onClick={() => navigate("/")}
+            style={{
+              backgroundColor: "var(--tranbolico-rosa)",
+              color: "black",
+              border: "none",
+            }}
+          >
             Cancelar
           </Button>
         </Col>

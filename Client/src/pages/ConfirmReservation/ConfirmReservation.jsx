@@ -1,9 +1,8 @@
-import React from 'react'
-import { Button, Col, Row } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import React from "react";
+import { Button, Col, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export const ConfirmReservation = () => {
-
   const navigate = useNavigate();
   return (
     <>
@@ -26,9 +25,22 @@ export const ConfirmReservation = () => {
 
               <h3>¡Tu reserva está confirmada! 🎉</h3>
 
-              <p>Gracias por elegir nuestro autobús turístico. Prepárate para una experiencia inolvidable llena de música, diversión y las mejores vistas de la ciudad. 🚌✨</p>
-              
-              <Button onClick={()=>navigate('/')}>Volver</Button>
+              <p>
+                Gracias por elegir nuestro autobús turístico. Prepárate para una
+                experiencia inolvidable llena de música, diversión y las mejores
+                vistas de la ciudad. 🚌✨
+              </p>
+
+              <Button
+                style={{
+                  backgroundColor: "var(--tranbolico-azulClaro)",
+                  color: "black",
+                  border: "none",
+                }}
+                onClick={() => navigate("/")}
+              >
+                Volver
+              </Button>
             </div>
             <div className="imagen-rabbit">
               <img
@@ -41,5 +53,5 @@ export const ConfirmReservation = () => {
         </Col>
       </Row>
     </>
-  )
-}
+  );
+};

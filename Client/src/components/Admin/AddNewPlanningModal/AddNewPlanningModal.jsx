@@ -127,7 +127,11 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
       </Modal.Body>
       <Modal.Footer>
         <Button
-          variant="secondary"
+          style={{
+            backgroundColor: "var(--tranbolico-rosa)",
+            color: "black",
+            border: "none",
+          }}
           onClick={() => {
             onHide();
             setRoute("");
@@ -137,7 +141,14 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
         >
           Cancelar
         </Button>
-        <Button variant="primary" onClick={handleSave}>
+        <Button
+          style={{
+            backgroundColor: "var(--tranbolico-azulClaro)",
+            color: "black",
+            border: "none",
+          }}
+          onClick={handleSave}
+        >
           Guardar
         </Button>
       </Modal.Footer>
