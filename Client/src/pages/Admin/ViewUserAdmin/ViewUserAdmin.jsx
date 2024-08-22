@@ -47,11 +47,11 @@ export const ViewUserAdmin = () => {
 
   return (
     <>
-      <Row>
+      {/* <Row>
         <div className="ppal-userView text-center text-white  mt-3">
           <h2 className="mb-0 py-2">USUARIOS</h2>
         </div>
-      </Row>
+      </Row> */}
       <AdminUserSearch
         handleChange={handleChange}
         option={option}

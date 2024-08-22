@@ -6,8 +6,10 @@ import { AutocompleteInput } from "../../../components/Admin/AutoCompleteInput/A
 import { AddRouteModal } from "../../../components/Admin/Modal/AddRouteModal";
 import "./viewEditRoute.scss";
 import "../../../App.css";
+import { useNavigate } from "react-router-dom";
 
 export const ViewEditRoute = () => {
+  const navigate = useNavigate();
   const { globalState, loading } = useContext(AppContext);
   const [routes, setRoutes] = useState([]);
   const [editRouteId, setEditRouteId] = useState("");
@@ -167,13 +169,13 @@ export const ViewEditRoute = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-center my-4">
+      <div className="d-flex justify-content-center align-items-center my-4 gap-2">
         <Button className="btn-add-route" onClick={() => setShowModal(true)}>
           Añadir Nueva Ruta
-        </Button>
+        </Button> 
+        <Button className="btn-volver-panel"  onClick={()=> navigate("/admin")}>Volver al panel</Button>
       </div>
-      {routes.length > 0 ? (
-          
+      {routes.length > 0 ? (          
             <Table striped bordered hover responsive>
               <thead>
                 <tr>
