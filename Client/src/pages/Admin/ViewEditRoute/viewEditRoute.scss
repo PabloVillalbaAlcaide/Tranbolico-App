@@ -5,3 +5,14 @@
     background-color: var(--tranbolico-azul) !important;
   }
 }
+
+.btn-volver-panel,
+.btn-volver-panel:hover,
+.btn-volver-panel:focus,
+.btn-volver-panel:active,
+.btn-volver-panel:focus:active {
+  color: black;
+  background-color: var(--tranbolico-amarillo);
+  border: none;
+}
+

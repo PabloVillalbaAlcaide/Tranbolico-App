@@ -6,8 +6,10 @@ import { AddNewPlanningModal } from "../../../components/Admin/AddNewPlanningMod
 import { format } from "date-fns";
 import "./viewAddPlanning.scss";
 import "../../../App.css";
+import { useNavigate } from "react-router-dom";
 
 export const ViewAddPlanning = () => {
+  const navigate = useNavigate();
   const { globalState, loading } = useContext(AppContext);
   const [planningList, setPlanningList] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -115,13 +117,16 @@ export const ViewAddPlanning = () => {
 
   return (
     <div>
-      <div className="d-flex justify-content-center my-4">
+      <div className="d-flex justify-content-center my-4 gap-2">
         <Button
           className="btn-add-planning"
           onClick={() => setShowModal(true)}
           aria-label="Añadir Nuevo Planning"
         >
           Añadir Nuevo Planning
+        </Button>
+        <Button className="btn-volver-panel" onClick={() => navigate("/admin")}>
+          Volver al panel
         </Button>
       </div>
       <Table striped bordered hover>

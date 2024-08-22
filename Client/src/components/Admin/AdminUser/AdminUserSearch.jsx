@@ -1,4 +1,6 @@
 import { Button, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
 export const AdminUserSearch = ({
   handleChange,
   option,
@@ -6,8 +8,16 @@ export const AdminUserSearch = ({
   onSearch,
   errMsg,
 }) => {
+  const navigate = useNavigate();
   return (
+    <>
+        <div className="d-flex justify-content-center align-items-center">
+      <Button className="btn-volver-panel mt-2 w-20" onClick={() => navigate("/admin")}>
+            Volver al panel
+          </Button>
+    </div>
     <div className="w-100 d-flex justify-content-center">
+      
       <Form className="d-flex flex-column m-3 search form-user-search ">
         <div className="d-flex justify-content-center">
           <Form.Check
@@ -50,12 +60,15 @@ export const AdminUserSearch = ({
             className="me-2"
             aria-label="Search"
           />
-          <Button className="btn-buscarUser " onClick={onSearch}>
+          <Button className="btn-buscarUser" onClick={onSearch}>
             Buscar
           </Button>
         </div>
         <p style={{ color: "red" }}>{errMsg}</p>
       </Form>
     </div>
+
+    </>
+    
   );
 };
