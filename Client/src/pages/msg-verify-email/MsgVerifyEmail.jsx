@@ -20,9 +20,9 @@ export const MsgVerifyEmail = () => {
                   width={"50px"}
                 />
               
-          <h3>Verificación por email</h3>
+          <h3 style={{fontWeight:'bold'}}>Verificación por email</h3>
 
-          <p>Te hemos enviado un correo de verificación. 
+          <p style={{fontSize:'1.08rem'}}>Te hemos enviado un correo de verificación. 
             Por favor, revisa tu bandeja de entrada
              y sigue las instrucciones para activar tu cuenta</p>
              </div>

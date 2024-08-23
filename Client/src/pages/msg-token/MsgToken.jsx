@@ -60,14 +60,15 @@ export const MsgToken = () => {
                 width={"50px"}
               />
 
-              <h3>Verificación por email</h3>
+              <h3  style={{fontWeight:'bold'}}>Verificación por email</h3>
 
-              <p>Cuenta verificada correctamente</p>
-
+              <p style={{fontSize:'1.12rem'}}>Cuenta verificada correctamente</p>
+              <br />
               <Button
                 style={{
                   backgroundColor: "var(--tranbolico-azulClaro)",
-                  color: "black",
+                  color: "var(--tranbolico-azul)",
+                  fontSize: "1.4rem",
                   border: "none",
                 }}
                 onClick={() => navigate("/")}

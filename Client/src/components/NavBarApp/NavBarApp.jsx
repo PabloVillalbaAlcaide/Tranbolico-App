@@ -115,7 +115,7 @@ export const NavBarApp = () => {
                       <div>
                         <Button
                           onClick={logOut}
-                          className="NavbarRegisterLoginColor NavbarRegisterLogin"
+                          className="NavbarRegisterLoginColor NavbarLogout"
                         >
                           Cerrar Sesión
                         </Button>
