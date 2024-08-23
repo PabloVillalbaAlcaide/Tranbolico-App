@@ -1,11 +1,17 @@
 .ppal-rutas {
-  background-color: var(--tranbolico-azul);
+  background-color: var(--tranbolico-fucsia);
   width: 100%;
   font-family: "VinaSans-Regular.ttf";
 }
 
 .ppal-rutas h2 {
   font-size: 3rem;
+}
+
+.contenedor-form-rutas {
+  font-family: "Akkurat-Regular.ttf";
+  font-weight: bold;
+  color: var(--tranbolico-azul);
 }
 
 .h1-rutas {
@@ -22,18 +28,24 @@
   font-size: 1.1rem;
 }
 
-
-
 .card-ruta-info {
   background-color: transparent;
-  border: 1px solid #28b7c7;
+  border: 2px solid #28b7c7;
   border-radius: 10px;
   padding: 1rem;
   margin-top: 2rem;
   width: 100%;
-  max-width: 300px;
+  max-width: 220px;
   min-width: 200px;
   text-align: center;
+  transition: transform 0.35s ease, box-shadow 0.35s ease,
+    background-color 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: rgba(40, 183, 199, 0.1);
+  }
 }
 
 .btn-reservar_rutas {
@@ -41,7 +53,6 @@
   background-color: var(--tranbolico-fucsia);
   font-style: italic;
   border-radius: 20px;
-
 }
 
 .btn-reservar_rutas:hover,
@@ -51,4 +62,39 @@
   background-color: #e30d42;
 }
 
+.btn-rutas-SB2 {
+  border: none;
+  background-color: var(--tranbolico-azul);
+  font-style: italic;
+  padding: 10px 50px;
+  font-size: 1.6rem;
+}
 
+.btn-rutas-SB2:hover,
+.btn-rutas-SB2:focus,
+.btn-rutas-SB2:active,
+.btn-rutas-SB2:focus:active {
+  background-color: #13268e;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(0.8deg);
+  }
+  50% {
+    transform: rotate(-1.5deg);
+  }
+  75% {
+    transform: rotate(0.8deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.btn-rutas-SB2:active {
+  animation: spin 0.4s ease-in-out;
+}
