@@ -336,7 +336,7 @@ JOIN route ON reservation.route_id = route.route_id JOIN  province dp ON route.d
 JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
 JOIN province ap ON route.arrival_province_id = ap.province_id JOIN city ac ON route.arrival_city_id = ac.city_id
 AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${userid}
-AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) >= NOW() AND reservation.is_deleted = 1;`;
+AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) <= NOW() OR reservation.user_id = ${userid} AND reservation.is_deleted = 1;`;
     connection.query(sql, (err, result) => {
       if (err) {
         console.error("error en traer usuario", err);
