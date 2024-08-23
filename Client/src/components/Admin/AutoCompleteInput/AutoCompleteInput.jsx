@@ -1,5 +1,6 @@
-import { useState, useEffect, useContext } from "react";
+import './AutoCompleteInput.scss'
 import axios from "axios";
+import { useState, useEffect, useContext } from "react";
 import { Form, ListGroup } from "react-bootstrap";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
 
@@ -68,6 +69,7 @@ export const AutocompleteInput = ({ value, onChange, onSelect, disabled }) => {
             <ListGroup.Item
               key={index}
               onMouseDown={() => handleSelect(suggestion)}
+              className="add-cursor-pointer"
             >
               {suggestion.city_province}
             </ListGroup.Item>
