@@ -7,9 +7,9 @@ import { AppContext } from "../../../context/TranbolicoContextProvider";
 import { ButtonRadio } from "../../../components/Admin/ButtonRadio/ButtonRadio";
 
 const radios = [
-  { name: 'Habilitados', value: '1' },
-  { name: 'Deshabilitados', value: '2' },
-  { name: 'Todos', value: '3' },
+  { name: "Habilitados", value: "1" },
+  { name: "Deshabilitados", value: "2" },
+  { name: "Todos", value: "3" },
 ];
 
 export const ViewUserAdmin = () => {
@@ -18,8 +18,8 @@ export const ViewUserAdmin = () => {
   const [info, setInfo] = useState();
   const [errMsg, setErrMsg] = useState("");
   const { globalState } = useContext(AppContext);
-  const [radioValue, setRadioValue] = useState('3');
-  
+  const [radioValue, setRadioValue] = useState("3");
+
   useEffect(() => {
     onSearch();
   }, [radioValue]);
@@ -52,11 +52,20 @@ export const ViewUserAdmin = () => {
     }
   };
 
-  const onFilterChange=()=>{
-    onSearch();
-  }
+  const onFilterChange = (user_id) => {
+    console.log(user_id);
+    if (radioValue !== "3") {
+      setInfo(
+        info.filter((elem) => {
+          if (elem.user_id !== user_id) {
+            console.log(elem.user_id);
+          }
 
-
+          return elem.user_id !== user_id;
+        })
+      );
+    }
+  };
 
   return (
     <>
@@ -73,7 +82,11 @@ export const ViewUserAdmin = () => {
         errMsg={errMsg}
       />
 
-      <ButtonRadio radioValue={radioValue} setRadioValue={setRadioValue} radios={radios}/>
+      <ButtonRadio
+        radioValue={radioValue}
+        setRadioValue={setRadioValue}
+        radios={radios}
+      />
 
       <div className="d-flex flex-column flex-md-row align-items-center justify-content-center flex-wrap">
         {info &&
