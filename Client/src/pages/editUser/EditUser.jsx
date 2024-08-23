@@ -282,10 +282,9 @@ export const EditUser = () => {
                 )}
                 <Form.Group
                   className="mb-2 d-flex justify-content-center align-items-center w-100"
-                  controlId="formBasicImg"
                 >
                   <label
-                    htmlFor="file-upload"
+                    htmlFor="file-img"
                     className="custom-file-upload d-flex align-items-center"
                   >
                     <img
@@ -298,7 +297,8 @@ export const EditUser = () => {
                     Seleccionar imagen
                   </label>
                   <Form.Control
-                    id="file-upload"
+                    id="file-img"
+                    className="file-upload"
                     type="file"
                     name="avatar"
                     onChange={handleFilesChange}
