@@ -117,17 +117,22 @@ export const ViewAddPlanning = () => {
 
   return (
     <div>
-      <div className="d-flex justify-content-center my-4 gap-2">
+      <div className="position-relative my-4">
         <Button
-          className="btn-add-planning"
-          onClick={() => setShowModal(true)}
-          aria-label="Añadir Nuevo Planning"
+          className="btn-volver-panel position-absolute start-0"
+          onClick={() => navigate("/admin")}
         >
-          Añadir Nuevo Planning
-        </Button>
-        <Button className="btn-volver-panel" onClick={() => navigate("/admin")}>
           Volver al panel
         </Button>
+        <div className="d-flex justify-content-center">
+          <Button
+            className="btn-add-planning"
+            onClick={() => setShowModal(true)}
+            aria-label="Añadir Nuevo Planning"
+          >
+            Añadir Nuevo Planning
+          </Button>
+        </div>
       </div>
       <Table striped bordered hover responsive>
         <thead>

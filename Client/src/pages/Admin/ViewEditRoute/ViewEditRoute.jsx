@@ -172,14 +172,20 @@ export const ViewEditRoute = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-center align-items-center my-4 gap-2">
-        <Button className="btn-add-route" onClick={() => setShowModal(true)}>
-          Añadir Nueva Ruta
-        </Button>
-        <Button className="btn-volver-panel" onClick={() => navigate("/admin")}>
+      <div className="d-flex align-items-center my-4 position-relative">
+        <Button
+          className="btn-volver-panel position-absolute start-0"
+          onClick={() => navigate("/admin")}
+        >
           Volver al panel
         </Button>
+        <div className="w-100 d-flex justify-content-center">
+          <Button className="btn-add-route" onClick={() => setShowModal(true)}>
+            Añadir Nueva Ruta
+          </Button>
+        </div>
       </div>
+
       {routes.length > 0 ? (
         <Table striped bordered hover responsive>
           <thead>
