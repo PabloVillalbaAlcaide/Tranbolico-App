@@ -28,6 +28,7 @@ import { ViewAddPlanning } from "../pages/Admin/ViewAddPlanning/ViewAddPlanning"
 import { PrivacyPolicy } from "../pages/PrivacyPolicy/PrivacyPolicy";
 import { LegalNotice } from "../pages/legalNotice/LegalNotice";
 import { ConfirmReservation } from "../pages/ConfirmReservation/ConfirmReservation";
+import { Statistics } from "../pages/Admin/Statistics/Statistics";
 
 export const AppRoutes = () => {
   const { globalState, loading } = useContext(AppContext);
@@ -91,6 +92,7 @@ export const AppRoutes = () => {
                   <Route path="/admin/routes" element={<ViewEditRoute />} />
                   <Route path="/admin/planning" element={<ViewAddPlanning />} />
                   <Route path="/admin/viewUser" element={<ViewUserAdmin />} />
+                  <Route path="/admin/statistics" element={<Statistics />} />
                 </>
               )}
 

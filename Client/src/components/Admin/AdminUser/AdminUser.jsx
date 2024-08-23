@@ -26,7 +26,6 @@ export const AdminUser = ({
     } else {
       setIsChecked(false);
     }
-    onFilterChange()
   }, [is_disabled]);
 
   //modificamos la db el parámetro is_disabled
@@ -40,7 +39,8 @@ export const AdminUser = ({
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
       );
-      onFilterChange()
+      if(isChecked != is_disabled){
+        onFilterChange(user_id)}
     } catch (error) {
       console.log(error);
     }
@@ -109,7 +109,8 @@ export const AdminUser = ({
               id="custom-switch"
               label={isChecked ? "Deshabilitar usuario" : "Habilitar usuario"}
               checked={isChecked}
-              onChange={handleChange}
+              onChange={()=>{handleChange
+              }}
               value={isChecked}
             />
           </Form>
