@@ -150,12 +150,23 @@ export const ResetPassword = () => {
               <Button onClick={onSubmit} className="btn-iniciar-login">
                 Aceptar
               </Button>
-              <Button
-                className="btn-volver-login border-0"
-                onClick={() => navigate("/")}
-              >
-                Volver
-              </Button>
+
+              {globalState.user ? (
+                <Button
+                  className="btn-volver-login border-0 "
+                  onClick={() => navigate(-1)}
+                >
+                  Volver
+                </Button>
+              ) : (
+                <Button
+                  className="btn-volver-login border-0 "
+                  onClick={() => navigate("/")}
+                >
+                  Volver
+                </Button>
+              )}
+
             </div>
           </Col>
         </Container>

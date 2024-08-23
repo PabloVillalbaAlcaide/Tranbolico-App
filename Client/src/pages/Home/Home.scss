@@ -62,12 +62,11 @@
 .contenedor-botones-home > Button {
   border: none;
   font-size: 1.8rem;
-  color: white;
+
   border-radius: 1rem;
   font-family: "VinaSans-Regular.ttf";
   padding: 10px 35px;
   min-width: 120px;
-
 }
 
 .btn-reservas-home {
@@ -94,24 +93,28 @@
 
 .btn-conocenos-home {
   background-color: var(--tranbolico-amarillo);
+  color: var(--tranbolico-azul);
 }
 
 .btn-conocenos-home:hover,
 .btn-conocenos-home:focus,
-.btn-conocenos-home:active, 
+.btn-conocenos-home:active,
 .btn-conocenos-home:focus:active {
   background-color: #facc00;
+  color: var(--tranbolico-azul);
 }
 
-.btn-faqs-home{
+.btn-faqs-home {
   background-color: var(--tranbolico-azulClaro);
+  color: var(--tranbolico-azul);
 }
 
 .btn-faqs-home:hover,
 .btn-faqs-home:focus,
-.btn-faqs-home:active, 
+.btn-faqs-home:active,
 .btn-faqs-home:focus:active {
   background-color: #53afc6;
+  color: var(--tranbolico-azul);
 }
 
 .contenedor-home-criaturas {
