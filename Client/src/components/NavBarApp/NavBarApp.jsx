@@ -56,7 +56,7 @@ export const NavBarApp = () => {
                 <Nav className="me-auto NavbarCollapse w-100">
                   <div className="d-flex justify-content-start align-items-lg-center flex-lg-row flex-column col-8">
                     {globalState.user?.user_type === 1 ? (
-                      <div className="d-flex justify-content-start align-items-lg-center flex-lg-row flex-column col-8">
+                      <div className="d-flex justify-content-start align-items-lg-center flex-lg-row flex-column col-12">
                         <Nav.Link
                           as={Link}
                           to="/admin"
@@ -87,7 +87,7 @@ export const NavBarApp = () => {
                         </Nav.Link>
                       </div>
                     ) : (
-                      <div className="d-flex justify-content-start align-items-lg-center flex-lg-row flex-column col-8">
+                      <div className="d-flex justify-content-start align-items-lg-center flex-lg-row flex-column col-12">
                         <Nav.Link
                           as={Link}
                           to="/routes"
