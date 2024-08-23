@@ -10,6 +10,7 @@ export const AdminUser = ({
   email,
   phone_number,
   is_disabled,
+  onFilterChange
 }) => {
   const [isChecked, setIsChecked] = useState(true);
   const [reservationHistory, setReservationHistory] = useState([]);
@@ -25,6 +26,7 @@ export const AdminUser = ({
     } else {
       setIsChecked(false);
     }
+    onFilterChange()
   }, [is_disabled]);
 
   //modificamos la db el parámetro is_disabled
@@ -38,6 +40,7 @@ export const AdminUser = ({
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
       );
+      onFilterChange()
     } catch (error) {
       console.log(error);
     }
