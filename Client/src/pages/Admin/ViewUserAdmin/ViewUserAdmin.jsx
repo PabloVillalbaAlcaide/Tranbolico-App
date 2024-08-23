@@ -1,10 +1,16 @@
 import { useState, useContext, useEffect } from "react";
-import { Row } from "react-bootstrap";
 import "./ViewUserAdmin.scss";
 import axios from "axios";
 import { AdminUser } from "../../../components/Admin/AdminUser/AdminUser";
 import { AdminUserSearch } from "../../../components/Admin/AdminUser/AdminUserSearch";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
+import { ButtonRadio } from "../../../components/Admin/ButtonRadio/ButtonRadio";
+
+const radios = [
+  { name: 'Habilitados', value: '1' },
+  { name: 'Deshabilitados', value: '2' },
+  { name: 'Todos', value: '3' },
+];
 
 export const ViewUserAdmin = () => {
   const [textSearch, setTextSearch] = useState("");
@@ -12,10 +18,11 @@ export const ViewUserAdmin = () => {
   const [info, setInfo] = useState();
   const [errMsg, setErrMsg] = useState("");
   const { globalState } = useContext(AppContext);
-
+  const [radioValue, setRadioValue] = useState('3');
+  
   useEffect(() => {
     onSearch();
-  }, []);
+  }, [radioValue]);
 
   //seteamos los parámetros del buscador
   const handleChange = (e) => {
@@ -30,7 +37,7 @@ export const ViewUserAdmin = () => {
   const onSearch = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:4000/admin/viewUser?opt=${option}&text=${textSearch}`,
+        `http://localhost:4000/admin/viewUser?opt=${option}&text=${textSearch}&value=${radioValue}`,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
@@ -44,6 +51,12 @@ export const ViewUserAdmin = () => {
       setErrMsg("Debes de selecionar una opción");
     }
   };
+
+  const onFilterChange=()=>{
+    onSearch();
+  }
+
+
 
   return (
     <>
@@ -60,6 +73,8 @@ export const ViewUserAdmin = () => {
         errMsg={errMsg}
       />
 
+      <ButtonRadio radioValue={radioValue} setRadioValue={setRadioValue} radios={radios}/>
+
       <div className="d-flex flex-column flex-md-row align-items-center justify-content-center flex-wrap">
         {info &&
           info.map((elem, index) => (
@@ -71,6 +86,7 @@ export const ViewUserAdmin = () => {
                 birthdate={elem.birthdate}
                 phone_number={elem.phone_number}
                 is_disabled={elem.is_disabled}
+                onFilterChange={onFilterChange}
               />
             </div>
           ))}
