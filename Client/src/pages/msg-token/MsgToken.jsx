@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import axios from "axios";
 import { Button } from "react-bootstrap";
+import { ButtonTram } from "../../components/ButtonTram/ButtonTram";
 
 export const MsgToken = () => {
   const { globalState, setGlobalState } = useContext(AppContext);
@@ -62,9 +63,13 @@ export const MsgToken = () => {
 
               <h3  style={{fontWeight:'bold'}}>Verificación por email</h3>
 
+
+              {/* <Button
+
               <p style={{fontSize:'1.12rem'}}>Cuenta verificada correctamente</p>
               <br />
               <Button
+
                 style={{
                   backgroundColor: "var(--tranbolico-azulClaro)",
                   color: "var(--tranbolico-azul)",
@@ -74,7 +79,10 @@ export const MsgToken = () => {
                 onClick={() => navigate("/")}
               >
                 Aceptar
-              </Button>
+              </Button> */}
+              <ButtonTram color="black" onClick={() => navigate("/")}>
+                Aceptar
+              </ButtonTram>
             </div>
             <div className="imagen-rabbit">
               <img

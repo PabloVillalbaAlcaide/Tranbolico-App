@@ -3,7 +3,11 @@ import { useContext, useState } from "react";
 import { Col, Container, Row, Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
+
+import { ButtonTram } from "../../../components/ButtonTram/ButtonTram";
+
 import "./ResetPassword.scss";
+
 
 const initialValue = {
   oldPassword: "",
@@ -147,25 +151,30 @@ export const ResetPassword = () => {
 
             <br />
             <div className="d-flex flex-row gap-2 align-items-center justify-content-center flex-column gap-2">
-              <Button onClick={onSubmit} className="btn-iniciar-login">
-                Aceptar
-              </Button>
 
-              {globalState.user ? (
-                <Button
-                  className="btn-volver-login border-0 "
-                  onClick={() => navigate(-1)}
+              {/* <Button onClick={onSubmit} className="btn-iniciar-login">
+                Restablecer Contraseña
+              </Button> */}
+           
+              {/* <Button
+                className="btn-volver-login border-0 "
+                onClick={() => navigate("/")}
+              >
+                Volver
+              </Button> */}
+             
+
+              <ButtonTram padding="10px 27px" color="black" onClick={onSubmit}>
+                Aceptar
+              </ButtonTram>
+
+              <ButtonTram
+                  backgroundColor='var(--tranbolico-fucsia)'
+                  onClick={() => {if(globalState?.user){navigate(-1)}else{navigate("/")}}}
                 >
                   Volver
-                </Button>
-              ) : (
-                <Button
-                  className="btn-volver-login border-0 "
-                  onClick={() => navigate("/")}
-                >
-                  Volver
-                </Button>
-              )}
+                </ButtonTram>
+
 
             </div>
           </Col>

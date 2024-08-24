@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Rutas.scss";
 import { AppContext } from "../../context/TranbolicoContextProvider";
+import { ButtonTram } from "../../components/ButtonTram/ButtonTram";
 
 export const Rutas = () => {
   const { globalState } = useContext(AppContext);
@@ -124,9 +125,15 @@ export const Rutas = () => {
               )}
             </Form.Group>
           </Form>
-          <Button className="btn-rutas-SB2" onClick={onSubmit}>
+
+          <ButtonTram 
+          color="black" 
+          onClick={onSubmit}>
+
+          //<Button className="btn-rutas-SB2" onClick={onSubmit}>
+
             Buscar
-          </Button>
+          </ButtonTram>
           {noRoutesMessage && (
             <p style={{ color: "red", marginTop: "20px" }}>{noRoutesMessage}</p>
           )}
@@ -144,12 +151,14 @@ export const Rutas = () => {
                   >
                     <p>{originFinal.city}</p>
                     <p>{e.city_name}</p>
-                    <Button
+                    <ButtonTram
+                      padding = '10px 35px'
+                      fontSize="1.5rem"
+                      backgroundColor="var(--tranbolico-fucsia)"
                       onClick={() => onSubmit2(e)}
-                      className="btn-reservar_rutas mt-2"
                     >
                       Reservar
-                    </Button>
+                    </ButtonTram>
                   </Col>
                 );
               })}
