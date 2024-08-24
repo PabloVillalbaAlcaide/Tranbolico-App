@@ -29,10 +29,8 @@ class ReservationController {
   };
 
   historical = (req, res) => {
-    console.log("Hasta aqui");
 
     const userID = req.params.id;
-    console.log(userID);
 
     let sql = `SELECT
     reservation.user_id,
@@ -56,6 +54,8 @@ AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETI
       if (err) {
         return res.status(500).json(err);
       } else {
+        console.log(result);
+        
         res.status(200).json(result);
       }
     });
