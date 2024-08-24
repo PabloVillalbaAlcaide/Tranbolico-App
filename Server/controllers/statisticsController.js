@@ -35,18 +35,28 @@ class StatisticsController {
   statisticsAge=(req,res)=>{
     const sql = `SELECT 
     CASE 
-    WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 16 AND 20 THEN '16-20'
-    WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 21 AND 25 THEN '21-25'
-    WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 26 AND 30 THEN '26-30'
-    WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 31 AND 35 THEN '31-35'
-    WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 36 AND 40 THEN '36-40'
-    WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 41 AND 45 THEN '41-45'
-    ELSE '45+'
+        WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 16 AND 20 THEN '16-20'
+        WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 21 AND 25 THEN '21-25'
+        WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 26 AND 30 THEN '26-30'
+        WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 31 AND 35 THEN '31-35'
+        WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 36 AND 40 THEN '36-40'
+        ELSE '41+'
     END AS age_group,
-    COUNT(*) AS user_count
-    FROM user
-    GROUP BY age_group`;
-
+    SUM(CASE WHEN genre IS NULL THEN 1 ELSE 0 END) AS genre_null,
+    SUM(CASE WHEN genre = 1 THEN 1 ELSE 0 END) AS genre_1,
+    SUM(CASE WHEN genre = 2 THEN 1 ELSE 0 END) AS genre_2,
+    SUM(CASE WHEN genre = 3 THEN 1 ELSE 0 END) AS genre_3
+FROM user
+GROUP BY age_group
+ORDER BY 
+    CASE 
+        WHEN age_group = '16-20' THEN 1
+        WHEN age_group = '21-25' THEN 2
+        WHEN age_group = '26-30' THEN 3
+        WHEN age_group = '31-35' THEN 4
+        WHEN age_group = '36-40' THEN 5
+        ELSE 6
+    END;`
     connection.query(sql,(err,result)=>{
       if(err){
         return res.status(500).json(err)
