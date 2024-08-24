@@ -1,0 +1,23 @@
+.button-tram {
+  border: none;
+  font-size: 1.8rem;
+  color: white;
+  border-radius: 1rem;
+  padding: 10px 35px;
+  min-width: 120px;
+  font-family: 'VinaSans-Regular.ttf';
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  display: inline-flex;  
+  align-items: center;  
+  justify-content: center;
+  background-color: var(--background-color);
+  
+  &:hover {
+    background-color: var(--hover-background-color);
+  }
+}
+

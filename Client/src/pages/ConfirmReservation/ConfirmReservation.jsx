@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { ButtonTram } from "../../components/ButtonTram/ButtonTram";
 
 export const ConfirmReservation = () => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ export const ConfirmReservation = () => {
                 vistas de la ciudad. 🚌✨
               </p>
 
-              <Button
+              {/* <Button
                 style={{
                   backgroundColor: "var(--tranbolico-azulClaro)",
                   color: "black",
@@ -40,7 +41,10 @@ export const ConfirmReservation = () => {
                 onClick={() => navigate("/")}
               >
                 Volver
-              </Button>
+              </Button> */}
+              <ButtonTram color="black" onClick={() => navigate("/")}>
+                Volver
+              </ButtonTram>
             </div>
             <div className="imagen-rabbit">
               <img
