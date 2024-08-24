@@ -6,6 +6,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { SearchDropdown } from "../../../components/locationSelector/LocationSelector"; //
+import { ButtonTram } from "../../../components/ButtonTram/ButtonTram";
 
 const initialValue = {
   name: "",
@@ -338,18 +339,24 @@ export const Register = () => {
                 Ve a <Link to={"/login"}>Login</Link>
               </p>
               <div className="d-flex justify-content-center gap-2">
-                <Button
+                {/* <Button
                   className="btn-iniciar-login aceptar border-0 fst-italic"
                   onClick={onSubmit}
                 >
                   Registrar
-                </Button>
-                <Button
+                </Button> */}
+                <ButtonTram backgroundColor = 'var(--tranbolico-azul)' onClick={onSubmit}>
+                  Registrar
+                </ButtonTram>
+                {/* <Button
                   className="btn-volver-login cancelar border-0 fst-italic"
                   onClick={() => navigate("/")}
                 >
                   Volver
-                </Button>
+                </Button> */}
+                <ButtonTram backgroundColor="var(--tranbolico-fucsia)" onClick={() => navigate("/")}>
+                  Volver
+                </ButtonTram>
               </div>
             </Form>
           </Col>

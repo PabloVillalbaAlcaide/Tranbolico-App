@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./RecoverPassword.scss";
+import { ButtonTram } from "../../../components/ButtonTram/ButtonTram";
 
 export const RecoverPassword = () => {
   const [mail, setMail] = useState({});
@@ -58,16 +59,22 @@ export const RecoverPassword = () => {
             </Form.Group>
             <br />
             <div className="d-flex flex-row gap-2 align-items-center justify-content-center flex-column gap-2">
-              <Button onClick={onSubmit} className="btn-iniciar-login">
+              {/* <Button onClick={onSubmit} className="btn-iniciar-login">
                 Recuperar Contraseña
-              </Button>
+              </Button> */}
+              <ButtonTram color="black" onClick={onSubmit}>
+                Aceptar
+              </ButtonTram>
 
-              <Button
+              {/* <Button
                 className="btn-volver-login border-0 fst-italic"
                 onClick={() => navigate("/")}
               >
                 Volver
-              </Button>
+              </Button> */}
+              <ButtonTram backgroundColor='var(--tranbolico-fucsia)' onClick={() => navigate("/")}>
+                Volver
+              </ButtonTram>
             </div>
           </div>
         </Container>

@@ -1,11 +1,12 @@
 // Button, Col
 import "./login.scss";
-import { Button, Container, Form, Row } from "react-bootstrap";
+import { Container, Form, Row } from "react-bootstrap";
 import icono from "/images/perfil2.png";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
+import { ButtonTram } from "../../../components/ButtonTram/ButtonTram";
 
 const initialValue = {
   email: "",
@@ -102,16 +103,29 @@ export const Login = () => {
             </strong>
             <br />
             <div className=" d-flex flex-row gap-2 align-items-center justify-content-center">
-              <Button onClick={handleSubmit} className="btn-iniciar-login">
+              {/* <Button onClick={handleSubmit} className="btn-iniciar-login">
                 Iniciar Sesión
-              </Button>
+              </Button> */}
+              <ButtonTram
+                backgroundColor="var(--tranbolico-azul)"
+                onClick={handleSubmit}
+              >
+                Aceptar
+              </ButtonTram>
 
-              <Button
+              {/* <Button
                 className="btn-volver-login border-0 "
                 onClick={() => navigate("/")}
               >
                 Volver
-              </Button>
+              </Button> */}
+              <ButtonTram
+               
+                backgroundColor="var(--tranbolico-fucsia)"
+                onClick={() => navigate("/")}
+              >
+                Volver
+              </ButtonTram>
             </div>
           </div>
         </Container>

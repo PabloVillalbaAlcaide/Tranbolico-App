@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { Col, Container, Row, Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
+import { ButtonTram } from "../../../components/ButtonTram/ButtonTram";
 
 const initialValue = {
   oldPassword: "",
@@ -147,15 +148,21 @@ export const ResetPassword = () => {
 
             <br />
             <div className="d-flex flex-row gap-2 align-items-center justify-content-center flex-column gap-2">
-              <Button onClick={onSubmit} className="btn-iniciar-login">
+              {/* <Button onClick={onSubmit} className="btn-iniciar-login">
                 Restablecer Contraseña
-              </Button>
-              <Button
+              </Button> */}
+              <ButtonTram padding="10px 27px" color="black" onClick={onSubmit}>
+                Aceptar
+              </ButtonTram>
+              {/* <Button
                 className="btn-volver-login border-0 "
                 onClick={() => navigate("/")}
               >
                 Volver
-              </Button>
+              </Button> */}
+              <ButtonTram backgroundColor='var(--tranbolico-fucsia)' onClick={() => navigate("/")}>
+                Volver
+              </ButtonTram>
             </div>
           </Col>
         </Container>
