@@ -1,5 +1,5 @@
 import { PureComponent, useContext, useEffect, useState } from "react";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell } from "recharts";
 import axios from "axios";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
 
@@ -24,28 +24,43 @@ export const StatisticsUsers = () => {
         value = parseInt(value);
         return { key, value };
       });
-
       setTotalUsers(mappedArray.shift());
-     
       setData(mappedArray);
     } catch (err) {
       console.log(err);
     }
   };
-  console.log(data);
-  
+
+  const RADIAN = Math.PI / 180;
+  const renderCustomizedLabel = ({ cx, cy, midAngle, outerRadius, index }) => {
+    const radius = outerRadius + 30;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <>
+        <text
+          x={x}
+          y={y}
+          fill="black"
+          textAnchor={x > cx ? "start" : "end"}
+          dominantBaseline="central"
+        >
+          {`${index === 0 ? "Habilitados" : "Deshabilitados"} - ${
+            data[index]?.value
+          }`}
+        </text>
+      </>
+    );
+  };
+
   return (
     <>
       {data && (
-        <>
-          <div className="d-flex flex-column">
-            <span>Totales: {`${totalUsers?.value}`}</span>
-            <span>Habilitados: {`${data[0]?.value}`}</span>
-            <span>Deshabilitados: {`${data[1]?.value}`}</span>
-          </div>
+        <div className="d-flex flex-column align-items-center justify-content-center position-relative">
           <PieChart
             width={800}
-            height={400}
+            height={250}
             onMouseEnter={PureComponent.onPieEnter}
           >
             <Pie
@@ -59,7 +74,7 @@ export const StatisticsUsers = () => {
               fill="#8884d8"
               paddingAngle={5}
               dataKey="value"
-              label
+              label={renderCustomizedLabel}
             >
               {data.map((entry, index) => (
                 <Cell
@@ -69,7 +84,13 @@ export const StatisticsUsers = () => {
               ))}
             </Pie>
           </PieChart>
-        </>
+          <span
+            className="position-absolute start-50 end-50 text-nowrap"
+            style={{ transform: "translate(-10px, 100px)" }}
+          >
+            Totales: {`${totalUsers?.value}`}
+          </span>
+        </div>
       )}
     </>
   );
