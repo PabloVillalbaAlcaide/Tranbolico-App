@@ -122,8 +122,14 @@
   .NavbarRegisterLoginColor {
     color: white;
   }
-  .NavbarRegisterLoginColor:hover {
-    color: rgb(127, 127, 127);
+
+  .NavbarRegisterLoginColor:hover,
+  .NavbarRegisterLoginColor:focus,
+  .NavbarRegisterLoginColor:active,
+  .NavbarRegisterLoginColor:focus:active {
+    color: var(--tranbolico-amarillo);
+    background-color: transparent;
+
   }
   .NavbarRegisterLogin:hover {
     background-color: transparent;
@@ -137,4 +143,33 @@
   .NavbarLogo {
     display: none;
   }
+}
+
+.NavbarLogout {
+  background-color: white;
+  margin-inline: 10px;
+  color: var(--tranbolico-azul);
+  font-family: "Akkurat-Regular.ttf", system-ui;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  padding-inline: 10px;
+  transition-duration: 0.2s;
+  min-width: 135px;
+  min-height: 50px;
+  border: none;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.NavbarLogout:hover {
+  color: white;
+  transform: rotate(2deg);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.NavbarLogout:hover,
+.NavbarLogout:focus,
+.NavbarLogout:active,
+.NavbarLogout:focus:active {
+  background-color: var(--tranbolico-rosa);
 }

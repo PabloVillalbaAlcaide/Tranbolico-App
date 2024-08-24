@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
 import axios from "axios";
-import { Button, Table, Form } from "react-bootstrap";
+import { Button, Table, Form, Row, Container } from "react-bootstrap";
 import { AddNewPlanningModal } from "../../../components/Admin/AddNewPlanningModal/AddNewPlanningModal";
 import { format } from "date-fns";
 import "./viewAddPlanning.scss";
@@ -116,127 +116,147 @@ export const ViewAddPlanning = () => {
   };
 
   return (
-    <div>
-      <div className="d-flex justify-content-center my-4 gap-2">
-        <Button
-          className="btn-add-planning"
-          onClick={() => setShowModal(true)}
-          aria-label="Añadir Nuevo Planning"
-        >
-          Añadir Nuevo Planning
-        </Button>
-        <Button className="btn-volver-panel" onClick={() => navigate("/admin")}>
-          Volver al panel
-        </Button>
-      </div>
-      <Table striped bordered hover responsive>
-        <thead>
-          <tr>
-            <th>Departure Date</th>
-            <th>Departure Time</th>
-            <th>Departure City</th>
-            <th>Departure Province</th>
-            <th>Arrival City</th>
-            <th>Arrival Province</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {planningList &&
-            planningList.map((item) => {
-              return (
-                <tr key={`${item.route_id}-${item.planning_id}`}>
-                  <td>
-                    {editing.routeId === item.route_id &&
-                    editing.planningId === item.planning_id ? (
-                      <Form.Group controlId="formDepartureDate">
-                        <Form.Control
-                          type="date"
-                          name="departure_date"
-                          value={
-                            editData.departure_date ||
-                            format(item.departure_date, "dd-MM-yyyy")
-                          }
-                          onChange={handleInputChange}
-                        />
-                      </Form.Group>
-                    ) : (
-                      format(item.departure_date, "dd-MM-yyyy")
-                    )}
-                  </td>
-                  <td>
-                    {editing.routeId === item.route_id &&
-                    editing.planningId === item.planning_id ? (
-                      <Form.Group controlId="formDepartureTime">
-                        <Form.Control
-                          type="time"
-                          name="departure_time"
-                          value={editData.departure_time || item.departure_time}
-                          onChange={handleInputChange}
-                        />
-                      </Form.Group>
-                    ) : (
-                      item.departure_time
-                    )}
-                  </td>
-                  <td>{item.departure_city}</td>
-                  <td>{item.departure_province}</td>
-                  <td>{item.arrival_city}</td>
-                  <td>{item.arrival_province}</td>
-                  <td>
-                    <div className="d-flex flex-column flex-md-row justify-content-around gap-2">
+    <>
+      <Row>
+        <div className="ppal-userView text-center text-white mt-3">
+          <h2 className="mb-0 py-2">PLANNING</h2>
+        </div>
+      </Row>
+      <Container fluid="xl">
+        <div className="position-relative my-4">
+          <Button
+            className="btn-volver-panel position-absolute start-0"
+            onClick={() => navigate("/admin")}
+          >
+            Volver al panel
+          </Button>
+          <div className="d-flex justify-content-center">
+            <Button
+              className="btn-add-planning"
+              onClick={() => setShowModal(true)}
+              aria-label="Añadir Nuevo Planning"
+            >
+              Añadir Nuevo Planning
+            </Button>
+          </div>
+        </div>
+        <Table striped bordered hover responsive>
+          <thead>
+            <tr>
+              <th>Departure Date</th>
+              <th>Departure Time</th>
+              <th>Departure City</th>
+              <th>Departure Province</th>
+              <th>Arrival City</th>
+              <th>Arrival Province</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {planningList &&
+              planningList.map((item) => {
+                return (
+                  <tr key={`${item.route_id}-${item.planning_id}`}>
+                    <td>
                       {editing.routeId === item.route_id &&
                       editing.planningId === item.planning_id ? (
+                        <Form.Group controlId="formDepartureDate">
+                          <Form.Control
+                            type="date"
+                            name="departure_date"
+                            value={
+                              editData.departure_date ||
+                              format(item.departure_date, "dd-MM-yyyy")
+                            }
+                            onChange={handleInputChange}
+                          />
+                        </Form.Group>
+                      ) : (
+                        format(item.departure_date, "dd-MM-yyyy")
+                      )}
+                    </td>
+                    <td>
+                      {editing.routeId === item.route_id &&
+                      editing.planningId === item.planning_id ? (
+                        <Form.Group controlId="formDepartureTime">
+                          <Form.Control
+                            type="time"
+                            name="departure_time"
+                            value={
+                              editData.departure_time || item.departure_time
+                            }
+                            onChange={handleInputChange}
+                          />
+                        </Form.Group>
+                      ) : (
+                        item.departure_time
+                      )}
+                    </td>
+                    <td>{item.departure_city}</td>
+                    <td>{item.departure_province}</td>
+                    <td>{item.arrival_city}</td>
+                    <td>{item.arrival_province}</td>
+                    <td>
+                      <div className="d-flex flex-column flex-md-row justify-content-around gap-2">
+                        {editing.routeId === item.route_id &&
+                        editing.planningId === item.planning_id ? (
+                          <Button
+                            style={{
+                              backgroundColor: "var(--tranbolico-verde)",
+                              color: "black",
+                              border: "none",
+                            }}
+                            onClick={() =>
+                              handleEditPlanning(
+                                item.route_id,
+                                item.planning_id
+                              )
+                            }
+                          >
+                            Guardar
+                          </Button>
+                        ) : (
+                          <Button
+                            style={{
+                              backgroundColor: "var(--tranbolico-azulClaro)",
+                              color: "black",
+                              border: "none",
+                            }}
+                            onClick={() => onEdit(item)}
+                          >
+                            Editar
+                          </Button>
+                        )}
                         <Button
                           style={{
-                            backgroundColor: "var(--tranbolico-verde)",
+                            backgroundColor: "var(--tranbolico-rosa)",
                             color: "black",
                             border: "none",
                           }}
                           onClick={() =>
-                            handleEditPlanning(item.route_id, item.planning_id)
+                            handleDeletePlanning(
+                              item.route_id,
+                              item.planning_id
+                            )
                           }
+                          aria-label={`Eliminar planning ${item.route_id}-${item.planning_id}`}
                         >
-                          Guardar
+                          Eliminar
                         </Button>
-                      ) : (
-                        <Button
-                          style={{
-                            backgroundColor: "var(--tranbolico-azulClaro)",
-                            color: "black",
-                            border: "none",
-                          }}
-                          onClick={() => onEdit(item)}
-                        >
-                          Editar
-                        </Button>
-                      )}
-                      <Button
-                        style={{
-                          backgroundColor: "var(--tranbolico-rosa)",
-                          color: "black",
-                          border: "none",
-                        }}
-                        onClick={() =>
-                          handleDeletePlanning(item.route_id, item.planning_id)
-                        }
-                        aria-label={`Eliminar planning ${item.route_id}-${item.planning_id}`}
-                      >
-                        Eliminar
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </Table>
 
-      <AddNewPlanningModal
-        show={showModal}
-        onHide={() => setShowModal(false)}
-        onSave={handleSavePlanning}
-      />
-    </div>
+        <AddNewPlanningModal
+          show={showModal}
+          onHide={() => setShowModal(false)}
+          onSave={handleSavePlanning}
+        />
+      </Container>
+    </>
   );
 };

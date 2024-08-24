@@ -56,26 +56,68 @@ export const NavBarApp = () => {
                 <Nav className="me-auto NavbarCollapse w-100">
                   <div className="d-flex justify-content-start align-items-lg-center flex-lg-row flex-column col-8">
                     {globalState.user?.user_type === 1 ? (
-                      <Nav.Link as={Link} to="/admin" className="NavbarNavLink">
-                        Admin
-                      </Nav.Link>
+                      <div className="d-flex justify-content-start align-items-lg-center flex-lg-row flex-column col-12">
+                        <Nav.Link
+                          as={Link}
+                          to="/admin"
+                          className="NavbarNavLink"
+                        >
+                          Admin
+                        </Nav.Link>
+                        <Nav.Link
+                          as={Link}
+                          to="/routes"
+                          className="NavbarNavLink"
+                        >
+                          Rutas
+                        </Nav.Link>
+                        <Nav.Link
+                          as={Link}
+                          to="/about"
+                          className="NavbarNavLink"
+                        >
+                          Conócenos
+                        </Nav.Link>
+                        <Nav.Link
+                          as={Link}
+                          to="/faqs"
+                          className="NavbarNavLink"
+                        >
+                          FAQ´S
+                        </Nav.Link>
+                      </div>
                     ) : (
-                      <Nav.Link
-                        onClick={handleNavigation}
-                        className="NavbarNavLink"
-                      >
-                        Reservas
-                      </Nav.Link>
+                      <div className="d-flex justify-content-start align-items-lg-center flex-lg-row flex-column col-12">
+                        <Nav.Link
+                          as={Link}
+                          to="/routes"
+                          className="NavbarNavLink"
+                        >
+                          Rutas
+                        </Nav.Link>
+                        <Nav.Link
+                          as={Link}
+                          to="/about"
+                          className="NavbarNavLink"
+                        >
+                          Conócenos
+                        </Nav.Link>
+
+                        <Nav.Link
+                          onClick={handleNavigation}
+                          className="NavbarNavLink"
+                        >
+                          Mis Reservas
+                        </Nav.Link>
+                        <Nav.Link
+                          as={Link}
+                          to="/faqs"
+                          className="NavbarNavLink"
+                        >
+                          FAQ´S
+                        </Nav.Link>
+                      </div>
                     )}
-                    <Nav.Link as={Link} to="/routes" className="NavbarNavLink">
-                      Rutas
-                    </Nav.Link>
-                    <Nav.Link as={Link} to="/about" className="NavbarNavLink">
-                      Conócenos
-                    </Nav.Link>
-                    <Nav.Link as={Link} to="/faqs" className="NavbarNavLink">
-                      FAQ´S
-                    </Nav.Link>
                   </div>
                   {!globalState.user || !globalState.token ? (
                     <div className="d-flex justify-content-xl-end  flex-lg-row flex-column align-items-lg-center">
@@ -115,7 +157,7 @@ export const NavBarApp = () => {
                       <div>
                         <Button
                           onClick={logOut}
-                          className="NavbarRegisterLoginColor NavbarRegisterLogin"
+                          className="NavbarRegisterLoginColor NavbarLogout"
                         >
                           Cerrar Sesión
                         </Button>

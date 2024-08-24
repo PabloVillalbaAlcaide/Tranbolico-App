@@ -3,7 +3,11 @@ import { useContext, useState } from "react";
 import { Col, Container, Row, Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
+
 import { ButtonTram } from "../../../components/ButtonTram/ButtonTram";
+
+import "./ResetPassword.scss";
+
 
 const initialValue = {
   oldPassword: "",
@@ -23,22 +27,20 @@ export const ResetPassword = () => {
       password1: "",
       password2: "",
     };
-    //validamos password
+    // Validamos password
     const passwordPattern = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
     if (!pass.password) {
       newErrors.password1 = "La contraseña es obligatoria";
       valid = false;
     } else if (pass.password.length > 100) {
-      newErrors.password1 =
-        "La contraseña debe contener como máximo 100 caracteres";
+      newErrors.password1 = "La contraseña debe contener como máximo 100 caracteres";
       valid = false;
     } else if (!passwordPattern.test(pass.password)) {
-      newErrors.password1 =
-        "La contraseña debe ser de más de 8 caracteres, contener al menos una mayúscula, una minúscula, y un número";
+      newErrors.password1 = "La contraseña debe ser de más de 8 caracteres, contener al menos una mayúscula, una minúscula, y un número";
       valid = false;
     }
 
-    //comparamos password1 y password2
+    // Comparamos password1 y password2
     if (pass.password !== pass2) {
       newErrors.password2 = "Las contraseñas no coinciden";
       valid = false;
@@ -90,17 +92,18 @@ export const ResetPassword = () => {
       console.log(err);
     }
   };
+
   return (
     <>
       <Row>
-        <div className="ppal-register text-center text-white mt-2 mb-2 ">
+        <div className="ppal-register text-center text-white mt-2 mb-2">
           <h2 className="mb-0 py-2">Restablecer Contraseña</h2>
         </div>
         <Container
           fluid
           className="contenedor-restablecer-password mt-5 text-center p-5 d-flex align-items-center justify-content-center flex-column"
         >
-          <Col xs={12} md={8} lg={6} xl={4}>
+          <Col xs={12} md={10} lg={8} xl={6}>
             <div className="text-center">
               <img
                 className="restablecer-img mt-1"
@@ -112,7 +115,7 @@ export const ResetPassword = () => {
               <Form.Control
                 className="input-form-login"
                 type="password"
-                placeholder="Constraseña"
+                placeholder="Contraseña"
                 onChange={handleChange}
                 value={pass.oldPassword}
                 name="oldPassword"
@@ -122,7 +125,7 @@ export const ResetPassword = () => {
               <Form.Control
                 className="input-form-login mt-2"
                 type="password"
-                placeholder="Nueva Constraseña"
+                placeholder="Nueva Contraseña"
                 onChange={handleChange}
                 value={pass.password}
                 name="password"
@@ -132,15 +135,15 @@ export const ResetPassword = () => {
               <Form.Control
                 className="input-form-login mt-2"
                 type="password"
-                placeholder="Repite Constraseña"
+                placeholder="Repite Contraseña"
                 onChange={handleChangePass2}
                 value={pass2}
                 name="password2"
               />
             </Form.Group>
 
-            {errors.password && (
-              <p className="text-danger">{errors.password}</p>
+            {errors.password1 && (
+              <p className="text-danger">{errors.password1}</p>
             )}
             {errors.password2 && (
               <p className="text-danger">{errors.password2}</p>
@@ -148,21 +151,31 @@ export const ResetPassword = () => {
 
             <br />
             <div className="d-flex flex-row gap-2 align-items-center justify-content-center flex-column gap-2">
+
               {/* <Button onClick={onSubmit} className="btn-iniciar-login">
                 Restablecer Contraseña
               </Button> */}
-              <ButtonTram padding="10px 27px" color="black" onClick={onSubmit}>
-                Aceptar
-              </ButtonTram>
+           
               {/* <Button
                 className="btn-volver-login border-0 "
                 onClick={() => navigate("/")}
               >
                 Volver
               </Button> */}
-              <ButtonTram backgroundColor='var(--tranbolico-fucsia)' onClick={() => navigate("/")}>
-                Volver
+             
+
+              <ButtonTram padding="10px 27px" color="black" onClick={onSubmit}>
+                Aceptar
               </ButtonTram>
+
+              <ButtonTram
+                  backgroundColor='var(--tranbolico-fucsia)'
+                  onClick={() => {if(globalState?.user){navigate(-1)}else{navigate("/")}}}
+                >
+                  Volver
+                </ButtonTram>
+
+
             </div>
           </Col>
         </Container>

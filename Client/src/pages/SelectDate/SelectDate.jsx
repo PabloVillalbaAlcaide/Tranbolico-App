@@ -138,7 +138,7 @@ export const SelectDate = () => {
   console.log(planningList);
 
   return (
-    <Container fluid className="p-0 m-0 mt-5 mb-5">
+    <Container fluid className="p-0 m-0 mt-5 mb-5 d-flex flex-column justify-content-center align-items-center">
       <Row>
         <h3 className="text-center pb-4">
           Selecciona día de{" "}

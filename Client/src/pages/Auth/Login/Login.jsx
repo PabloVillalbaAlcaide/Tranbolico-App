@@ -19,6 +19,12 @@ export const Login = () => {
   const [msg, setMsg] = useState(false);
   const { globalState, setGlobalState } = useContext(AppContext);
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLogin({ ...login, [name]: value });
@@ -72,6 +78,7 @@ export const Login = () => {
                 onChange={handleChange}
                 value={login.email}
                 name="email"
+                autoFocus
               />
             </Form.Group>
             <Form.Group controlId="formBasicPassword">
@@ -82,6 +89,7 @@ export const Login = () => {
                 onChange={handleChange}
                 value={login.password}
                 name="password"
+                onKeyDown={handleKeyPress}
               />
             </Form.Group>
             {/* {msg && <p style={{ color: "#e72957"}}>Datos incorrectos</p>} */}

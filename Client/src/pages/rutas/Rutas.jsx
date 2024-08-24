@@ -82,15 +82,19 @@ export const Rutas = () => {
         <br />
         <div className="contenedor-form-rutas d-flex justify-content-center align-items-center flex-column">
           <Form>
-            <Form.Group className="mb-3" controlId="formBasicOrigin">
-              <Form.Label>Origen</Form.Label>
+            <Form.Group
+              className="mb-3 text-center"
+              controlId="formBasicOrigin"
+            >
+              <Form.Label className="fs-4">Origen</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="origen"
+                placeholder="estoy en.."
                 onChange={handleOriginChange}
                 value={origin || ""}
                 name="origin"
                 autoComplete="off"
+                className="text-center"
               />
               {originSuggestions.length > 0 && (
                 <div className="suggestions">
@@ -121,9 +125,13 @@ export const Rutas = () => {
               )}
             </Form.Group>
           </Form>
+
           <ButtonTram 
           color="black" 
           onClick={onSubmit}>
+
+          //<Button className="btn-rutas-SB2" onClick={onSubmit}>
+
             Buscar
           </ButtonTram>
           {noRoutesMessage && (
@@ -158,6 +166,7 @@ export const Rutas = () => {
           )}
         </div>
         <br />
+        <br /> <br />
       </div>
     </>
   );

@@ -2,29 +2,60 @@ p {
   margin-bottom: 0;
 }
 
+/* Estilos para el contenedor principal del registro */
 .ppal-register {
   font-family: "VinaSans-Regular.ttf";
+  h2 {
+    font-size: 3rem;
+  }
 }
 
-.ppal-register h2 {
-  font-size: 3rem;
-}
-
+/* Colores de fondo para botones específicos */
 .ppal-register,
 .aceptar {
   background-color: var(--tranbolico-azul);
 }
+
 .cancelar {
   background-color: var(--tranbolico-fucsia);
 }
-.input-form {
-  border-radius: 20px;
+
+/* Estilos para los inputs del formulario */
+.input-form-register,
+.province-city-container-register input,
+.province-city-container-register .form-control {
+  border-radius: 10px;
   border: 2px solid black;
   font-style: italic;
   text-align: center;
   font-size: 1.2rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+  margin: 0; /* Eliminar márgenes que puedan centrar el input */
 }
 
+/* Efectos al enfocar o pasar el mouse sobre los inputs */
+.input-form-register:focus,
+.input-form-register:hover,
+.province-city-container-register input:focus,
+.province-city-container-register input:hover,
+.province-city-container-register .form-control:focus,
+.province-city-container-register .form-control:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+/* Eliminar sombra y mantener el color del borde al enfocar */
+.form-control:focus,
+.province-city-container-register input:focus,
+.province-city-container-register .form-control:focus {
+  box-shadow: none;
+  border-color: inherit;
+}
+
+/* Estilos para el contenedor del registro */
 .contenedor-register {
   font-family: "Akkurat-Regular.ttf";
   font-size: 1rem;
@@ -38,31 +69,53 @@ p {
   margin: 0 auto;
 }
 
+/* Estilos para la imagen del registro */
 .register-img {
   background-color: #91cad8;
-  border-radius: 100px;
+  border-radius: 100%;
   border: 1px solid black;
-  width: 65px;
+  width: 70px;
   position: relative;
-  top: -90px;
+  top: -85px;
   box-shadow: 0 0 0 5px;
 }
 
-.input-form {
-  border-radius: 10px;
-  border: 2px solid black;
-  font-style: italic;
-  text-align: center;
-  font-size: 1.2rem;
-  margin: 0 auto;
+/* Grid principal del formulario */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px; /* Espacio entre inputs */
 }
 
-@media (max-width: 800px) {
-  .contenedor-register {
-    width: 80%;
-    min-width: 300px;
+/* Contenedor para los inputs de Provincia y Ciudad */
+.province-city-container-register {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+/* Media queries para pantallas grandes */
+@media (min-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
   }
-  .input-form {
-    max-width: 100%;
+
+  /* Si el contenedor tiene la clase 'with-city', organizar Provincia y Ciudad en dos columnas */
+  .province-city-container-register.with-city,
+  .province-city-container-register:not(.with-city) {
+    grid-template-columns: 1fr;
+    grid-column: span 2;
+  }
+
+  /* Si no tiene la clase 'with-city', hacer que el contenedor ocupe dos columnas completas */
+  // .province-city-container-register:not(.with-city) {
+  //   grid-column: span 2;
+  // }
+
+  /* Asegurar que ciertos inputs ocupen dos columnas completas */
+  .form-grid .input-form-register[type="select"], /* Género */
+  .form-grid .form-group[controlId="formBasicPassword"], /* Contraseña */
+  .form-grid .form-group[controlId="formBasicPassword2"] /* Confirmar Contraseña */ {
+    grid-column: span 2;
   }
 }
