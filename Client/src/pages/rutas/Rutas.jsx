@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Rutas.scss";
 import { AppContext } from "../../context/TranbolicoContextProvider";
-import { ProgressBar } from "../../components/ProgressBar/ProgressBar";
+
+import { ButtonTram } from "../../components/ButtonTram/ButtonTram";
+
 
 export const Rutas = () => {
   const { globalState } = useContext(AppContext);
@@ -83,15 +85,19 @@ export const Rutas = () => {
         <br />
         <div className="contenedor-form-rutas d-flex justify-content-center align-items-center flex-column">
           <Form>
-            <Form.Group className="mb-3" controlId="formBasicOrigin">
-              <Form.Label>Origen</Form.Label>
+            <Form.Group
+              className="mb-3 text-center"
+              controlId="formBasicOrigin"
+            >
+              <Form.Label className="fs-4">Origen</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="origen"
+                placeholder="estoy en.."
                 onChange={handleOriginChange}
                 value={origin || ""}
                 name="origin"
                 autoComplete="off"
+                className="text-center"
               />
               {originSuggestions.length > 0 && (
                 <div className="suggestions">
@@ -122,9 +128,12 @@ export const Rutas = () => {
               )}
             </Form.Group>
           </Form>
-          <Button className="btn-iniciar-login" onClick={onSubmit}>
+
+          <ButtonTram 
+          color="black" 
+          onClick={onSubmit}>
             Buscar
-          </Button>
+          </ButtonTram>
           {noRoutesMessage && (
             <p style={{ color: "red", marginTop: "20px" }}>{noRoutesMessage}</p>
           )}
@@ -142,12 +151,14 @@ export const Rutas = () => {
                   >
                     <p>{originFinal.city}</p>
                     <p>{e.city_name}</p>
-                    <Button
+                    <ButtonTram
+                      padding = '10px 35px'
+                      fontSize="1.5rem"
+                      backgroundColor="var(--tranbolico-fucsia)"
                       onClick={() => onSubmit2(e)}
-                      className="btn-reservar_rutas mt-2"
                     >
                       Reservar
-                    </Button>
+                    </ButtonTram>
                   </Col>
                 );
               })}
@@ -155,6 +166,7 @@ export const Rutas = () => {
           )}
         </div>
         <br />
+        <br /> <br />
       </div>
     </>
   );

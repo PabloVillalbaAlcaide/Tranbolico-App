@@ -186,12 +186,12 @@ class AdminController {
     dp_prov.name AS departure_province,
     ap.city_name AS arrival_city,
     ap_prov.name AS arrival_province
-FROM planning JOIN route ON planning.route_id = route.route_id
-JOIN city dp ON route.departure_city_id = dp.city_id 
-AND route.departure_province_id = dp.province_id
-JOIN province dp_prov ON dp.province_id = dp_prov.province_id
-JOIN city ap ON route.arrival_city_id = ap.city_id AND route.arrival_province_id = ap.province_id
-JOIN province ap_prov ON ap.province_id = ap_prov.province_id`;
+    FROM planning JOIN route ON planning.route_id = route.route_id
+    JOIN city dp ON route.departure_city_id = dp.city_id 
+    AND route.departure_province_id = dp.province_id
+    JOIN province dp_prov ON dp.province_id = dp_prov.province_id
+    JOIN city ap ON route.arrival_city_id = ap.city_id AND route.arrival_province_id = ap.province_id
+    JOIN province ap_prov ON ap.province_id = ap_prov.province_id`;
     connection.query(sql, (err, result) => {
       if (err) {
         return res.status(500).json(err);
@@ -209,12 +209,12 @@ JOIN province ap_prov ON ap.province_id = ap_prov.province_id`;
     departure_province.name AS departure_province_name,
     arrival_city.city_name AS arrival_city_name,
     arrival_province.name AS arrival_province_name
-FROM route
-JOIN city AS departure_city ON route.departure_city_id = departure_city.city_id AND route.departure_province_id = departure_city.province_id
-JOIN province AS departure_province ON departure_city.province_id = departure_province.province_id
-JOIN city AS arrival_city ON route.arrival_city_id = arrival_city.city_id AND route.arrival_province_id = arrival_city.province_id
-JOIN province AS arrival_province ON arrival_city.province_id = arrival_province.province_id
-WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' OR departure_city.city_name LIKE '${search}%')`;
+    FROM route
+    JOIN city AS departure_city ON route.departure_city_id = departure_city.city_id AND route.departure_province_id = departure_city.province_id
+    JOIN province AS departure_province ON departure_city.province_id = departure_province.province_id
+    JOIN city AS arrival_city ON route.arrival_city_id = arrival_city.city_id AND route.arrival_province_id = arrival_city.province_id
+    JOIN province AS arrival_province ON arrival_city.province_id = arrival_province.province_id
+    WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' OR departure_city.city_name LIKE '${search}%')`;
     connection.query(sql, (err, result) => {
       if (err) {
         return res.status(500).json(err);
@@ -329,117 +329,55 @@ WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' O
     });
   };
 
-  historicalUser = (req, res) => {
-    const { userid } = req.query;
-    const sql = ` SELECT
-    reservation.user_id,
-    reservation.reservation_id,
-    reservation.reservation_type,
-    reservation.is_deleted,
-    route.text AS route_name,
-    planning.departure_date AS departure_day,
-    planning.departure_time AS departure_time,
-    dp.name AS departure_province_name,
-    dc.city_name AS departure_city_name,
-    ap.name AS arrival_province_name,
-    ac.city_name AS arrival_city_name
-FROM reservation JOIN planning ON reservation.route_id = planning.route_id AND reservation.planning_id = planning.planning_id
-JOIN route ON reservation.route_id = route.route_id JOIN  province dp ON route.departure_province_id = dp.province_id
-JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
-JOIN province ap ON route.arrival_province_id = ap.province_id JOIN city ac ON route.arrival_city_id = ac.city_id
-AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${userid}
-AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) <= NOW() OR reservation.user_id = ${userid} AND reservation.is_deleted = 1;`;
-    connection.query(sql, (err, result) => {
-      if (err) {
-        console.error("error en traer usuario", err);
-        return res
-          .status(500)
-          .json({ error: "error en traer historial del usuario" });
-      }
-      res.status(200).json(result);
-    });
-  };
+//   getPlanning = (req, res) => {
+//     const sql = `SELECT 
+//     planning.route_id,
+//     planning.planning_id,
+//     planning.departure_date,
+//     planning.departure_time,
+//     dp.city_name AS departure_city,
+//     dp_prov.name AS departure_province,
+//     ap.city_name AS arrival_city,
+//     ap_prov.name AS arrival_province
+// FROM planning JOIN route ON planning.route_id = route.route_id
+// JOIN city dp ON route.departure_city_id = dp.city_id 
+// AND route.departure_province_id = dp.province_id
+// JOIN province dp_prov ON dp.province_id = dp_prov.province_id
+// JOIN city ap ON route.arrival_city_id = ap.city_id AND route.arrival_province_id = ap.province_id
+// JOIN province ap_prov ON ap.province_id = ap_prov.province_id
+// WHERE CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) > NOW()`;
+//     connection.query(sql, (err, result) => {
+//       if (err) {
+//         return res.status(500).json(err);
+//       } else {
+//         res.status(200).json(result);
+//       }
+//     });
+//   };
 
-  //vista reservas de usuario
-  reservationUser = (req, res) => {
-    const { userid } = req.query;
-    const sql = `SELECT
-    reservation.user_id,
-    reservation.reservation_id,
-    reservation.reservation_type,
-    route.text AS route_name,
-    planning.departure_date AS departure_day,
-    planning.departure_time AS departure_time,
-    dp.name AS departure_province_name,
-    dc.city_name AS departure_city_name,
-    ap.name AS arrival_province_name,
-    ac.city_name AS arrival_city_name
-FROM reservation JOIN planning ON reservation.route_id = planning.route_id AND reservation.planning_id = planning.planning_id
-JOIN route ON reservation.route_id = route.route_id JOIN  province dp ON route.departure_province_id = dp.province_id
-JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
-JOIN province ap ON route.arrival_province_id = ap.province_id JOIN city ac ON route.arrival_city_id = ac.city_id
-AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${userid}
-AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) >= NOW() AND reservation.is_deleted = 0 `;
-    connection.query(sql, (err, result) => {
-      if (err) {
-        console.error("error en traer usuario", err);
-        return res
-          .status(500)
-          .json({ error: "error en traer reservas del usuario" });
-      }
-      res.status(200).json(result);
-    });
-  };
+//   getPlanningRoutes = (req, res) => {
+//     const { search } = req.query;
+//     const sql = `SELECT 
+//     route.*,
+//     departure_city.city_name AS departure_city_name,
+//     departure_province.name AS departure_province_name,
+//     arrival_city.city_name AS arrival_city_name,
+//     arrival_province.name AS arrival_province_name
+// FROM route
+// JOIN city AS departure_city ON route.departure_city_id = departure_city.city_id AND route.departure_province_id = departure_city.province_id
+// JOIN province AS departure_province ON departure_city.province_id = departure_province.province_id
+// JOIN city AS arrival_city ON route.arrival_city_id = arrival_city.city_id AND route.arrival_province_id = arrival_city.province_id
+// JOIN province AS arrival_province ON arrival_city.province_id = arrival_province.province_id
+// WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' OR departure_city.city_name LIKE '${search}%')`;
 
-  getPlanning = (req, res) => {
-    const sql = `SELECT 
-    planning.route_id,
-    planning.planning_id,
-    planning.departure_date,
-    planning.departure_time,
-    dp.city_name AS departure_city,
-    dp_prov.name AS departure_province,
-    ap.city_name AS arrival_city,
-    ap_prov.name AS arrival_province
-FROM planning JOIN route ON planning.route_id = route.route_id
-JOIN city dp ON route.departure_city_id = dp.city_id 
-AND route.departure_province_id = dp.province_id
-JOIN province dp_prov ON dp.province_id = dp_prov.province_id
-JOIN city ap ON route.arrival_city_id = ap.city_id AND route.arrival_province_id = ap.province_id
-JOIN province ap_prov ON ap.province_id = ap_prov.province_id
-WHERE CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) > NOW()`;
-    connection.query(sql, (err, result) => {
-      if (err) {
-        return res.status(500).json(err);
-      } else {
-        res.status(200).json(result);
-      }
-    });
-  };
-
-  getPlanningRoutes = (req, res) => {
-    const { search } = req.query;
-    const sql = `SELECT 
-    route.*,
-    departure_city.city_name AS departure_city_name,
-    departure_province.name AS departure_province_name,
-    arrival_city.city_name AS arrival_city_name,
-    arrival_province.name AS arrival_province_name
-FROM route
-JOIN city AS departure_city ON route.departure_city_id = departure_city.city_id AND route.departure_province_id = departure_city.province_id
-JOIN province AS departure_province ON departure_city.province_id = departure_province.province_id
-JOIN city AS arrival_city ON route.arrival_city_id = arrival_city.city_id AND route.arrival_province_id = arrival_city.province_id
-JOIN province AS arrival_province ON arrival_city.province_id = arrival_province.province_id
-WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' OR departure_city.city_name LIKE '${search}%')`;
-
-    connection.query(sql, (err, result) => {
-      if (err) {
-        return res.status(500).json(err);
-      } else {
-        console.log(result);
-        res.status(200).json(result);
-      }
-    });
-  };
+//     connection.query(sql, (err, result) => {
+//       if (err) {
+//         return res.status(500).json(err);
+//       } else {
+//         console.log(result);
+//         res.status(200).json(result);
+//       }
+//     });
+//   };
 }
 module.exports = new AdminController();

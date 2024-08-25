@@ -35,18 +35,28 @@ class StatisticsController {
   statisticsAge=(req,res)=>{
     const sql = `SELECT 
     CASE 
-    WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 16 AND 20 THEN '16-20'
-    WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 21 AND 25 THEN '21-25'
-    WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 26 AND 30 THEN '26-30'
-    WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 31 AND 35 THEN '31-35'
-    WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 36 AND 40 THEN '36-40'
-    WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 41 AND 45 THEN '41-45'
-    ELSE '45+'
+        WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 16 AND 20 THEN '16-20'
+        WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 21 AND 25 THEN '21-25'
+        WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 26 AND 30 THEN '26-30'
+        WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 31 AND 35 THEN '31-35'
+        WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 36 AND 40 THEN '36-40'
+        ELSE '41+'
     END AS age_group,
-    COUNT(*) AS user_count
-    FROM user
-    GROUP BY age_group`;
-
+    SUM(CASE WHEN genre IS NULL THEN 1 ELSE 0 END) AS genre_null,
+    SUM(CASE WHEN genre = 1 THEN 1 ELSE 0 END) AS genre_1,
+    SUM(CASE WHEN genre = 2 THEN 1 ELSE 0 END) AS genre_2,
+    SUM(CASE WHEN genre = 3 THEN 1 ELSE 0 END) AS genre_3
+FROM user
+GROUP BY age_group
+ORDER BY 
+    CASE 
+        WHEN age_group = '16-20' THEN 1
+        WHEN age_group = '21-25' THEN 2
+        WHEN age_group = '26-30' THEN 3
+        WHEN age_group = '31-35' THEN 4
+        WHEN age_group = '36-40' THEN 5
+        ELSE 6
+    END;`
     connection.query(sql,(err,result)=>{
       if(err){
         return res.status(500).json(err)
@@ -57,56 +67,22 @@ class StatisticsController {
   }
 
   statisticsRoutes=(req,res)=>{
-    const sql = `WITH TopRoutes AS (
-    SELECT 
-    r.route_id,
-    r.departure_city_id,
-    r.departure_province_id,
-    r.arrival_city_id,
-    r.arrival_province_id,
-    COUNT(reservation_id) AS reservation_count
-    FROM 
-    route r
-    JOIN 
-    reservation res ON r.route_id = res.route_id
-    GROUP BY 
-    r.route_id
-    ORDER BY 
-    reservation_count DESC
-    LIMIT 10
-    ),
-    CombinedRoutes AS (
-    SELECT 
-    LEAST(tr1.route_id, tr2.route_id) AS route_id_1,
-    GREATEST(tr1.route_id, tr2.route_id) AS route_id_2,
-    LEAST(tr1.departure_city_id, tr1.arrival_city_id) AS departure_city_id,
-    LEAST(tr1.departure_province_id, tr1.arrival_province_id) AS departure_province_id,
-    GREATEST(tr1.departure_city_id, tr1.arrival_city_id) AS arrival_city_id,
-    GREATEST(tr1.departure_province_id, tr1.arrival_province_id) AS arrival_province_id,
-    tr1.reservation_count + IFNULL(tr2.reservation_count, 0) AS total_reservation_count
-    FROM 
-    TopRoutes tr1
-    LEFT JOIN 
-    TopRoutes tr2 ON tr1.departure_city_id = tr2.arrival_city_id 
-    AND tr1.departure_province_id = tr2.arrival_province_id
-    AND tr1.arrival_city_id = tr2.departure_city_id
-    AND tr1.arrival_province_id = tr2.departure_province_id
-    )
-    SELECT 
+    const sql = `SELECT 
     route_id_1,
     route_id_2,
     departure_city_id,
     departure_province_id,
     arrival_city_id,
     arrival_province_id,
+    departure_city_name,
+    departure_province_name,
+    arrival_city_name,
+    arrival_province_name,
     MAX(total_reservation_count) AS total_reservation_count
-    FROM 
-    CombinedRoutes
-    GROUP BY 
-    route_id_1, route_id_2, departure_city_id, departure_province_id, arrival_city_id, arrival_province_id
-    ORDER BY 
-    total_reservation_count DESC
-    LIMIT 10;`;
+    FROM CombinedRoutes
+    GROUP BY route_id_1, route_id_2, departure_city_id, departure_province_id, arrival_city_id, arrival_province_id, departure_city_name, departure_province_name, arrival_city_name, arrival_province_name
+    ORDER BY total_reservation_count DESC
+    LIMIT 10;`
 
     connection.query(sql,(err,result)=>{
       if(err){

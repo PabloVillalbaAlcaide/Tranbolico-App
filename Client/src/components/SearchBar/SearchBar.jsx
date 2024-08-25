@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./searchBar.scss";
 import { AppContext } from "../../context/TranbolicoContextProvider";
+import { ButtonTram } from "../ButtonTram/ButtonTram";
 
 export const SearchBar = () => {
   const [origin, setOrigin] = useState("");
@@ -172,6 +173,9 @@ export const SearchBar = () => {
         <Button className="btn-buscarSBH" onClick={onSubmit}>
           Buscar
         </Button>
+        {/* <ButtonTram color="black" backgroundColor='var(--tranbolico-rosa)' onClick={onSubmit}>
+          Buscar
+        </ButtonTram> */}
       </Form>
     </div>
   );

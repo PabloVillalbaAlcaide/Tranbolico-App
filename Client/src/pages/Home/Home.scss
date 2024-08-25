@@ -66,7 +66,8 @@
   border-radius: 1rem;
   font-family: "VinaSans-Regular.ttf";
   padding: 10px 35px;
-  min-width: 120px;
+  min-width: 150px;
+  min-height: 50px;
 }
 
 .btn-reservas-home {
@@ -177,6 +178,10 @@
   .buscador-home {
     flex-wrap: wrap;
     gap: 1rem;
+  }
+
+  .contenedor-botones-home > Button {
+    min-width: 260px;
   }
 
   .btn-buscarSBH {

@@ -7,6 +7,7 @@ import axios from "axios";
 import { UserAvatar } from "../../components/UserAvatar/UserAvatar";
 import { SearchDropdown } from "../../components/locationSelector/LocationSelector";
 import uploadIcon from "../../../src/assets/icons/upload.svg";
+import { ButtonTram } from "../../components/ButtonTram/ButtonTram";
 
 export const EditUser = () => {
   const { globalState, setGlobalState, loading } = useContext(AppContext);
@@ -282,10 +283,9 @@ export const EditUser = () => {
                 )}
                 <Form.Group
                   className="mb-2 d-flex justify-content-center align-items-center w-100"
-                  controlId="formBasicImg"
                 >
                   <label
-                    htmlFor="file-upload"
+                    htmlFor="file-img"
                     className="custom-file-upload d-flex align-items-center"
                   >
                     <img
@@ -298,25 +298,32 @@ export const EditUser = () => {
                     Seleccionar imagen
                   </label>
                   <Form.Control
-                    id="file-upload"
+                    id="file-img"
+                    className="file-upload"
                     type="file"
                     name="avatar"
                     onChange={handleFilesChange}
                   />
                 </Form.Group>
                 <div className="d-flex justify-content-center gap-2">
-                  <Button
+                  {/* <Button
                     className="btn-iniciar-login aceptar border-0 fst-italic"
                     onClick={onSubmit}
                   >
                     Aceptar
-                  </Button>
-                  <Button
+                  </Button> */}
+                  <ButtonTram color="black" onClick={onSubmit}>
+                    Aceptar
+                  </ButtonTram>
+                  {/* <Button
                     className="btn-volver-login cancelar border-0 fst-italic"
                     onClick={() => navigate("/profile")}
                   >
                     Cancelar
-                  </Button>
+                  </Button> */}
+                  <ButtonTram backgroundColor='var(--tranbolico-fucsia)' onClick={() => navigate("/profile")}>
+                    Cancelar
+                  </ButtonTram>
                 </div>
               </Form>
             </Col>

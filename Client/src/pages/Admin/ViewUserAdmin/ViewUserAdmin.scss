@@ -1,50 +1,18 @@
 .ppal-userView {
   background-color: var(--tranbolico-azul);
   width: 100%;
-  font-family: "VinaSans-Regular.ttf";
-  
-}
-
-.hr-viewUser {
-  border-top: 3px solid var(--tranbolico-fucsia);
-  margin: 20px 0;
-  width: 100%;
-  opacity: 1 !important;
+  font-family: "VinaSans-Regular.ttf"; 
 }
 
 .ppal-userView h2 {
   font-size: 3rem;
 }
+
 .form-user-search {
   border: 3px solid var(--tranbolico-azul);
   font-family: "Akkurat-Regular.ttf";
   padding: 8px;
   border-radius: 5px;
-}
-.contenedor-userView {
-  font-family: "Akkurat-Regular.ttf";
-}
-.contenedor-userView p {
-  font-size: 1rem;
-}
-.contenedor-userView {
-  .accordion-item {
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 20px;
-  }
-}
-.contenedor-userView {
-  .accordion-user {
-    border: 3px solid var(--tranbolico-azulClaro);
-    max-width: 400px;
-    min-width: 300px;
-
-  }
-}
-
-.input-buscar-viewUser{
-  min-width: 150px;
 }
 
 .btn-buscarUser {
@@ -58,4 +26,22 @@
 .btn-buscarUser:active ,
 .btn-buscarUser:focus:active  {
   background-color: #13268e;
+}
+
+.accordion-user .accordion-header {
+  min-height: 50px; // Ajusta este valor según tus necesidades
+}
+
+.d-flex.justify-content-center.my-3 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.accordion-user {
+  padding-top: 0.5rem; // Ajusta este valor según tus necesidades
+  padding-bottom: 0.5rem; // Ajusta este valor según tus necesidades
+}
+
+.accordion-user h4 {
+  margin: 0 auto;
 }

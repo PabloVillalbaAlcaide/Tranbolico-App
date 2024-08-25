@@ -6,6 +6,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { SearchDropdown } from "../../../components/locationSelector/LocationSelector"; //
+import { ButtonTram } from "../../../components/ButtonTram/ButtonTram";
 
 const initialValue = {
   name: "",
@@ -44,7 +45,7 @@ export const Register = () => {
   const handleSelect = (field) => (value) => {
     setRegister((prevState) => {
       const newState = { ...prevState, [field]: value };
-      if (field === 'province') {
+      if (field === "province") {
         newState.city = {}; // Reiniciar city a un objeto vacío
       }
       return newState;
@@ -147,7 +148,6 @@ export const Register = () => {
   };
 
   console.log(register.province.province_id);
-  
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -164,7 +164,7 @@ export const Register = () => {
       }
     }
   };
-  
+
   return (
     <>
       <Row>
@@ -172,7 +172,7 @@ export const Register = () => {
           <h2 className="mb-0 py-2">REGISTRO</h2>
         </div>
         <div className="contenedor-register d-flex justify-content-center p-5 mt-5 ">
-          <Col xs={12} md={8} lg={6} xl={4}>
+          <Col xs={12}>
             <Form onSubmit={onSubmit}>
               <div className="text-center">
                 <img
@@ -182,155 +182,170 @@ export const Register = () => {
                   width={"50px"}
                 />
               </div>
-              <Form.Group className="mb-2" controlId="formBasicName">
-                <Form.Control
-                  className="input-form"
-                  type="text"
-                  placeholder="Nombre"
-                  name="name"
-                  value={register.name}
-                  onChange={handleChange}
-                  autoComplete="off"
-                />
-              </Form.Group>
-              {errors.name && (
-                <p className="text-center text-danger fw-bold">{errors.name}</p>
-              )}
-              <Form.Group className="mb-2" controlId="formBasicSurname">
-                <Form.Control
-                  className="input-form"
-                  type="text"
-                  placeholder="Apellidos"
-                  name="surname"
-                  value={register.surname}
-                  onChange={handleChange}
-                  autoComplete="off"
-                />
-              </Form.Group>
-              {errors.surname && (
-                <p className="text-center text-danger fw-bold">
-                  {errors.surname}
-                </p>
-              )}
-              <Form.Group className="mb-2" controlId="formBasicEmail">
-                <Form.Control
-                  className="input-form"
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  value={register.email}
-                  onChange={handleChange}
-                  autoComplete="off"
-                />
-              </Form.Group>
-              {errors.email && (
-                <p className="text-center text-danger fw-bold">
-                  {errors.email}
-                </p>
-              )}
-              <Form.Group className="mb-2" controlId="formBasicPhoneNumber">
-                <Form.Control
-                  className="input-form"
-                  type="tel"
-                  placeholder="Teléfono"
-                  name="phone_number"
-                  value={register.phone_number}
-                  onChange={handleChange}
-                  autoComplete="off"
-                />
-              </Form.Group>
-              {errors.phone_number && (
-                <p className="text-center text-danger fw-bold">
-                  {errors.phone_number}
-                </p>
-              )}
-              <Form.Group className="mb-2" controlId="formBasicBirthDate">
-                <Form.Control
-                  className="input-form"
-                  type="date"
-                  placeholder="Fecha de nacimiento"
-                  name="birthdate"
-                  value={register.birthdate}
-                  onChange={handleChange}
-                  autoComplete="off"
-                />
-              </Form.Group>
-              {errors.birthdate && (
-                <p className="text-center text-danger fw-bold">
-                  {errors.birthdate}
-                </p>
-              )}
-              <Form.Group className="mb-2" controlId="formBasicGenre">
-                <Form.Control
-                  className="input-form"
-                  as="select"
-                  name="genre"
-                  value={register.genre}
-                  onChange={handleChange}
+              <div className="form-grid">
+                <Form.Group className="mb-2" controlId="formBasicName">
+                  <Form.Control
+                    className="input-form-register"
+                    type="text"
+                    placeholder="Nombre"
+                    name="name"
+                    value={register.name}
+                    onChange={handleChange}
+                    autoComplete="off"
+                  />
+                </Form.Group>
+                {errors.name && (
+                  <p className="text-center text-danger fw-bold">
+                    {errors.name}
+                  </p>
+                )}
+                <Form.Group className="mb-2" controlId="formBasicSurname">
+                  <Form.Control
+                    className="input-form-register"
+                    type="text"
+                    placeholder="Apellidos"
+                    name="surname"
+                    value={register.surname}
+                    onChange={handleChange}
+                    autoComplete="off"
+                  />
+                </Form.Group>
+                {errors.surname && (
+                  <p className="text-center text-danger fw-bold">
+                    {errors.surname}
+                  </p>
+                )}
+                <Form.Group className="mb-2" controlId="formBasicEmail">
+                  <Form.Control
+                    className="input-form-register"
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                    value={register.email}
+                    onChange={handleChange}
+                    autoComplete="off"
+                  />
+                </Form.Group>
+                {errors.email && (
+                  <p className="text-center text-danger fw-bold">
+                    {errors.email}
+                  </p>
+                )}
+                <Form.Group className="mb-2" controlId="formBasicPhoneNumber">
+                  <Form.Control
+                    className="input-form-register"
+                    type="tel"
+                    placeholder="Teléfono"
+                    name="phone_number"
+                    value={register.phone_number}
+                    onChange={handleChange}
+                    autoComplete="off"
+                  />
+                </Form.Group>
+                {errors.phone_number && (
+                  <p className="text-center text-danger fw-bold">
+                    {errors.phone_number}
+                  </p>
+                )}
+                <Form.Group className="mb-2" controlId="formBasicBirthDate">
+                  <Form.Control
+                    className="input-form-register"
+                    type="date"
+                    placeholder="Fecha de nacimiento"
+                    name="birthdate"
+                    value={register.birthdate}
+                    onChange={handleChange}
+                    autoComplete="off"
+                  />
+                </Form.Group>
+                {errors.birthdate && (
+                  <p className="text-center text-danger fw-bold">
+                    {errors.birthdate}
+                  </p>
+                )}
+                <Form.Group className="mb-2" controlId="formBasicGenre">
+                  <Form.Control
+                    className="input-form-register"
+                    as="select"
+                    name="genre"
+                    value={register.genre}
+                    onChange={handleChange}
+                  >
+                    <option value="">Seleccione</option>
+                    <option value="1">Masculino</option>
+                    <option value="2">Femenino</option>
+                    <option value="3">Otro</option>
+                  </Form.Control>
+                </Form.Group>
+
+                <div
+                  className={`province-city-container-register ${
+                    showCityDropdown ? "with-city" : ""
+                  }`}
                 >
-                  <option value="">Seleccione</option>
-                  <option value="1">Masculino</option>
-                  <option value="2">Femenino</option>
-                  <option value="3">Otro</option>
-                </Form.Control>
-              </Form.Group>
-              <Form.Group className="mb-2" controlId="formBasicProvince">
-                <SearchDropdown
-                  type="province"
-                  selectedOption={register.province}
-                  handleSelect={handleSelect("province")}
-                  placeholder="Provincia"
-                  autoComplete="off"
-                />
-              </Form.Group>
-              {errors.province && (
-                <p className="text-center text-danger fw-bold">
-                  {errors.province}
-                </p>
-              )}
-              {showCityDropdown  && <Form.Group className="mb-2" controlId="formBasicCity">
-                <SearchDropdown
-                  type="city"
-                  provinceId={register.province.province_id}
-                  selectedOption={register.city}
-                  handleSelect={handleSelect("city")}
-                  placeholder="Ciudad"
-                  autoComplete="off"
-                />
-              </Form.Group>}
-              {errors.city && (
-                <p className="text-center text-danger fw-bold">{errors.city}</p>
-              )}
-              <Form.Group className="mb-2" controlId="formBasicPassword">
-                <Form.Control
-                  className="input-form"
-                  type="password"
-                  placeholder="Contraseña"
-                  name="password"
-                  value={register.password}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              {errors.password && (
-                <p className="text-center text-danger fw-bold">
-                  {errors.password}
-                </p>
-              )}
-              <Form.Group className="mb-2" controlId="formBasicPassword2">
-                <Form.Control
-                  className="input-form"
-                  type="password"
-                  placeholder="Confirmar contraseña"
-                  name="password2"
-                  value={password2}
-                  onChange={handleChangePassword2}
-                />
-              </Form.Group>
-              {errors.password2 && (
-                <p className="text-center text-danger fw-bold">
-                  {errors.password2}
-                </p>
-              )}
+                  <Form.Group className="mb-2" controlId="formBasicProvince">
+                    <SearchDropdown
+                      type="province"
+                      selectedOption={register.province}
+                      handleSelect={handleSelect("province")}
+                      placeholder="Provincia"
+                      autoComplete="off"
+                    />
+                  </Form.Group>
+                  {errors.province && (
+                    <p className="text-center text-danger fw-bold">
+                      {errors.province}
+                    </p>
+                  )}
+                  {showCityDropdown && (
+                    <Form.Group className="mb-2" controlId="formBasicCity">
+                      <SearchDropdown
+                        type="city"
+                        provinceId={register.province.province_id}
+                        selectedOption={register.city}
+                        handleSelect={handleSelect("city")}
+                        placeholder="Ciudad"
+                        autoComplete="off"
+                      />
+                    </Form.Group>
+                  )}
+                  {errors.city && (
+                    <p className="text-center text-danger fw-bold">
+                      {errors.city}
+                    </p>
+                  )}
+                </div>
+                <Form.Group className="mb-2" controlId="formBasicPassword">
+                  <Form.Control
+                    className="input-form-register"
+                    type="password"
+                    placeholder="Contraseña"
+                    name="password"
+                    value={register.password}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+                {errors.password && (
+                  <p className="text-center text-danger fw-bold">
+                    {errors.password}
+                  </p>
+                )}
+                <Form.Group className="mb-2" controlId="formBasicPassword2">
+                  <Form.Control
+                    className="input-form-register"
+                    type="password"
+                    placeholder="Confirmar contraseña"
+                    name="password2"
+                    value={password2}
+                    onChange={handleChangePassword2}
+                  />
+                </Form.Group>
+                {errors.password2 && (
+                  <p className="text-center text-danger fw-bold">
+                    {errors.password2}
+                  </p>
+                )}
+              </div>
               <p className="fw-bold fst-italic text-center mb-4 fs-6">
                 <span>
                   ¿Ya tienes una cuenta? <br />
@@ -338,18 +353,24 @@ export const Register = () => {
                 Ve a <Link to={"/login"}>Login</Link>
               </p>
               <div className="d-flex justify-content-center gap-2">
-                <Button
+                {/* <Button
                   className="btn-iniciar-login aceptar border-0 fst-italic"
                   onClick={onSubmit}
                 >
                   Registrar
-                </Button>
-                <Button
+                </Button> */}
+                <ButtonTram backgroundColor = 'var(--tranbolico-azul)' onClick={onSubmit}>
+                  Registrar
+                </ButtonTram>
+                {/* <Button
                   className="btn-volver-login cancelar border-0 fst-italic"
                   onClick={() => navigate("/")}
                 >
                   Volver
-                </Button>
+                </Button> */}
+                <ButtonTram backgroundColor="var(--tranbolico-fucsia)" onClick={() => navigate("/")}>
+                  Volver
+                </ButtonTram>
               </div>
             </Form>
           </Col>

@@ -29,57 +29,85 @@ class ReservationController {
   };
 
   historical = (req, res) => {
-    console.log("Hasta aqui");
+    console.log(Object.keys(req.params).length > 0);
+    
 
-    const userID = req.params.id;
-    console.log(userID);
+    let userID = req.params.id;
+    if (req.query.length) {
+      userID = req.query.userid;
+    }
 
-    let sql = `SELECT
+    const sql = `SELECT
     reservation.user_id,
     reservation.reservation_id,
-    reservation.reservation_type,
-    reservation.is_deleted,
-    route.text AS route_name,
-    planning.departure_date AS departure_day,
-    planning.departure_time AS departure_time,
-    dp.name AS departure_province_name,
-    dc.city_name AS departure_city_name,
-    ap.name AS arrival_province_name,
-    ac.city_name AS arrival_city_name
-FROM reservation JOIN planning ON reservation.route_id = planning.route_id AND reservation.planning_id = planning.planning_id
-JOIN route ON reservation.route_id = route.route_id JOIN  province dp ON route.departure_province_id = dp.province_id
-JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
-JOIN province ap ON route.arrival_province_id = ap.province_id JOIN city ac ON route.arrival_city_id = ac.city_id
-AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${userID}
-AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) <= NOW() OR reservation.user_id = ${userID} AND reservation.is_deleted = 1`;
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 1 THEN planning.departure_date END) AS departure_days_ida,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 2 THEN planning.departure_date END) AS departure_days_vuelta,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 1 THEN planning.departure_time END) AS departure_times_ida,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 2 THEN planning.departure_time END) AS departure_times_vuelta,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 1 THEN dp.name END) AS departure_province_ida,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 2 THEN dp.name END) AS departure_province_vuelta,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 1 THEN dc.city_name END) AS departure_city_ida,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 2 THEN dc.city_name END) AS departure_city_vuelta,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 1 THEN ap.name END) AS arrival_province_ida,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 2 THEN ap.name END) AS arrival_province_vuelta,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 1 THEN ac.city_name END) AS arrival_city_ida,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 2 THEN ac.city_name END) AS arrival_city_vuelta,
+    MAX(reservation.is_deleted) AS is_deleted
+    FROM reservation
+    JOIN planning ON reservation.route_id = planning.route_id AND reservation.planning_id = planning.planning_id
+    JOIN route ON reservation.route_id = route.route_id
+    JOIN province dp ON route.departure_province_id = dp.province_id
+    JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
+    JOIN province ap ON route.arrival_province_id = ap.province_id
+    JOIN city ac ON route.arrival_city_id = ac.city_id AND route.arrival_province_id = ac.province_id
+    WHERE reservation.user_id = ${userID}
+    AND (reservation.reservation_type = 2 AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) < NOW() OR reservation.user_id = ${userID} AND reservation.is_deleted = 1)
+    GROUP BY reservation.reservation_id;`;
+    console.log("Todo bien");
+    
     connection.query(sql, (err, result) => {
       if (err) {
         return res.status(500).json(err);
       } else {
+        console.log("SOY EL RESULTADO",result);
+
         res.status(200).json(result);
       }
     });
   };
 
   nextReservations = (req, res) => {
-    const userID = req.params.id;
-    let sql = `SELECT
+    let userID = req.params.id;
+    if (req.query.userid) {
+      userID = req.query.userid;
+    }
+    console.log(userID);
+    
+    const sql = `SELECT
     reservation.user_id,
     reservation.reservation_id,
-    reservation.reservation_type,
-    route.text AS route_name,
-    planning.departure_date AS departure_day,
-    planning.departure_time AS departure_time,
-    dp.name AS departure_province_name,
-    dc.city_name AS departure_city_name,
-    ap.name AS arrival_province_name,
-    ac.city_name AS arrival_city_name
-FROM reservation JOIN planning ON reservation.route_id = planning.route_id AND reservation.planning_id = planning.planning_id
-JOIN route ON reservation.route_id = route.route_id JOIN  province dp ON route.departure_province_id = dp.province_id
-JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
-JOIN province ap ON route.arrival_province_id = ap.province_id JOIN city ac ON route.arrival_city_id = ac.city_id
-AND route.arrival_province_id = ac.province_id WHERE reservation.user_id = ${userID}
-AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) >= NOW() AND reservation.is_deleted = 0`;
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 1 THEN planning.departure_date END) AS departure_days_ida,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 2 THEN planning.departure_date END) AS departure_days_vuelta,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 1 THEN planning.departure_time END) AS departure_times_ida,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 2 THEN planning.departure_time END) AS departure_times_vuelta,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 1 THEN dp.name END) AS departure_province_ida,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 2 THEN dp.name END) AS departure_province_vuelta,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 1 THEN dc.city_name END) AS departure_city_ida,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 1 THEN ap.name END) AS arrival_province_ida,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 1 THEN ac.city_name END) AS arrival_city_ida,
+    GROUP_CONCAT(CASE WHEN reservation.reservation_type = 2 THEN ac.city_name END) AS arrival_city_vuelta,
+    MAX(reservation.is_deleted) AS is_deleted
+    FROM reservation
+    JOIN planning ON reservation.route_id = planning.route_id AND reservation.planning_id = planning.planning_id
+    JOIN route ON reservation.route_id = route.route_id
+    JOIN province dp ON route.departure_province_id = dp.province_id
+    JOIN city dc ON route.departure_city_id = dc.city_id AND route.departure_province_id = dc.province_id
+    JOIN province ap ON route.arrival_province_id = ap.province_id
+    JOIN city ac ON route.arrival_city_id = ac.city_id AND route.arrival_province_id = ac.province_id
+    WHERE reservation.user_id = ${userID}
+    AND (reservation.reservation_type = 1 OR (reservation.reservation_type = 2 AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) > NOW()))
+    AND reservation.is_deleted = 0
+    GROUP BY reservation.reservation_id;`;
     connection.query(sql, (err, result) => {
       if (err) {
         console.log(err);
