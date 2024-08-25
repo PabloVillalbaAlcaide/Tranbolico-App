@@ -6,6 +6,7 @@ import axios from "axios";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "./selectDate.scss";
 import { ButtonTram } from "../../components/ButtonTram/ButtonTram";
+import { ProgressBar } from "../../components/ProgressBar/ProgressBar";
 
 export const SelectDate = () => {
   const { reservation, setReservation, route, loadingReservation } =
@@ -137,9 +138,11 @@ export const SelectDate = () => {
   console.log(planningList);
 
   return (
-
-    <Container fluid className="p-0 m-0 mt-5 mb-5 d-flex flex-column justify-content-center align-items-center">
-       <ProgressBar date={planningList} />
+    <Container
+      fluid
+      className="p-0 m-0 mt-5 mb-5 d-flex flex-column justify-content-center align-items-center"
+    >
+      <ProgressBar date={planningList} />
 
       <Row>
         <h3 className="text-center pb-4">
@@ -259,7 +262,6 @@ export const SelectDate = () => {
           md={4}
           className="d-flex flex-column flex-md-row justify-content-md-around justify-content-center align-items-center p-0 m-0 w-100 gap-4"
         >
-
           {/* <Button onClick={nextStep} className="btn btn-success" style={{
 
               backgroundColor: "var(--tranbolico-verde)",
@@ -269,8 +271,13 @@ export const SelectDate = () => {
           >
             Continuar
           </Button> */}
-          <ButtonTram fontSize="1.3rem" color="black" onClick={nextStep} backgroundColor='var(--tranbolico-verde)'>
-          Continuar
+          <ButtonTram
+            fontSize="1.3rem"
+            color="black"
+            onClick={nextStep}
+            backgroundColor="var(--tranbolico-verde)"
+          >
+            Continuar
           </ButtonTram>
           {/* <Button
             onClick={() => navigate(-1)}
@@ -282,7 +289,12 @@ export const SelectDate = () => {
           >
             Atras
           </Button> */}
-          <ButtonTram fontSize="1.3rem" color="black" backgroundColor="var(--tranbolico-amarillo)" onClick={() => navigate(-1)}>
+          <ButtonTram
+            fontSize="1.3rem"
+            color="black"
+            backgroundColor="var(--tranbolico-amarillo)"
+            onClick={() => navigate(-1)}
+          >
             Atrás
           </ButtonTram>
           {/* <Button
@@ -295,7 +307,12 @@ export const SelectDate = () => {
           >
             Cancelar
           </Button> */}
-          <ButtonTram fontSize="1.3rem" color="black" backgroundColor="var(--tranbolico-fucsia)" onClick={() => navigate("/")}>
+          <ButtonTram
+            fontSize="1.3rem"
+            color="black"
+            backgroundColor="var(--tranbolico-fucsia)"
+            onClick={() => navigate("/")}
+          >
             Cancelar
           </ButtonTram>
         </Col>
