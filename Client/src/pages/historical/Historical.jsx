@@ -6,7 +6,7 @@ import { UserAvatar } from "../../components/UserAvatar/UserAvatar";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 
 export const Historical = () => {
-  const [hist, setHist] = useState("historical");
+  const [hist, setHist] = useState("myReservations");
   const { globalState } = useContext(AppContext);
 
   return (
@@ -29,9 +29,9 @@ export const Historical = () => {
             </button>
             <button
               className={`historical-button ${
-                hist === "nextReservations" ? "active" : ""
+                hist === "myReservations" ? "active" : ""
               }`}
-              onClick={() => setHist("nextReservations")}
+              onClick={() => setHist("myReservations")}
             >
               Reservas
             </button>

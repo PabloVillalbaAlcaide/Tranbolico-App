@@ -129,9 +129,6 @@ export const Rutas = () => {
           <ButtonTram 
           color="black" 
           onClick={onSubmit}>
-
-          //<Button className="btn-rutas-SB2" onClick={onSubmit}>
-
             Buscar
           </ButtonTram>
           {noRoutesMessage && (

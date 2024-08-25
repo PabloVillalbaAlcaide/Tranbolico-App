@@ -33,6 +33,9 @@ export const UserReservations = () => {
   }, [globalState.user, loading, hist]);
 
   const getReservations = async (partialUrl) => {
+    if (partialUrl === "myReservations") {
+      partialUrl = "nextReservations";
+    }
     try {
       const res = await axios.get(
         `http://localhost:4000/reservation/${partialUrl}/${globalState.user.user_id}`,
@@ -40,8 +43,8 @@ export const UserReservations = () => {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
       );
-
       setReservationsList(res.data);
+      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -83,29 +86,33 @@ export const UserReservations = () => {
       <Table striped bordered hover responsive>
         <thead className="text-center">
           <tr>
-            <th>Fecha</th>
-            <th>Hora</th>
             <th>Origen</th>
             <th>Destino</th>
+            <th>Fecha de ida</th>
+            <th>Fecha de vuelta</th>
             <th>Complementos</th>
             <th>Precio</th>
-            {hist === "nextReservations" && <th>Cancelar</th>}
+            {hist === "myReservations" && <th>Cancelar</th>}
           </tr>
         </thead>
         <tbody>
           {reservationsList.map((elem, index) => (
             <tr key={index}>
-              <td>{elem.departure_day}</td>
-              <td>{elem.departure_time}</td>
               <td>
-                {elem.departure_city_name} - {elem.departure_province_name}
+                {elem.departure_city_ida}, {elem.departure_province_ida}
               </td>
               <td>
-                {elem.arrival_city_name} - {elem.arrival_province_name}
+                {elem.arrival_province_ida}, {elem.arrival_city_ida}
+              </td>
+              <td>
+                {elem.departure_days_ida} / {elem.departure_times_ida}
+              </td>
+              <td>
+              {elem.departure_days_vuelta} / {elem.departure_times_vuelta}
               </td>
               <td>Guía Turístico</td>
               <td>12€</td>
-              {hist === "nextReservations" && elem.reservation_type === 1 && (
+              {hist === "myReservations" && (
                 <td
                   onClick={() => handleShow(elem)}
                   className="btn-cancel-reservation"

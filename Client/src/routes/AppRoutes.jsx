@@ -76,12 +76,12 @@ export const AppRoutes = () => {
                   <Route path="/editUser" element={<EditUser />} />
                   <Route path="/resetPassword" element={<ResetPassword />} />
 
-                  <Route path="/historical" element={<Historical />}>
-                    <Route index element={<UserReservations />} />
-                    <Route
-                      path="nextReservations"
+                  <Route path="/myReservations" element={<Historical />}>
+                  <Route
+                      index
                       element={<UserReservations />}
                     />
+                    <Route path="historical" element={<UserReservations />} />
                   </Route>
                 </>
               )}

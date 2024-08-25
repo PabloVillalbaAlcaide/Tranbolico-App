@@ -23,7 +23,7 @@ export const NavBarApp = () => {
 
   const handleNavigation = () => {
     if (globalState.user) {
-      navigate("/historical");
+      navigate("/myReservations");
     } else {
       navigate("/login");
     }

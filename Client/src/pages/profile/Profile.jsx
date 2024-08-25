@@ -65,7 +65,7 @@ export const Profile = () => {
                     alt="past-bookings-icon"
                     width={"50px"}
                   />
-                  <Link to={"/historical"} className="fst-italic text-dark">
+                  <Link to={"/myReservations"} className="fst-italic text-dark">
                     Mis reservas
                   </Link>
                 </div>
