@@ -26,11 +26,19 @@ export const Admin = () => {
               <h3 className="m-auto">Planning</h3>
             </Button>
 
+            {
+              <Button
+                className="buttonAdmin"
+                onClick={() => navigate("/admin/viewUser")}
+              >
+                <h3 className="m-auto">Ver Usuario</h3>
+              </Button>
+            }
             <Button
               className="buttonAdmin"
-              onClick={() => navigate("/admin/viewUser")}
+              onClick={() => navigate("/admin/statistics")}
             >
-              <h3 className="m-auto">Ver Usuario</h3>
+              <h3 className="m-auto">Estadísticas</h3>
             </Button>
             <img src={cerdito} alt="" />
           </div>
