@@ -5,6 +5,7 @@ import { AppContext } from "../../context/TranbolicoContextProvider";
 import axios from "axios";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "./selectDate.scss";
+import { ProgressBar } from "../../components/ProgressBar/ProgressBar";
 
 export const SelectDate = () => {
   const { reservation, setReservation, route, loadingReservation } =
@@ -103,13 +104,12 @@ export const SelectDate = () => {
               destination_city: arrival.city,
               destination_province: arrival.province,
               date: reservation.departure_date,
-              time: reservation.departure_time
+              time: reservation.departure_time,
             },
           }
         );
         setPlanningList(res.data);
       }
-      
     } catch (err) {
       console.log(err);
     }
@@ -138,6 +138,7 @@ export const SelectDate = () => {
 
   return (
     <Container fluid className="p-0 m-0 mt-5 mb-5">
+      <ProgressBar date={planningList} />
       <Row>
         <h3 className="text-center pb-4">
           Selecciona día de{" "}
@@ -256,11 +257,15 @@ export const SelectDate = () => {
           md={4}
           className="d-flex flex-column flex-md-row justify-content-md-around justify-content-center align-items-center p-0 m-0 w-100 gap-4"
         >
-          <Button onClick={nextStep} className="btn btn-success" style={{
+          <Button
+            onClick={nextStep}
+            className="btn btn-success"
+            style={{
               backgroundColor: "var(--tranbolico-verde)",
               color: "black",
               border: "none",
-            }}>
+            }}
+          >
             Continuar
           </Button>
           <Button

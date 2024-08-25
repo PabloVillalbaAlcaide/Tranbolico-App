@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Rutas.scss";
 import { AppContext } from "../../context/TranbolicoContextProvider";
+import { ProgressBar } from "../../components/ProgressBar/ProgressBar";
 
 export const Rutas = () => {
   const { globalState } = useContext(AppContext);
@@ -78,6 +79,7 @@ export const Rutas = () => {
             <h2 className="mb-0 py-2">RUTAS</h2>
           </div>
         </Row>
+        <ProgressBar />
         <br />
         <div className="contenedor-form-rutas d-flex justify-content-center align-items-center flex-column">
           <Form>

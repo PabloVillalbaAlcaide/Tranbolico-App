@@ -5,6 +5,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { useContext } from "react";
 import { AppContext } from "../../context/TranbolicoContextProvider";
+import { ProgressBar } from "../../components/ProgressBar/ProgressBar";
 
 export const DetailReservation = () => {
   const { reservation } = useOutletContext();
@@ -30,6 +31,7 @@ export const DetailReservation = () => {
     <>
       <main>
         <Container fluid>
+          <ProgressBar />
           <Row className="py-4 gap-4 flex-column justify-content-center align-items-center">
             <Col className="resumen-reseva d-flex flex-column justify-content-center align-items-center gap-3">
               <h4 className="fst-italic">Realizar el pago</h4>
