@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { PieChart, Pie, Cell } from "recharts";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["#ffd92d", "#91cad8", "#e3b6d4", "#b3b420"];
 
 export const StatisticsGenre = () => {
   const { globalState } = useContext(AppContext);
@@ -22,7 +22,6 @@ export const StatisticsGenre = () => {
         }
       );
       setData(res.data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -61,7 +60,7 @@ export const StatisticsGenre = () => {
             ? `Femenino - ${user_count}`
             : genre === 3
             ? `No binario - ${user_count}`
-            : `Null - ${user_count}`}
+            : `No especifica - ${user_count}`}
         </text>
         <text
           x={x2}

@@ -1,5 +1,5 @@
 import { PureComponent, useContext, useEffect, useState } from "react";
-import { PieChart, Pie, Cell } from "recharts";
+import { PieChart, Pie, Cell, Text } from "recharts";
 import axios from "axios";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
 

@@ -67,56 +67,22 @@ ORDER BY
   }
 
   statisticsRoutes=(req,res)=>{
-    const sql = `WITH TopRoutes AS (
-    SELECT 
-    r.route_id,
-    r.departure_city_id,
-    r.departure_province_id,
-    r.arrival_city_id,
-    r.arrival_province_id,
-    COUNT(reservation_id) AS reservation_count
-    FROM 
-    route r
-    JOIN 
-    reservation res ON r.route_id = res.route_id
-    GROUP BY 
-    r.route_id
-    ORDER BY 
-    reservation_count DESC
-    LIMIT 10
-    ),
-    CombinedRoutes AS (
-    SELECT 
-    LEAST(tr1.route_id, tr2.route_id) AS route_id_1,
-    GREATEST(tr1.route_id, tr2.route_id) AS route_id_2,
-    LEAST(tr1.departure_city_id, tr1.arrival_city_id) AS departure_city_id,
-    LEAST(tr1.departure_province_id, tr1.arrival_province_id) AS departure_province_id,
-    GREATEST(tr1.departure_city_id, tr1.arrival_city_id) AS arrival_city_id,
-    GREATEST(tr1.departure_province_id, tr1.arrival_province_id) AS arrival_province_id,
-    tr1.reservation_count + IFNULL(tr2.reservation_count, 0) AS total_reservation_count
-    FROM 
-    TopRoutes tr1
-    LEFT JOIN 
-    TopRoutes tr2 ON tr1.departure_city_id = tr2.arrival_city_id 
-    AND tr1.departure_province_id = tr2.arrival_province_id
-    AND tr1.arrival_city_id = tr2.departure_city_id
-    AND tr1.arrival_province_id = tr2.departure_province_id
-    )
-    SELECT 
+    const sql = `SELECT 
     route_id_1,
     route_id_2,
     departure_city_id,
     departure_province_id,
     arrival_city_id,
     arrival_province_id,
+    departure_city_name,
+    departure_province_name,
+    arrival_city_name,
+    arrival_province_name,
     MAX(total_reservation_count) AS total_reservation_count
-    FROM 
-    CombinedRoutes
-    GROUP BY 
-    route_id_1, route_id_2, departure_city_id, departure_province_id, arrival_city_id, arrival_province_id
-    ORDER BY 
-    total_reservation_count DESC
-    LIMIT 10;`;
+    FROM CombinedRoutes
+    GROUP BY route_id_1, route_id_2, departure_city_id, departure_province_id, arrival_city_id, arrival_province_id, departure_city_name, departure_province_name, arrival_city_name, arrival_province_name
+    ORDER BY total_reservation_count DESC
+    LIMIT 10;`
 
     connection.query(sql,(err,result)=>{
       if(err){
