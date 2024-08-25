@@ -16,15 +16,17 @@ export const StatisticsAge = () => {
   const [data, setData] = useState([]);
   const { globalState } = useContext(AppContext);
 
+  useEffect(() => {
+    getData(); 
+  }, []);
+
   const getData = async () => {
     try {
       const res = await axios.get(
         "http://localhost:4000/statistics/statisticsAge",
         { headers: { Authorization: `Bearer ${globalState.token}` } }
       );
-      console.log(res);
 
-     
       const transformedData = res.data.map(item => ({
         name: item.age_group,
         genre_1: Number(item.genre_1),
@@ -38,10 +40,6 @@ export const StatisticsAge = () => {
       console.log(err);
     }
   };
-
-  useEffect(() => {
-    getData(); 
-  }, []);
 
   return (
     <>
