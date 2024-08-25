@@ -9,23 +9,23 @@ export const UserReservations = ({ user_id }) => {
   const { globalState } = useContext(AppContext);
 
   useEffect(() => {
-    const viewReservation = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:4000/admin/reservationUser?userid=${user_id}`,
-          {
-            headers: { Authorization: `Bearer ${globalState.token}` },
-          }
-        );
-        setReservation(res.data);
-      } catch (error) {
-        console.error(error);
-        setError("Error al cargar el historial de reservas.");
-      }
-    };
-
     viewReservation();
   }, [user_id, globalState.token]);
+
+  const viewReservation = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:4000/reservation/nextReservations?userid=${user_id}`,
+        {
+          headers: { Authorization: `Bearer ${globalState.token}` },
+        }
+      );
+      setReservation(res.data);
+    } catch (error) {
+      console.error(error);
+      setError("Error al cargar el historial de reservas.");
+    }
+  };
 
   return (
     <>
@@ -48,7 +48,7 @@ export const UserReservations = ({ user_id }) => {
                 <td>{`${item.arrival_city_ida} - ${item.arrival_province_ida}`}</td>
                 <td>{`${item.departure_days_ida} - ${item.departure_times_ida}`}</td>
                 <td>{`${item.departure_days_vuelta} - ${item.departure_times_vuelta}`}</td>
-                <td>{item.is_deleted === 1 ? 'Cancelado' : '12€'}</td>
+                <td>{item.is_deleted === 1 ? "Cancelado" : "12€"}</td>
               </tr>
             ))}
           </tbody>

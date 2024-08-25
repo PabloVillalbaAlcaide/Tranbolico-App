@@ -1,35 +1,36 @@
 import { useState, useEffect, useContext } from "react";
-import { Alert, Table } from "react-bootstrap";
+import { Alert, Table, Spinner } from "react-bootstrap";
 import axios from "axios";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
 
-export const UserHistory = ({ user_id }) => {
+export const UserHistory = ({ user_id, fetchData }) => {
   const [reservationHistory, setReservationHistory] = useState([]);
   const [error, setError] = useState(null);
   const { globalState } = useContext(AppContext);
 
   useEffect(() => {
-    const viewHistory = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:4000/admin/historicalUser?userid=${user_id}`,
-          {
-            headers: { Authorization: `Bearer ${globalState.token}` },
-          }
-        );
-        setReservationHistory(res.data);
-      } catch (error) {
-        console.error(error);
-        setError("Error al cargar el historial de reservas.");
-      }
-    };
+    if (fetchData) {
+      viewHistory();
+    }
+  }, [fetchData, user_id, globalState.token]);
 
-    viewHistory();
-  }, [user_id, globalState.token]);
+  const viewHistory = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:4000/reservation/historical?userid=${user_id}`,
+        {
+          headers: { Authorization: `Bearer ${globalState.token}` },
+        }
+      );
+      setReservationHistory(res.data);
+    } catch (error) {
+      console.error(error);
+      setError("Error al cargar el historial de reservas.");
+    }
+  };
 
   return (
     <>
-      {error && <Alert variant="danger">{error}</Alert>}
       {reservationHistory.length > 0 ? (
         <Table striped bordered hover size="sm" responsive>
           <thead>
