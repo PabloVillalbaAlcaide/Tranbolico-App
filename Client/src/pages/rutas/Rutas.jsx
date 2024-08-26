@@ -8,6 +8,7 @@ import { AppContext } from "../../context/TranbolicoContextProvider";
 
 import { ButtonTram } from "../../components/ButtonTram/ButtonTram";
 import { ProgressBar } from "../../components/ProgressBar/ProgressBar";
+import { TitleTram } from "../../components/TitleTram/TitleTram";
 
 export const Rutas = () => {
   const { globalState } = useContext(AppContext);
@@ -76,11 +77,14 @@ export const Rutas = () => {
   return (
     <>
       <div className="contenedor-rutas ">
-        <Row>
+        {/* <Row>
           <div className="ppal-rutas text-center text-white mt-2">
             <h2 className="mb-0 py-2">RUTAS</h2>
           </div>
-        </Row>
+        </Row> */}
+        <TitleTram backgroundColor={'var(--tranbolico-fucsia)'} color={"white"}>
+          RUTAS
+        </TitleTram>
         <ProgressBar />
         <br />
         <div className="contenedor-form-rutas d-flex justify-content-center align-items-center flex-column">

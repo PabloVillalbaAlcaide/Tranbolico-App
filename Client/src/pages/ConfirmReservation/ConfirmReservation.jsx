@@ -17,7 +17,7 @@ export const ConfirmReservation = () => {
                 width={"150px"}
               />
             </div>
-            <div className="text-center mb-3 style-verify w-25 p-5 d-flex justify-content-center flex-column align-items-center">
+            <div className="text-center mb-3 style-verify w-25 p-5 d-flex justify-content-center flex-column align-items-center gap-3">
               <img
                 src="/public/images/enviando.png"
                 alt="Verify"

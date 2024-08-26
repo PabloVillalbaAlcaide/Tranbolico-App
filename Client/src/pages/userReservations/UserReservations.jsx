@@ -5,6 +5,7 @@ import { AppContext } from "../../context/TranbolicoContextProvider";
 import axios from "axios";
 import { Table } from "react-bootstrap";
 import { ModalApp } from "../../components/modal/Modal";
+import { TitleTram } from "../../components/TitleTram/TitleTram";
 
 const iconoCancelar = (
   <svg
