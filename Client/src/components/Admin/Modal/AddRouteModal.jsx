@@ -9,7 +9,7 @@ export const AddRouteModal = ({
   newRoute,
 }) => {
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose} className="akkurat-font">
       <Modal.Header closeButton>
         <Modal.Title>Añadir Nueva Ruta</Modal.Title>
       </Modal.Header>

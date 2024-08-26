@@ -76,7 +76,7 @@ export const StatisticsGenre = () => {
   };
 
   return (
-    <>
+    <div className="akkurat-font">
       {data && (
         <PieChart width={400} height={400}>
           <Pie
@@ -98,6 +98,6 @@ export const StatisticsGenre = () => {
           </Pie>
         </PieChart>
       )}
-    </>
+    </div>
   );
 };

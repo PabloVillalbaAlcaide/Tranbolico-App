@@ -171,7 +171,7 @@ export const ViewEditRoute = () => {
   };
 
   return (
-    <>
+    <div className="akkurat-font">
       <Row>
         <div className="ppal-userView text-center text-white mt-3">
           <h2 className="mb-0 py-2">Rutas</h2>
@@ -187,7 +187,7 @@ export const ViewEditRoute = () => {
           </Button>
           <div className="w-100 d-flex justify-content-center">
             <Button
-              className="btn-add-route"
+              className="btn-add-route ms-5 ms-md-5 ms-custom-ER"
               onClick={() => setShowModal(true)}
             >
               Añadir Nueva Ruta
@@ -376,6 +376,6 @@ export const ViewEditRoute = () => {
           newRoute={newRoute}
         />
       </Container>
-    </>
+    </div>
   );
 };

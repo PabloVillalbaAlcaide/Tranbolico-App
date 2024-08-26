@@ -44,7 +44,7 @@ export const StatisticsRoutes = () => {
   }, []);
   
   return (
-    <div style={{ width: "100%", height: 300, maxWidth: 500 }}>
+    <div style={{ width: "100%", height: 300, maxWidth: 500 }} className="akkurat-font">
       <ResponsiveContainer width="100%" height="100%">
       <Text x={"50%"} y={20} textAnchor="middle" dominantBaseline="middle">
             Rutas más solicitadas
