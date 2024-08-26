@@ -3,27 +3,24 @@
 }
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(
-    3,
-    1fr
-  ); /* Tres columnas en pantallas grandes */
-  gap: 16px; /* Espacio entre elementos */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
 
 @media (max-width: 992px) {
   .grid-container {
-    grid-template-columns: 1fr 1fr; /* Dos columnas en pantallas pequeñas */
+    grid-template-columns: 1fr 1fr;
     grid-template-areas:
       "calendario calendario"
       "fecha hora";
   }
   .calendario {
-    grid-area: calendario; /* Coloca calendario en la primera fila */
+    grid-area: calendario;
   }
   .fecha {
-    grid-area: fecha; /* Coloca fecha en la segunda fila, primera columna */
+    grid-area: fecha;
   }
   .hora {
-    grid-area: hora; /* Coloca hora en la segunda fila, segunda columna */
+    grid-area: hora;
   }
 }

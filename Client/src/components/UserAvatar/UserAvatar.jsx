@@ -4,7 +4,7 @@ export const UserAvatar = ({ user, size = 50 }) => {
 
   let bgColor = '#91cad8 '
 
-  if(user.avatar === '/tram6.png' || user.avatar === '/tram7.png'|| user.avatar === '/tram8.png'|| user.avatar === '/tram1.png'){
+  if(user?.avatar === '/tram6.png' || user?.avatar === '/tram7.png'|| user?.avatar === '/tram8.png'|| user?.avatar === '/tram1.png'){
     bgColor= '#e3b6d4';
   }else{
     bgColor= '#b3b420';
