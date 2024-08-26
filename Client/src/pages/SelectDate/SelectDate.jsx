@@ -142,7 +142,9 @@ export const SelectDate = () => {
       <ProgressBar date={planningList} />
 
       <Row>
-        <h3 className="text-center pb-4 fs-4 mt-1 textEnun">
+
+        <h3 className="text-center pb-4 fs-4 mt-1 textEnun akkurat-font">
+
           Selecciona día de{" "}
           {location.pathname === "/reservations"
             ? choose.textIda
@@ -219,7 +221,7 @@ export const SelectDate = () => {
           md={6}
           className="d-flex flex-column align-items-center w-100 p-0 m-0"
         >
-          <div className="grid-container w-100">
+          <div className="grid-container w-100 akkurat-font">
             <div className="fecha d-flex flex-column justify-content-start align-items-center btn-primary">
               <h4>Fecha</h4>
               <p className="mt-3">{date}</p>

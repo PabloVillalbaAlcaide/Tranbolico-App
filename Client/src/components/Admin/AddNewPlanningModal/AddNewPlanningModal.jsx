@@ -77,7 +77,7 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
   };
 
   return (
-    <Modal show={show} onHide={onHide}>
+    <Modal show={show} onHide={onHide} className="akkurat-font">
       <Modal.Header closeButton>
         <Modal.Title>Añadir Nuevo Planning</Modal.Title>
       </Modal.Header>

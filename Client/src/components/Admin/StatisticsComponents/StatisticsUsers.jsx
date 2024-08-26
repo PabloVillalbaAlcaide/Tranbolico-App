@@ -57,7 +57,7 @@ export const StatisticsUsers = () => {
   return (
     <>
       {data && (
-        <div className="d-flex flex-column align-items-center justify-content-center position-relative">
+        <div className="d-flex flex-column align-items-center justify-content-center position-relative mt-5 akkurat-font">
           <PieChart
             width={800}
             height={250}

@@ -26,3 +26,15 @@ th {
   background-color: var(--tranbolico-amarillo);
   border: none;
 }
+
+//ER editRoute
+//AP addPlanning
+@media (max-width: 800px) {
+  .ms-custom-ER {
+    margin-left: 6rem !important;
+  }
+
+  .ms-custom-AP {
+    margin-left: 8rem !important;
+  }
+}
