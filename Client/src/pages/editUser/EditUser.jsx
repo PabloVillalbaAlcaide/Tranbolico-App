@@ -120,7 +120,7 @@ export const EditUser = () => {
       }
 
       const response = await axios.put(
-        `http://localhost:4000/users/editOneUser`,
+        `${import.meta.env.VITE_API_URL}/users/editOneUser`,
         formData,
         { headers: { Authorization: `Bearer ${globalState.token}` } }
       );

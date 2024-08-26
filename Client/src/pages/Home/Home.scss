@@ -183,6 +183,10 @@
   .contenedor-botones-home > Button {
     min-width: 260px;
   }
+  .btn-conocenos-home,
+  .btn-faqs-home {
+    color: var(--tranbolico-azul);
+  }
 
   .btn-buscarSBH {
     font-size: 2rem;
@@ -223,7 +227,6 @@
   .contenedor-botones-home > Button {
     border: none;
     font-size: 2.8rem;
-    color: white;
     border-radius: 1rem;
     font-family: "VinaSans-Regular.ttf";
     width: 100%;

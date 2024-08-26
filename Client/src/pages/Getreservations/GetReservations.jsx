@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Row } from "react-bootstrap";
 import { Outlet, useLocation } from "react-router-dom";
+import { TitleTram } from "../../components/TitleTram/TitleTram";
 
 export const GetReservations = () => {
   const [reservation, setReservation] = useState();
@@ -24,11 +25,14 @@ export const GetReservations = () => {
 
   return (
     <>
-      <Row>
+      {/* <Row>
         <div className="ppal-rutas text-center text-white mt-2">
           <h2 className="mb-0 py-2">RESERVAS</h2>
         </div>
-      </Row>
+      </Row> */}
+      <TitleTram backgroundColor={'var(--tranbolico-fucsia)'} color={"white"}>
+        RESERVAS
+      </TitleTram>
       <Outlet
         context={{ reservation, setReservation, route, loadingReservation }}
       />

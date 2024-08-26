@@ -16,7 +16,7 @@ export const StatisticsGenre = () => {
   const obtainData = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:4000/statistics/statisticsGenre",
+        `${import.meta.env.VITE_API_URL}/statistics/statisticsGenre`,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }

@@ -20,7 +20,7 @@ export const MsgToken = () => {
   const verifyUser = async (token) => {
     try {
       const res = await axios.put(
-        "http://localhost:4000/users/verifyUser",
+        `${import.meta.env.VITE_API_URL}/users/verifyUser`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },

@@ -82,7 +82,7 @@ export const SelectDate = () => {
     try {
       if (location.pathname === "/reservations") {
         const res = await axios.get(
-          `http://localhost:4000/reservation/getSchedules`,
+          `${import.meta.env.VITE_API_URL}/reservation/getSchedules`,
           {
             headers: { Authorization: `Bearer ${globalState.token}` },
             params: {
@@ -96,7 +96,7 @@ export const SelectDate = () => {
         setPlanningList(res.data);
       } else {
         const res = await axios.get(
-          `http://localhost:4000/reservation/getSchedules`,
+          `${import.meta.env.VITE_API_URL}/reservation/getSchedules`,
           {
             headers: { Authorization: `Bearer ${globalState.token}` },
             params: {
@@ -134,9 +134,6 @@ export const SelectDate = () => {
     }
   };
 
-  console.log(reservation);
-  console.log(planningList);
-
   return (
     <Container
       fluid
@@ -145,7 +142,9 @@ export const SelectDate = () => {
       <ProgressBar date={planningList} />
 
       <Row>
-        <h3 className="text-center pb-4 akkurat-font">
+
+        <h3 className="text-center pb-4 fs-4 mt-1 textEnun akkurat-font">
+
           Selecciona día de{" "}
           {location.pathname === "/reservations"
             ? choose.textIda
@@ -239,11 +238,18 @@ export const SelectDate = () => {
               {date
                 ? planningList.map((elem) => {
                     if (elem.departure_date === date) {
+                      const isSelected =
+                        (location.pathname === "/reservations" &&
+                          elem.departure_time === reservation.departure_time) ||
+                        (location.pathname === "/reservations/returnDate" &&
+                          elem.departure_time === reservation.arrival_time);
                       return (
                         <Button
                           key={elem.planning_id}
                           onClick={() => setPlanning(elem)}
-                          className="m-2"
+                          className={`m-2 btn-date ${
+                            isSelected ? "selected" : ""
+                          }`}
                         >
                           {elem.departure_time}
                         </Button>

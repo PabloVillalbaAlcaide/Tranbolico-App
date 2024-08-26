@@ -25,7 +25,7 @@ export const ViewAddPlanning = () => {
 
   const getPlanning = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/admin/getPlanning", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/admin/getPlanning`, {
         headers: { Authorization: `Bearer ${globalState.token}` },
       });
       setPlanningList(res.data);
@@ -37,7 +37,7 @@ export const ViewAddPlanning = () => {
   const handleSavePlanning = async (newPlanning) => {
     try {
       const res = await axios.post(
-        "http://localhost:4000/admin/addPlanning",
+        `${import.meta.env.VITE_API_URL}/admin/addPlanning`,
         newPlanning,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
@@ -63,7 +63,7 @@ export const ViewAddPlanning = () => {
   const handleDeletePlanning = async (routeId, planningId) => {
     try {
       const res = await axios.delete(
-        `http://localhost:4000/admin/delPlanning/${routeId}/${planningId}`,
+        `${import.meta.env.VITE_API_URL}/admin/delPlanning/${routeId}/${planningId}`,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
@@ -83,7 +83,7 @@ export const ViewAddPlanning = () => {
   const handleEditPlanning = async (routeId, planningId) => {
     try {
       const res = await axios.put(
-        `http://localhost:4000/admin/editPlanning/${routeId}/${planningId}`,
+        `${import.meta.env.VITE_API_URL}/admin/editPlanning/${routeId}/${planningId}`,
         editData,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },

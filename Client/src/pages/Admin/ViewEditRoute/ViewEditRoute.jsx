@@ -40,7 +40,7 @@ export const ViewEditRoute = () => {
 
   const getRoutes = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/admin/getRoutes", {
+      const res = await axios.get("${import.meta.env.VITE_API_URL}/admin/getRoutes", {
         headers: { Authorization: `Bearer ${globalState.token}` },
       });
       setRoutes(res.data);
@@ -73,7 +73,7 @@ export const ViewEditRoute = () => {
       console.log(editedRoute);
 
       const response = await axios.put(
-        "http://localhost:4000/admin/editRoute",
+        `${import.meta.env.VITE_API_URL}/admin/editRoute`,
         editedRoute,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
@@ -99,7 +99,7 @@ export const ViewEditRoute = () => {
 
     try {
       const response = await axios.patch(
-        "http://localhost:4000/admin/disableRoute",
+        `${import.meta.env.VITE_API_URL}/admin/disableRoute`,
         { route_id: routeId, is_disabled: isDisabled },
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
@@ -125,7 +125,7 @@ export const ViewEditRoute = () => {
   const handleDeleteClick = async (routeId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:4000/admin/deleteRoute/${routeId}`,
+        `${import.meta.env.VITE_API_URL}/admin/deleteRoute/${routeId}`,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
@@ -149,7 +149,7 @@ export const ViewEditRoute = () => {
   const handleAddRoute = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:4000/admin/addRoute",
+        `${import.meta.env.VITE_API_URL}/admin/addRoute`,
         newRoute,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
@@ -29,7 +29,6 @@ export const StatisticsMap = () => {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
       );
-      console.log(res.data);
 
       const modifiedData = await Promise.all(
         res.data.map(async (item) => {
@@ -56,34 +55,36 @@ export const StatisticsMap = () => {
   }, []);
 
   return (
-    <MapContainer
-      style={{
-        width: "500px",
-        height: "500px",
-      }}
-      center={center}
-      zoom={5}
-    >
-      <TileLayer
-        url={`https://api.maptiler.com/maps/dataviz/256/{z}/{x}/{y}.png?key=${
-          import.meta.env.VITE_MAPTILER_API_KEY
-        }`}
-        attribution='© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      />
-      {data.map((item) => (
-        <Marker
-          key={item.city_name}
-          position={{
-            lat: item.lat,
-            lng: item.lng,
-          }}
-        >
-          <Popup>
-            {item.city_name}, {item.province_name} ({item.total_reservations}{" "}
-            reservas)
-          </Popup>
-        </Marker>
-      ))}
-    </MapContainer>
+    <>
+      {data && <MapContainer
+        style={{
+          width: "500px",
+          height: "500px",
+        }}
+        center={center}
+        zoom={5}
+      >
+        <TileLayer
+          url={`https://api.maptiler.com/maps/dataviz/256/{z}/{x}/{y}.png?key=${
+            import.meta.env.VITE_MAPTILER_API_KEY
+          }`}
+          attribution='© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        {data.map((item) => (
+          <Marker
+            key={item.city_name}
+            position={{
+              lat: item.lat,
+              lng: item.lng,
+            }}
+          >
+            <Popup>
+              {item.city_name}, {item.province_name} ({item.total_reservations}{" "}
+              reservas)
+            </Popup>
+          </Marker>
+        ))}
+      </MapContainer>}
+    </>
   );
 };

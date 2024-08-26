@@ -28,7 +28,7 @@ export const SearchBar = () => {
     if (value !== "") {
       try {
         const res = await axios.get(
-          `http://localhost:4000/reservation/oneWayTrip?search=${value}`
+          `${import.meta.env.VITE_API_URL}/reservation/oneWayTrip?search=${value}`
         );
         setOriginSuggestions(res.data);
       } catch (err) {
@@ -46,7 +46,7 @@ export const SearchBar = () => {
     if (value !== "" && originFinal.city && originFinal.province) {
       try {
         const res = await axios.get(
-          `http://localhost:4000/reservation/returnTrip?search=${value}&city=${originFinal.city}&province=${originFinal.province}`
+          `${import.meta.env.VITE_API_URL}/reservation/returnTrip?search=${value}&city=${originFinal.city}&province=${originFinal.province}`
         );
 
         setDestinationSuggestions(res.data);

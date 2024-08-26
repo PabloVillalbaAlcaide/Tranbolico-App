@@ -17,7 +17,7 @@ export const StatisticsUsers = () => {
   const getData = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:4000/statistics/statisticsUsers",
+        `${import.meta.env.VITE_API_URL}/statistics/statisticsUsers`,
         { headers: { Authorization: `Bearer ${globalState.token}` } }
       );
       const mappedArray = Object.entries(res.data[0]).map(([key, value]) => {

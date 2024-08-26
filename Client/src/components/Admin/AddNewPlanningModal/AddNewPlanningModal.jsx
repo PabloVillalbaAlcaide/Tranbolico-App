@@ -15,7 +15,7 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
   const getPlanningRoutes = async (value) => {
     try {
       const res = await axios.get(
-        `http://localhost:4000/admin/getPlanningRoutes?search=${value}`,
+        `${import.meta.env.VITE_API_URL}/admin/getPlanningRoutes?search=${value}`,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
