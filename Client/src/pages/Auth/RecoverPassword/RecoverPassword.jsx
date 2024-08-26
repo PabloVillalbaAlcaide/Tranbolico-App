@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./RecoverPassword.scss";
 import { ButtonTram } from "../../../components/ButtonTram/ButtonTram";
+import { TitleTram } from "../../../components/TitleTram/TitleTram";
 
 export const RecoverPassword = () => {
   const [mail, setMail] = useState({});
@@ -31,9 +32,12 @@ export const RecoverPassword = () => {
   return (
     <>
       <Row>
-        <div className="ppal-register text-center text-white mt-2 mb-2 ">
+        {/* <div className="ppal-register text-center text-white mt-2 mb-2 ">
           <h2 className="mb-0 py-2">Nueva Contraseña</h2>{" "}
-        </div>
+        </div> */}
+        <TitleTram backgroundColor={'var(--tranbolico-azul)'} color={"white"}>
+          Nueva Contraseña
+        </TitleTram>
         <Container
           fluid
           className="p-0 mt-1 d-flex justify-content-center align-items-start"

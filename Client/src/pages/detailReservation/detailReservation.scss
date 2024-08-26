@@ -28,3 +28,17 @@ main {
     color: var(--tranbolico-fucsia);
   }
 }
+
+.buttons-Details{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+@media (max-width: 540px) {
+  .buttons-Details{
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+  }
+}
