@@ -74,7 +74,7 @@ export const DetailReservation = () => {
             </Col>
             
             <Col>
-              <div className="d-flex justify-content-center flex-column gap-4">
+              <div className="buttons-Details">
                 {/* <Button
                   style={{
                     backgroundColor: "var(--tranbolico-azulClaro)",

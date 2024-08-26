@@ -3,8 +3,13 @@ import { FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
 import busTranbólico from "/images/busTrambólico.jpg";
 import "./Footer.scss";
 import { Link } from "react-router-dom";
+import { FaWhatsapp } from "react-icons/fa";
 
 export const Footer = () => {
+  const phoneNumber = '34123456789';
+  const defaultMessage = encodeURIComponent('Bienvenid@ a Tranbólico. ¿En qué puedo ayudarle?');
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${defaultMessage}`;
+
   return (
     <Container
       fluid
@@ -14,9 +19,11 @@ export const Footer = () => {
       <h1 className="h1-footer m-0">TRANBÓLICO</h1>
 
       <p className="tuvuelta-footer m-0">Tu vuelta a casa sin esperas</p>
-      <p></p>
 
       <div className="iconos-footer m-0">
+        <Button variant="none" href={whatsappUrl} target="_blank">
+          <FaWhatsapp color="white" size={25} />
+        </Button>
         <Button variant="none">
           <FaTwitter color="white" size={25} />
         </Button>
@@ -26,7 +33,6 @@ export const Footer = () => {
         <Button variant="none">
           <FaInstagram color="white" size={25} />
         </Button>
-
       </div>
 
       <div className="">
