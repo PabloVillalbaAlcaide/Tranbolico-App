@@ -10,6 +10,7 @@ router.put("/editRoute", verifyAdmin, adminController.editRoute);
 router.delete("/deleteRoute/:id", verifyAdmin, adminController.deleteRoute);
 router.patch("/disableRoute", verifyAdmin, adminController.disableRoute);
 router.get("/getPlanning", verifyAdmin, adminController.getPlanning);
+router.get("/getHistoricalPlanning", verifyAdmin, adminController.getHistoricalPlanning);
 router.get("/getPlanningRoutes", verifyAdmin, adminController.getPlanningRoutes);
 router.post("/addPlanning", verifyAdmin, adminController.addPlanning);
 router.delete("/delPlanning/:routeId/:planningId", verifyAdmin, adminController.delPlanning);

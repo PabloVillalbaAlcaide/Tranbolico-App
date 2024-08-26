@@ -187,13 +187,48 @@ class AdminController {
     dp.city_name AS departure_city,
     dp_prov.name AS departure_province,
     ap.city_name AS arrival_city,
-    ap_prov.name AS arrival_province
-    FROM planning JOIN route ON planning.route_id = route.route_id
+    ap_prov.name AS arrival_province,
+    planning.is_deleted
+    FROM planning 
+    JOIN route ON planning.route_id = route.route_id
     JOIN city dp ON route.departure_city_id = dp.city_id 
     AND route.departure_province_id = dp.province_id
     JOIN province dp_prov ON dp.province_id = dp_prov.province_id
-    JOIN city ap ON route.arrival_city_id = ap.city_id AND route.arrival_province_id = ap.province_id
-    JOIN province ap_prov ON ap.province_id = ap_prov.province_id`;
+    JOIN city ap ON route.arrival_city_id = ap.city_id 
+    AND route.arrival_province_id = ap.province_id
+    JOIN province ap_prov ON ap.province_id = ap_prov.province_id
+    WHERE CONCAT(planning.departure_date, ' ', planning.departure_time) > NOW() 
+    AND planning.is_deleted = FALSE`;
+    connection.query(sql, (err, result) => {
+      if (err) {
+        return res.status(500).json(err);
+      } else {
+        res.status(200).json(result);
+      }
+    });
+  };
+
+  getHistoricalPlanning = (req, res) => {
+    const sql = `SELECT 
+    planning.route_id,
+    planning.planning_id,
+    planning.departure_date,
+    planning.departure_time,
+    dp.city_name AS departure_city,
+    dp_prov.name AS departure_province,
+    ap.city_name AS arrival_city,
+    ap_prov.name AS arrival_province,
+    planning.is_deleted
+    FROM planning 
+    JOIN route ON planning.route_id = route.route_id
+    JOIN city dp ON route.departure_city_id = dp.city_id 
+    AND route.departure_province_id = dp.province_id
+    JOIN province dp_prov ON dp.province_id = dp_prov.province_id
+    JOIN city ap ON route.arrival_city_id = ap.city_id 
+    AND route.arrival_province_id = ap.province_id
+    JOIN province ap_prov ON ap.province_id = ap_prov.province_id
+    WHERE CONCAT(planning.departure_date, ' ', planning.departure_time) < NOW() 
+    OR planning.is_deleted = TRUE`;
     connection.query(sql, (err, result) => {
       if (err) {
         return res.status(500).json(err);
@@ -256,7 +291,7 @@ class AdminController {
 
     const { routeId, planningId } = req.params;
     const data = [routeId, planningId];
-    const sql = `DELETE FROM planning WHERE route_id = ? AND planning_id = ?`;
+    const sql = `UPDATE planning SET is_deleted = TRUE WHERE route_id = ? AND planning_id = ?`;
     connection.query(sql, data, (err, result) => {
       if (err) {
         return res.status(500).json(err);
