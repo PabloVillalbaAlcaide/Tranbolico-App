@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
 import { ButtonTram } from "../../../components/ButtonTram/ButtonTram";
+import { TitleTram } from "../../../components/TitleTram/TitleTram";
 
 const initialValue = {
   email: "",
@@ -59,9 +60,12 @@ export const Login = () => {
   return (
     <>
       <Row>
-        <div className="ppal-login text-center text-white  mt-2">
+        {/* <div className="ppal-login text-center text-white  mt-2">
           <h2 className="mb-0 py-2">LOGIN</h2>
-        </div>
+        </div> */}
+        <TitleTram backgroundColor={'var(--tranbolico-azul)'} color={"white"}>
+          LOGIN
+        </TitleTram>
         <Container
           fluid
           className="p-0 mt-1  d-flex justify-content-center align-items-start"

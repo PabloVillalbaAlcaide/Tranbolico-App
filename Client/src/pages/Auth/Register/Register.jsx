@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { SearchDropdown } from "../../../components/locationSelector/LocationSelector"; //
 import { ButtonTram } from "../../../components/ButtonTram/ButtonTram";
+import { TitleTram } from "../../../components/TitleTram/TitleTram";
 
 const initialValue = {
   name: "",
@@ -168,9 +169,12 @@ export const Register = () => {
   return (
     <>
       <Row>
-        <div className="ppal-register text-center text-white mt-2 mb-2 ">
+        {/* <div className="ppal-register text-center text-white mt-2 mb-2 ">
           <h2 className="mb-0 py-2">REGISTRO</h2>
-        </div>
+        </div> */}
+        <TitleTram backgroundColor={'var(--tranbolico-azul)'} color={"white"}>
+          REGISTRO
+        </TitleTram>
         <div className="contenedor-register d-flex justify-content-center p-5 mt-5 ">
           <Col xs={12}>
             <Form onSubmit={onSubmit}>

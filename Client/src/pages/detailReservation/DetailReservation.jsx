@@ -6,6 +6,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import { useContext } from "react";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import { ProgressBar } from "../../components/ProgressBar/ProgressBar";
+import { ButtonTram } from "../../components/ButtonTram/ButtonTram";
 
 export const DetailReservation = () => {
   const { reservation } = useOutletContext();
@@ -71,10 +72,10 @@ export const DetailReservation = () => {
                 </h5>
               </div>
             </Col>
-
+            
             <Col>
-              <div className="d-flex justify-content-center gap-4">
-                <Button
+              <div className="d-flex justify-content-center flex-column gap-4">
+                {/* <Button
                   style={{
                     backgroundColor: "var(--tranbolico-azulClaro)",
                     color: "black",
@@ -83,8 +84,16 @@ export const DetailReservation = () => {
                   onClick={confirmReservation}
                 >
                   Confirmar
-                </Button>
-                <Button
+                </Button> */}
+                <ButtonTram 
+                fontSize="1.3rem"
+                color="black"
+                backgroundColor="var(--tranbolico-verde)"
+                onClick={confirmReservation}
+                >
+                  Confirmar
+                </ButtonTram>
+                {/* <Button
                   style={{
                     backgroundColor: "var(--tranbolico-amarillo)",
                     color: "black",
@@ -93,8 +102,16 @@ export const DetailReservation = () => {
                   onClick={() => navigate(-1)}
                 >
                   Atras
-                </Button>
-                <Button
+                </Button> */}
+                <ButtonTram
+                fontSize="1.3rem"
+                color="black"
+                backgroundColor="var(--tranbolico-amarillo)"
+                onClick={() => navigate(-1)}
+                >
+                  Atrás
+                </ButtonTram>
+                {/* <Button
                   style={{
                     backgroundColor: "var(--tranbolico-rosa)",
                     color: "black",
@@ -103,7 +120,15 @@ export const DetailReservation = () => {
                   onClick={() => navigate("/")}
                 >
                   Cancelar
-                </Button>
+                </Button> */}
+                <ButtonTram
+                fontSize="1.3rem"
+                color="black"
+                backgroundColor="var(--tranbolico-fucsia)"
+                onClick={() => navigate("/")}
+                >
+                Cancelar
+                </ButtonTram>
               </div>
             </Col>
           </Row>

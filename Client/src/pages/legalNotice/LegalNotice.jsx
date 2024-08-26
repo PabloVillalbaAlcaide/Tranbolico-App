@@ -1,14 +1,18 @@
 import React from "react";
 import { Row } from "react-bootstrap";
+import { TitleTram } from "../../components/TitleTram/TitleTram";
 
 export const LegalNotice = () => {
   return (
     <div>
-      <Row>
+      {/* <Row>
         <div className="ppal-rutas text-center text-white mt-2">
           <h2 className="mb-0 py-2">AVISO LEGAL</h2>
         </div>
-      </Row>
+      </Row> */}
+      <TitleTram backgroundColor={'var(--tranbolico-fucsia)'} color={"white"}>
+        AVISO LEGAL
+      </TitleTram>
       <Row className="justify-content-center">
         <div className="w-75 my-5">
           <ol className="text-left">

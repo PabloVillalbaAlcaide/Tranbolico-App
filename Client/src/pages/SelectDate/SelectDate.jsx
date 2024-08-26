@@ -239,11 +239,18 @@ export const SelectDate = () => {
               {date
                 ? planningList.map((elem) => {
                     if (elem.departure_date === date) {
+                      const isSelected =
+                        (location.pathname === "/reservations" &&
+                          elem.departure_time === reservation.departure_time) ||
+                        (location.pathname === "/reservations/returnDate" &&
+                          elem.departure_time === reservation.arrival_time);
                       return (
                         <Button
                           key={elem.planning_id}
                           onClick={() => setPlanning(elem)}
-                          className="m-2"
+                          className={`m-2 btn-date ${
+                            isSelected ? "selected" : ""
+                          }`}
                         >
                           {elem.departure_time}
                         </Button>
