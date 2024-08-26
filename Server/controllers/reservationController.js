@@ -78,8 +78,10 @@ class ReservationController {
     JOIN province ap ON route.arrival_province_id = ap.province_id
     JOIN city ac ON route.arrival_city_id = ac.city_id AND route.arrival_province_id = ac.province_id
     WHERE reservation.user_id = ${userID}
-    AND (reservation.reservation_type = 2 AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) < NOW() OR reservation.user_id = ${userID} AND reservation.is_deleted = 1)
-    GROUP BY reservation.reservation_id;`;
+    AND (
+    (reservation.reservation_type = 2 AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) < NOW())
+    OR (reservation.user_id = ${userID} AND reservation.is_deleted = true))
+    GROUP BY reservation.reservation_id`;
     console.log("Todo bien");
     
     connection.query(sql, (err, result) => {
@@ -124,7 +126,7 @@ class ReservationController {
     WHERE reservation.user_id = ${userID}
     AND (reservation.reservation_type = 1 OR (reservation.reservation_type = 2 AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) > NOW()))
     AND reservation.is_deleted = 0
-    GROUP BY reservation.reservation_id;`;
+    GROUP BY reservation.reservation_id`;
     connection.query(sql, (err, result) => {
       if (err) {
         console.log(err);

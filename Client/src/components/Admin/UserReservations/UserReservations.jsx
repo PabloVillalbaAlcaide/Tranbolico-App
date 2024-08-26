@@ -1,11 +1,10 @@
 import { useState, useEffect, useContext } from "react";
-import { Alert, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import axios from "axios";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
 
 export const UserReservations = ({ user_id }) => {
   const [reservation, setReservation] = useState([]);
-  const [error, setError] = useState(null);
   const { globalState } = useContext(AppContext);
 
   useEffect(() => {
@@ -23,13 +22,13 @@ export const UserReservations = ({ user_id }) => {
       setReservation(res.data);
     } catch (error) {
       console.error(error);
-      setError("Error al cargar el historial de reservas.");
     }
   };
 
+  console.log("reservas",reservation);
+  
   return (
     <>
-      {error && <Alert variant="danger">{error}</Alert>}
       {reservation.length > 0 ? (
         <Table striped bordered hover size="sm" responsive>
           <thead>
