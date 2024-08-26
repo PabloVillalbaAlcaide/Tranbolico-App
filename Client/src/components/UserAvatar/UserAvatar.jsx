@@ -23,7 +23,7 @@ export const UserAvatar = ({ user, size = 50 }) => {
     <>
     <div style={avatarStyle}>
         {user?.avatar && <img
-          src={`http://localhost:4000/images/users/${user.avatar}`}
+          src={`${import.meta.env.VITE_API_URL}/images/users/${user.avatar}`}
           alt="avatar"
           width={size}
           height={size}

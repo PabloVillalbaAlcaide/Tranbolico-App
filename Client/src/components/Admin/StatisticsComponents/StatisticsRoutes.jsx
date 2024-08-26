@@ -20,7 +20,7 @@ export const StatisticsRoutes = () => {
   const getData = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:4000/statistics/statisticsRoutes",
+        `${import.meta.env.VITE_API_URL}/statistics/statisticsRoutes`,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }

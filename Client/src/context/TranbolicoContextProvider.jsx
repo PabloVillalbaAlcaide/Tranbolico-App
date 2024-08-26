@@ -18,7 +18,7 @@ export const TranbolicoContextProvider = ({ children }) => {
 
   const getUser = async (token) => {
     try {
-      const res = await axios.get("http://localhost:4000/users/getOneUser", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/getOneUser`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

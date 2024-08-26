@@ -38,7 +38,7 @@ export const UserReservations = () => {
     }
     try {
       const res = await axios.get(
-        `http://localhost:4000/reservation/${partialUrl}/${globalState.user.user_id}`,
+        `${import.meta.env.VITE_API_URL}/reservation/${partialUrl}/${globalState.user.user_id}`,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
@@ -58,7 +58,7 @@ export const UserReservations = () => {
   const cancelReservation = async (reservation) => {
     try {
       const response = await axios.put(
-        `http://localhost:4000/reservation/cancelReservation`,
+        `${import.meta.env.VITE_API_URL}/reservation/cancelReservation`,
         {
           reservationForCancel: reservation,
         },

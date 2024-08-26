@@ -82,7 +82,7 @@ export const SelectDate = () => {
     try {
       if (location.pathname === "/reservations") {
         const res = await axios.get(
-          `http://localhost:4000/reservation/getSchedules`,
+          `${import.meta.env.VITE_API_URL}/reservation/getSchedules`,
           {
             headers: { Authorization: `Bearer ${globalState.token}` },
             params: {
@@ -96,7 +96,7 @@ export const SelectDate = () => {
         setPlanningList(res.data);
       } else {
         const res = await axios.get(
-          `http://localhost:4000/reservation/getSchedules`,
+          `${import.meta.env.VITE_API_URL}/reservation/getSchedules`,
           {
             headers: { Authorization: `Bearer ${globalState.token}` },
             params: {
