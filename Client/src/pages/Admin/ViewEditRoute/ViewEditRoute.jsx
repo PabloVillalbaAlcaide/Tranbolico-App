@@ -40,9 +40,11 @@ export const ViewEditRoute = () => {
 
   const getRoutes = async () => {
     try {
-      const res = await axios.get("${import.meta.env.VITE_API_URL}/admin/getRoutes", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/admin/getRoutes`, {
         headers: { Authorization: `Bearer ${globalState.token}` },
       });
+      console.log(res.data);
+      
       setRoutes(res.data);
     } catch (err) {
       console.log(err);

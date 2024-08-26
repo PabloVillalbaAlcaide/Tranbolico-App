@@ -167,7 +167,7 @@ class AdminController {
   deleteRoute = (req, res) => {
     const data = [req.params.id];
 
-    const sql = `UPDATE route SET is_deleted = ? WHERE route_id = ?`;
+    const sql = `UPDATE route SET is_deleted = false WHERE route_id = ?`;
 
     connection.query(sql, data, (err, result) => {
       if (err) {
