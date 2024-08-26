@@ -14,11 +14,11 @@ class AdminController {
     ac.city_name AS arrival_city, 
     r.text, 
     r.is_disabled
-  FROM route r JOIN city dc ON r.departure_province_id = dc.province_id 
-  AND r.departure_city_id = dc.city_id JOIN province dp 
-  ON r.departure_province_id = dp.province_id JOIN city ac 
-  ON r.arrival_province_id = ac.province_id AND r.arrival_city_id = ac.city_id
-  JOIN province ap ON r.arrival_province_id = ap.province_id`;
+    FROM route r JOIN city dc ON r.departure_province_id = dc.province_id 
+    AND r.departure_city_id = dc.city_id JOIN province dp 
+    ON r.departure_province_id = dp.province_id JOIN city ac 
+    ON r.arrival_province_id = ac.province_id AND r.arrival_city_id = ac.city_id
+    JOIN province ap ON r.arrival_province_id = ap.province_id WHERE is_deleted = false`;
     connection.query(sql, (err, result) => {
       if (err) {
         if (!res.headersSent) {
@@ -34,7 +34,9 @@ class AdminController {
 
   searchLocations = (req, res) => {
     const search = req.query.q;
-    const sql = `SELECT city.city_id, city.city_name, province.province_id, province.name FROM city, province WHERE city.province_id = province.province_id AND (city.city_name LIKE ? OR province.name LIKE ?)`;
+    const sql = `SELECT city.city_id, city.city_name, province.province_id, province.name 
+    FROM city, province WHERE city.province_id = province.province_id 
+    AND (city.city_name LIKE ? OR province.name LIKE ?)`;
     const searchTerm = `%${search}%`;
 
     connection.query(sql, [searchTerm, searchTerm], (err, results) => {
@@ -165,7 +167,7 @@ class AdminController {
   deleteRoute = (req, res) => {
     const data = [req.params.id];
 
-    const sql = `DELETE FROM route WHERE route_id = ?;`;
+    const sql = `UPDATE route SET is_deleted = ? WHERE route_id = ?`;
 
     connection.query(sql, data, (err, result) => {
       if (err) {
@@ -214,7 +216,7 @@ class AdminController {
     JOIN province AS departure_province ON departure_city.province_id = departure_province.province_id
     JOIN city AS arrival_city ON route.arrival_city_id = arrival_city.city_id AND route.arrival_province_id = arrival_city.province_id
     JOIN province AS arrival_province ON arrival_city.province_id = arrival_province.province_id
-    WHERE route.is_disabled = false AND (departure_province.name LIKE '${search}%' OR departure_city.city_name LIKE '${search}%')`;
+    WHERE route.is_disabled = false AND route.is_deleted = false AND (departure_province.name LIKE '${search}%' OR departure_city.city_name LIKE '${search}%')`;
     connection.query(sql, (err, result) => {
       if (err) {
         return res.status(500).json(err);
@@ -282,7 +284,6 @@ class AdminController {
       if (err) {
         return res.status(500).json(err);
       }
-      console.log("realizado");
 
       res.status(200).json(result);
     });
@@ -303,9 +304,6 @@ class AdminController {
     if (isDisabled !== null) {
       sql += ` AND is_disabled = ${isDisabled}`;
     }
-
-    console.log(sql);
-    
 
     connection.query(sql, (err, result) => {
       if (err) {
