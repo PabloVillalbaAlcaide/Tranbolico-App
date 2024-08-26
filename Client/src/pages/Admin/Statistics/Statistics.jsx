@@ -1,10 +1,13 @@
+import { Container } from "react-bootstrap";
 import { StatisticsUsers } from "../../../components/Admin/StatisticsComponents/StatisticsUsers";
-import { StatisticsRoutes } from "../../../components/Admin/StatisticsComponents/StatisticsRoutes";
-import { StatisticsAge } from "../../../components/Admin/StatisticsComponents/StatisticsAge";
 import { StatisticsGenre } from "../../../components/Admin/StatisticsComponents/StatisticsGenre";
+import { StatisticsAge } from "../../../components/Admin/StatisticsComponents/StatisticsAge";
+import { StatisticsRoutes } from "../../../components/Admin/StatisticsComponents/StatisticsRoutes";
 import { StatisticsMap } from "../../../components/Admin/StatisticsComponents/StatisticsMap";
+import "./statistics.scss";
 import { Button, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+
 
 export const Statistics = () => {
   const navigate = useNavigate();
@@ -22,12 +25,19 @@ export const Statistics = () => {
       >
         Volver al panel
       </Button>
-      <StatisticsUsers />
-      <StatisticsRoutes />
+
+    <Container fluid="xl" className="statistics-container mb-5">
+      <div className="statistics-grid-container">
+        <StatisticsUsers />
+        <StatisticsGenre />
+      </div>
       <StatisticsAge />
-      <StatisticsGenre />
-      <StatisticsMap />
-      <br />
+
+      <div className="statistics-grid-container">
+        <StatisticsRoutes />
+        <StatisticsMap />
+      </div>
+    </Container>
     </>
   );
 };

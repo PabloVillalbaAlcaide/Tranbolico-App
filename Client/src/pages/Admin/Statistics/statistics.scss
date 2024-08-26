@@ -1,0 +1,22 @@
+.statistics-container {
+  display: grid;
+  gap: 20px;
+}
+
+.statistics-grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.statistics-grid-container > * {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .statistics-grid-container {
+    grid-template-columns: 1fr;
+  }
+}

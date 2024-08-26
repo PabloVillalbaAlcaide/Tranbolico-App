@@ -1,7 +1,7 @@
 import { PureComponent, useContext, useEffect, useState } from "react";
-import { PieChart, Pie, Cell, Text } from "recharts";
+import { ResponsiveContainer, PieChart, Pie, Cell} from "recharts";
 import axios from "axios";
-import { AppContext } from "../../../context/TranbolicoContextProvider";
+import { AppContext } from "../../../context/TranbolicoContextProvider"
 
 const COLORS = ["#283583", "#e72957"];
 
@@ -57,36 +57,34 @@ export const StatisticsUsers = () => {
   return (
     <>
       {data && (
-        <div className="d-flex flex-column align-items-center justify-content-center position-relative mt-5 akkurat-font">
-          <PieChart
-            width={800}
-            height={250}
-            onMouseEnter={PureComponent.onPieEnter}
-          >
-            <Pie
-              data={data}
-              cx={420}
-              cy={200}
-              startAngle={180}
-              endAngle={0}
-              innerRadius={60}
-              outerRadius={80}
-              fill="#8884d8"
-              paddingAngle={5}
-              dataKey="value"
-              label={renderCustomizedLabel}
-            >
-              {data.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-          </PieChart>
+        <div className="d-flex flex-column align-items-center justify-content-center position-relative w-100" style={{height:"400px"}}>
+            <ResponsiveContainer>
+              <PieChart width="100%" height={400} onMouseEnter={PureComponent.onPieEnter}>
+                <Pie
+                  data={data}
+                  cx="50%"
+                  cy="50%"
+                  startAngle={180}
+                  endAngle={0}
+                  innerRadius="30%"
+                  outerRadius="40%"
+                  fill="#8884d8"
+                  paddingAngle={5}
+                  dataKey="value"
+                  label={renderCustomizedLabel}
+                >
+                  {data.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
           <span
             className="position-absolute start-50 end-50 text-nowrap"
-            style={{ transform: "translate(-10px, 100px)" }}
+            style={{ transform: "translate(-37.5px, 30px)" }}
           >
             Totales: {`${totalUsers?.value}`}
           </span>

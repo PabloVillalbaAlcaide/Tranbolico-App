@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
-import { AppContext } from "../../../context/TranbolicoContextProvider";
+import { AppContext } from "../../../context/TranbolicoContextProvider"
 import {
   BarChart,
   Bar,
@@ -88,10 +88,10 @@ export const StatisticsAge = () => {
   };
 
   return (
-    <>  
-      <ResponsiveContainer width="100%" height={300}>
+    <div>
+      <ResponsiveContainer height={300}>
         <BarChart
-          width={500}
+          width="100%"
           height={300}
           data={data}
           margin={{
@@ -112,6 +112,6 @@ export const StatisticsAge = () => {
         </BarChart>
       </ResponsiveContainer>
       {renderButtons()}
-    </>
+    </div>
   );
 };

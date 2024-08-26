@@ -1,7 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
+import { scaleLinear } from "d3-scale";
 import "leaflet/dist/leaflet.css";
 
 const center = {
@@ -17,8 +18,18 @@ const getCoordinates = async (city, province) => {
   return { lat: parseFloat(lat), lng: parseFloat(lon) };
 };
 
+const colorScale = scaleLinear()
+.domain([0, 0.5, 1])
+.range(["green", "yellow", "red"]);
+
+const getColor = (reservations, minReservations, maxReservations) => {
+  const ratio = (reservations - minReservations) / (maxReservations - minReservations);
+  return colorScale(ratio);
+};
+
 export const StatisticsMap = () => {
   const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
   const { globalState } = useContext(AppContext);
 
   const getData = async () => {
@@ -46,6 +57,7 @@ export const StatisticsMap = () => {
 
       setData(modifiedData);
     } catch (err) {
+      setError("Error al obtener los datos");
       console.log(err);
     }
   };
@@ -54,37 +66,48 @@ export const StatisticsMap = () => {
     getData();
   }, []);
 
+  const minReservations = Math.min(...data.map(item => item.total_reservations));
+  const maxReservations = Math.max(...data.map(item => item.total_reservations));
+
   return (
     <>
-      {data && <MapContainer
-        style={{
-          width: "500px",
-          height: "500px",
-        }}
-        center={center}
-        zoom={5}
-      >
-        <TileLayer
-          url={`https://api.maptiler.com/maps/dataviz/256/{z}/{x}/{y}.png?key=${
-            import.meta.env.VITE_MAPTILER_API_KEY
-          }`}
-          attribution='© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
-        {data.map((item) => (
-          <Marker
-            key={item.city_name}
-            position={{
-              lat: item.lat,
-              lng: item.lng,
-            }}
-          >
-            <Popup>
-              {item.city_name}, {item.province_name} ({item.total_reservations}{" "}
-              reservas)
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>}
+      {error && <p>{error}</p>}
+      {data && (
+        <MapContainer
+          style={{
+            aspectRatio: 1 / 1,
+            maxWidth: "500px",
+            maxHeight: "500px",
+          }}
+          center={center}
+          zoom={5}
+        >
+          <TileLayer
+            url={`https://api.maptiler.com/maps/dataviz/256/{z}/{x}/{y}.png?key=${
+              import.meta.env.VITE_MAPTILER_API_KEY
+            }`}
+            attribution='© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          />
+          {data.map((item) => (
+            <CircleMarker
+              key={item.city_name}
+              center={{
+                lat: item.lat,
+                lng: item.lng,
+              }}
+              radius={10}
+              color={getColor(item.total_reservations, minReservations, maxReservations)}
+              weight={0}
+              fillOpacity={0.7}
+            >
+              <Popup>
+                {item.city_name}, {item.province_name} ({item.total_reservations}{" "}
+                reservas)
+              </Popup>
+            </CircleMarker>
+          ))}
+        </MapContainer>
+      )}
     </>
   );
 };
