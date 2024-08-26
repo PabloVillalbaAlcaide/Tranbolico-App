@@ -134,9 +134,6 @@ export const SelectDate = () => {
     }
   };
 
-  console.log(reservation);
-  console.log(planningList);
-
   return (
     <Container
       fluid
@@ -145,7 +142,7 @@ export const SelectDate = () => {
       <ProgressBar date={planningList} />
 
       <Row>
-        <h3 className="text-center pb-4">
+        <h3 className="text-center pb-4 fs-4 mt-1 textEnun">
           Selecciona día de{" "}
           {location.pathname === "/reservations"
             ? choose.textIda

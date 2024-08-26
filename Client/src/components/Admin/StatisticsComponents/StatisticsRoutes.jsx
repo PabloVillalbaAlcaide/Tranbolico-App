@@ -25,12 +25,10 @@ export const StatisticsRoutes = () => {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
       );
-      console.log(res.data);
-      
+
       const modifiedData = res.data.map((item) => ({
         ...item,
-        route_name: `${item.departure_city_name} - ${item.arrival_city_name
-        }`,
+        route_name: `${item.departure_city_name} - ${item.arrival_city_name}`,
       }));
 
       setData(modifiedData);
@@ -42,21 +40,28 @@ export const StatisticsRoutes = () => {
   useEffect(() => {
     getData();
   }, []);
-  
+
   return (
     <div style={{ width: "100%", height: 300, maxWidth: 500 }}>
       <ResponsiveContainer width="100%" height="100%">
-      <Text x={"50%"} y={20} textAnchor="middle" dominantBaseline="middle">
-            Rutas más solicitadas
-          </Text>
+        <Text x={"50%"} y={20} textAnchor="middle" dominantBaseline="middle">
+          Rutas más solicitadas
+        </Text>
         <BarChart
           data={data}
           margin={{ top: 20, right: 30, left: 20, bottom: 30 }}
           barSize={40}
         >
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
-          <XAxis dataKey="route_name" interval={0} angle={-45} textAnchor="end" />
-          <YAxis tickFormatter={(tick) => Number.isInteger(tick) ? tick : ''} />
+          <XAxis
+            dataKey="route_name"
+            interval={0}
+            angle={-45}
+            textAnchor="end"
+          />
+          <YAxis
+            tickFormatter={(tick) => (Number.isInteger(tick) ? tick : "")}
+          />
           <Legend verticalAlign="top" height={36} />
           <Bar
             dataKey="total_reservation_count"
@@ -64,7 +69,7 @@ export const StatisticsRoutes = () => {
             name="Reservas Totales"
           >
             <LabelList dataKey="total_reservation_count" position="top" />
-          </Bar> 
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </div>

@@ -44,7 +44,6 @@ export const UserReservations = () => {
         }
       );
       setReservationsList(res.data);
-      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -79,7 +78,6 @@ export const UserReservations = () => {
       console.log(err);
     }
   };
-  console.log(reservationsList);
 
   return (
     <>
@@ -108,7 +106,7 @@ export const UserReservations = () => {
                 {elem.departure_days_ida} / {elem.departure_times_ida}
               </td>
               <td>
-              {elem.departure_days_vuelta} / {elem.departure_times_vuelta}
+                {elem.departure_days_vuelta} / {elem.departure_times_vuelta}
               </td>
               <td>Guía Turístico</td>
               <td>12€</td>

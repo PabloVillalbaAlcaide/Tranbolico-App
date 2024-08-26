@@ -9,6 +9,11 @@
   ); /* Tres columnas en pantallas grandes */
   gap: 16px; /* Espacio entre elementos */
 }
+.textEnun {
+  font-family: "Akkurat-Regular.ttf";
+  font-weight: bold;
+  color: var(--tranbolico-azul);
+}
 
 @media (max-width: 992px) {
   .grid-container {
