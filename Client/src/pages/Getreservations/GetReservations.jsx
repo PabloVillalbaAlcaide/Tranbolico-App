@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { Row } from "react-bootstrap";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { TitleTram } from "../../components/TitleTram/TitleTram";
 
@@ -9,15 +8,18 @@ export const GetReservations = () => {
   const route = location.state;
   const [loadingReservation, setLoadingReservation] = useState(true);
 
-  useEffect(() => {
+  useEffect(() => {    
     const storedReservation = sessionStorage.getItem("reservation");
 
     if (!reservation && storedReservation) {
       setReservation(JSON.parse(storedReservation));
+      
     } else if (
       reservation &&
       storedReservation !== JSON.stringify(reservation)
     ) {
+      console.log(reservation);
+      
       sessionStorage.setItem("reservation", JSON.stringify(reservation));
     }
     setLoadingReservation(false);
@@ -25,11 +27,6 @@ export const GetReservations = () => {
 
   return (
     <>
-      {/* <Row>
-        <div className="ppal-rutas text-center text-white mt-2">
-          <h2 className="mb-0 py-2">RESERVAS</h2>
-        </div>
-      </Row> */}
       <TitleTram backgroundColor={'var(--tranbolico-fucsia)'} color={"white"}>
         RESERVAS
       </TitleTram>

@@ -16,10 +16,6 @@ export const SelectDate = () => {
   const { globalState, loading } = useContext(AppContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const [choose, setChoose] = useState({
-    textIda: "ida",
-    textVuelta: "vuelta",
-  });
 
   useEffect(() => {
     if (!loadingReservation && !loading) {
@@ -43,6 +39,9 @@ export const SelectDate = () => {
   }, [route, location.pathname, loadingReservation, loading]);
 
   useEffect(() => {
+
+    console.log("Cargando",loading, loadingReservation);
+
     if (!loadingReservation && !loading) {
       if (location.pathname === "/reservations") {
         let newReservation = {
@@ -53,12 +52,14 @@ export const SelectDate = () => {
           arrival_province: route?.destination.province,
           arrival_city: route?.destination.city,
         };
+        console.log("newReservation",newReservation);
+        
         setReservation(newReservation);
       } else {
         setReservation({ ...reservation, arrival_date: date });
       }
     }
-  }, [date, location.pathname]);
+  }, [date, location.pathname, loadingReservation, loading]);
 
   const nextStep = () => {
     if (
@@ -73,7 +74,6 @@ export const SelectDate = () => {
       reservation.arrival_date &&
       reservation.arrival_time
     ) {
-      setChoose({ textIda: "", textVuelta: "vuelta" });
       navigate("/reservations/detailReservation");
     }
   };
@@ -142,79 +142,11 @@ export const SelectDate = () => {
       <ProgressBar date={planningList} />
 
       <Row>
-
         <h3 className="text-center pb-4 fs-4 mt-1 textEnun akkurat-font">
-
           Selecciona día de{" "}
-          {location.pathname === "/reservations"
-            ? choose.textIda
-            : choose.textVuelta}
+          {location.pathname === "/reservations" ? "ida" : "vuelta"}
         </h3>
       </Row>
-      {/* <Row className="justify-content-center selectDatepicker">
-        <Col
-          xs={12}
-          md={6}
-          className="d-flex flex-column align-items-center w-100 p-0 m-0"
-        >
-          <Row className="w-100">
-            <Col
-              xs={4}
-              className="d-flex justify-content-center align-items-center p-0 m-0"
-            >
-              {date && (
-                <p
-                  className="btn"
-                  style={{
-                    backgroundColor: "var(--tranbolico-fucsia)",
-                    color: "white",
-                    border: "none",
-                  }}
-                >
-                  {date}
-                </p>
-              )}
-            </Col>
-            <Col
-              xs={4}
-              className="d-flex justify-content-center align-items-center p-0 m-0"
-            >
-              <TranbolicoDatePicker
-                date={date}
-                setDate={setDate}
-                planningList={planningList}
-              />
-            </Col>
-            <Col
-              xs={4}
-              className="d-flex flex-column justify-content-center align-items-center p-0 m-0"
-            >
-              {date
-                ? planningList.map((elem) => {
-                    if (elem.departure_date === date) {
-                      return (
-                        <Button
-                          style={{
-                            backgroundColor: "var(--tranbolico-azulClaro)",
-                            color: "black",
-                            border: "none",
-                          }}
-                          key={elem.planning_id}
-                          onClick={() => setPlanning(elem)}
-                          className="m-2"
-                        >
-                          {elem.departure_time}
-                        </Button>
-                      );
-                    }
-                  })
-                : ""}
-            </Col>
-          </Row>
-        </Col>
-      </Row> */}
-
-      {/* alvaro */}
       <Row className="justify-content-center selectDatepicker">
         <Col
           xs={12}
@@ -268,15 +200,6 @@ export const SelectDate = () => {
           md={4}
           className="d-flex flex-column flex-md-row justify-content-md-around justify-content-center align-items-center p-0 m-0 w-100 gap-4"
         >
-          {/* <Button onClick={nextStep} className="btn btn-success" style={{
-
-              backgroundColor: "var(--tranbolico-verde)",
-              color: "black",
-              border: "none",
-            }}
-          >
-            Continuar
-          </Button> */}
           <ButtonTram
             fontSize="1.3rem"
             color="black"
@@ -285,16 +208,6 @@ export const SelectDate = () => {
           >
             Continuar
           </ButtonTram>
-          {/* <Button
-            onClick={() => navigate(-1)}
-            style={{
-              backgroundColor: "var(--tranbolico-amarillo)",
-              color: "black",
-              border: "none",
-            }}
-          >
-            Atras
-          </Button> */}
           <ButtonTram
             fontSize="1.3rem"
             color="black"
@@ -303,21 +216,14 @@ export const SelectDate = () => {
           >
             Atrás
           </ButtonTram>
-          {/* <Button
-            onClick={() => navigate("/")}
-            style={{
-              backgroundColor: "var(--tranbolico-rosa)",
-              color: "black",
-              border: "none",
-            }}
-          >
-            Cancelar
-          </Button> */}
           <ButtonTram
             fontSize="1.3rem"
             color="black"
             backgroundColor="var(--tranbolico-fucsia)"
-            onClick={() => navigate("/")}
+            onClick={() => {
+              sessionStorage.clear()
+              navigate("/")
+            }}
           >
             Cancelar
           </ButtonTram>
