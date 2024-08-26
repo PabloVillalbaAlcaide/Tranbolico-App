@@ -1,14 +1,18 @@
 import { Row } from "react-bootstrap";
 import { ScrollTopButton } from "../../components/ScrollTopButton/ScrollTopButton";
+import { TitleTram } from "../../components/TitleTram/TitleTram";
 
 export const PrivacyPolicy = () => {
   return (
     <>
-      <Row>
+      {/* <Row>
         <div className="ppal-rutas text-center text-white mt-2">
           <h2 className="mb-0 py-2">POLÍTICA DE PRIVACIDAD</h2>
         </div>
-      </Row>
+      </Row> */}
+      <TitleTram backgroundColor={'var(--tranbolico-fucsia)'} color={"white"}>
+        POLÍTICA DE PRIVACIDAD
+      </TitleTram>
       <Row className="justify-content-center">
         <div className="w-75 text-left py-5">
           <p className="my-5">

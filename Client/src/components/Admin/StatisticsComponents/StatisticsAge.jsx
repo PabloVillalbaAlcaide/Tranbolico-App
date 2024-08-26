@@ -62,7 +62,7 @@ export const StatisticsAge = () => {
     ];
 
     return (
-      <div style={{ marginBottom: 10, textAlign: 'center' }}>
+      <div style={{ marginBottom: 10, textAlign: 'center' }} className="akkurat-font">
         {buttons.map((button, index) => (
           <button
             key={index}

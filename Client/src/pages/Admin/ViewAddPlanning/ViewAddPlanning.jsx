@@ -122,8 +122,8 @@ export const ViewAddPlanning = () => {
           <h2 className="mb-0 py-2">PLANNING</h2>
         </div>
       </Row>
-      <Container fluid="xl">
-        <div className="position-relative my-4">
+      <Container fluid="xl" className="akkurat-font">
+        <div className="position-relative my-4 ">
           <Button
             className="btn-volver-panel position-absolute start-0"
             onClick={() => navigate("/admin")}
@@ -132,7 +132,7 @@ export const ViewAddPlanning = () => {
           </Button>
           <div className="d-flex justify-content-center">
             <Button
-              className="btn-add-planning"
+              className="btn-add-planning  ms-5 ms-md-5 ms-custom-AP"
               onClick={() => setShowModal(true)}
               aria-label="Añadir Nuevo Planning"
             >

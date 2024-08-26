@@ -85,7 +85,18 @@
   cursor: pointer;
 }
 
-.avatar-user {
+@media (max-width: 991px) {
+  .avatar-user {
+    display: none;
+  }
+}
+@media (max-width: 576px) {
+  .user-name-navbar {
+    display: none;
+  }
+}
+.avatar-user,
+.avatar-user-navbar {
   cursor: pointer;
   transition: transform 0.3s ease;
 }
@@ -129,7 +140,6 @@
   .NavbarRegisterLoginColor:focus:active {
     color: var(--tranbolico-amarillo);
     background-color: transparent;
-
   }
   .NavbarRegisterLogin:hover {
     background-color: transparent;
@@ -147,7 +157,7 @@
 
 .NavbarLogout {
   background-color: white;
-  margin-inline: 10px;
+  /* margin-inline: 10px; */
   color: var(--tranbolico-azul);
   font-family: "Akkurat-Regular.ttf", system-ui;
   font-size: 1.1rem;
@@ -155,7 +165,6 @@
   border-radius: 50px;
   padding-inline: 10px;
   transition-duration: 0.2s;
-  min-width: 135px;
   min-height: 50px;
   border: none;
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;

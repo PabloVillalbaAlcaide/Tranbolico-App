@@ -76,7 +76,7 @@ export const StatisticsGenre = () => {
   };
 
   return (
-    <>
+    <div className="akkurat-font">
       {data && (
         <div className="w-100 mx-auto" style={{height:"400px"}}>
           <ResponsiveContainer>
@@ -102,6 +102,6 @@ export const StatisticsGenre = () => {
           </ResponsiveContainer>
         </div>
       )}
-    </>
+    </div>
   );
 };

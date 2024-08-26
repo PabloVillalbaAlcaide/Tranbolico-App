@@ -4,12 +4,17 @@ import { Col, Container, Row } from "react-bootstrap";
 import "./historical.scss";
 import { UserAvatar } from "../../components/UserAvatar/UserAvatar";
 import { AppContext } from "../../context/TranbolicoContextProvider";
+import { TitleTram } from "../../components/TitleTram/TitleTram";
 
 export const Historical = () => {
   const [hist, setHist] = useState("myReservations");
   const { globalState } = useContext(AppContext);
 
   return (
+    <>
+    <TitleTram backgroundColor={'var(--tranbolico-azul)'} color={"white"}>
+        MIS RESERVAS
+      </TitleTram>
     <Container>
       <Row className="historial-contenedor py-4 flex-column align-items-center justify-content-center">
         <Col>
@@ -40,5 +45,6 @@ export const Historical = () => {
         </Col>
       </Row>
     </Container>
+    </>
   );
 };

@@ -85,7 +85,7 @@ export const ViewUserAdmin = () => {
           <h2 className="mb-0 py-2">USUARIOS</h2>
         </div>
       </Row>
-      <Container fluid="xl">
+      <Container fluid="xl" className="akkurat-font">
         <AdminUserSearch
           handleChange={handleChange}
           option={option}

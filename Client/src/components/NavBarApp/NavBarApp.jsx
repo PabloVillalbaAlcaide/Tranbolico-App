@@ -3,13 +3,23 @@ import "./NavBarApp.css";
 
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Nav, Navbar } from "react-bootstrap";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import { UserAvatar } from "../UserAvatar/UserAvatar";
 
 export const NavBarApp = () => {
   const navigate = useNavigate();
   const { globalState, setGlobalState } = useContext(AppContext);
+  const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 992);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsWideScreen(window.innerWidth >= 992);
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const logOut = () => {
     const newGlobalState = { ...globalState };
@@ -36,12 +46,12 @@ export const NavBarApp = () => {
         style={{ background: "var(--tranbolico-azul" }}
       >
         <div className="container-xxl d-flex justify-content-between row">
-          <div className="col-lg-4 col-0 d-flex align-items-center">
+          <div className="col-lg-4 d-flex align-items-center">
             <Link to="/" className="NavbarLogo">
               TRANBÓLICO
             </Link>
           </div>
-          <div className="d-flex justify-content-start align-items-center col-8 ">
+          <div className="d-flex justify-content-start align-items-center col-lg-8">
             <Navbar expand="lg " className="w-100">
               <div className="d-flex align-items-center">
                 <Navbar.Toggle
@@ -52,6 +62,24 @@ export const NavBarApp = () => {
                   TRANBÓLICO
                 </Link>
               </div>
+              {!isWideScreen && (
+                <div className="d-flex justify-content-center align-items-center gap-4">
+                  <div
+                    className="avatar-user-navbar text-center"
+                    onClick={() => navigate("/profile")}
+                  >
+                    <UserAvatar user={globalState.user} size={50} />
+                  </div>
+                  <div
+                    className="user-name-navbar text-center"
+                    onClick={() => navigate("/profile")}
+                  >
+                    <p className="text-white fw-bold">
+                      {globalState.user?.name}
+                    </p>
+                  </div>
+                </div>
+              )}
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto NavbarCollapse w-100">
                   <div className="d-flex justify-content-start align-items-lg-center flex-lg-row flex-column col-8">
@@ -151,16 +179,25 @@ export const NavBarApp = () => {
                         onClick={() => navigate("/profile")}
                       >
                         <p className="text-white fw-bold">
-                          {globalState.user?.name} {globalState.user?.surname}
+                          {globalState.user?.name}
                         </p>
                       </div>
                       <div>
-                        <Button
-                          onClick={logOut}
-                          className="NavbarRegisterLoginColor NavbarLogout"
-                        >
-                          Cerrar Sesión
-                        </Button>
+                        {isWideScreen ? (
+                          <Button
+                            onClick={logOut}
+                            className="NavbarRegisterLoginColor NavbarLogout"
+                          >
+                            Cerrar sesión
+                          </Button>
+                        ) : (
+                          <Nav.Link
+                            onClick={logOut}
+                            className="NavbarNavLink text-decoration-underline"
+                          >
+                            Cerrar sesión
+                          </Nav.Link>
+                        )}
                       </div>
                     </div>
                   )}
