@@ -29,7 +29,6 @@ export const StatisticsMap = () => {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
       );
-      console.log(res.data);
 
       const modifiedData = await Promise.all(
         res.data.map(async (item) => {
