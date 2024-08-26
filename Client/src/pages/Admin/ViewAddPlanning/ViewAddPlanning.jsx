@@ -16,16 +16,21 @@ export const ViewAddPlanning = () => {
   const [isUpdated, setIsUpdated] = useState(false);
   const [editing, setEditing] = useState({ routeId: null, planningId: null }); // Estado para el planning en edición
   const [editData, setEditData] = useState({}); // Estado para los datos editados
+  const [viewhistorical, setViewhistorical] = useState(false);
 
   useEffect(() => {
     if (globalState.token && !loading) {
       getPlanning();
     }
-  }, [globalState.token, loading, isUpdated]);
+  }, [globalState.token, loading, isUpdated, viewhistorical]);
 
   const getPlanning = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/admin/getPlanning`, {
+      let url = `${import.meta.env.VITE_API_URL}/admin/getPlanning`;
+      if(viewhistorical){
+        url = `${import.meta.env.VITE_API_URL}/admin/getHistoricalPlanning`
+      }
+      const res = await axios.get(url, {
         headers: { Authorization: `Bearer ${globalState.token}` },
       });
       setPlanningList(res.data);
@@ -115,6 +120,9 @@ export const ViewAddPlanning = () => {
     setEditData(item);
   };
 
+  console.log(planningList);
+  
+
   return (
     <>
       <Row>
@@ -138,6 +146,13 @@ export const ViewAddPlanning = () => {
             >
               Añadir Nuevo Planning
             </Button>
+            <Button
+              className="btn-add-planning  ms-5 ms-md-5 ms-custom-AP"
+              onClick={() => setViewhistorical(!viewhistorical)}
+              aria-label="ver historial"
+            >
+              {!viewhistorical ? "Ver historial" : "Ver Actual"}
+            </Button>
           </div>
         </div>
         <Table striped bordered hover responsive>
@@ -149,7 +164,7 @@ export const ViewAddPlanning = () => {
               <th>Departure Province</th>
               <th>Arrival City</th>
               <th>Arrival Province</th>
-              <th>Acciones</th>
+              <th>{viewhistorical ? "Cancelado" : "Acciones"}</th>
             </tr>
           </thead>
           <tbody>
@@ -196,8 +211,8 @@ export const ViewAddPlanning = () => {
                     <td>{item.departure_province}</td>
                     <td>{item.arrival_city}</td>
                     <td>{item.arrival_province}</td>
-                    <td>
-                      <div className="d-flex flex-column flex-md-row justify-content-around gap-2">
+                    {!viewhistorical ? <td>
+                       <div className="d-flex flex-column flex-md-row justify-content-around gap-2">
                         {editing.routeId === item.route_id &&
                         editing.planningId === item.planning_id ? (
                           <Button
@@ -244,7 +259,7 @@ export const ViewAddPlanning = () => {
                           Eliminar
                         </Button>
                       </div>
-                    </td>
+                    </td> : <td>{item.is_deleted ? "CANCELADO" : ""}</td>}
                   </tr>
                 );
               })}
