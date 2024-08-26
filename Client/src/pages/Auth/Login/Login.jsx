@@ -33,7 +33,7 @@ export const Login = () => {
   const handleSubmit = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:4000/users/loginUser",
+        `${import.meta.env.VITE_API_URL}/users/loginUser`,
         login
       );
       setGlobalState({

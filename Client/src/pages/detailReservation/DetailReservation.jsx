@@ -14,7 +14,7 @@ export const DetailReservation = () => {
   const confirmReservation = async () => {
     try {
       await axios.post(
-        `http://localhost:4000/reservation/setReservation`,
+        `${import.meta.env.VITE_API_URL}/reservation/setReservation`,
         reservation,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },

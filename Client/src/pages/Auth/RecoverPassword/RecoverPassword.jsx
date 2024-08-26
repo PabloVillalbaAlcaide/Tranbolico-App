@@ -19,7 +19,7 @@ export const RecoverPassword = () => {
       console.log(mail);
 
       const res = await axios.post(
-        "http://localhost:4000/users/recoverPassword",
+        `${import.meta.env.VITE_API_URL}/users/recoverPassword`,
         mail
       );
       console.log(res);

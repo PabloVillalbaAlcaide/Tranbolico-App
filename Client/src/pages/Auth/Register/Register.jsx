@@ -155,7 +155,7 @@ export const Register = () => {
       try {
         console.log("register", register);
 
-        await axios.post("http://localhost:4000/users/registerUser", register);
+        await axios.post(`${import.meta.env.VITE_API_URL}/users/registerUser`, register);
         console.log("registrado");
 
         navigate("/MsgVerifyEmail");

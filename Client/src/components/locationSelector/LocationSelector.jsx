@@ -29,7 +29,7 @@ export const SearchDropdown = ({
       const partialUrl = type === "province" ? `${type}?query=${query}` : `${type}?query=${query}&province=${provinceId}`
 
       const response = await axios.get(
-        `http://localhost:4000/${partialUrl}`
+        `${import.meta.env.VITE_API_URL}/${partialUrl}`
       );
       setOptions(response.data);
       setShowDropdown(true);

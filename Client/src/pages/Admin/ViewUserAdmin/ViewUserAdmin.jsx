@@ -40,7 +40,7 @@ export const ViewUserAdmin = () => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `http://localhost:4000/admin/viewUser?opt=${option}&text=${textSearch}&value=${radioValue}`,
+        `${import.meta.env.VITE_API_URL}/admin/viewUser?opt=${option}&text=${textSearch}&value=${radioValue}`,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
@@ -61,7 +61,7 @@ export const ViewUserAdmin = () => {
   const handleUserChange = async (user_id, is_disabled) => {
     try {
       await axios.patch(
-        `http://localhost:4000/admin/disableUser`,
+        `${import.meta.env.VITE_API_URL}/admin/disableUser`,
         { user_id, is_disabled },
         {
           headers: { Authorization: `Bearer ${globalState.token}` },

@@ -17,7 +17,7 @@ export const UserHistory = ({ user_id, fetchData }) => {
   const viewHistory = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:4000/reservation/historical?userid=${user_id}`,
+        `${import.meta.env.VITE_API_URL}/reservation/historical?userid=${user_id}`,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }

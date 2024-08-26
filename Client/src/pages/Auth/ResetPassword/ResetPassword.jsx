@@ -74,7 +74,7 @@ export const ResetPassword = () => {
         token = hashtoken;
       }
       const res = await axios.post(
-        "http://localhost:4000/users/changePassword",
+        `${import.meta.env.VITE_API_URL}/users/changePassword`,
         pass,
         { headers: { Authorization: `Bearer ${token}` } }
       );
