@@ -7,20 +7,17 @@ export const Admin = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Row>
-        <div className="text-center text-white mt-2 mb-2 ">
-          <h2 className="mb-0 py-2">Administrador</h2>
-        </div>
+      <Row className="m-5">
         <Col>
           <div className="d-flex flex-column align-items-center ">
             <Button
-              className="buttonAdmin"
+              className="buttonAdmin buttonAdmin1"
               onClick={() => navigate("/admin/Routes")}
             >
               <h3 className="m-auto">Rutas</h3>
             </Button>
             <Button
-              className="buttonAdmin"
+              className="buttonAdmin buttonAdmin2"
               onClick={() => navigate("/admin/planning")}
             >
               <h3 className="m-auto">Planning</h3>
@@ -28,14 +25,14 @@ export const Admin = () => {
 
             {
               <Button
-                className="buttonAdmin"
+                className="buttonAdmin buttonAdmin3"
                 onClick={() => navigate("/admin/viewUser")}
               >
                 <h3 className="m-auto">Ver Usuario</h3>
               </Button>
             }
             <Button
-              className="buttonAdmin"
+              className="buttonAdmin buttonAdmin4"
               onClick={() => navigate("/admin/statistics")}
             >
               <h3 className="m-auto">Estadísticas</h3>

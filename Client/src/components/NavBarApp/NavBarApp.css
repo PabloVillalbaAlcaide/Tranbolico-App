@@ -56,7 +56,7 @@
   font-family: "Akkurat-Regular.ttf", system-ui;
   font-size: 1.1rem;
   font-weight: 600;
-  border-radius: 50px;
+  border-radius: 16px;
   padding-inline: 10px;
   transition-duration: 0.2s;
 }
@@ -163,7 +163,7 @@
   font-family: "Akkurat-Regular.ttf", system-ui;
   font-size: 1.1rem;
   font-weight: 600;
-  border-radius: 50px;
+  border-radius: 16px;
   padding-inline: 10px;
   transition-duration: 0.2s;
   min-height: 50px;
