@@ -2,7 +2,7 @@ import "../../App.css";
 import "./detailReservation.scss";
 import axios from "axios";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useContext } from "react";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import { ProgressBar } from "../../components/ProgressBar/ProgressBar";
@@ -30,33 +30,32 @@ export const DetailReservation = () => {
 
   return (
     <>
-      <main>
-        <Container fluid>
+        <Container fluid className="detailReservation">
           <ProgressBar />
           <Row className="py-4 gap-4 flex-column justify-content-center align-items-center">
             <Col className="resumen-reseva d-flex flex-column justify-content-center align-items-center gap-3">
-              <h4 className="fst-italic">Realizar el pago</h4>
+              <h4 className="fst-italic fw-bold">Resumen de la reserva</h4>
               <div className="d-flex flex-column gap-2">
-                <h5 className="fw-bold">- Trayecto</h5>
+                <h5 className="fw-bold">Trayecto:</h5>
                 <p>
-                  {reservation.departure_city} - {reservation.arrival_city}
+                  {reservation?.departure_city} - {reservation?.arrival_city}
                 </p>
-                <h5 className="fw-bold">- Ida</h5>
+                <h5 className="fw-bold">Ida:</h5>
                 <div className="d-flex gap-4">
                   <div className="boton-detail-date-reservation">
-                    {reservation.departure_date}
+                    {reservation?.departure_date}
                   </div>
                   <div className="boton-detail-time-reservation">
-                    {reservation.departure_time}
+                    {reservation?.departure_time}
                   </div>
                 </div>
-                <h5 className="fw-bold">- Vuelta</h5>
+                <h5 className="fw-bold">Vuelta:</h5>
                 <div className="d-flex gap-4">
                   <div className="boton-detail-date-reservation">
-                    {reservation.arrival_date}
+                    {reservation?.arrival_date}
                   </div>
                   <div className="boton-detail-time-reservation">
-                    {reservation.arrival_time}
+                    {reservation?.arrival_time}
                   </div>
                 </div>
               </div>
@@ -75,16 +74,6 @@ export const DetailReservation = () => {
             
             <Col>
               <div className="buttons-Details">
-                {/* <Button
-                  style={{
-                    backgroundColor: "var(--tranbolico-azulClaro)",
-                    color: "black",
-                    border: "none",
-                  }}
-                  onClick={confirmReservation}
-                >
-                  Confirmar
-                </Button> */}
                 <ButtonTram 
                 fontSize="1.3rem"
                 color="black"
@@ -93,16 +82,6 @@ export const DetailReservation = () => {
                 >
                   Confirmar
                 </ButtonTram>
-                {/* <Button
-                  style={{
-                    backgroundColor: "var(--tranbolico-amarillo)",
-                    color: "black",
-                    border: "none",
-                  }}
-                  onClick={() => navigate(-1)}
-                >
-                  Atras
-                </Button> */}
                 <ButtonTram
                 fontSize="1.3rem"
                 color="black"
@@ -111,16 +90,6 @@ export const DetailReservation = () => {
                 >
                   Atrás
                 </ButtonTram>
-                {/* <Button
-                  style={{
-                    backgroundColor: "var(--tranbolico-rosa)",
-                    color: "black",
-                    border: "none",
-                  }}
-                  onClick={() => navigate("/")}
-                >
-                  Cancelar
-                </Button> */}
                 <ButtonTram
                 fontSize="1.3rem"
                 color="black"
@@ -133,7 +102,6 @@ export const DetailReservation = () => {
             </Col>
           </Row>
         </Container>
-      </main>
     </>
   );
 };
