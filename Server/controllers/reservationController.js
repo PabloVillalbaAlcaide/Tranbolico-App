@@ -2,9 +2,7 @@ const connection = require("../config/db");
 
 class ReservationController {
   oneWayTrip = (req, res) => {
-    console.log(req);
     const { search } = req.query;
-    console.log(search);
     let sql = `SELECT city.city_name, province.name 
     FROM city, province 
     WHERE city.province_id = province.province_id 
@@ -35,7 +33,7 @@ class ReservationController {
     WHERE name = '${province}')) 
     AND (province.name LIKE '${search}%' 
     OR city.city_name LIKE '${search}%')
-    AND route.is_deleted = false`;
+    AND route.is_deleted = FALSE`;
     connection.query(sql, (err, result) => {
       if (err) {
         return res.status(500).json(err);
@@ -46,9 +44,6 @@ class ReservationController {
   };
 
   historical = (req, res) => {
-    console.log(Object.keys(req.params).length > 0);
-    
-
     let userID = req.params.id;
     if (req.query.length) {
       userID = req.query.userid;
@@ -80,16 +75,14 @@ class ReservationController {
     WHERE reservation.user_id = ${userID}
     AND (
     (reservation.reservation_type = 2 AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) < NOW())
-    OR (reservation.user_id = ${userID} AND reservation.is_deleted = true))
-    GROUP BY reservation.reservation_id`;
-    console.log("Todo bien");
-    
+    OR (reservation.user_id = ${userID} AND reservation.is_deleted = TRUE))
+    GROUP BY reservation.reservation_id
+    ORDER BY departure_days_ida DESC, departure_times_ida DESC`;
+
     connection.query(sql, (err, result) => {
       if (err) {
         return res.status(500).json(err);
       } else {
-        console.log("SOY EL RESULTADO",result);
-
         res.status(200).json(result);
       }
     });
@@ -100,8 +93,7 @@ class ReservationController {
     if (req.query.userid) {
       userID = req.query.userid;
     }
-    console.log(userID);
-    
+
     const sql = `SELECT
     reservation.user_id,
     reservation.reservation_id,
@@ -125,12 +117,12 @@ class ReservationController {
     JOIN city ac ON route.arrival_city_id = ac.city_id AND route.arrival_province_id = ac.province_id
     WHERE reservation.user_id = ${userID}
     AND (reservation.reservation_type = 1 OR (reservation.reservation_type = 2 AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) > NOW()))
-    AND reservation.is_deleted = 0
-    GROUP BY reservation.reservation_id`;
+    AND reservation.is_deleted = FALSE
+    GROUP BY reservation.reservation_id
+    ORDER BY departure_days_ida, departure_times_ida`;
+
     connection.query(sql, (err, result) => {
       if (err) {
-        console.log(err);
-
         return res.status(500).json(err);
       } else {
         return res.status(200).json(result);
@@ -139,7 +131,6 @@ class ReservationController {
   };
 
   cancelReservation = (req, res) => {
-    console.log(req.body);
     const { reservationForCancel } = req.body;
     const data = [
       reservationForCancel.user_id,
@@ -147,7 +138,7 @@ class ReservationController {
     ];
     const sql = `
     UPDATE reservation
-    SET is_deleted = 1
+    SET is_deleted = TRUE
     WHERE user_id = ?
     AND reservation_id = ?
     AND reservation_type IN (1, 2)
@@ -170,8 +161,6 @@ class ReservationController {
   };
 
   getSchedules = (req, res) => {
-    console.log(req.query);
-
     const {
       origin_province,
       origin_city,
@@ -201,6 +190,7 @@ class ReservationController {
     AND ap.name = '${destination_province}'
     AND ac.city_name = '${destination_city}'
     AND CAST(CONCAT(p1.departure_date, ' ', p1.departure_time) AS DATETIME) >= NOW()
+    AND p1.is_deleted = FALSE
     AND EXISTS (
     SELECT 1
     FROM planning p2
@@ -213,10 +203,12 @@ class ReservationController {
     AND dc2.city_name = '${destination_city}'
     AND ap2.name LIKE '${origin_province}'
     AND ac2.city_name = '${origin_city}'
+    AND p2.is_deleted = FALSE
     AND CAST(CONCAT(p2.departure_date, ' ', p2.departure_time) AS DATETIME) 
     BETWEEN CAST(CONCAT(p1.departure_date, ' ', p1.departure_time) AS DATETIME) 
     AND DATE_ADD(CAST(CONCAT(p1.departure_date, ' ', p1.departure_time) AS DATETIME), INTERVAL 8 HOUR)
-    );`;
+    )
+    ORDER BY p1.departure_time`;
 
     if (date && time) {
       sql = `SELECT planning.route_id, planning.planning_id, planning.departure_date, planning.departure_time, dp.name AS departure_province_name,
@@ -232,7 +224,9 @@ class ReservationController {
       AND ap.name = '${destination_province}' 
       AND ac.city_name = '${destination_city}' 
       AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) > CAST('${date} ${time}' AS DATETIME)
-      AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) <= DATE_ADD(CAST('${date} ${time}' AS DATETIME), INTERVAL 8 HOUR)`;
+      AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) <= DATE_ADD(CAST('${date} ${time}' AS DATETIME), INTERVAL 8 HOUR)
+      AND planning.is_deleted = FALSE
+      ORDER BY planning.departure_time`;
     }
     connection.query(sql, (err, result) => {
       if (err) {
@@ -259,8 +253,6 @@ class ReservationController {
       if (err) {
         return res.status(500).json(err);
       } else {
-        console.log(result);
-
         let data = [
           user_id,
           result[0].new_id,

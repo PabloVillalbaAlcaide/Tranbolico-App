@@ -23,8 +23,6 @@ const tranbolicAvatar = [
 class UserController {
   //Controlador que realiza el registro de usuario
   registerUser = (req, res) => {
-    console.log(req.body);
-
     const {
       name,
       surname,
@@ -57,7 +55,7 @@ class UserController {
                 name,
                 surname,
                 birthdate,
-                genre,
+                genre || null,
                 email,
                 hash,
                 phone_number,
@@ -67,21 +65,6 @@ class UserController {
               ];
               let sql2 = `INSERT INTO user (name, surname, birthdate, genre, email, password, phone_number, avatar, province_id, city_id)
               VALUES (?,?,?,?,?,?,?,?,?,?);`;
-              if (genre === "") {
-                data = [
-                  name,
-                  surname,
-                  birthdate,
-                  email,
-                  hash,
-                  phone_number,
-                  avatar,
-                  province.province_id,
-                  city.city_id,
-                ];
-                sql2 = `INSERT INTO user (name, surname, birthdate, email, password, phone_number, avatar, province_id, city_id)
-                VALUES (?,?,?,?,?,?,?,?,?);`;
-              }
 
               connection.query(sql2, data, (errorIns, resultIns) => {
                 if (errorIns) {
@@ -187,8 +170,6 @@ class UserController {
   verifyUser = (req, res) => {
     const hashToken = req.headers.authorization.split(" ")[1];
 
-    console.log(hashToken);
-
     if (!hashToken) {
       res.status(401).json({ status: 401, message: "No autorizado 1" });
     }
@@ -203,7 +184,6 @@ class UserController {
           .status(401)
           .json({ status: 401, message: "No autorizado 2" });
       } else {
-        console.log(decode);
         let data = [decode.id];
         let sql = `UPDATE user SET is_validated = 1 WHERE user_id = ?`;
         connection.query(sql, data, (err, result) => {
@@ -222,7 +202,6 @@ class UserController {
                   .status(401)
                   .json({ status: 401, message: "No autorizado" });
               } else {
-                
                 if (!resultSelect || resultSelect.length === 0) {
                   return res.status(401).json("No autorizado");
                 } else {
@@ -306,9 +285,6 @@ class UserController {
   };
 
   editOneUser = (req, res) => {
-    // console.log("Request body:", req.body);
-    // console.log("Request file:", req.file);
-
     if (!req.body) {
       return res
         .status(400)
@@ -340,7 +316,7 @@ class UserController {
         error: "Faltan datos necesarios en el cuerpo de la solicitud",
       });
     }
-    
+
     let data = [
       name,
       surname,
@@ -354,8 +330,6 @@ class UserController {
     let sql = `UPDATE user SET name = ?, surname = ?, email = ?, genre = ?, phone_number = ?, province_id = ?, city_id = ? WHERE user_id = ?`;
 
     if (req.file) {
-      console.log("Imagen recibida:", req.file.filename);
-
       data = [
         name,
         surname,
@@ -370,9 +344,6 @@ class UserController {
 
       sql = `UPDATE user SET name = ?, surname = ?, email = ?, genre = ?, phone_number = ?, province_id = ?, city_id = ?, avatar = ? WHERE user_id = ?`;
     }
-
-    console.log("SQL query:", sql);
-    console.log("Data:", data);
 
     connection.query(sql, data, (err, result) => {
       if (err) {
@@ -391,14 +362,10 @@ class UserController {
   };
 
   recoverPassword = (req, res) => {
-    console.log("Hasta aqui");
     const { email } = req.body;
 
     let sql = `SELECT * FROM user WHERE email='${email}' AND is_disabled = 0 AND is_validated = 1`;
-    console.log("Hasta aqui");
     connection.query(sql, (err, result) => {
-      console.log("Hasta aqui 1");
-
       if (err) {
         return res.status(500).json(err);
       } else if (result.length === 0) {
@@ -406,13 +373,12 @@ class UserController {
       } else {
         //Genera la contraseña de recuperacion
         const password = generator.generate({
-          length: 12, // Longitud de la contraseña
+          length: 8, // Longitud de la contraseña
           numbers: true, // Incluir números
-          symbols: true, // Incluir símbolos
+          symbols: false, // Incluir símbolos
           uppercase: true, // Incluir letras mayúsculas
-          lowercase: true, // Incluir letras minúsculas
+          lowercase: false, // Incluir letras minúsculas
         });
-        console.log("Hasta aqui 2");
         //Genera Token
         const resetToken = tokenGenerator(
           result[0].user_id,
@@ -429,7 +395,6 @@ class UserController {
             return res.status(500).json(error);
           } else {
             let data = [hash, result[0].user_id];
-            console.log(result[0].user_id);
             let sql2 =
               "UPDATE user SET password = ?, is_auto_generated = 1 WHERE user_id = ?";
             connection.query(sql2, data, (err, resultUpdate) => {
@@ -448,10 +413,8 @@ class UserController {
 
   changePassword = (req, res) => {
     const { oldPassword, password } = req.body;
-    console.log(oldPassword, "*****", password);
 
     const hashtoken = req.headers.authorization.split(" ")[1];
-    console.log("1111");
     const token = decryptToken(hashtoken, process.env.SECRET_KEY_3);
 
     const { id } = jwt.decode(token);
@@ -469,7 +432,6 @@ class UserController {
             if (errHash) {
               return resHash.status(500).json(errHash);
             } else {
-              console.log("22222");
               if (resHash) {
                 let saltRounds = 10;
                 bcrypt.hash(password, saltRounds, (error, hash) => {
