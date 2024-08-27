@@ -76,16 +76,16 @@ export const Register = () => {
     if (!register.name) {
       newErrors.name = "El nombre es obligatorio";
       valid = false;
-    } else if (register.name.length < 3 || register.name.length > 15) {
-      newErrors.name = "El nombre debe contener entre 3 y 15 caracteres";
+    } else if (register.name.length < 3 || register.name.length > 50) {
+      newErrors.name = "El nombre debe contener entre 3 y 50 caracteres";
       valid = false;
     }
 
     if (!register.surname) {
       newErrors.surname = "El apellido es obligatorio";
       valid = false;
-    } else if (register.surname.length < 3 || register.surname.length > 40) {
-      newErrors.surname = "El nombre debe contener entre 3 y 40 caracteres";
+    } else if (register.surname.length < 3 || register.surname.length > 100) {
+      newErrors.surname = "El nombre debe contener entre 3 y 100 caracteres";
       valid = false;
     }
 

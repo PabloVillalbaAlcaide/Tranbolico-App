@@ -1,8 +1,8 @@
 const { body } = require('express-validator');
 
 const validateRules = [
-    body('name', 'el nombre no cumple los canones').exists().isLength({min:3, max:15}),
-    body('surname', 'apellido no valido').exists().isLength({min:3, max:40}),
+    body('name', 'el nombre no cumple los canones').exists().isLength({min:3, max:50}),
+    body('surname', 'apellido no valido').exists().isLength({min:3, max:100}),
     body('email', 'email válido requerido').exists().isEmail(),
     body('birthdate', 'debe ser un numero').exists(),
     body('password', 'no es suficientemente segura').exists().custom(value => {
