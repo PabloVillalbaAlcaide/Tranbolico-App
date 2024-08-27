@@ -101,7 +101,8 @@
   transition: transform 0.3s ease;
 }
 
-.avatar-user:active {
+.avatar-user:active,
+.avatar-user-navbar:active{
   animation: avatarSpin 0.3s ease-in-out;
 }
 
