@@ -120,9 +120,6 @@ export const ViewAddPlanning = () => {
     setEditData(item);
   };
 
-  console.log(planningList);
-  
-
   return (
     <>
       <Row>

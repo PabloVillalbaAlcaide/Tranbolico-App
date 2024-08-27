@@ -68,8 +68,7 @@ export const Login = () => {
         </TitleTram>
         <Container
           fluid
-          className="p-0 mt-1  d-flex justify-content-center align-items-start"
-          style={{ minHeight: "80vh" }}
+          className="p-0 mt-1  d-flex justify-content-center align-items-start mb-5"
         >
           <div className="contenedor-login mt-5 text-center d-flex align-items-center justify-content-center flex-column">
             <img src={icono} alt="personIcon" className="login-img  mt-1  " />

@@ -297,8 +297,24 @@ class AdminController {
       } else {
         console.log(result);
         let newPlanningId = result[0].new_planning_id;
-        let data = [route_id, departure_date, departure_time, newPlanningId];
-        let sql = `INSERT INTO planning (route_id, departure_date, departure_time, planning_id) VALUES (?, ?, ?, ?)`;
+        let data = [
+          route_id,
+          departure_date,
+          departure_time,
+          newPlanningId,
+          route_id,
+        ];
+        let sql = `
+        INSERT INTO planning (route_id, departure_date, departure_time, planning_id)
+        VALUES ?, ?, ?, ?
+        WHERE EXISTS (
+        SELECT 1
+        FROM route
+        WHERE route_id = ?
+        AND is_deleted = FALSE
+        AND is_disabled = FALSE
+        )
+`;
         connection.query(sql, data, (err2, finalResult) => {
           if (err2) {
             return res.status(500).json(err2);
@@ -320,7 +336,28 @@ class AdminController {
       if (err) {
         return res.status(500).json(err);
       } else {
-        res.status(200).json(result);
+        const sql2 =`SELECT reservation_id 
+        FROM reservation 
+        WHERE route_id = ? AND planning_id = ?`;
+        connection.query(sql2, data, (err, resultSelect) => {
+          if (err) {
+            return res.status(500).json(err);
+          } else {
+            const data2 =resultSelect.map(elem => elem.reservation_id)
+            if(data2.length >0){
+              const sql3 = `UPDATE reservation 
+              SET is_deleted = TRUE 
+              WHERE reservation_id IN (?)`;
+              connection.query(sql3, data2, (err, resultUpdate) => {
+                if(err){
+                  return res.status(500).json(err)
+                }else{
+                  res.status(200).json(resultUpdate)
+                }
+              })
+            }
+          }
+        });
       }
     });
   };

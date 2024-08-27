@@ -279,6 +279,10 @@ export const ViewEditRoute = () => {
                             "arrival_province_id",
                             suggestion.province_id
                           );
+                          handleInputChange(
+                            "arrival_city_province",
+                            suggestion.city_province
+                          );
                         }}
                         disabled={editRouteId !== route.route_id}
                       />

@@ -18,22 +18,23 @@ class ReservationController {
 
   returnTrip = (req, res) => {
     const { search, city, province } = req.query;
-    let sql = `SELECT province.name AS name, city.city_name AS city_name 
-    FROM route 
-    JOIN city ON route.arrival_province_id = city.province_id 
-    AND route.arrival_city_id = city.city_id
-    JOIN province ON city.province_id = province.province_id 
-    WHERE route.departure_city_id = (
-    SELECT city_id 
-    FROM city 
-    WHERE city_name = '${city}' 
-    AND province_id = (
-    SELECT province_id 
-    FROM province 
-    WHERE name = '${province}')) 
-    AND (province.name LIKE '${search}%' 
-    OR city.city_name LIKE '${search}%')
-    AND route.is_deleted = FALSE`;
+      let sql = `SELECT province.name AS name, city.city_name AS city_name 
+      FROM route 
+      JOIN city ON route.arrival_province_id = city.province_id 
+      AND route.arrival_city_id = city.city_id
+      JOIN province ON city.province_id = province.province_id 
+      WHERE route.departure_city_id = (
+      SELECT city_id 
+      FROM city 
+      WHERE city_name = '${city}' 
+      AND province_id = (
+      SELECT province_id 
+      FROM province 
+      WHERE name = '${province}')) 
+      AND (province.name LIKE '${search}%' 
+      OR city.city_name LIKE '${search}%')
+      AND route.is_deleted = FALSE
+      AND route.is_disabled = FALSE`;
     connection.query(sql, (err, result) => {
       if (err) {
         return res.status(500).json(err);
