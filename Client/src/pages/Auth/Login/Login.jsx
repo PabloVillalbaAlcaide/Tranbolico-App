@@ -64,7 +64,7 @@ export const Login = () => {
         </TitleTram>
         <Container
           fluid
-          className="p-0 mt-1 d-flex justify-content-center align-items-start"
+          className="p-0 mt-1  d-flex justify-content-center align-items-start mb-5"
         >
           <div className="contenedor-login my-5 px-5 mb-lg-0 text-center d-flex flex-column justify-content-center ">
             <div>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Modal, Button, Form, Dropdown } from "react-bootstrap";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
 
@@ -11,6 +11,12 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
   const { globalState } = useContext(AppContext);
   const [routesList, setRoutesList] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    setSelectedRoute({});
+    setError("");
+  }, [show]);
 
   const getPlanningRoutes = async (value) => {
     try {
@@ -24,8 +30,8 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
       setRoutesList(res.data);
       setShowDropdown(true);
     } catch (error) {
-      console.log(error);
-      // Consider showing an error message to the user
+      console.error(error);
+      setError("Error al obtener las rutas. Por favor, inténtalo de nuevo.");
     }
   };
 
@@ -64,16 +70,23 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
   };
 
   const handleSave = () => {
-    const newPlanning = {
-      ...selectedRoute,
-      departure_date: date,
-      departure_time: time,
-    };
-    onSave(newPlanning);
-    setRoute("");
-    setDate("");
-    setTime("");
-    onHide(); // Cierra el modal
+    if (selectedRoute == {} && date && time) {
+      const newPlanning = {
+        ...selectedRoute,
+        departure_date: date,
+        departure_time: time,
+      };
+      onSave(newPlanning);
+      setRoute("");
+      setDate("");
+      setTime("");
+      setSelectedRoute({});
+      setError("");
+      onHide();
+      console.log("Guardado");
+    } else {
+      setError("Faltan datos");
+    }
   };
 
   return (
@@ -84,6 +97,11 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
       <Modal.Body>
         <Form>
           <Form.Group controlId="route">
+            {error !== "" && (
+              <p style={{ fontWeight: "12px", color: "crimson", textAlign: "center" }}>
+                {error}
+              </p>
+            )}
             <Form.Label>Ruta</Form.Label>
             <Form.Control
               type="text"
@@ -137,6 +155,8 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
             setRoute("");
             setDate("");
             setTime("");
+            setSelectedRoute({});
+            setError("");
           }}
         >
           Cancelar

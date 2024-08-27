@@ -6,7 +6,8 @@ class StatisticsController {
     COUNT(*) AS total_users,
     SUM(CASE WHEN is_disabled = 1 THEN 1 ELSE 0 END) AS disabled_users,
     SUM(CASE WHEN is_disabled = 0 THEN 1 ELSE 0 END) AS enabled_users
-    FROM user`;
+    FROM user
+    WHERE user_type = 2`;
 
     connection.query(sql, (err, result) => {
       if (err) {
@@ -21,6 +22,7 @@ class StatisticsController {
     const sql = `SELECT genre,
     COUNT(*) AS user_count
     FROM user
+    WHERE user_type = 2
     GROUP BY genre`;
 
     connection.query(sql, (err, result) => {
@@ -47,6 +49,7 @@ class StatisticsController {
     SUM(CASE WHEN genre = 2 THEN 1 ELSE 0 END) AS genre_2,
     SUM(CASE WHEN genre = 3 THEN 1 ELSE 0 END) AS genre_3
     FROM user
+    WHERE user_type = 2
     GROUP BY age_group
     ORDER BY 
     CASE 
