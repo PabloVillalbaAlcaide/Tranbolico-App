@@ -19,11 +19,12 @@ const getCoordinates = async (city, province) => {
 };
 
 const colorScale = scaleLinear()
-.domain([0, 0.5, 1])
-.range(["green", "yellow", "red"]);
+  .domain([0, 0.5, 1])
+  .range(["green", "yellow", "red"]);
 
 const getColor = (reservations, minReservations, maxReservations) => {
-  const ratio = (reservations - minReservations) / (maxReservations - minReservations);
+  const ratio =
+    (reservations - minReservations) / (maxReservations - minReservations);
   return colorScale(ratio);
 };
 
@@ -66,14 +67,19 @@ export const StatisticsMap = () => {
     getData();
   }, []);
 
-  const minReservations = Math.min(...data.map(item => item.total_reservations));
-  const maxReservations = Math.max(...data.map(item => item.total_reservations));
+  const minReservations = Math.min(
+    ...data.map((item) => item.total_reservations)
+  );
+  const maxReservations = Math.max(
+    ...data.map((item) => item.total_reservations)
+  );
 
   return (
     <>
       {error && <p>{error}</p>}
       {data && (
         <MapContainer
+          className="view-StatisticsMap"
           style={{
             aspectRatio: 1 / 1,
             maxWidth: "500px",
@@ -96,13 +102,17 @@ export const StatisticsMap = () => {
                 lng: item.lng,
               }}
               radius={10}
-              color={getColor(item.total_reservations, minReservations, maxReservations)}
+              color={getColor(
+                item.total_reservations,
+                minReservations,
+                maxReservations
+              )}
               weight={0}
               fillOpacity={0.7}
             >
               <Popup>
-                {item.city_name}, {item.province_name} ({item.total_reservations}{" "}
-                reservas)
+                {item.city_name}, {item.province_name} (
+                {item.total_reservations} reservas)
               </Popup>
             </CircleMarker>
           ))}

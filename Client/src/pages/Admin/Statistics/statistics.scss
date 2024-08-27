@@ -1,6 +1,38 @@
+.container-statistic {
+  background-color: white;
+}
+
 .statistics-container {
   display: grid;
   gap: 20px;
+}
+.statistics-user,
+.statistics-routes {
+  margin-top: 90px;
+}
+.statistics-user > h2,
+.statistics-routes > h2 {
+  padding: 20px;
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.statistics-user,
+.statistics-routes,
+.view-StatisticsUsers,
+.view-StatisticsGenre,
+.view-StatisticsRoutes,
+.view-StatisticsAge,
+.view-StatisticsMap {
+  background-color: rgb(248, 247, 247);
+  margin-bottom: 20px;
+  padding: 5px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 2px 2px 15px rgb(98, 98, 98);
+}
+.statistics-user > h2 {
+  margin-block: auto;
 }
 
 .statistics-grid-container {
@@ -8,12 +40,18 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
+.statistics-grid-container-map {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  justify-items: last baseline;
+}
 
-.statistics-grid-container > * {
+/* .statistics-grid-container > * {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 @media (max-width: 1024px) {
   .statistics-grid-container {
