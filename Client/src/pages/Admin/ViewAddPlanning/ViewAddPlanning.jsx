@@ -128,7 +128,7 @@ export const ViewAddPlanning = () => {
         </div>
       </Row>
       <Container fluid="xl" className="akkurat-font">
-      <div className="btns-planning d-flex position-relative my-4 align-items-center justify-content-center flex-column flex-md-column ">
+        <div className="btns-planning d-flex position-relative my-4 align-items-center justify-content-center flex-column flex-md-column ">
           <Button
             className="btn-volver-panel position-absolute start-0"
             onClick={() => navigate("/admin")}
@@ -155,12 +155,12 @@ export const ViewAddPlanning = () => {
         <Table striped bordered hover responsive>
           <thead>
             <tr>
-              <th>Departure Date</th>
-              <th>Departure Time</th>
-              <th>Departure City</th>
-              <th>Departure Province</th>
-              <th>Arrival City</th>
-              <th>Arrival Province</th>
+              <th>Fecha de salida </th>
+              <th>Hora de salida </th>
+              <th>Ciudad de salida</th>
+              <th>Provincia de salida</th>
+              <th>Ciudad de llegada</th>
+              <th>Provincia de llegada</th>
               <th>{viewhistorical ? "Cancelado" : "Acciones"}</th>
             </tr>
           </thead>
@@ -209,53 +209,53 @@ export const ViewAddPlanning = () => {
                     <td>{item.arrival_city}</td>
                     <td>{item.arrival_province}</td>
                     {!viewhistorical ? <td>
-                       <div className="d-flex flex-column flex-md-row justify-content-around gap-2">
-                        {editing.routeId === item.route_id &&
-                        editing.planningId === item.planning_id ? (
+                        <div className="d-flex flex-column flex-md-row justify-content-around gap-2">
+                          {editing.routeId === item.route_id &&
+                          editing.planningId === item.planning_id ? (
+                            <Button
+                              style={{
+                                backgroundColor: "var(--tranbolico-verde)",
+                                color: "black",
+                                border: "none",
+                              }}
+                              onClick={() =>
+                                handleEditPlanning(
+                                  item.route_id,
+                                  item.planning_id
+                                )
+                              }
+                            >
+                              Guardar
+                            </Button>
+                          ) : (
+                            <Button
+                              style={{
+                                backgroundColor: "var(--tranbolico-azulClaro)",
+                                color: "black",
+                                border: "none",
+                              }}
+                              onClick={() => onEdit(item)}
+                            >
+                              Editar
+                            </Button>
+                          )}
                           <Button
                             style={{
-                              backgroundColor: "var(--tranbolico-verde)",
+                              backgroundColor: "var(--tranbolico-rosa)",
                               color: "black",
                               border: "none",
                             }}
                             onClick={() =>
-                              handleEditPlanning(
+                              handleDeletePlanning(
                                 item.route_id,
                                 item.planning_id
                               )
                             }
+                            aria-label={`Eliminar planning ${item.route_id}-${item.planning_id}`}
                           >
-                            Guardar
+                            Eliminar
                           </Button>
-                        ) : (
-                          <Button
-                            style={{
-                              backgroundColor: "var(--tranbolico-azulClaro)",
-                              color: "black",
-                              border: "none",
-                            }}
-                            onClick={() => onEdit(item)}
-                          >
-                            Editar
-                          </Button>
-                        )}
-                        <Button
-                          style={{
-                            backgroundColor: "var(--tranbolico-rosa)",
-                            color: "black",
-                            border: "none",
-                          }}
-                          onClick={() =>
-                            handleDeletePlanning(
-                              item.route_id,
-                              item.planning_id
-                            )
-                          }
-                          aria-label={`Eliminar planning ${item.route_id}-${item.planning_id}`}
-                        >
-                          Eliminar
-                        </Button>
-                      </div>
+                        </div>
                     </td> : <td>{item.is_deleted ? "CANCELADO" : ""}</td>}
                   </tr>
                 );

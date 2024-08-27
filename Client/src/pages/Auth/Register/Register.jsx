@@ -156,7 +156,10 @@ export const Register = () => {
       try {
         console.log("register", register);
 
-        await axios.post(`${import.meta.env.VITE_API_URL}/users/registerUser`, register);
+        await axios.post(
+          `${import.meta.env.VITE_API_URL}/users/registerUser`,
+          register
+        );
         console.log("registrado");
 
         navigate("/MsgVerifyEmail");
@@ -172,7 +175,7 @@ export const Register = () => {
         {/* <div className="ppal-register text-center text-white mt-2 mb-2 ">
           <h2 className="mb-0 py-2">REGISTRO</h2>
         </div> */}
-        <TitleTram backgroundColor={'var(--tranbolico-azul)'} color={"white"}>
+        <TitleTram backgroundColor={"var(--tranbolico-azul)"} color={"white"}>
           REGISTRO
         </TitleTram>
         <div className="contenedor-register d-flex justify-content-center mt-5">
@@ -183,7 +186,6 @@ export const Register = () => {
                   className="register-img"
                   src="/public/images/perfil2.png"
                   alt="personIcon"
-                  width={"50px"}
                 />
               </div>
               <div className="form-grid">
@@ -363,7 +365,10 @@ export const Register = () => {
                 >
                   Registrar
                 </Button> */}
-                <ButtonTram backgroundColor = 'var(--tranbolico-azul)' onClick={onSubmit}>
+                <ButtonTram
+                  backgroundColor="var(--tranbolico-azul)"
+                  onClick={onSubmit}
+                >
                   Registrar
                 </ButtonTram>
                 {/* <Button
@@ -372,7 +377,10 @@ export const Register = () => {
                 >
                   Volver
                 </Button> */}
-                <ButtonTram backgroundColor="var(--tranbolico-fucsia)" onClick={() => navigate("/")}>
+                <ButtonTram
+                  backgroundColor="var(--tranbolico-fucsia)"
+                  onClick={() => navigate("/")}
+                >
                   Volver
                 </ButtonTram>
               </div>

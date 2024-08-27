@@ -1,4 +1,3 @@
-// Button, Col
 import "./login.scss";
 import { Container, Form, Row } from "react-bootstrap";
 import icono from "/images/perfil2.png";
@@ -45,7 +44,7 @@ export const Login = () => {
       localStorage.setItem("token", res.data.token);
 
       if (res.data.finalResult.user_type === 1) {
-        navigate("/admin"); //enviar al administrador
+        navigate("/admin");
       } else if (res.data.finalResult.user_type === 2) {
         navigate("/");
       }
@@ -60,19 +59,17 @@ export const Login = () => {
   return (
     <>
       <Row className="mx-2">
-        {/* <div className="ppal-login text-center text-white  mt-2">
-          <h2 className="mb-0 py-2">LOGIN</h2>
-        </div> */}
-        <TitleTram backgroundColor={'var(--tranbolico-azul)'} color={"white"}>
+        <TitleTram backgroundColor={"var(--tranbolico-azul)"} color={"white"}>
           LOGIN
         </TitleTram>
         <Container
           fluid
           className="p-0 mt-1  d-flex justify-content-center align-items-start mb-5"
         >
-          <div className="contenedor-login mt-5 text-center d-flex align-items-center justify-content-center flex-column">
-            <img src={icono} alt="personIcon" className="login-img  mt-1  " />
-            {/* <h2 className="h2-login fs-2">login</h2> */}
+          <div className="contenedor-login my-5 px-5 mb-lg-0 text-center d-flex flex-column justify-content-center ">
+            <div>
+              <img src={icono} alt="personIcon" className="login-img mt-1" />
+            </div>
             <Form.Group>
               <Form.Control
                 className="input-form-login pb-2"
@@ -97,7 +94,7 @@ export const Login = () => {
             </Form.Group>
             {/* {msg && <p style={{ color: "#e72957"}}>Datos incorrectos</p>} */}
             {msg && (
-              <p className="frase-2-login fs-5 ">
+              <p className="frase-2-login fs-6 pt-2 ">
                 <Link to="/recoverPassword">
                   <span>¿Has olvidado tu contraseña?</span>
                 </Link>
@@ -114,24 +111,13 @@ export const Login = () => {
             </strong>
             <br />
             <div className=" d-flex flex-row gap-2 align-items-center justify-content-center">
-              {/* <Button onClick={handleSubmit} className="btn-iniciar-login">
-                Iniciar Sesión
-              </Button> */}
               <ButtonTram
                 backgroundColor="var(--tranbolico-azul)"
                 onClick={handleSubmit}
               >
                 Aceptar
               </ButtonTram>
-
-              {/* <Button
-                className="btn-volver-login border-0 "
-                onClick={() => navigate("/")}
-              >
-                Volver
-              </Button> */}
               <ButtonTram
-               
                 backgroundColor="var(--tranbolico-fucsia)"
                 onClick={() => navigate("/")}
               >

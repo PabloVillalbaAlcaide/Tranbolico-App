@@ -13,8 +13,7 @@
   font-size: 1rem;
   background-color: #28b7c7;
   border-radius: 10px;
-  padding: 50px;
-  padding-inline: 50px;
+  padding-block: 50px;
   width: 100%;
   max-width: 400px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
@@ -25,7 +24,7 @@
   background-color: #28b7c7;
   border-radius: 100px;
   border: 1px solid black;
-  width: 65px;
+  width: 70px;
   position: relative;
   top: -90px;
   box-shadow: 0 0 0 5px;
@@ -80,7 +79,7 @@
 
 @media (max-width: 800px) {
   .contenedor-login {
-    width: 80%;
+    width: 100%;
     min-width: 300px;
     padding-inline: 50px;
   }

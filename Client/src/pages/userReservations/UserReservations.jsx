@@ -5,7 +5,7 @@ import { AppContext } from "../../context/TranbolicoContextProvider";
 import axios from "axios";
 import { Table } from "react-bootstrap";
 import { ModalApp } from "../../components/modal/Modal";
-import { TitleTram } from "../../components/TitleTram/TitleTram";
+import { format } from "date-fns";
 
 const iconoCancelar = (
   <svg
@@ -26,6 +26,7 @@ export const UserReservations = () => {
   const { globalState, loading } = useContext(AppContext);
   const [show, setShow] = useState(false);
   const [element, setElement] = useState(null);
+  const formatFecha = (fecha) => format(new Date(fecha), "dd/MM/yyyy");
 
   useEffect(() => {
     if (!loading && globalState.user) {
@@ -39,7 +40,9 @@ export const UserReservations = () => {
     }
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/reservation/${partialUrl}/${globalState.user.user_id}`,
+        `${import.meta.env.VITE_API_URL}/reservation/${partialUrl}/${
+          globalState.user.user_id
+        }`,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
@@ -104,10 +107,12 @@ export const UserReservations = () => {
                 {elem.arrival_province_ida}, {elem.arrival_city_ida}
               </td>
               <td>
-                {elem.departure_days_ida} / {elem.departure_times_ida}
+                {formatFecha(elem.departure_days_ida)} /{" "}
+                {elem.departure_times_ida}
               </td>
               <td>
-                {elem.departure_days_vuelta} / {elem.departure_times_vuelta}
+                {formatFecha(elem.departure_days_vuelta)} /{" "}
+                {elem.departure_times_vuelta}
               </td>
               <td>Guía Turístico</td>
               <td>12€</td>
