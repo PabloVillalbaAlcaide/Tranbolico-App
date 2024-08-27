@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../../../App.css";
 import "./register.scss";
 
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Col, Form, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { SearchDropdown } from "../../../components/locationSelector/LocationSelector"; //
@@ -168,14 +168,14 @@ export const Register = () => {
 
   return (
     <>
-      <Row>
+      <Row className="mx-2">
         {/* <div className="ppal-register text-center text-white mt-2 mb-2 ">
           <h2 className="mb-0 py-2">REGISTRO</h2>
         </div> */}
         <TitleTram backgroundColor={'var(--tranbolico-azul)'} color={"white"}>
           REGISTRO
         </TitleTram>
-        <div className="contenedor-register d-flex justify-content-center p-5 mt-5 ">
+        <div className="contenedor-register d-flex justify-content-center mt-5">
           <Col xs={12}>
             <Form onSubmit={onSubmit}>
               <div className="text-center">

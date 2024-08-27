@@ -89,7 +89,7 @@
 }
 
 .ppal-faqs {
-  font-family: "Akkurat-Regular.ttf";
+  font-family: "VinaSans-Regular.ttf";
 }
 
 .ppal-faqs h2 {
@@ -154,11 +154,7 @@
 @media (max-width: 800px) {
   .faqs-image {
     width: 200px;
-    right: -40px;
+    right: -20px;
     top: 10;
-  }
-
-  .ppal-faqs h2 {
-    font-size: 3rem;
   }
 }
