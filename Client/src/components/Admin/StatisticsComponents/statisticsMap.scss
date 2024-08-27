@@ -1,0 +1,18 @@
+.map-container {
+  position: relative;
+}
+
+.legend {
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  transform: translateY(-20%);
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 30%;
+  height: 10px;
+  background: linear-gradient(to right, green, yellow, red);
+  opacity: 0.75;
+}

@@ -26,7 +26,7 @@ export const Statistics = () => {
       </Button>
       <Container fluid="xl" className="statistics-container mb-5">
         <div className="statistics-user">
-          <h2>USUARIOS</h2>
+          <h2>Usuarios</h2>
         </div>
         <div className="statistics-grid-container">
           <div className="view-StatisticsUsers">

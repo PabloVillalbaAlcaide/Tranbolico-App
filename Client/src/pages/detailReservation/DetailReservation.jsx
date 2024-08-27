@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import { ProgressBar } from "../../components/ProgressBar/ProgressBar";
 import { ButtonTram } from "../../components/ButtonTram/ButtonTram";
+import { format } from "date-fns";
 
 export const DetailReservation = () => {
   const { reservation } = useOutletContext();
@@ -43,7 +44,7 @@ export const DetailReservation = () => {
                 <h5 className="fw-bold">Ida:</h5>
                 <div className="d-flex gap-4">
                   <div className="boton-detail-date-reservation">
-                    {reservation?.departure_date}
+                    {format(new Date(reservation?.departure_date), "dd-MM-yyyy")}
                   </div>
                   <div className="boton-detail-time-reservation">
                     {reservation?.departure_time}
@@ -52,7 +53,7 @@ export const DetailReservation = () => {
                 <h5 className="fw-bold">Vuelta:</h5>
                 <div className="d-flex gap-4">
                   <div className="boton-detail-date-reservation">
-                    {reservation?.arrival_date}
+                  {format(new Date(reservation?.arrival_date), "dd-MM-yyyy")}
                   </div>
                   <div className="boton-detail-time-reservation">
                     {reservation?.arrival_time}
