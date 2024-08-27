@@ -7,6 +7,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import "./selectDate.scss";
 import { ButtonTram } from "../../components/ButtonTram/ButtonTram";
 import { ProgressBar } from "../../components/ProgressBar/ProgressBar";
+import { format } from "date-fns";
 
 export const SelectDate = () => {
   const { reservation, setReservation, route, loadingReservation } =
@@ -156,7 +157,7 @@ export const SelectDate = () => {
           <div className="grid-container w-100 akkurat-font">
             <div className="fecha d-flex flex-column justify-content-start align-items-center btn-primary">
               <h4>Fecha</h4>
-              {date && <p className="mt-3 text-date">{date}</p>}
+              {date && <p className="mt-3 text-date">{format(new Date(date), "dd-MM-yyyy")}</p>}
             </div>
             <div className="calendario d-flex flex-column justify-content-center align-items-center p-0 m-0">
               <TranbolicoDatePicker
