@@ -59,7 +59,7 @@ export const Login = () => {
   };
   return (
     <>
-      <Row>
+      <Row className="mx-2">
         {/* <div className="ppal-login text-center text-white  mt-2">
           <h2 className="mb-0 py-2">LOGIN</h2>
         </div> */}

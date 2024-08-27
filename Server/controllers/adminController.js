@@ -14,10 +14,14 @@ class AdminController {
     ac.city_name AS arrival_city, 
     r.text, 
     r.is_disabled
-    FROM route r JOIN city dc ON r.departure_province_id = dc.province_id 
-    AND r.departure_city_id = dc.city_id JOIN province dp 
-    ON r.departure_province_id = dp.province_id JOIN city ac 
-    ON r.arrival_province_id = ac.province_id AND r.arrival_city_id = ac.city_id
+    FROM route r 
+    JOIN city dc ON r.departure_province_id = dc.province_id 
+    AND r.departure_city_id = dc.city_id 
+    JOIN province dp 
+    ON r.departure_province_id = dp.province_id 
+    JOIN city ac 
+    ON r.arrival_province_id = ac.province_id 
+    AND r.arrival_city_id = ac.city_id
     JOIN province ap ON r.arrival_province_id = ap.province_id WHERE is_deleted = false`;
     connection.query(sql, (err, result) => {
       if (err) {
@@ -167,7 +171,7 @@ class AdminController {
   deleteRoute = (req, res) => {
     const data = [req.params.id];
 
-    const sql = `UPDATE route SET is_deleted = false WHERE route_id = ?`;
+    const sql = `UPDATE route SET is_deleted = TRUE WHERE route_id = ?`;
 
     connection.query(sql, data, (err, result) => {
       if (err) {
@@ -190,15 +194,21 @@ class AdminController {
     ap_prov.name AS arrival_province,
     planning.is_deleted
     FROM planning 
-    JOIN route ON planning.route_id = route.route_id
-    JOIN city dp ON route.departure_city_id = dp.city_id 
+    JOIN route 
+    ON planning.route_id = route.route_id
+    JOIN city dp 
+    ON route.departure_city_id = dp.city_id 
     AND route.departure_province_id = dp.province_id
-    JOIN province dp_prov ON dp.province_id = dp_prov.province_id
-    JOIN city ap ON route.arrival_city_id = ap.city_id 
+    JOIN province dp_prov 
+    ON dp.province_id = dp_prov.province_id
+    JOIN city ap 
+    ON route.arrival_city_id = ap.city_id 
     AND route.arrival_province_id = ap.province_id
-    JOIN province ap_prov ON ap.province_id = ap_prov.province_id
+    JOIN province ap_prov 
+    ON ap.province_id = ap_prov.province_id
     WHERE CONCAT(planning.departure_date, ' ', planning.departure_time) > NOW() 
-    AND planning.is_deleted = FALSE`;
+    AND planning.is_deleted = FALSE
+    ORDER BY planning.departure_date, planning.departure_time`;
     connection.query(sql, (err, result) => {
       if (err) {
         return res.status(500).json(err);
@@ -220,15 +230,20 @@ class AdminController {
     ap_prov.name AS arrival_province,
     planning.is_deleted
     FROM planning 
-    JOIN route ON planning.route_id = route.route_id
-    JOIN city dp ON route.departure_city_id = dp.city_id 
+    JOIN route 
+    ON planning.route_id = route.route_id
+    JOIN city dp 
+    ON route.departure_city_id = dp.city_id 
     AND route.departure_province_id = dp.province_id
     JOIN province dp_prov ON dp.province_id = dp_prov.province_id
-    JOIN city ap ON route.arrival_city_id = ap.city_id 
+    JOIN city ap 
+    ON route.arrival_city_id = ap.city_id 
     AND route.arrival_province_id = ap.province_id
-    JOIN province ap_prov ON ap.province_id = ap_prov.province_id
+    JOIN province ap_prov 
+    ON ap.province_id = ap_prov.province_id
     WHERE CONCAT(planning.departure_date, ' ', planning.departure_time) < NOW() 
-    OR planning.is_deleted = TRUE`;
+    OR planning.is_deleted = TRUE
+    ORDER BY planning.departure_date DESC, planning.departure_time DESC`;
     connection.query(sql, (err, result) => {
       if (err) {
         return res.status(500).json(err);
@@ -247,11 +262,20 @@ class AdminController {
     arrival_city.city_name AS arrival_city_name,
     arrival_province.name AS arrival_province_name
     FROM route
-    JOIN city AS departure_city ON route.departure_city_id = departure_city.city_id AND route.departure_province_id = departure_city.province_id
-    JOIN province AS departure_province ON departure_city.province_id = departure_province.province_id
-    JOIN city AS arrival_city ON route.arrival_city_id = arrival_city.city_id AND route.arrival_province_id = arrival_city.province_id
-    JOIN province AS arrival_province ON arrival_city.province_id = arrival_province.province_id
-    WHERE route.is_disabled = false AND route.is_deleted = false AND (departure_province.name LIKE '${search}%' OR departure_city.city_name LIKE '${search}%')`;
+    JOIN city AS departure_city 
+    ON route.departure_city_id = departure_city.city_id 
+    AND route.departure_province_id = departure_city.province_id
+    JOIN province AS departure_province 
+    ON departure_city.province_id = departure_province.province_id
+    JOIN city AS arrival_city 
+    ON route.arrival_city_id = arrival_city.city_id 
+    AND route.arrival_province_id = arrival_city.province_id
+    JOIN province AS arrival_province 
+    ON arrival_city.province_id = arrival_province.province_id
+    WHERE route.is_disabled = FALSE 
+    AND route.is_deleted = FALSE 
+    AND (departure_province.name LIKE '${search}%' 
+    OR departure_city.city_name LIKE '${search}%')`;
     connection.query(sql, (err, result) => {
       if (err) {
         return res.status(500).json(err);
@@ -328,13 +352,16 @@ class AdminController {
   viewUser = (req, res) => {
     const { opt, text, value } = req.query;
 
-    const isDisabled = value == 1 ? false : value == 2 ? true : null
-
-    console.log(isDisabled);
-    
+    const isDisabled = value == 1 ? false : value == 2 ? true : null;
+    console.log(opt);
 
     let sql = `SELECT user_id, CONCAT(name, " ", surname) AS full_name, birthdate, email, phone_number, is_disabled 
-    FROM user WHERE ${opt} LIKE "${text}%" AND user_type != 1`;
+    FROM user WHERE ${opt} LIKE "%${text}%" AND user_type != 1`;
+
+    if (opt === "name") {
+      sql = `SELECT user_id, CONCAT(name, " ", surname) AS full_name, birthdate, email, phone_number, is_disabled 
+    FROM user WHERE (${opt} LIKE "%${text}%" OR surname LIKE "%${text}%") AND user_type != 1`;
+    }
 
     if (isDisabled !== null) {
       sql += ` AND is_disabled = ${isDisabled}`;
@@ -348,6 +375,7 @@ class AdminController {
       res.status(200).json(result);
     });
   };
+
   //deshabilitar usuarios
   disableUser = (req, res) => {
     const { user_id, is_disabled } = req.body;

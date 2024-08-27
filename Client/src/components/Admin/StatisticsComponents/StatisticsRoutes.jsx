@@ -8,7 +8,7 @@ import {
   CartesianGrid,
   Legend,
   ResponsiveContainer,
-  Tooltip
+  Tooltip,
 } from "recharts";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
 
@@ -41,10 +41,11 @@ export const StatisticsRoutes = () => {
   }, []);
 
   return (
-
-    <div style={{ width: "100%", height: 500}}>
+    <div
+      style={{ width: "100%", height: 500 }}
+      className="view-StatisticsRoutes"
+    >
       <ResponsiveContainer>
-
         <BarChart
           data={data}
           margin={{ top: 20, right: 30, left: 20, bottom: 30 }}
@@ -52,17 +53,33 @@ export const StatisticsRoutes = () => {
         >
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
 
-          <XAxis dataKey="route_name" interval={0} angle={-45} textAnchor="end" />
-          <YAxis tickFormatter={(tick) => Number.isInteger(tick) ? tick : ''} />
-          <Legend width={100} wrapperStyle={{ top: 40, right: 20, backgroundColor: '#f5f5f5', border: '1px solid #d5d5d5', borderRadius: 3, lineHeight: '40px' }} />
+          <XAxis
+            dataKey="route_name"
+            interval={0}
+            angle={-45}
+            textAnchor="end"
+          />
+          <YAxis
+            tickFormatter={(tick) => (Number.isInteger(tick) ? tick : "")}
+          />
+          <Legend
+            width={100}
+            wrapperStyle={{
+              top: 40,
+              right: 20,
+              backgroundColor: "#f5f5f5",
+              border: "1px solid #d5d5d5",
+              borderRadius: 3,
+              lineHeight: "40px",
+            }}
+          />
           <Tooltip />
 
           <Bar
             dataKey="total_reservation_count"
             fill="#91cad8"
             name="Reservas Totales"
-          /> 
-
+          />
         </BarChart>
       </ResponsiveContainer>
     </div>

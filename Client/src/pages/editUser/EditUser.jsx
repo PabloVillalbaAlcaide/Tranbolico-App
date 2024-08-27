@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, useCallback } from "react";
 import { AppContext } from "../../context/TranbolicoContextProvider";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Col, Form, Row } from "react-bootstrap";
 import "./editUser.scss";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -63,13 +63,13 @@ export const EditUser = () => {
     const newErrors = {};
     let isValid = true;
 
-    if (editedUser.name?.length < 3 || editedUser.name?.length > 15) {
-      newErrors.name = "El nombre debe contener entre 3 y 15 caracteres";
+    if (editedUser.name?.length < 3 || editedUser.name?.length > 50) {
+      newErrors.name = "El nombre debe contener entre 3 y 50 caracteres";
       isValid = false;
     }
 
-    if (editedUser.surname?.length < 3 || editedUser.surname?.length > 40) {
-      newErrors.surname = "El apellido debe contener entre 3 y 40 caracteres";
+    if (editedUser.surname?.length < 3 || editedUser.surname?.length > 100) {
+      newErrors.surname = "El apellido debe contener entre 3 y 100 caracteres";
       isValid = false;
     }
 

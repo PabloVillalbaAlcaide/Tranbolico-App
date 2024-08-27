@@ -1,17 +1,16 @@
-import React from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import { FaTwitter } from "react-icons/fa";
 import "../../App.css";
 import "./About.scss";
 
 export const About = () => {
-  const twitterColor = "#283583"; // Color azul específico
+  const twitterColor = "#283583"; 
 
   return (
     <div>
-      <Row className="mt-4 banner-about d-flex align-items-center justify-content-between justify-content-center">
-        <div className="ppal-about ps-5 text-white mt-2 flex-grow-1">
-          <h2 className=" py-2 m-0">Conócenos</h2>
+      <Row className="mt-4 banner-about">
+        <div className="d-flex align-items-center justify-content-md-between justify-content-center ppal-about ps-md-5 text-white flex-grow-1">
+          <h2 className="pb-2 m-0">Conócenos</h2>
         </div>
         <img
           src="/images/Trambólico2.png"

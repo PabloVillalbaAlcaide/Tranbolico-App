@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-import { AppContext } from "../../../context/TranbolicoContextProvider"
+import { AppContext } from "../../../context/TranbolicoContextProvider";
 
 const COLORS = ["#ffd92d", "#91cad8", "#e3b6d4", "#b3b420"];
 
@@ -76,29 +76,29 @@ export const StatisticsGenre = () => {
   };
 
   return (
-    <div className="akkurat-font">
+    <div className="akkurat-font view-StatisticsGenre">
       {data && (
-        <div className="w-100 mx-auto" style={{height:"400px"}}>
+        <div className="w-100 mx-auto" style={{ height: "400px" }}>
           <ResponsiveContainer>
-          <PieChart width="100%" height={400}>
-            <Pie
-              data={data}
-              cx="50%"
-              cy="50%"
-              labelLine={true}
-              label={renderCustomizedLabel}
-              outerRadius={80}
-              fill="#8884d8"
-              dataKey="user_count"
-            >
-              {data?.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
-            </Pie>
-          </PieChart>
+            <PieChart width="100%" height={400}>
+              <Pie
+                data={data}
+                cx="50%"
+                cy="50%"
+                labelLine={true}
+                label={renderCustomizedLabel}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="user_count"
+              >
+                {data?.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+            </PieChart>
           </ResponsiveContainer>
         </div>
       )}
