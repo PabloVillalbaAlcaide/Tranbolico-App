@@ -43,7 +43,7 @@ export const NavBarApp = () => {
     <div className="p-0 navbar">
       <header
         className="container-fluid d-flex justify-content-center"
-        style={{ background: "var(--tranbolico-azul" }}
+        style={{ background: "var(--tranbolico-azul)" }}
       >
         <div className="container-xxl d-flex justify-content-between row">
           <div className="col-lg-4 d-flex align-items-center">
@@ -62,7 +62,7 @@ export const NavBarApp = () => {
                   TRANBÓLICO
                 </Link>
               </div>
-              {!isWideScreen && (
+              {!isWideScreen && globalState.user && (
                 <div className="d-flex justify-content-center align-items-center gap-4">
                   <div
                     className="avatar-user-navbar text-center"

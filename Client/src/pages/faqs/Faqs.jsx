@@ -5,10 +5,10 @@ import tranbolic4 from "/images/Trambólico4.png";
 export const Faqs = () => {
   return (
     <>
-      <div className="contenedor-faqs">
+      <div>
         <Row className="mt-4 banner-faqs d-flex align-items-center justify-content-between justify-content-center">
-          <div className="ppal-faqs ps-5 text-white mt-2 flex-grow-1">
-            <h2 className=" py-2 m-0">FAQS</h2>
+          <div className="ppal-faqs ps-5 flex-grow-1">
+            <h2 className=" pb-2 m-0">FAQS</h2>
           </div>
           <img src={tranbolic4} alt="tranbolic4" className="faqs-image" />
         </Row>
