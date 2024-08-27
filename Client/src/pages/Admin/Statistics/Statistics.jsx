@@ -8,12 +8,11 @@ import "./statistics.scss";
 import { Button, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-
 export const Statistics = () => {
   const navigate = useNavigate();
 
   return (
-    <>
+    <div className="container-statistic">
       <Row>
         <div className="ppal-userView text-center text-white mt-3">
           <h2 className="mb-0 py-2">ESTADÍSTICAS</h2>
@@ -25,19 +24,27 @@ export const Statistics = () => {
       >
         Volver al panel
       </Button>
+      <Container fluid="xl" className="statistics-container mb-5">
+        <div className="statistics-user">
+          <h2>USUARIOS</h2>
+        </div>
+        <div className="statistics-grid-container">
+          <div className="view-StatisticsUsers">
+            <StatisticsUsers />
+          </div>
 
-    <Container fluid="xl" className="statistics-container mb-5">
-      <div className="statistics-grid-container">
-        <StatisticsUsers />
-        <StatisticsGenre />
-      </div>
-      <StatisticsAge />
+          <StatisticsGenre />
+        </div>
+        {<StatisticsAge />}
+        <div className="statistics-routes">
+          <h2>Rutas</h2>
+        </div>
+        <div className="statistics-grid-container-map ">
+          <StatisticsRoutes />
 
-      <div className="statistics-grid-container">
-        <StatisticsRoutes />
-        <StatisticsMap />
-      </div>
-    </Container>
-    </>
+          <StatisticsMap />
+        </div>
+      </Container>
+    </div>
   );
 };
