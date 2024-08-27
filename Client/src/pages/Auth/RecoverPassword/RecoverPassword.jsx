@@ -1,4 +1,4 @@
-import { Button, Container, Form, Row } from "react-bootstrap";
+import {Container, Form, Row } from "react-bootstrap";
 import icono from "/images/perfil2.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ import { TitleTram } from "../../../components/TitleTram/TitleTram";
 
 export const RecoverPassword = () => {
   const [mail, setMail] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -18,7 +19,7 @@ export const RecoverPassword = () => {
   const onSubmit = async () => {
     try {
       console.log(mail);
-
+      setErrorMessage("");
       const res = await axios.post(
         `${import.meta.env.VITE_API_URL}/users/recoverPassword`,
         mail
@@ -26,7 +27,8 @@ export const RecoverPassword = () => {
       console.log(res);
       navigate("/MsgRecoverPassword");
     } catch (err) {
-      console.log(err, "error de recover password");
+      console.log(err);
+      setErrorMessage("Correo inválido. Por favor, intente de nuevo.");
     }
   };
   return (
@@ -60,6 +62,9 @@ export const RecoverPassword = () => {
                 value={mail.email || ""}
                 name="email"
               />
+              {errorMessage && (
+                <div className="text-danger mt-2">{errorMessage}</div>
+              )}
             </Form.Group>
             <br />
             <div className="d-flex flex-row gap-2 align-items-center justify-content-center flex-column gap-2">

@@ -98,7 +98,7 @@ export const Login = () => {
             </Form.Group>
             {/* {msg && <p style={{ color: "#e72957"}}>Datos incorrectos</p>} */}
             {msg && (
-              <p className="frase-2-login fs-5 ">
+              <p className="frase-2-login fs-6 pt-2 ">
                 <Link to="/recoverPassword">
                   <span>¿Has olvidado tu contraseña?</span>
                 </Link>
