@@ -131,23 +131,23 @@ export const ViewAddPlanning = () => {
         </div>
       </Row>
       <Container fluid="xl" className="akkurat-font">
-        <div className="position-relative my-4 ">
+      <div className="btns-planning d-flex position-relative my-4 align-items-center justify-content-center flex-column flex-md-column ">
           <Button
             className="btn-volver-panel position-absolute start-0"
             onClick={() => navigate("/admin")}
           >
             Volver al panel
           </Button>
-          <div className="d-flex justify-content-center">
+          <div>
             <Button
               className="btn-add-planning  ms-5 ms-md-5 ms-custom-AP"
               onClick={() => setShowModal(true)}
               aria-label="Añadir Nuevo Planning"
             >
-              Añadir Nuevo Planning
+              Añadir Planning
             </Button>
             <Button
-              className="btn-add-planning  ms-5 ms-md-5 ms-custom-AP"
+              className="btn-verHistorial ms-4"
               onClick={() => setViewhistorical(!viewhistorical)}
               aria-label="ver historial"
             >

@@ -5,3 +5,37 @@
     background-color: var(--tranbolico-azul) !important;
   }
 }
+
+.btn-verHistorial {
+  background-color: var(--tranbolico-rosa);
+  border: 0;
+  &:hover {
+    background-color: var(--tranbolico-rosa) !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .btns-planning {
+    align-items: stretch !important;
+    max-width: 200px !important;
+    width: 100% !important;
+
+    .btn-volver-panel {
+      position: static !important;
+      margin-bottom: 0.6rem;
+      width: 100%;
+      max-width: 200px !important;
+    }
+
+    .btn-add-planning {
+      margin-left: 0 !important;
+      margin-bottom: 0.6rem;
+      width: 100%;
+    }
+
+    .btn-verHistorial {
+      margin-left: 0 !important;
+      width: 100%;
+    }
+  }
+}
