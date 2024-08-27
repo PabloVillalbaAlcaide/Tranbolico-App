@@ -66,11 +66,11 @@ export const Login = () => {
           fluid
           className="p-0 mt-1  d-flex justify-content-center align-items-start mb-5"
         >
-          <div className="contenedor-login my-5 px-5 mb-lg-0 text-center d-flex flex-column justify-content-center ">
-            <div>
+          <div className="contenedor-login my-5 px-5 mb-lg-0 text-center d-flex flex-column justify-content-center">
+            <div className="div-login_img">
               <img src={icono} alt="personIcon" className="login-img mt-1" />
             </div>
-            <Form.Group>
+            <Form.Group className="mt-4">
               <Form.Control
                 className="input-form-login pb-2"
                 type="email"
