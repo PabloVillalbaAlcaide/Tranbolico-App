@@ -79,10 +79,13 @@ class StatisticsController {
     arrival_city_name,
     arrival_province_name,
     MAX(total_reservation_count) AS total_reservation_count
-    FROM CombinedRoutes
-    GROUP BY route_id_1, route_id_2, departure_city_id, departure_province_id, arrival_city_id, arrival_province_id, departure_city_name, departure_province_name, arrival_city_name, arrival_province_name
-    ORDER BY total_reservation_count DESC
-    LIMIT 10;`;
+    FROM 
+    CombinedRoutes
+    GROUP BY 
+    route_id_1, route_id_2, departure_city_id, departure_province_id, arrival_city_id, arrival_province_id, departure_city_name, departure_province_name, arrival_city_name, arrival_province_name
+    ORDER BY 
+    total_reservation_count DESC
+    LIMIT 10`;
 
     connection.query(sql, (err, result) => {
       if (err) {
@@ -101,13 +104,14 @@ class StatisticsController {
     FROM route r
     JOIN planning pl ON r.route_id = pl.route_id
     JOIN reservation res ON pl.route_id = res.route_id AND pl.planning_id = res.planning_id
-    JOIN city c ON (r.departure_city_id = c.city_id AND r.departure_province_id = c.province_id)
-    OR (r.arrival_city_id = c.city_id AND r.arrival_province_id = c.province_id)
+    JOIN city c ON r.arrival_city_id = c.city_id AND r.arrival_province_id = c.province_id
     JOIN province p ON c.province_id = p.province_id
     WHERE res.is_deleted = FALSE
+    AND res.reservation_type = 1
     GROUP BY c.city_id, c.province_id, c.city_name, p.name
+    HAVING total_reservations > 0
     ORDER BY total_reservations DESC
-    LIMIT 10`;
+    LIMIT 10;`;
 
     connection.query(sql, (err, result) => {
       if (err) {

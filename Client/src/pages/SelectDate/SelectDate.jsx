@@ -156,7 +156,7 @@ export const SelectDate = () => {
           <div className="grid-container w-100 akkurat-font">
             <div className="fecha d-flex flex-column justify-content-start align-items-center btn-primary">
               <h4>Fecha</h4>
-              <p className="mt-3">{date}</p>
+              {date && <p className="mt-3 text-date">{date}</p>}
             </div>
             <div className="calendario d-flex flex-column justify-content-center align-items-center p-0 m-0">
               <TranbolicoDatePicker
