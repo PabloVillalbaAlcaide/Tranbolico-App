@@ -6,25 +6,29 @@
 body {
   font-family: "VinaSans", sans-serif;
 }
-
-.conocenos {
+.banner-about {
   background-color: var(--tranbolico-amarillo);
-  font-family: "Akkurat", sans-serif;
-  font-size: 3.5rem;
-  color: var(--tranbolico-azul);
-  padding: 20px;
-  border-radius: 15px;
-  max-width: 90%;
-  margin: 30px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 
-  @media (min-width: 768px) {
-    flex-direction: row;
-    justify-content: space-between;
-    max-width: 70%;
-  }
+  width: 95%;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 20px;
+}
+
+.ppal-about {
+  font-family: "Akkurat-Regular.ttf";
+}
+
+.ppal-about h2 {
+  color: var(--tranbolico-azul);
+  font-size: 4rem;
+}
+
+.about-image {
+  position: absolute;
+  right: 80px;
+  top: -40px;
+  width: 220px;
 }
 
 .conocenos img {
@@ -81,7 +85,6 @@ body {
   min-width: 40px;
   min-height: 40px;
   margin-bottom: 10px;
-  
 
   @media (min-width: 768px) {
     margin-right: 15px;
@@ -104,7 +107,6 @@ body {
   font-size: 1.4rem;
   margin-bottom: 10px;
   font-weight: bold;
-  
 }
 
 .funciona-text span {
@@ -189,5 +191,30 @@ body {
   @media (min-width: 768px) {
     position: static;
     margin-left: auto;
+  }
+}
+@media (max-width: 800px) {
+  .about-image {
+    width: 200px;
+    right: -40px;
+    top: 10;
+  }
+
+  .ppal-about h2 {
+    font-size: 3rem;
+  }
+}
+@media (max-width: 450px) {
+  .about-image {
+    width: 160px;
+    right: -40px;
+    top: -20px;
+  }
+}
+@media (max-width: 400px) {
+  .about-image {
+    width: 160px;
+
+    top: -2000px;
   }
 }
