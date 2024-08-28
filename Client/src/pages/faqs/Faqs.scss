@@ -44,12 +44,27 @@
     border: 2px solid #ccc;
     border-radius: 5px;
     margin-bottom: 20px;
+    transition: all 0.3s ease;
+  }
+  .accordion-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa;
   }
 }
 
 .accordion-item {
   border-radius: 5px;
   margin-bottom: 20px;
+  border: 2px solid #ccc;
+  transition: all 0.3s ease;
+}
+
+.accordion-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa;
+  border-color: #aaa;
 }
 
 .accordion-button {
@@ -76,5 +91,9 @@
     width: 200px;
     right: -20px;
     top: 10;
+  }
+
+  .faqs-preguntasYrespuestas p {
+    min-width: 60dvw;
   }
 }

@@ -58,7 +58,7 @@ export const About = () => {
           lugares y asegurarse de que tu noche sea perfecta.
         </p>
         <p>
-          En de Tranbolico , estamos comprometidos con ofrecerte mucho más que
+          En Tranbolico , estamos comprometidos con ofrecerte mucho más que
           un simple viaje; queremos que cada salida se convierta en una
           experiencia completa, llena de momentos únicos, buena comida, y la
           mejor diversión. ¡Únete a nosotros y descubre una nueva forma de salir
