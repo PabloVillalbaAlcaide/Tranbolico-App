@@ -74,7 +74,6 @@ class AdminController {
         arrival_province_id,
         text,
       ];
-      console.log(data);
 
       const sql = `INSERT INTO route (departure_city_id, departure_province_id, arrival_city_id, arrival_province_id, text) VALUES (?, ?, ?, ?, ?)`;
 
@@ -132,11 +131,8 @@ class AdminController {
 
     const sql = `UPDATE route SET departure_province_id = ?, departure_city_id = ?, arrival_province_id = ?, arrival_city_id = ?, text = ? WHERE route_id = ?`;
 
-    console.log(data);
-
     connection.query(sql, data, (err, result) => {
       if (err) {
-        console.error("error en editar la ruta", err);
         return res.status(500).json({ error: "error en editar la ruta" });
       }
       res.status(200).json(result);
@@ -144,8 +140,6 @@ class AdminController {
   };
 
   disableRoute = (req, res) => {
-    console.log(req.body);
-
     const { route_id, is_disabled } = req.body;
 
     // Validar datos de entrada
@@ -280,7 +274,6 @@ class AdminController {
       if (err) {
         return res.status(500).json(err);
       } else {
-        console.log(result);
         res.status(200).json(result);
       }
     });
@@ -288,16 +281,14 @@ class AdminController {
 
   addPlanning = (req, res) => {
     const { route_id, departure_date, departure_time } = req.body;
-    console.log(req.body);
-  
+
     let sqlMaxRouteId = `SELECT COALESCE(MAX(planning_id), 0) + 1 AS new_planning_id FROM planning WHERE route_id = ${route_id}`;
     connection.query(sqlMaxRouteId, (err, result) => {
       if (err) {
         return res.status(500).json(err);
       } else {
-        console.log(result);
         let newPlanningId = result[0].new_planning_id;
-  
+
         // Verificar si la ruta existe y no está eliminada o deshabilitada
         let sqlCheckRoute = `
         SELECT 1
@@ -310,21 +301,27 @@ class AdminController {
           if (errCheck) {
             return res.status(500).json(errCheck);
           } else if (resultCheck.length === 0) {
-            return res.status(400).json({ error: "La ruta no existe o está deshabilitada/eliminada" });
+            return res
+              .status(400)
+              .json({
+                error: "La ruta no existe o está deshabilitada/eliminada",
+              });
           } else {
             let sqlInsert = `
             INSERT INTO planning (route_id, departure_date, departure_time, planning_id)
             VALUES (?, ?, ?, ?)
             `;
-            let data = [route_id, departure_date, departure_time, newPlanningId];
-  
-            console.log("Voy a guardar");
-  
+            let data = [
+              route_id,
+              departure_date,
+              departure_time,
+              newPlanningId,
+            ];
+
             connection.query(sqlInsert, data, (err2, finalResult) => {
               if (err2) {
                 return res.status(500).json(err2);
               } else {
-                console.log("ACABE");
                 res.status(200).json(finalResult);
               }
             });
@@ -333,11 +330,8 @@ class AdminController {
       }
     });
   };
-  
 
   delPlanning = (req, res) => {
-    console.log(req.params);
-
     const { routeId, planningId } = req.params;
     const data = [routeId, planningId];
     const sql = `UPDATE planning SET is_deleted = TRUE WHERE route_id = ? AND planning_id = ?`;
@@ -345,25 +339,25 @@ class AdminController {
       if (err) {
         return res.status(500).json(err);
       } else {
-        const sql2 =`SELECT reservation_id 
+        const sql2 = `SELECT reservation_id 
         FROM reservation 
         WHERE route_id = ? AND planning_id = ?`;
         connection.query(sql2, data, (err, resultSelect) => {
           if (err) {
             return res.status(500).json(err);
           } else {
-            const data2 =resultSelect.map(elem => elem.reservation_id)
-            if(data2.length >0){
+            const data2 = resultSelect.map((elem) => elem.reservation_id);
+            if (data2.length > 0) {
               const sql3 = `UPDATE reservation 
               SET is_deleted = TRUE 
               WHERE reservation_id IN (?)`;
               connection.query(sql3, data2, (err, resultUpdate) => {
-                if(err){
-                  return res.status(500).json(err)
-                }else{
-                  res.status(200).json(resultUpdate)
+                if (err) {
+                  return res.status(500).json(err);
+                } else {
+                  res.status(200).json(resultUpdate);
                 }
-              })
+              });
             }
           }
         });
@@ -372,9 +366,6 @@ class AdminController {
   };
 
   editPlanning = (req, res) => {
-    console.log(req.params);
-    console.log(req.body);
-
     const { routeId, planningId } = req.params;
     const { departure_date, departure_time } = req.body;
 
@@ -399,7 +390,6 @@ class AdminController {
     const { opt, text, value } = req.query;
 
     const isDisabled = value == 1 ? false : value == 2 ? true : null;
-    console.log(opt);
 
     let sql = `SELECT user_id, CONCAT(name, " ", surname) AS full_name, birthdate, email, phone_number, is_disabled 
     FROM user WHERE ${opt} LIKE "%${text}%" AND user_type != 1`;
@@ -415,7 +405,6 @@ class AdminController {
 
     connection.query(sql, (err, result) => {
       if (err) {
-        console.error("error en traer usuario", err);
         return res.status(500).json({ error: "error en traer usuario" });
       }
       res.status(200).json(result);
@@ -425,11 +414,9 @@ class AdminController {
   //deshabilitar usuarios
   disableUser = (req, res) => {
     const { user_id, is_disabled } = req.body;
-    console.log(user_id, "userid", is_disabled, "is_disabled");
     const sql = `UPDATE user SET is_disabled = ${is_disabled} WHERE user_id = ${user_id}`;
     connection.query(sql, (err, result) => {
       if (err) {
-        console.error("error al habilitar7deshabilitar usuario", err);
         return res.status(500).json({ error: "error al habi/deshabi usuario" });
       }
       res.status(200).json("Todo ok");
