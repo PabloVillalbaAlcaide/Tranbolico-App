@@ -41,8 +41,6 @@ export const SelectDate = () => {
 
   useEffect(() => {
 
-    console.log("Cargando",loading, loadingReservation);
-
     if (!loadingReservation && !loading) {
       if (location.pathname === "/reservations") {
         let newReservation = {
@@ -53,8 +51,7 @@ export const SelectDate = () => {
           arrival_province: route?.destination.province,
           arrival_city: route?.destination.city,
         };
-        console.log("newReservation",newReservation);
-        
+
         setReservation(newReservation);
       } else {
         setReservation({ ...reservation, arrival_date: date });
@@ -157,7 +154,11 @@ export const SelectDate = () => {
           <div className="grid-container w-100 akkurat-font">
             <div className="fecha d-flex flex-column justify-content-start align-items-center btn-primary">
               <h4>Fecha</h4>
-              {date && <p className="mt-3 text-date">{format(new Date(date), "dd-MM-yyyy")}</p>}
+              {date && (
+                <p className="mt-3 text-date">
+                  {format(new Date(date), "dd-MM-yyyy")}
+                </p>
+              )}
             </div>
             <div className="calendario d-flex flex-column justify-content-center align-items-center p-0 m-0">
               <TranbolicoDatePicker
@@ -222,8 +223,8 @@ export const SelectDate = () => {
             color="black"
             backgroundColor="var(--tranbolico-fucsia)"
             onClick={() => {
-              sessionStorage.clear()
-              navigate("/")
+              sessionStorage.clear();
+              navigate("/");
             }}
           >
             Cancelar

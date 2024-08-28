@@ -289,7 +289,7 @@ class AdminController {
   addPlanning = (req, res) => {
     const { route_id, departure_date, departure_time } = req.body;
     console.log(req.body);
-
+  
     let sqlMaxRouteId = `SELECT COALESCE(MAX(planning_id), 0) + 1 AS new_planning_id FROM planning WHERE route_id = ${route_id}`;
     connection.query(sqlMaxRouteId, (err, result) => {
       if (err) {
@@ -297,34 +297,43 @@ class AdminController {
       } else {
         console.log(result);
         let newPlanningId = result[0].new_planning_id;
-        let data = [
-          route_id,
-          departure_date,
-          departure_time,
-          newPlanningId,
-          route_id,
-        ];
-        let sql = `
-        INSERT INTO planning (route_id, departure_date, departure_time, planning_id)
-        VALUES ?, ?, ?, ?
-        WHERE EXISTS (
+  
+        // Verificar si la ruta existe y no está eliminada o deshabilitada
+        let sqlCheckRoute = `
         SELECT 1
         FROM route
         WHERE route_id = ?
         AND is_deleted = FALSE
         AND is_disabled = FALSE
-        )
-`;
-        connection.query(sql, data, (err2, finalResult) => {
-          if (err2) {
-            return res.status(500).json(err2);
+        `;
+        connection.query(sqlCheckRoute, [route_id], (errCheck, resultCheck) => {
+          if (errCheck) {
+            return res.status(500).json(errCheck);
+          } else if (resultCheck.length === 0) {
+            return res.status(400).json({ error: "La ruta no existe o está deshabilitada/eliminada" });
           } else {
-            res.status(200).json(finalResult);
+            let sqlInsert = `
+            INSERT INTO planning (route_id, departure_date, departure_time, planning_id)
+            VALUES (?, ?, ?, ?)
+            `;
+            let data = [route_id, departure_date, departure_time, newPlanningId];
+  
+            console.log("Voy a guardar");
+  
+            connection.query(sqlInsert, data, (err2, finalResult) => {
+              if (err2) {
+                return res.status(500).json(err2);
+              } else {
+                console.log("ACABE");
+                res.status(200).json(finalResult);
+              }
+            });
           }
         });
       }
     });
   };
+  
 
   delPlanning = (req, res) => {
     console.log(req.params);

@@ -1,5 +1,4 @@
-import React from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { ButtonTram } from "../../components/ButtonTram/ButtonTram";
 
@@ -32,16 +31,6 @@ export const ConfirmReservation = () => {
                 vistas de la ciudad. 🚌✨
               </p>
 
-              {/* <Button
-                style={{
-                  backgroundColor: "var(--tranbolico-azulClaro)",
-                  color: "black",
-                  border: "none",
-                }}
-                onClick={() => navigate("/")}
-              >
-                Volver
-              </Button> */}
               <ButtonTram color="black" onClick={() => navigate("/")}>
                 Volver
               </ButtonTram>

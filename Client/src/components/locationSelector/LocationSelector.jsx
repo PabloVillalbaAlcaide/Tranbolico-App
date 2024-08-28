@@ -1,16 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Form, FormControl, ListGroup, Row, Col } from "react-bootstrap";
-import debounce from "lodash.debounce";
 import "./locationSelector.scss";
-
 
 export const SearchDropdown = ({
   type,
   selectedOption,
   handleSelect,
   placeholder,
-  provinceId
+  provinceId,
 }) => {
   const [options, setOptions] = useState([]);
   const [inputValue, setInputValue] = useState(selectedOption);
@@ -18,15 +16,16 @@ export const SearchDropdown = ({
 
   useEffect(() => {
     if (selectedOption) {
-
       setInputValue(selectedOption.name || selectedOption.city_name || "");
-
     }
   }, [selectedOption]);
 
   const fetchOptions = useCallback(async (query) => {
     try {
-      const partialUrl = type === "province" ? `${type}?query=${query}` : `${type}?query=${query}&province=${provinceId}`
+      const partialUrl =
+        type === "province"
+          ? `${type}?query=${query}`
+          : `${type}?query=${query}&province=${provinceId}`;
 
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/${partialUrl}`
@@ -45,18 +44,17 @@ export const SearchDropdown = ({
   };
 
   const handleOptionSelect = (option) => {
-
     const displayValue = option.name || option.city_name;
     setInputValue(displayValue);
     handleSelect(option);
-    setShowDropdown(false); // Cierra el dropdown
+    setShowDropdown(false);
   };
 
   return (
     <Form.Group
       controlId={`form${type.charAt(0).toUpperCase() + type.slice(1)}`}
     >
-       <FormControl
+      <FormControl
         className="input-form"
         type="text"
         value={inputValue}

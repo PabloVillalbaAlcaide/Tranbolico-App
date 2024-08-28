@@ -13,7 +13,7 @@ export const AdminUserSearch = ({
   return (
     <>
       <div className="w-100 d-flex justify-content-center pt-3 position-relative akkurat-font">
-      <Button
+        <Button
           className="btn-volver-panel position-absolute start-0 mb-2"
           onClick={() => navigate("/admin")}
         >

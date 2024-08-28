@@ -21,7 +21,9 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
   const getPlanningRoutes = async (value) => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/admin/getPlanningRoutes?search=${value}`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/admin/getPlanningRoutes?search=${value}`,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
@@ -70,7 +72,7 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
   };
 
   const handleSave = () => {
-    if (selectedRoute == {} && date && time) {
+    if (Object.keys(selectedRoute).length !== 0 && date && time) {
       const newPlanning = {
         ...selectedRoute,
         departure_date: date,
@@ -83,7 +85,6 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
       setSelectedRoute({});
       setError("");
       onHide();
-      console.log("Guardado");
     } else {
       setError("Faltan datos");
     }
@@ -98,7 +99,13 @@ export const AddNewPlanningModal = ({ show, onHide, onSave }) => {
         <Form>
           <Form.Group controlId="route">
             {error !== "" && (
-              <p style={{ fontWeight: "12px", color: "crimson", textAlign: "center" }}>
+              <p
+                style={{
+                  fontWeight: "12px",
+                  color: "crimson",
+                  textAlign: "center",
+                }}
+              >
                 {error}
               </p>
             )}

@@ -5,7 +5,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./searchBar.scss";
 import { AppContext } from "../../context/TranbolicoContextProvider";
-import { ButtonTram } from "../ButtonTram/ButtonTram";
 
 export const SearchBar = () => {
   const [origin, setOrigin] = useState("");
@@ -28,7 +27,9 @@ export const SearchBar = () => {
     if (value !== "") {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/reservation/oneWayTrip?search=${value}`
+          `${
+            import.meta.env.VITE_API_URL
+          }/reservation/oneWayTrip?search=${value}`
         );
         setOriginSuggestions(res.data);
       } catch (err) {
@@ -46,7 +47,11 @@ export const SearchBar = () => {
     if (value !== "" && originFinal.city && originFinal.province) {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/reservation/returnTrip?search=${value}&city=${originFinal.city}&province=${originFinal.province}`
+          `${
+            import.meta.env.VITE_API_URL
+          }/reservation/returnTrip?search=${value}&city=${
+            originFinal.city
+          }&province=${originFinal.province}`
         );
 
         setDestinationSuggestions(res.data);
@@ -173,9 +178,6 @@ export const SearchBar = () => {
         <Button className="btn-buscarSBH" onClick={onSubmit}>
           Buscar
         </Button>
-        {/* <ButtonTram color="black" backgroundColor='var(--tranbolico-rosa)' onClick={onSubmit}>
-          Buscar
-        </ButtonTram> */}
       </Form>
     </div>
   );

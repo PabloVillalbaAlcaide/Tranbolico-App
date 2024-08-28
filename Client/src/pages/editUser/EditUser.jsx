@@ -125,7 +125,6 @@ export const EditUser = () => {
         { headers: { Authorization: `Bearer ${globalState.token}` } }
       );
       if (response.status === 200) {
-        console.log(response);
         if (response.data.image) {
           sanitizedUser = { ...sanitizedUser, avatar: response.data.image };
         }
@@ -281,9 +280,7 @@ export const EditUser = () => {
                     {errors.city}
                   </p>
                 )}
-                <Form.Group
-                  className="mb-2 d-flex justify-content-center align-items-center w-100"
-                >
+                <Form.Group className="mb-2 d-flex justify-content-center align-items-center w-100">
                   <label
                     htmlFor="file-img"
                     className="custom-file-upload d-flex align-items-center"
@@ -306,22 +303,13 @@ export const EditUser = () => {
                   />
                 </Form.Group>
                 <div className="d-flex justify-content-center gap-2">
-                  {/* <Button
-                    className="btn-iniciar-login aceptar border-0 fst-italic"
-                    onClick={onSubmit}
-                  >
-                    Aceptar
-                  </Button> */}
                   <ButtonTram color="black" onClick={onSubmit}>
                     Aceptar
                   </ButtonTram>
-                  {/* <Button
-                    className="btn-volver-login cancelar border-0 fst-italic"
+                  <ButtonTram
+                    backgroundColor="var(--tranbolico-fucsia)"
                     onClick={() => navigate("/profile")}
                   >
-                    Cancelar
-                  </Button> */}
-                  <ButtonTram backgroundColor='var(--tranbolico-fucsia)' onClick={() => navigate("/profile")}>
                     Cancelar
                   </ButtonTram>
                 </div>

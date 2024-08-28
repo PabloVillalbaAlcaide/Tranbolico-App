@@ -16,7 +16,9 @@ export const UserHistory = ({ user_id, fetchData }) => {
   const viewHistory = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/reservation/historical?userid=${user_id}`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/reservation/historical?userid=${user_id}`,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
@@ -26,8 +28,7 @@ export const UserHistory = ({ user_id, fetchData }) => {
       console.error(error);
     }
   };
-  console.log("historial",reservationHistory);
-  
+
   return (
     <>
       {reservationHistory.length > 0 ? (
@@ -46,14 +47,17 @@ export const UserHistory = ({ user_id, fetchData }) => {
               <tr
                 key={reservation.reservation_id}
                 style={{
-                  backgroundColor: reservation.is_deleted === 1 ? 'var(--tranbolico-rosa)' : 'transparent',
+                  backgroundColor:
+                    reservation.is_deleted === 1
+                      ? "var(--tranbolico-rosa)"
+                      : "transparent",
                 }}
               >
                 <td>{`${reservation.departure_city_ida} - ${reservation.departure_province_ida}`}</td>
                 <td>{`${reservation.arrival_city_ida} - ${reservation.arrival_province_ida}`}</td>
                 <td>{`${reservation.departure_days_ida} - ${reservation.departure_times_ida}`}</td>
                 <td>{`${reservation.departure_days_vuelta} - ${reservation.departure_times_vuelta}`}</td>
-                <td>{reservation.is_deleted === 1 ? 'Cancelado' : '12€'}</td>
+                <td>{reservation.is_deleted === 1 ? "Cancelado" : "12€"}</td>
               </tr>
             ))}
           </tbody>

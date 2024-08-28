@@ -5,7 +5,6 @@ import "../../App.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../context/TranbolicoContextProvider";
 import axios from "axios";
-import { Button } from "react-bootstrap";
 import { ButtonTram } from "../../components/ButtonTram/ButtonTram";
 
 export const MsgToken = () => {
@@ -27,8 +26,6 @@ export const MsgToken = () => {
         }
       );
 
-      console.log(res);
-
       setGlobalState({
         ...globalState,
         token: res.data.token,
@@ -39,8 +36,6 @@ export const MsgToken = () => {
       console.log(err);
     }
   };
-
-  console.log(globalState);
 
   return (
     <>
@@ -61,25 +56,8 @@ export const MsgToken = () => {
                 width={"50px"}
               />
 
-              <h3  style={{fontWeight:'bold'}}>Verificación por email</h3>
+              <h3 style={{ fontWeight: "bold" }}>Verificación por email</h3>
 
-
-              {/* <Button
-
-              <p style={{fontSize:'1.12rem'}}>Cuenta verificada correctamente</p>
-              <br />
-              <Button
-
-                style={{
-                  backgroundColor: "var(--tranbolico-azulClaro)",
-                  color: "var(--tranbolico-azul)",
-                  fontSize: "1.4rem",
-                  border: "none",
-                }}
-                onClick={() => navigate("/")}
-              >
-                Aceptar
-              </Button> */}
               <ButtonTram color="black" onClick={() => navigate("/")}>
                 Aceptar
               </ButtonTram>

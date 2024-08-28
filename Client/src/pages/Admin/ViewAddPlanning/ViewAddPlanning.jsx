@@ -27,8 +27,8 @@ export const ViewAddPlanning = () => {
   const getPlanning = async () => {
     try {
       let url = `${import.meta.env.VITE_API_URL}/admin/getPlanning`;
-      if(viewhistorical){
-        url = `${import.meta.env.VITE_API_URL}/admin/getHistoricalPlanning`
+      if (viewhistorical) {
+        url = `${import.meta.env.VITE_API_URL}/admin/getHistoricalPlanning`;
       }
       const res = await axios.get(url, {
         headers: { Authorization: `Bearer ${globalState.token}` },
@@ -68,7 +68,9 @@ export const ViewAddPlanning = () => {
   const handleDeletePlanning = async (routeId, planningId) => {
     try {
       const res = await axios.delete(
-        `${import.meta.env.VITE_API_URL}/admin/delPlanning/${routeId}/${planningId}`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/admin/delPlanning/${routeId}/${planningId}`,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
@@ -88,7 +90,9 @@ export const ViewAddPlanning = () => {
   const handleEditPlanning = async (routeId, planningId) => {
     try {
       const res = await axios.put(
-        `${import.meta.env.VITE_API_URL}/admin/editPlanning/${routeId}/${planningId}`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/admin/editPlanning/${routeId}/${planningId}`,
         editData,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
@@ -208,7 +212,8 @@ export const ViewAddPlanning = () => {
                     <td>{item.departure_province}</td>
                     <td>{item.arrival_city}</td>
                     <td>{item.arrival_province}</td>
-                    {!viewhistorical ? <td>
+                    {!viewhistorical ? (
+                      <td>
                         <div className="d-flex flex-column flex-md-row justify-content-around gap-2">
                           {editing.routeId === item.route_id &&
                           editing.planningId === item.planning_id ? (
@@ -256,7 +261,10 @@ export const ViewAddPlanning = () => {
                             Eliminar
                           </Button>
                         </div>
-                    </td> : <td>{item.is_deleted ? "CANCELADO" : ""}</td>}
+                      </td>
+                    ) : (
+                      <td>{item.is_deleted ? "CANCELADO" : ""}</td>
+                    )}
                   </tr>
                 );
               })}

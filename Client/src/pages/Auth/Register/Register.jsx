@@ -38,8 +38,6 @@ export const Register = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
-
     setRegister({ ...register, [name]: value });
   };
 
@@ -148,19 +146,14 @@ export const Register = () => {
     return valid;
   };
 
-  console.log(register.province.province_id);
-
   const onSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        console.log("register", register);
-
         await axios.post(
           `${import.meta.env.VITE_API_URL}/users/registerUser`,
           register
         );
-        console.log("registrado");
 
         navigate("/MsgVerifyEmail");
       } catch (error) {
@@ -172,9 +165,6 @@ export const Register = () => {
   return (
     <>
       <Row className="mx-2">
-        {/* <div className="ppal-register text-center text-white mt-2 mb-2 ">
-          <h2 className="mb-0 py-2">REGISTRO</h2>
-        </div> */}
         <TitleTram backgroundColor={"var(--tranbolico-azul)"} color={"white"}>
           REGISTRO
         </TitleTram>
@@ -359,24 +349,12 @@ export const Register = () => {
                 Ve a <Link to={"/login"}>Login</Link>
               </p>
               <div className="d-flex justify-content-center gap-2">
-                {/* <Button
-                  className="btn-iniciar-login aceptar border-0 fst-italic"
-                  onClick={onSubmit}
-                >
-                  Registrar
-                </Button> */}
                 <ButtonTram
                   backgroundColor="var(--tranbolico-azul)"
                   onClick={onSubmit}
                 >
                   Registrar
                 </ButtonTram>
-                {/* <Button
-                  className="btn-volver-login cancelar border-0 fst-italic"
-                  onClick={() => navigate("/")}
-                >
-                  Volver
-                </Button> */}
                 <ButtonTram
                   backgroundColor="var(--tranbolico-fucsia)"
                   onClick={() => navigate("/")}

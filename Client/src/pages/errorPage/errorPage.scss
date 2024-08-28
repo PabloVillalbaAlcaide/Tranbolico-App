@@ -1,25 +1,20 @@
-.style-verify{
-  background-color: rgb(216,216,216);
+.style-verify {
+  background-color: rgb(216, 216, 216);
   border-radius: 20px;
-  color: var(--tranbolico-azul)
-  
-  }
-  .ppal-verify{
-    min-height: 70dvh;
-    position: relative;
-  
-  }
-  .imagen-rabbit{
+  color: var(--tranbolico-azul);
+}
+.ppal-verify {
+  min-height: 70dvh;
+  position: relative;
+}
+.imagen-rabbit {
   position: absolute;
   right: 20px;
   bottom: -50px;
   transform: rotate(315deg);
-  
-  }
-  .imagen-pollo {
-    position: absolute;
-    top: 200px;
-    right: 1250px;
-  
-  
-  }
+}
+.imagen-pollo {
+  position: absolute;
+  top: 200px;
+  right: 1250px;
+}

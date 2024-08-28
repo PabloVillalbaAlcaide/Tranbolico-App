@@ -30,7 +30,10 @@ const getCoordinates = async (city, province) => {
     coordinatesCache[key] = coords;
     return coords;
   } catch (error) {
-    console.error(`Error fetching coordinates for ${city}, ${province}:`, error);
+    console.error(
+      `Error fetching coordinates for ${city}, ${province}:`,
+      error
+    );
     return { lat: 0, lng: 0 }; // Coordenadas por defecto en caso de error
   }
 };
@@ -139,7 +142,7 @@ export const StatisticsMap = () => {
                 </Popup>
               </CircleMarker>
             ))}
-            <div className="legend"/>
+            <div className="legend" />
           </MapContainer>
         </div>
       )}

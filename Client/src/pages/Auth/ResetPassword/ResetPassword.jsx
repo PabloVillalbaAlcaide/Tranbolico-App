@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useContext, useState } from "react";
-import { Col, Container, Row, Form, Button } from "react-bootstrap";
+import { Col, Container, Row, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
 
@@ -8,7 +8,6 @@ import { ButtonTram } from "../../../components/ButtonTram/ButtonTram";
 
 import "./ResetPassword.scss";
 import { TitleTram } from "../../../components/TitleTram/TitleTram";
-
 
 const initialValue = {
   oldPassword: "",
@@ -34,10 +33,12 @@ export const ResetPassword = () => {
       newErrors.password1 = "La contraseña es obligatoria";
       valid = false;
     } else if (pass.password.length > 100) {
-      newErrors.password1 = "La contraseña debe contener como máximo 100 caracteres";
+      newErrors.password1 =
+        "La contraseña debe contener como máximo 100 caracteres";
       valid = false;
     } else if (!passwordPattern.test(pass.password)) {
-      newErrors.password1 = "La contraseña debe ser de más de 8 caracteres, contener al menos una mayúscula, una minúscula, y un número";
+      newErrors.password1 =
+        "La contraseña debe ser de más de 8 caracteres, contener al menos una mayúscula, una minúscula, y un número";
       valid = false;
     }
 
@@ -79,7 +80,6 @@ export const ResetPassword = () => {
         pass,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log(res);
       if (res.data.hash) {
         setGlobalState({
           ...globalState,
@@ -97,10 +97,7 @@ export const ResetPassword = () => {
   return (
     <>
       <Row>
-        {/* <div className="ppal-register text-center text-white mt-2 mb-2">
-          <h2 className="mb-0 py-2">Restablecer Contraseña</h2>
-        </div> */}
-        <TitleTram backgroundColor={'var(--tranbolico-azul)'} color={"white"}>
+        <TitleTram backgroundColor={"var(--tranbolico-azul)"} color={"white"}>
           Restablecer Contraseña
         </TitleTram>
         <Container
@@ -155,31 +152,22 @@ export const ResetPassword = () => {
 
             <br />
             <div className="d-flex flex-row gap-2 align-items-center justify-content-center flex-column gap-2">
-
-              {/* <Button onClick={onSubmit} className="btn-iniciar-login">
-                Restablecer Contraseña
-              </Button> */}
-           
-              {/* <Button
-                className="btn-volver-login border-0 "
-                onClick={() => navigate("/")}
-              >
-                Volver
-              </Button> */}
-             
-
               <ButtonTram padding="10px 27px" color="black" onClick={onSubmit}>
                 Aceptar
               </ButtonTram>
 
               <ButtonTram
-                  backgroundColor='var(--tranbolico-fucsia)'
-                  onClick={() => {if(globalState?.user){navigate(-1)}else{navigate("/")}}}
-                >
-                  Volver
-                </ButtonTram>
-
-
+                backgroundColor="var(--tranbolico-fucsia)"
+                onClick={() => {
+                  if (globalState?.user) {
+                    navigate(-1);
+                  } else {
+                    navigate("/");
+                  }
+                }}
+              >
+                Volver
+              </ButtonTram>
             </div>
           </Col>
         </Container>

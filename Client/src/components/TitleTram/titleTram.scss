@@ -1,7 +1,6 @@
 .banner-titleTram {
   width: 95%;
   margin: 0 auto;
-  //position: relative;
   border-radius: 20px;
 }
 
@@ -9,12 +8,11 @@
   font-family: "VinaSans-Regular.ttf";
 }
 
-h2{
+h2 {
   font-size: 4rem;
 }
 
 @media (max-width: 800px) {
-  
   .ppal-faqs h2 {
     font-size: 3rem;
   }

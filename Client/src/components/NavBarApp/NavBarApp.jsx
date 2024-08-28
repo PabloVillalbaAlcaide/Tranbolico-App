@@ -1,5 +1,5 @@
 import "../../App.css";
-import "./NavBarApp.css";
+import "./NavBarApp.scss";
 
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Nav, Navbar } from "react-bootstrap";

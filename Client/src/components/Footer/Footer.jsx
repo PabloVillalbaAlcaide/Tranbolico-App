@@ -6,8 +6,10 @@ import { Link } from "react-router-dom";
 import { FaWhatsapp } from "react-icons/fa";
 
 export const Footer = () => {
-  const phoneNumber = '34123456789';
-  const defaultMessage = encodeURIComponent('Bienvenid@ a Tranbólico. ¿En qué puedo ayudarle?');
+  const phoneNumber = "34123456789";
+  const defaultMessage = encodeURIComponent(
+    "Bienvenid@ a Tranbólico. ¿En qué puedo ayudarle?"
+  );
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${defaultMessage}`;
 
   return (

@@ -18,9 +18,12 @@ export const TranbolicoContextProvider = ({ children }) => {
 
   const getUser = async (token) => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/getOneUser`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/users/getOneUser`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       setGlobalState({ ...globalState, token: token, user: res.data });
     } catch (err) {
