@@ -18,6 +18,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const [msg, setMsg] = useState(false);
   const { globalState, setGlobalState } = useContext(AppContext);
+  const [errors, setErrors] = useState({});
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -30,32 +31,56 @@ export const Login = () => {
     setLogin({ ...login, [name]: value });
   };
 
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {
+      email: "",
+      password: "",
+    };
+
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!login.email) {
+      newErrors.email = "El email es obligatorio";
+      valid = false;
+    } else if (login.email.length > 320) {
+      newErrors.surname = "El email debe contener como máximo 320 caracteres";
+      valid = false;
+    } else if (!emailPattern.test(login.email)) {
+      newErrors.email = "Formato de email no válido";
+      valid = false;
+    }
+    setErrors(newErrors);
+    return valid;
+  };
+
   const handleSubmit = async () => {
-    try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/users/loginUser`,
-        login
-      );
-      setGlobalState({
-        ...globalState,
-        token: res.data.token,
-        user: res.data.finalResult,
-      });
-      localStorage.setItem("token", res.data.token);
+    if (validateForm()) {
+      try {
+        const res = await axios.post(
+          `${import.meta.env.VITE_API_URL}/users/loginUser`,
+          login
+        );
+        setGlobalState({
+          ...globalState,
+          token: res.data.token,
+          user: res.data.finalResult,
+        });
+        localStorage.setItem("token", res.data.token);
 
-      if (res.data.finalResult.user_type === 1) {
-        navigate("/admin");
-      } else if (res.data.finalResult.user_type === 2) {
-        navigate("/");
-      }
-    } catch (err) {
-      console.log(err);
-
-      if (err.response.status === 401) {
-        setMsg(true);
+        if (res.data.finalResult.user_type === 1) {
+          navigate("/admin");
+        } else if (res.data.finalResult.user_type === 2) {
+          navigate("/");
+        }
+      } catch (err) {
+        console.log(err);
+        if (err.response.status === 401) {
+          setMsg(true);
+        }
       }
     }
   };
+
   return (
     <>
       <Row className="mx-2">
@@ -81,6 +106,9 @@ export const Login = () => {
                 autoFocus
               />
             </Form.Group>
+            {errors.email && (
+              <p className="text-center text-danger fw-bold">{errors.email}</p>
+            )}
             <Form.Group controlId="formBasicPassword">
               <Form.Control
                 className="input-form-login pb-2 mt-2 "
@@ -92,7 +120,6 @@ export const Login = () => {
                 onKeyDown={handleKeyPress}
               />
             </Form.Group>
-            {/* {msg && <p style={{ color: "#e72957"}}>Datos incorrectos</p>} */}
             {msg && (
               <p className="frase-2-login fs-6 pt-2 ">
                 <Link to="/recoverPassword">
