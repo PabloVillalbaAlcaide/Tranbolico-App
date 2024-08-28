@@ -111,9 +111,9 @@ class UserController {
               if (resHash) {
                 let data = result[0].user_id;
                 let sql2 = `SELECT user.*, province.name AS province, city.city_name AS city
-    FROM user JOIN province ON user.province_id = province.province_id JOIN 
-    city ON user.province_id = city.province_id AND user.city_id = city.city_id 
-    WHERE user.user_id = ?`;
+                FROM user JOIN province ON user.province_id = province.province_id JOIN 
+                city ON user.province_id = city.province_id AND user.city_id = city.city_id 
+                WHERE user.user_id = ?`;
                 connection.query(sql2, data, (errSelect, resultSelect) => {
                   if (errSelect) {
                     return res

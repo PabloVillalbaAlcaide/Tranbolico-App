@@ -5,6 +5,11 @@ export const ProgressBar = ({ date }) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    const img = new Image();
+    img.src = "./images/autobús.jpg";
+  }, []);
+
+  useEffect(() => {
     if (window.location.href.includes("routes")) {
       setProgress(1);
     }
