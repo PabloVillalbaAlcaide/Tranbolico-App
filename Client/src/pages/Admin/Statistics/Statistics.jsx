@@ -39,7 +39,7 @@ export const Statistics = () => {
         <div className="statistics-routes">
           <h2>Rutas</h2>
         </div>
-        <div className="statistics-grid-container-map ">
+        <div className="statistics-grid-container">
           <StatisticsRoutes />
 
           <StatisticsMap />
