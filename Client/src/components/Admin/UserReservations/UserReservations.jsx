@@ -14,7 +14,9 @@ export const UserReservations = ({ user_id }) => {
   const viewReservation = async () => {
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/reservation/nextReservations?userid=${user_id}`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/reservation/nextReservations?userid=${user_id}`,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
@@ -25,8 +27,6 @@ export const UserReservations = ({ user_id }) => {
     }
   };
 
-  console.log("reservas",reservation);
-  
   return (
     <>
       {reservation.length > 0 ? (

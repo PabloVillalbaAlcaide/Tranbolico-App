@@ -1,5 +1,12 @@
 import { useState, useContext, useEffect } from "react";
-import { Row, Accordion, Form, Container, Spinner, Alert } from "react-bootstrap";
+import {
+  Row,
+  Accordion,
+  Form,
+  Container,
+  Spinner,
+  Alert,
+} from "react-bootstrap";
 import "./ViewUserAdmin.scss";
 import axios from "axios";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
@@ -40,7 +47,9 @@ export const ViewUserAdmin = () => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/admin/viewUser?opt=${option}&text=${textSearch}&value=${radioValue}`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/admin/viewUser?opt=${option}&text=${textSearch}&value=${radioValue}`,
         {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
@@ -95,7 +104,11 @@ export const ViewUserAdmin = () => {
         />
 
         <div className="d-flex justify-content-center my-3">
-          <ButtonRadio radios={radios} radioValue={radioValue} setRadioValue={setRadioValue} />
+          <ButtonRadio
+            radios={radios}
+            radioValue={radioValue}
+            setRadioValue={setRadioValue}
+          />
         </div>
 
         {loading ? (
@@ -111,14 +124,22 @@ export const ViewUserAdmin = () => {
                     <Accordion.Header>
                       <div className="d-flex justify-content-between w-100 px-5">
                         <h4 className="mx-auto">{user.full_name}</h4>
-                        <div className="d-flex align-items-center justify-content-end flex-shrink-0" style={{ width: "100px" }}>
+                        <div
+                          className="d-flex align-items-center justify-content-end flex-shrink-0"
+                          style={{ width: "100px" }}
+                        >
                           <Form.Check
                             type="switch"
                             id="custom-switch"
                             label=""
                             checked={user.is_disabled === 0}
                             onClick={(e) => e.stopPropagation()} // Evitar que el click despliegue el acordeón
-                            onChange={() => handleUserChange(user.user_id, user.is_disabled === 0 ? 1 : 0)}
+                            onChange={() =>
+                              handleUserChange(
+                                user.user_id,
+                                user.is_disabled === 0 ? 1 : 0
+                              )
+                            }
                           />
                         </div>
                       </div>
@@ -141,7 +162,12 @@ export const ViewUserAdmin = () => {
                             <strong>Historial</strong>
                           </Accordion.Header>
                           <Accordion.Body>
-                            <UserHistory user_id={user.user_id} fetchData={activeAccordion === `history-${user.user_id}`} />
+                            <UserHistory
+                              user_id={user.user_id}
+                              fetchData={
+                                activeAccordion === `history-${user.user_id}`
+                              }
+                            />
                           </Accordion.Body>
                         </Accordion.Item>
                         <Accordion.Item eventKey="3">

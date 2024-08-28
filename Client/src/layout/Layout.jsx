@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import "./layout.css";
+import "./layout.scss";
 import { NavBarApp } from "../components/NavBarApp/NavBarApp";
 import { Footer } from "../components/Footer/Footer";
 import { Row } from "react-bootstrap";

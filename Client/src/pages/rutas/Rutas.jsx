@@ -26,7 +26,9 @@ export const Rutas = () => {
     if (value !== "") {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/reservation/oneWayTrip?search=${value}`
+          `${
+            import.meta.env.VITE_API_URL
+          }/reservation/oneWayTrip?search=${value}`
         );
         setOriginSuggestions(res.data);
       } catch (err) {
@@ -49,7 +51,9 @@ export const Rutas = () => {
       setNoRoutesMessage("");
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/reservation/returnTrip?search=${""}&city=${
+          `${
+            import.meta.env.VITE_API_URL
+          }/reservation/returnTrip?search=${""}&city=${
             originFinal.city
           }&province=${originFinal.province}`
         );
@@ -82,7 +86,7 @@ export const Rutas = () => {
             <h2 className="mb-0 py-2">RUTAS</h2>
           </div>
         </Row> */}
-        <TitleTram backgroundColor={'var(--tranbolico-fucsia)'} color={"white"}>
+        <TitleTram backgroundColor={"var(--tranbolico-fucsia)"} color={"white"}>
           RUTAS
         </TitleTram>
         <ProgressBar />

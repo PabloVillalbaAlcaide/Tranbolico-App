@@ -11,7 +11,6 @@ import locationIcon from "../../../src/assets/icons/location.svg";
 import birthdateIcon from "../../../src/assets/icons/birthdate.svg";
 import pastBookingsIcon from "../../../src/assets/icons/pastBookings.svg";
 import changePasswordIcon from "../../../src/assets/icons/changePassword.svg";
-// import futureBookingsIcon from "../../../src/assets/icons/futureBookings.svg";
 import editUserProfile from "../../../src/assets/icons/editUserProfile.svg";
 
 export const Profile = () => {
@@ -69,29 +68,6 @@ export const Profile = () => {
                     Mis reservas
                   </Link>
                 </div>
-                {/* <div className="profile-links d-flex align-items-center gap-2">
-                  <img
-                    src={pastBookingsIcon}
-                    alt="past-bookings-icon"
-                    width={"50px"}
-                  />
-                    <Link to={"/historical"} className="fst-italic text-dark">
-                      Historial de reservas
-                    </Link>
-                </div>
-                <div className="profile-links d-flex align-items-center gap-2">
-                  <img
-                    src={futureBookingsIcon}
-                    alt="future-bookings-icon"
-                    width={"50px"}
-                  />
-                    <Link
-                      to={"/historical/nextReservations"}
-                      className="fst-italic text-dark"
-                    >
-                      Próximas reservas
-                    </Link>
-                </div> */}
                 <div className="profile-links d-flex align-items-center gap-2">
                   <img
                     src={editUserProfile}

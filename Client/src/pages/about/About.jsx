@@ -1,4 +1,4 @@
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Container } from "react-bootstrap";
 import { FaTwitter } from "react-icons/fa";
 import "../../App.css";
 import "./About.scss";
@@ -7,7 +7,7 @@ export const About = () => {
   const twitterColor = "#283583";
 
   return (
-    <div>
+    <Container fluid="xl">
       <Row className="mt-4 banner-about">
         <div className="d-flex align-items-center justify-content-md-between justify-content-center ppal-about ps-md-5 text-white flex-grow-1">
           <h2 className="pb-2 m-0">Conócenos</h2>
@@ -177,6 +177,6 @@ export const About = () => {
           </div>
         </Col>
       </Row>
-    </div>
+    </Container>
   );
 };

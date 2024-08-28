@@ -1,26 +1,22 @@
-.style-verify{
-background-color: rgb(216,216,216);
-border-radius: 20px;
-color: var(--tranbolico-azul);
-min-width: 300px;
-font-family: "Akkurat-Regular.ttf";
+.style-verify {
+  background-color: rgb(216, 216, 216);
+  border-radius: 20px;
+  color: var(--tranbolico-azul);
+  min-width: 300px;
+  font-family: "Akkurat-Regular.ttf";
 }
-.ppal-verify{
+.ppal-verify {
   min-height: 70dvh;
   position: relative;
-
 }
-.imagen-rabbit{
-position: absolute;
-right: 20px;
-bottom: -50px;
-transform: rotate(315deg);
-
+.imagen-rabbit {
+  position: absolute;
+  right: 20px;
+  bottom: -50px;
+  transform: rotate(315deg);
 }
 .imagen-pollo {
   position: absolute;
   top: 200px;
   right: 1250px;
-
-
 }

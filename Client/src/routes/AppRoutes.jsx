@@ -77,10 +77,7 @@ export const AppRoutes = () => {
                   <Route path="/resetPassword" element={<ResetPassword />} />
 
                   <Route path="/myReservations" element={<Historical />}>
-                  <Route
-                      index
-                      element={<UserReservations />}
-                    />
+                    <Route index element={<UserReservations />} />
                     <Route path="historical" element={<UserReservations />} />
                   </Route>
                 </>

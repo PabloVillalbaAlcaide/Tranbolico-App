@@ -5,12 +5,7 @@ import { TitleTram } from "../../components/TitleTram/TitleTram";
 export const LegalNotice = () => {
   return (
     <div>
-      {/* <Row>
-        <div className="ppal-rutas text-center text-white mt-2">
-          <h2 className="mb-0 py-2">AVISO LEGAL</h2>
-        </div>
-      </Row> */}
-      <TitleTram backgroundColor={'var(--tranbolico-fucsia)'} color={"white"}>
+      <TitleTram backgroundColor={"var(--tranbolico-fucsia)"} color={"white"}>
         AVISO LEGAL
       </TitleTram>
       <Row className="justify-content-center">

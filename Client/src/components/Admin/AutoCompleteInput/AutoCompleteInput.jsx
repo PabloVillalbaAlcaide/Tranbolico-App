@@ -39,8 +39,6 @@ export const AutocompleteInput = ({ value, onChange, onSelect, disabled }) => {
   }, [value, disabled, globalState.token]);
 
   const handleSelect = (suggestion) => {
-    console.log(suggestion);
-
     onSelect(suggestion);
     setShowSuggestions(false);
   };

@@ -31,78 +31,78 @@ export const DetailReservation = () => {
 
   return (
     <>
-        <Container fluid className="detailReservation">
-          <ProgressBar />
-          <Row className="py-4 gap-4 flex-column justify-content-center align-items-center">
-            <Col className="resumen-reseva d-flex flex-column justify-content-center align-items-center gap-3">
-              <h4 className="fst-italic fw-bold">Resumen de la reserva</h4>
-              <div className="d-flex flex-column gap-2">
-                <h5 className="fw-bold">Trayecto:</h5>
-                <p>
-                  {reservation?.departure_city} - {reservation?.arrival_city}
-                </p>
-                <h5 className="fw-bold">Ida:</h5>
-                <div className="d-flex gap-4">
-                  <div className="boton-detail-date-reservation">
-                    {format(new Date(reservation?.departure_date), "dd-MM-yyyy")}
-                  </div>
-                  <div className="boton-detail-time-reservation">
-                    {reservation?.departure_time}
-                  </div>
+      <Container fluid className="detailReservation">
+        <ProgressBar />
+        <Row className="py-4 gap-4 flex-column justify-content-center align-items-center">
+          <Col className="resumen-reseva d-flex flex-column justify-content-center align-items-center gap-3">
+            <h4 className="fst-italic fw-bold">Resumen de la reserva</h4>
+            <div className="d-flex flex-column gap-2">
+              <h5 className="fw-bold">Trayecto:</h5>
+              <p>
+                {reservation?.departure_city} - {reservation?.arrival_city}
+              </p>
+              <h5 className="fw-bold">Ida:</h5>
+              <div className="d-flex gap-4">
+                <div className="boton-detail-date-reservation">
+                  {format(new Date(reservation?.departure_date), "dd-MM-yyyy")}
                 </div>
-                <h5 className="fw-bold">Vuelta:</h5>
-                <div className="d-flex gap-4">
-                  <div className="boton-detail-date-reservation">
+                <div className="boton-detail-time-reservation">
+                  {reservation?.departure_time}
+                </div>
+              </div>
+              <h5 className="fw-bold">Vuelta:</h5>
+              <div className="d-flex gap-4">
+                <div className="boton-detail-date-reservation">
                   {format(new Date(reservation?.arrival_date), "dd-MM-yyyy")}
-                  </div>
-                  <div className="boton-detail-time-reservation">
-                    {reservation?.arrival_time}
-                  </div>
+                </div>
+                <div className="boton-detail-time-reservation">
+                  {reservation?.arrival_time}
                 </div>
               </div>
-              <div className="d-flex flex-column justify-content-center align-items-center gap-2">
-                <h5 className="fw-bold desglose-precio">
-                  Viaje de ida y vuelta: <span>7,60€</span>
-                </h5>
-                <h5 className="fw-bold desglose-precio">
-                  Guía turístico: <span>4,40€</span>
-                </h5>
-                <h5 className="fw-bold desglose-precio">
-                  Total: <span>12€</span>
-                </h5>
-              </div>
-            </Col>
-            
-            <Col>
-              <div className="buttons-Details">
-                <ButtonTram 
+            </div>
+            <div className="d-flex flex-column justify-content-center align-items-center gap-2">
+              <h5 className="fw-bold desglose-precio">
+                Viaje de ida y vuelta: <span>7,60€</span>
+              </h5>
+              <h5 className="fw-bold desglose-precio">
+                Guía turístico: <span>4,40€</span>
+              </h5>
+              <h5 className="fw-bold desglose-precio">
+                Total: <span>12€</span>
+              </h5>
+            </div>
+          </Col>
+
+          <Col>
+            <div className="buttons-Details">
+              <ButtonTram
                 fontSize="1.3rem"
                 color="black"
                 backgroundColor="var(--tranbolico-verde)"
                 onClick={confirmReservation}
-                >
-                  Confirmar
-                </ButtonTram>
-                <ButtonTram
+              >
+                Confirmar
+              </ButtonTram>
+              <ButtonTram
                 fontSize="1.3rem"
                 color="black"
                 backgroundColor="var(--tranbolico-amarillo)"
                 onClick={() => navigate(-1)}
-                >
-                  Atrás
-                </ButtonTram>
-                <ButtonTram
+              >
+                Atrás
+              </ButtonTram>
+              <ButtonTram
                 fontSize="1.3rem"
                 color="black"
                 backgroundColor="var(--tranbolico-fucsia)"
                 onClick={() => navigate("/")}
-                >
+              >
                 Cancelar
-                </ButtonTram>
-              </div>
-            </Col>
-          </Row>
-        </Container>
+              </ButtonTram>
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 };

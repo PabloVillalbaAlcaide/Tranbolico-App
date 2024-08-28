@@ -40,11 +40,12 @@ export const ViewEditRoute = () => {
 
   const getRoutes = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/admin/getRoutes`, {
-        headers: { Authorization: `Bearer ${globalState.token}` },
-      });
-      console.log(res.data);
-      
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/admin/getRoutes`,
+        {
+          headers: { Authorization: `Bearer ${globalState.token}` },
+        }
+      );
       setRoutes(res.data);
     } catch (err) {
       console.log(err);
@@ -61,7 +62,6 @@ export const ViewEditRoute = () => {
   };
 
   const handleInputChange = (name, value) => {
-    console.log("Nombre", name, "Valor", value);
     setEditedRoute((prevState) => ({
       ...prevState,
       [name]: value,
@@ -69,11 +69,7 @@ export const ViewEditRoute = () => {
   };
 
   const handleSaveClick = async () => {
-    console.log(editedRoute);
-
     try {
-      console.log(editedRoute);
-
       const response = await axios.put(
         `${import.meta.env.VITE_API_URL}/admin/editRoute`,
         editedRoute,
@@ -93,11 +89,9 @@ export const ViewEditRoute = () => {
       console.log(err);
       alert("Error al guardar la ruta. Por favor, inténtalo de nuevo.");
     }
-    console.log("realizado");
   };
 
   const handleDisableClick = async (routeId, isDisabled) => {
-    console.log("LLEGO");
 
     try {
       const response = await axios.patch(
@@ -107,7 +101,6 @@ export const ViewEditRoute = () => {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
       );
-      console.log("LLEGO 2");
 
       if (response.status === 200) {
         setRoutes(
