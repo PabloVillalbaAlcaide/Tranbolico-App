@@ -29,6 +29,7 @@ body {
   right: 80px;
   top: -40px;
   width: 220px;
+  clip-path: inset(5% 20% 15% 10%);
 }
 
 .conocenos img {
@@ -213,17 +214,8 @@ body {
     top: 10;
   }
 }
-@media (max-width: 450px) {
+@media (max-width: 520px) {
   .about-image {
-    width: 160px;
-    right: -40px;
-    top: -20px;
-  }
-}
-@media (max-width: 400px) {
-  .about-image {
-    width: 160px;
-
-    top: -2000px;
+    display: none;
   }
 }

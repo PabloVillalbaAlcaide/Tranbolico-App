@@ -7,7 +7,7 @@ export const About = () => {
   const twitterColor = "#283583";
 
   return (
-    <Container fluid="xl">
+    <Container fluid="xl" className="overflow-hidden">
       <Row className="mt-4 banner-about">
         <div className="d-flex align-items-center justify-content-md-between justify-content-center ppal-about ps-md-5 text-white flex-grow-1">
           <h2 className="pb-2 m-0">Conócenos</h2>
