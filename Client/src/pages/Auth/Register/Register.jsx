@@ -69,7 +69,6 @@ export const Register = () => {
       password: "",
       password2: "",
     };
-
     // Validaciones
     if (!register.name) {
       newErrors.name = "El nombre es obligatorio";
@@ -99,12 +98,17 @@ export const Register = () => {
       valid = false;
     }
 
+    const phoneNumberPattern = /^[0-9]{9}$/;
     if (!register.phone_number) {
       newErrors.phone_number = "El teléfono es obligatorio";
       valid = false;
     } else if (register.phone_number.length > 25) {
       newErrors.phone_number =
         "El teléfono debe contener como máximo 25 caracteres";
+      valid = false;
+    } else if (!phoneNumberPattern.test(register.phone_number)) {
+      newErrors.phone_number =
+        "Introduce un número de teléfono válido de 9 dígitos";
       valid = false;
     }
 
@@ -141,7 +145,6 @@ export const Register = () => {
       newErrors.password2 = "Las contraseñas no coinciden";
       valid = false;
     }
-
     setErrors(newErrors);
     return valid;
   };
@@ -179,86 +182,96 @@ export const Register = () => {
                 />
               </div>
               <div className="form-grid">
-                <Form.Group className="mb-2" controlId="formBasicName">
-                  <Form.Control
-                    className="input-form-register"
-                    type="text"
-                    placeholder="Nombre"
-                    name="name"
-                    value={register.name}
-                    onChange={handleChange}
-                    autoComplete="off"
-                  />
-                </Form.Group>
-                {errors.name && (
-                  <p className="text-center text-danger fw-bold">
-                    {errors.name}
-                  </p>
-                )}
-                <Form.Group className="mb-2" controlId="formBasicSurname">
-                  <Form.Control
-                    className="input-form-register"
-                    type="text"
-                    placeholder="Apellidos"
-                    name="surname"
-                    value={register.surname}
-                    onChange={handleChange}
-                    autoComplete="off"
-                  />
-                </Form.Group>
-                {errors.surname && (
-                  <p className="text-center text-danger fw-bold">
-                    {errors.surname}
-                  </p>
-                )}
-                <Form.Group className="mb-2" controlId="formBasicEmail">
-                  <Form.Control
-                    className="input-form-register"
-                    type="email"
-                    placeholder="Email"
-                    name="email"
-                    value={register.email}
-                    onChange={handleChange}
-                    autoComplete="off"
-                  />
-                </Form.Group>
-                {errors.email && (
-                  <p className="text-center text-danger fw-bold">
-                    {errors.email}
-                  </p>
-                )}
-                <Form.Group className="mb-2" controlId="formBasicPhoneNumber">
-                  <Form.Control
-                    className="input-form-register"
-                    type="tel"
-                    placeholder="Teléfono"
-                    name="phone_number"
-                    value={register.phone_number}
-                    onChange={handleChange}
-                    autoComplete="off"
-                  />
-                </Form.Group>
-                {errors.phone_number && (
-                  <p className="text-center text-danger fw-bold">
-                    {errors.phone_number}
-                  </p>
-                )}
-                <Form.Group className="mb-2" controlId="formBasicBirthDate">
-                  <Form.Control
-                    className="input-form-register"
-                    type="date"
-                    placeholder="Fecha de nacimiento"
-                    name="birthdate"
-                    value={register.birthdate}
-                    onChange={handleChange}
-                    autoComplete="off"
-                  />
-                </Form.Group>
-                {errors.birthdate && (
-                  <p className="text-center text-danger fw-bold">
-                    {errors.birthdate}
-                  </p>
-                )}
+                <div>
+                  <Form.Group className="mb-2" controlId="formBasicName">
+                    <Form.Control
+                      className="input-form-register"
+                      type="text"
+                      placeholder="Nombre"
+                      name="name"
+                      value={register.name}
+                      onChange={handleChange}
+                      autoComplete="off"
+                    />
+                  </Form.Group>
+                  {errors.name && (
+                    <p className="text-center text-danger fw-bold">
+                      {errors.name}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <Form.Group className="mb-2" controlId="formBasicSurname">
+                    <Form.Control
+                      className="input-form-register"
+                      type="text"
+                      placeholder="Apellidos"
+                      name="surname"
+                      value={register.surname}
+                      onChange={handleChange}
+                      autoComplete="off"
+                    />
+                  </Form.Group>
+                  {errors.surname && (
+                    <p className="text-center text-danger fw-bold">
+                      {errors.surname}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <Form.Group className="mb-2" controlId="formBasicEmail">
+                    <Form.Control
+                      className="input-form-register"
+                      type="email"
+                      placeholder="Email"
+                      name="email"
+                      value={register.email}
+                      onChange={handleChange}
+                      autoComplete="off"
+                    />
+                  </Form.Group>
+                  {errors.email && (
+                    <p className="text-center text-danger fw-bold">
+                      {errors.email}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <Form.Group className="mb-2" controlId="formBasicPhoneNumber">
+                    <Form.Control
+                      className="input-form-register"
+                      type="tel"
+                      placeholder="Teléfono"
+                      name="phone_number"
+                      value={register.phone_number}
+                      onChange={handleChange}
+                      autoComplete="off"
+                    />
+                  </Form.Group>
+                  {errors.phone_number && (
+                    <p className="text-center text-danger fw-bold">
+                      {errors.phone_number}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <Form.Group className="mb-2" controlId="formBasicBirthDate">
+                    <Form.Control
+                      className="input-form-register"
+                      type="date"
+                      placeholder="Fecha de nacimiento"
+                      name="birthdate"
+                      value={register.birthdate}
+                      onChange={handleChange}
+                      autoComplete="off"
+                    />
+                  </Form.Group>
+                  {errors.birthdate && (
+                    <p className="text-center text-danger fw-bold">
+                      {errors.birthdate}
+                    </p>
+                  )}
+                </div>
                 <Form.Group className="mb-2" controlId="formBasicGenre">
                   <Form.Control
                     className="input-form-register"
@@ -311,36 +324,40 @@ export const Register = () => {
                     </p>
                   )}
                 </div>
-                <Form.Group className="mb-2" controlId="formBasicPassword">
-                  <Form.Control
-                    className="input-form-register"
-                    type="password"
-                    placeholder="Contraseña"
-                    name="password"
-                    value={register.password}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-                {errors.password && (
-                  <p className="text-center text-danger fw-bold">
-                    {errors.password}
-                  </p>
-                )}
-                <Form.Group className="mb-2" controlId="formBasicPassword2">
-                  <Form.Control
-                    className="input-form-register"
-                    type="password"
-                    placeholder="Confirmar contraseña"
-                    name="password2"
-                    value={password2}
-                    onChange={handleChangePassword2}
-                  />
-                </Form.Group>
-                {errors.password2 && (
-                  <p className="text-center text-danger fw-bold">
-                    {errors.password2}
-                  </p>
-                )}
+                <div>
+                  <Form.Group className="mb-2" controlId="formBasicPassword">
+                    <Form.Control
+                      className="input-form-register"
+                      type="password"
+                      placeholder="Contraseña"
+                      name="password"
+                      value={register.password}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+                  {errors.password && (
+                    <p className="text-center text-danger fw-bold">
+                      {errors.password}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <Form.Group className="mb-2" controlId="formBasicPassword2">
+                    <Form.Control
+                      className="input-form-register"
+                      type="password"
+                      placeholder="Confirmar contraseña"
+                      name="password2"
+                      value={password2}
+                      onChange={handleChangePassword2}
+                    />
+                  </Form.Group>
+                  {errors.password2 && (
+                    <p className="text-center text-danger fw-bold">
+                      {errors.password2}
+                    </p>
+                  )}
+                </div>
               </div>
               <p className="fw-bold fst-italic text-center mb-4 fs-6">
                 <span>
