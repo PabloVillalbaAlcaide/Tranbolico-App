@@ -4,7 +4,7 @@ import "../../App.css";
 import "./About.scss";
 
 export const About = () => {
-  const twitterColor = "#283583"; 
+  const twitterColor = "#283583";
 
   return (
     <div>
@@ -18,7 +18,52 @@ export const About = () => {
           className="about-image"
         />
       </Row>
+
       <div className="como-funciona">
+        <h3 className="fst-normal fs-1 fw-bold">
+          Bienvenidos a <span className="about-trambolico">TRANBóLICO</span> la
+          nueva forma de vivir el ocio nocturno.
+        </h3>
+        <p>
+          Somos una agencia de viajes fundada en 2023, con una misión clara:
+          revolucionar la manera en que disfrutas de tus noches de fiesta. Somos
+          una empresa joven, con la energía y el entusiasmo necesarios para
+          cambiar el concepto tradicional de salir de noche, y nacimos con esa
+          intención.
+        </p>
+        <p>
+          Nuestro origen se encuentra en Almazora, un pueblo de la provincia de
+          Castellón. Desde aquí, hemos ideado una plataforma que no solo te
+          lleva de fiesta, sino que transforma toda la experiencia en algo
+          inolvidable. Nuestra app te permite descubrir la oferta más completa
+          de ocio nocturno, abarcando todos los estilos y ambientes: desde las
+          mejores salas de conciertos, discotecas y pubs, hasta los eventos más
+          exclusivos, fiestas, festivales, y mucho más.
+        </p>
+        <p>
+          Pero no solo nos enfocamos en la fiesta; también queremos que
+          disfrutes al máximo de la oferta gastronómica que cada ciudad tiene
+          para ofrecer. Con nosotros, podrás degustar una amplia variedad de
+          opciones culinarias: desde la comida tradicional y de autor, hasta
+          sushi, comida vegana, italiana, y las mejores hamburguesas. Además,
+          tendrás la oportunidad de participar en jornadas gastronómicas que
+          destacan los productos locales, permitiéndote saborear la esencia de
+          cada destino.
+        </p>
+        <p>
+          Todo esto lo podrás descubrir a través de nuestra App, que está
+          diseñada para hacer de tu experiencia algo fácil, seguro y divertido.
+          Y no estarás solo: en cada trayecto te acompañará nuestro guía
+          turístico especializado, quien se encargará de mostrarte los mejores
+          lugares y asegurarse de que tu noche sea perfecta.
+        </p>
+        <p>
+          En de Tranbolico , estamos comprometidos con ofrecerte mucho más que
+          un simple viaje; queremos que cada salida se convierta en una
+          experiencia completa, llena de momentos únicos, buena comida, y la
+          mejor diversión. ¡Únete a nosotros y descubre una nueva forma de salir
+          de fiesta.
+        </p>
         <h3>¿Cómo funciona?</h3>
         <Row className="funciona-content">
           <Col xs={12} md={6} className="funciona-item">

@@ -50,6 +50,11 @@ body {
   max-width: 90%;
   padding: 20px;
 }
+.about-trambolico {
+  font-family: "VinaSans-Regular.ttf", sans-serif;
+  font-size: 3rem;
+  font-weight: lighter;
+}
 
 .como-funciona h3 {
   color: var(--tranbolico-azul);
@@ -58,6 +63,14 @@ body {
   margin-bottom: 30px;
   text-align: center;
   font-style: italic;
+}
+.como-funciona p {
+  color: var(--tranbolico-azul);
+  font-family: "Akkurat", sans-serif;
+  font-size: 1rem;
+  margin-bottom: 30px;
+  text-align: left;
+  font-style: normal;
 }
 
 .funciona-content {
