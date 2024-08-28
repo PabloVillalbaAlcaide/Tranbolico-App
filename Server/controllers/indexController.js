@@ -19,10 +19,8 @@ class IndexController {
     }
     connection.query(sql, data, (error, results) => {
       if (error) {
-        console.error("Database query error:", error);
         return res.status(500).json({ error: "Database query error" });
       }
-      console.log(results);
 
       res.json(results);
     });

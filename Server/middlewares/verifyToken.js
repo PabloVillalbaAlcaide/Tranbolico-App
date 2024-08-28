@@ -23,8 +23,6 @@ const verifyToken = (req, res, next) => {
     }
   });
   
-  console.log("Verificado");
-  
   next();
 };
 

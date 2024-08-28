@@ -36,8 +36,6 @@ const verifyAdmin = (req, res, next) => {
     }
   });
   
-  console.log("Verificado");
-  
   next();
 };
 
