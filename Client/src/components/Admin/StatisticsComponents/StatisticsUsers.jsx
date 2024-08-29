@@ -3,7 +3,7 @@ import { ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import axios from "axios";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
 
-const COLORS = ["#283583", "#e72957"];
+const COLORS = ["#e72957", "#283583"];
 
 export const StatisticsUsers = () => {
   const [data, setData] = useState([]);
@@ -46,7 +46,7 @@ export const StatisticsUsers = () => {
           textAnchor={x > cx ? "start" : "end"}
           dominantBaseline="central"
         >
-          {`${index === 0 ? "Habilitados" : "Deshabilitados"} - ${
+          {`${index === 0 ? "Deshabilitados" : "Habilitados"} - ${
             data[index]?.value
           }`}
         </text>
