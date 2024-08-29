@@ -136,7 +136,7 @@ export const UserReservations = () => {
 
       <ModalApp
         element={element}
-        title={`${element?.departure_city_name} - ${element?.arrival_city_name}`}
+        title={`${element?.departure_city_ida} - ${element?.arrival_city_ida}`}
         text={"¿Deseas eliminar la ruta seleccionada?"}
         aceptar={cancelReservation}
         show={show}
