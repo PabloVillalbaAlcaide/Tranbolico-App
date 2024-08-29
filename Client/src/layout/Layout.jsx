@@ -39,9 +39,11 @@ const Layout = () => {
       <Row>
         <NavBarApp />
       </Row>
-      <div className="container-ppal">
-        <Outlet />
-      </div>
+      <Row className="container-ppal">
+        <div>
+          <Outlet />
+        </div>
+      </Row>
       <Row>
         <Footer />
       </Row>

@@ -30,14 +30,8 @@ const sendMail = (email, name, registerToken) =>{
 </body>
 </html>`
 
-    //verificacion si la comunicación es correcta
-    // transporter
-    //     .verify()
-    //     .then(()=>console.log("todo ok")
-    //     .catch((err)=>err));
-
     const info = transporter.sendMail({
-        from: ' "Tranbólico" <eilkiriaxogos@gmail.com>',
+        from: ' "Tranbólico" <ProyectoTranbolico@gmail.com>',
         to: email,
         subject: "Bienvenida a Tranbólico",
         html: mensajeHtml
