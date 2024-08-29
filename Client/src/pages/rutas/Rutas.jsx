@@ -81,11 +81,6 @@ export const Rutas = () => {
   return (
     <>
       <div className="contenedor-rutas ">
-        {/* <Row>
-          <div className="ppal-rutas text-center text-white mt-2">
-            <h2 className="mb-0 py-2">RUTAS</h2>
-          </div>
-        </Row> */}
         <TitleTram backgroundColor={"var(--tranbolico-fucsia)"} color={"white"}>
           RUTAS
         </TitleTram>
