@@ -33,16 +33,14 @@ export const DetailReservation = () => {
     <>
       <Container fluid className="detailReservation">
         <ProgressBar />
-        <Row className="py-4 gap-4 flex-column justify-content-center align-items-center">
-          <Col className="resumen-reseva d-flex flex-column justify-content-center align-items-center gap-3">
-            <h4 className="fst-italic fw-bold">Resumen de la reserva</h4>
-            <div className="d-flex flex-column gap-2">
-              <h5 className="fw-bold">Trayecto:</h5>
-              <p>
+        <Row className="py-4 gap-3 flex-column justify-content-center align-items-center akkurat-font">
+          <Col className="resumen-reseva d-flex flex-column justify-content-center align-items-center gap-4">
+            <div className="d-flex flex-column gap-3">
+              <h5 className=" fw-bold ">
                 {reservation?.departure_city} - {reservation?.arrival_city}
-              </p>
-              <h5 className="fw-bold">Ida:</h5>
-              <div className="d-flex gap-4">
+              </h5>
+              <h4 className="ida_vuelta_resumen fw-bold">Ida:</h4>
+              <div className="d-flex gap-3">
                 <div className="boton-detail-date-reservation">
                   {format(new Date(reservation?.departure_date), "dd-MM-yyyy")}
                 </div>
@@ -50,8 +48,8 @@ export const DetailReservation = () => {
                   {reservation?.departure_time}
                 </div>
               </div>
-              <h5 className="fw-bold">Vuelta:</h5>
-              <div className="d-flex gap-4">
+              <h4 className="ida_vuelta_resumen fw-bold">Vuelta:</h4>
+              <div className="d-flex gap-3">
                 <div className="boton-detail-date-reservation">
                   {format(new Date(reservation?.arrival_date), "dd-MM-yyyy")}
                 </div>
@@ -60,14 +58,14 @@ export const DetailReservation = () => {
                 </div>
               </div>
             </div>
-            <div className="d-flex flex-column justify-content-center align-items-center gap-2">
-              <h5 className="fw-bold desglose-precio">
+            <div className="d-flex flex-column justify-content-center align-items-center gap-3">
+              <h5 className="fw-bold desglose-precio h5_resumen">
                 Viaje de ida y vuelta: <span>7,60€</span>
               </h5>
-              <h5 className="fw-bold desglose-precio">
+              <h5 className="fw-bold desglose-precio h5_resumen">
                 Guía turístico: <span>4,40€</span>
               </h5>
-              <h5 className="fw-bold desglose-precio">
+              <h5 className="fw-bold desglose-precio h5_resumen_plus">
                 Total: <span>12€</span>
               </h5>
             </div>

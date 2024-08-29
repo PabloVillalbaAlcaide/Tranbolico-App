@@ -37,7 +37,7 @@ export const Admin = () => {
             >
               <h3 className="m-auto">Estadísticas</h3>
             </Button>
-            <img src={cerdito} alt="" />
+            <img src={cerdito} alt="cerdito" />
           </div>
         </Col>
       </Row>
