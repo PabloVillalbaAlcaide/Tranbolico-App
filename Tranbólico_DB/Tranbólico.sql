@@ -128,4 +128,6 @@ LEFT JOIN
     AND tr1.arrival_province_id = tr2.departure_province_id
 WHERE 
     tr1.route_id < tr2.route_id OR tr2.route_id IS NULL;
-    
+
+INSERT INTO user (name, surname, birthdate, genre, email, password, phone_number, avatar, province_id, city_id, is_auto_generated, is_validated, is_disabled, user_type) 
+VALUES ('Admin', 'AdminTranbolico', '1980-01-01', NULL,'proyectotranbolico@gmail.com','$2b$10$q8CbI4tZhh2uajFHSqZwIezOljQXpTgXj.8Q72tAz97MGM5IksQXa', '123456789', '/tram1.png', 12, 40, FALSE, TRUE, FALSE, 1);
