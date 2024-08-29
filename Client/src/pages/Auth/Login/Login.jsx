@@ -95,7 +95,7 @@ export const Login = () => {
             <div className="div-login_img">
               <img src={icono} alt="personIcon" className="login-img mt-1" />
             </div>
-            <Form.Group className="mt-4">
+            <Form.Group className="mt-4 mb-2">
               <Form.Control
                 className="input-form-login pb-2"
                 type="email"

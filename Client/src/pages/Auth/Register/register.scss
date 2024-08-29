@@ -2,7 +2,6 @@ p {
   margin-bottom: 0;
 }
 
-/* Estilos para el contenedor principal del registro */
 .ppal-register {
   font-family: "VinaSans-Regular.ttf";
   h2 {
@@ -10,7 +9,6 @@ p {
   }
 }
 
-/* Colores de fondo para botones específicos */
 .ppal-register,
 .aceptar {
   background-color: var(--tranbolico-azul);
@@ -20,7 +18,6 @@ p {
   background-color: var(--tranbolico-fucsia);
 }
 
-/* Estilos para los inputs del formulario */
 .input-form-register,
 .province-city-container-register input,
 .province-city-container-register .form-control {
@@ -32,10 +29,9 @@ p {
   width: 100%;
   box-sizing: border-box;
   transition: all 0.2s ease-in-out;
-  margin: 0; /* Eliminar márgenes que puedan centrar el input */
+  margin: 0;
 }
 
-/* Efectos al enfocar o pasar el mouse sobre los inputs */
 .input-form-register:focus,
 .input-form-register:hover,
 .province-city-container-register input:focus,
@@ -47,7 +43,6 @@ p {
   outline: none;
 }
 
-/* Eliminar sombra y mantener el color del borde al enfocar */
 .form-control:focus,
 .province-city-container-register input:focus,
 .province-city-container-register .form-control:focus {
@@ -55,67 +50,60 @@ p {
   border-color: inherit;
 }
 
-/* Estilos para el contenedor del registro */
 .contenedor-register {
   font-family: "Akkurat-Regular.ttf";
   font-size: 1rem;
   background-color: #91cad8;
   border-radius: 10px;
   padding: 50px;
+  margin-top: 50px;
   width: 100%;
   max-width: 700px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
   position: relative;
-  margin: 0 auto;
 }
 
-/* Estilos para la imagen del registro */
+.div-register-img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% -50%;
+}
+
 .register-img {
   background-color: #91cad8;
   border-radius: 100%;
   border: 1px solid black;
   width: 70px;
-  position: relative;
-  top: -85px;
   box-shadow: 0 0 0 5px;
 }
 
-/* Grid principal del formulario */
 .form-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px; /* Espacio entre inputs */
+  gap: 16px;
 }
 
-/* Contenedor para los inputs de Provincia y Ciudad */
 .province-city-container-register {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
 }
 
-/* Media queries para pantallas grandes */
 @media (min-width: 768px) {
   .form-grid {
     grid-template-columns: 1fr 1fr;
   }
 
-  /* Si el contenedor tiene la clase 'with-city', organizar Provincia y Ciudad en dos columnas */
   .province-city-container-register.with-city,
   .province-city-container-register:not(.with-city) {
     grid-template-columns: 1fr;
     grid-column: span 2;
   }
 
-  /* Si no tiene la clase 'with-city', hacer que el contenedor ocupe dos columnas completas */
-  // .province-city-container-register:not(.with-city) {
-  //   grid-column: span 2;
-  // }
-
-  /* Asegurar que ciertos inputs ocupen dos columnas completas */
-  .form-grid .input-form-register[type="select"], /* Género */
-  .form-grid .form-group[controlId="formBasicPassword"], /* Contraseña */
-  .form-grid .form-group[controlId="formBasicPassword2"] /* Confirmar Contraseña */ {
+  .form-grid .input-form-register[type="select"],
+  .form-grid .form-group[controlId="formBasicPassword"],
+  .form-grid .form-group[controlId="formBasicPassword2"] {
     grid-column: span 2;
   }
 }
