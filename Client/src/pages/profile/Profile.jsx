@@ -20,7 +20,7 @@ export const Profile = () => {
 
   return (
     <>
-      <Row>
+      <Row className="overflow-hidden">
         <Col>
           <div className="div-profile d-flex flex-column align-items-center gap-5">
             <div className="d-flex flex-column justify-content-center">

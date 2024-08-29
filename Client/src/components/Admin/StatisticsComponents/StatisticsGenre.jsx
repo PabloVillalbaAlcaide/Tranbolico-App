@@ -59,7 +59,7 @@ export const StatisticsGenre = () => {
             : genre === 2
             ? `Femenino - ${user_count}`
             : genre === 3
-            ? `No binario - ${user_count}`
+            ? `Otro - ${user_count}`
             : `No especifica - ${user_count}`}
         </text>
         <text
