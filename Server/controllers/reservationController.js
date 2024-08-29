@@ -26,11 +26,15 @@ class ReservationController {
       WHERE route.departure_city_id = (
       SELECT city_id 
       FROM city 
-      WHERE city_name = '${city}' 
+      WHERE city_name LIKE '${city}' 
       AND province_id = (
       SELECT province_id 
       FROM province 
-      WHERE name = '${province}')) 
+      WHERE name LIKE '${province}')) 
+      AND province.province_id = (
+      SELECT province.province_id 
+      FROM province 
+      WHERE name LIKE '${province}')
       AND (province.name LIKE '${search}%' 
       OR city.city_name LIKE '${search}%')
       AND route.is_deleted = FALSE
