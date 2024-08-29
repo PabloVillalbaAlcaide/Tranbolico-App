@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../../../App.css";
 import "./register.scss";
-
 import { Col, Form, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -171,17 +170,17 @@ export const Register = () => {
         <TitleTram backgroundColor={"var(--tranbolico-azul)"} color={"white"}>
           REGISTRO
         </TitleTram>
-        <div className="contenedor-register d-flex justify-content-center mt-5">
+        <div className="contenedor-register d-flex justify-content-center mx-auto">
           <Col xs={12}>
             <Form onSubmit={onSubmit}>
-              <div className="text-center">
+              <div className="text-center div-register-img">
                 <img
                   className="register-img"
                   src="/public/images/perfil2.png"
                   alt="personIcon"
                 />
               </div>
-              <div className="form-grid">
+              <div className="form-grid mt-4">
                 <div>
                   <Form.Group className="mb-2" controlId="formBasicName">
                     <Form.Control

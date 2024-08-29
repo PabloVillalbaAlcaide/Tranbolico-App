@@ -88,6 +88,20 @@ export const EditUser = () => {
       isValid = false;
     }
 
+    const phoneNumberPattern = /^[0-9]{9}$/;
+    if (!editedUser.phone_number) {
+      newErrors.phone_number = "El teléfono es obligatorio";
+      isValid = false;
+    } else if (editedUser.phone_number?.length > 25) {
+      newErrors.phone_number =
+        "El teléfono debe contener como máximo 25 caracteres";
+      isValid = false;
+    } else if (!phoneNumberPattern.test(editedUser.phone_number)) {
+      newErrors.phone_number =
+        "Introduce un número de teléfono válido de 9 dígitos";
+      isValid = false;
+    }
+
     setErrors(newErrors);
     return isValid;
   }, [editedUser]);
@@ -166,7 +180,7 @@ export const EditUser = () => {
                   />
                 </Form.Group>
                 {errors.name && (
-                  <p className="text-center text-danger fw-bold">
+                  <p className="text-center text-danger fw-bold mb-2">
                     {errors.name}
                   </p>
                 )}
@@ -184,7 +198,7 @@ export const EditUser = () => {
                   />
                 </Form.Group>
                 {errors.surname && (
-                  <p className="text-center text-danger fw-bold">
+                  <p className="text-center text-danger fw-bold mb-2">
                     {errors.surname}
                   </p>
                 )}
@@ -202,7 +216,7 @@ export const EditUser = () => {
                   />
                 </Form.Group>
                 {errors.email && (
-                  <p className="text-center text-danger fw-bold">
+                  <p className="text-center text-danger fw-bold mb-2">
                     {errors.email}
                   </p>
                 )}
@@ -220,7 +234,7 @@ export const EditUser = () => {
                   />
                 </Form.Group>
                 {errors.phone_number && (
-                  <p className="text-center text-danger fw-bold">
+                  <p className="text-center text-danger fw-bold mb-2">
                     {errors.phone_number}
                   </p>
                 )}
@@ -257,7 +271,7 @@ export const EditUser = () => {
                   />
                 </Form.Group>
                 {errors.province && (
-                  <p className="text-center text-danger fw-bold">
+                  <p className="text-center text-danger fw-bold mb-2">
                     {errors.province}
                   </p>
                 )}
@@ -276,7 +290,7 @@ export const EditUser = () => {
                   />
                 </Form.Group>
                 {errors.city && (
-                  <p className="text-center text-danger fw-bold">
+                  <p className="text-center text-danger fw-bold mb-2">
                     {errors.city}
                   </p>
                 )}
