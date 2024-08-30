@@ -50,10 +50,10 @@ class ReservationController {
 
   historical = (req, res) => {
     let userID = req.params.id;
-    if (req.query.length) {
+    if (req.query.userid) {
       userID = req.query.userid;
     }
-
+    
     const sql = `SELECT
     reservation.user_id,
     reservation.reservation_id,
@@ -79,10 +79,11 @@ class ReservationController {
     JOIN city ac ON route.arrival_city_id = ac.city_id AND route.arrival_province_id = ac.province_id
     WHERE reservation.user_id = ${userID}
     AND (
-    (reservation.reservation_type = 2 AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) < NOW())
-    OR (reservation.user_id = ${userID} AND reservation.is_deleted = TRUE))
+    (reservation.reservation_type IN (1,2) AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) < NOW())
+    OR (reservation.user_id = ${userID} AND reservation.is_deleted = TRUE)
+    )
     GROUP BY reservation.reservation_id
-    ORDER BY departure_days_ida DESC, departure_times_ida DESC`;
+    ORDER BY departure_days_ida DESC, departure_times_ida DESC;`;
 
     connection.query(sql, (err, result) => {
       if (err) {
@@ -121,10 +122,12 @@ class ReservationController {
     JOIN province ap ON route.arrival_province_id = ap.province_id
     JOIN city ac ON route.arrival_city_id = ac.city_id AND route.arrival_province_id = ac.province_id
     WHERE reservation.user_id = ${userID}
-    AND (reservation.reservation_type = 1 OR (reservation.reservation_type = 2 AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) > NOW()))
+    AND ((reservation.reservation_type IN (1,2) AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) > NOW())
+    OR (reservation.reservation_type = 1 AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) < NOW() 
+    AND reservation.reservation_type = 2 AND CAST(CONCAT(planning.departure_date, ' ', planning.departure_time) AS DATETIME) > NOW()))
     AND reservation.is_deleted = FALSE
     GROUP BY reservation.reservation_id
-    ORDER BY departure_days_ida, departure_times_ida`;
+    ORDER BY departure_days_ida, departure_times_ida;`;
 
     connection.query(sql, (err, result) => {
       if (err) {

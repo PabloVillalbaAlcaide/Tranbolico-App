@@ -3,18 +3,18 @@ import { Table } from "react-bootstrap";
 import axios from "axios";
 import { AppContext } from "../../../context/TranbolicoContextProvider";
 
-export const UserHistory = ({ user_id, fetchData }) => {
+export const UserHistory = ({ user_id }) => {
   const [reservationHistory, setReservationHistory] = useState([]);
   const { globalState } = useContext(AppContext);
 
   useEffect(() => {
-    if (fetchData) {
-      viewHistory();
-    }
-  }, [fetchData, user_id, globalState.token]);
+    viewHistory();
+  }, [user_id, globalState.token]);
 
   const viewHistory = async () => {
     try {
+      console.log("Voy");
+
       const res = await axios.get(
         `${
           import.meta.env.VITE_API_URL
@@ -23,11 +23,15 @@ export const UserHistory = ({ user_id, fetchData }) => {
           headers: { Authorization: `Bearer ${globalState.token}` },
         }
       );
+      console.log(res.data);
+
       setReservationHistory(res.data);
     } catch (error) {
       console.error(error);
     }
   };
+  // console.log(reservationHistory);
+  // console.log(user_id);
 
   return (
     <>

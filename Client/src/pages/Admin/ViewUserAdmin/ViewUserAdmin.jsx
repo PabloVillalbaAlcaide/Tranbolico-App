@@ -29,7 +29,6 @@ export const ViewUserAdmin = () => {
   const [loading, setLoading] = useState(false);
   const { globalState } = useContext(AppContext);
   const [radioValue, setRadioValue] = useState("3");
-  const [activeAccordion, setActiveAccordion] = useState(null);
 
   useEffect(() => {
     onSearch();
@@ -162,12 +161,7 @@ export const ViewUserAdmin = () => {
                             <strong>Historial</strong>
                           </Accordion.Header>
                           <Accordion.Body>
-                            <UserHistory
-                              user_id={user.user_id}
-                              fetchData={
-                                activeAccordion === `history-${user.user_id}`
-                              }
-                            />
+                            <UserHistory user_id={user.user_id} />
                           </Accordion.Body>
                         </Accordion.Item>
                         <Accordion.Item eventKey="3">
